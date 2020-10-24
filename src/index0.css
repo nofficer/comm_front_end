@@ -1,0 +1,362 @@
+body {
+  background-color: #282828;
+  color: #fffff2;
+  font-family: 'Oswald';
+}
+
+.landing {
+  text-align: center;
+}
+
+.container {
+  padding: 15px;
+}
+
+.container2 {
+  animation: 1s fadein 1.5s forwards;
+  opacity: 0;
+}
+
+.item {
+    border-radius: 25px;
+}
+
+a {
+  margin: 5px;
+  text-decoration: none;
+  color:#fffff2;
+}
+
+a:hover {
+  opacity: 10%;
+  color: white;
+  transition: .1s ease-in ease-out;
+  cursor: pointer;
+}
+
+.blacktext {
+  color: black;
+}
+
+.navitem {
+white-space: nowrap;
+padding: 0 20px;
+}
+
+
+.item:hover {
+  background-color:#333;
+  cursor:pointer;
+  transition: .2s linear;
+}
+
+.red {
+  color:red;
+}
+
+.red:hover {
+  color:#f45342;
+  cursor:pointer;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+  margin: 0;
+  padding: 10px;
+  font-size: 30px;
+  animation: 1s fadein 0.5s forwards;
+	opacity: 0;
+}
+
+@keyframes fadein {
+	100% {
+		opacity: 1;
+	}
+}
+
+h1 {
+  font-size: 50px;
+  padding-top: 20vh;
+}
+
+.takeupspace {
+  flex: 2 1 65%
+}
+
+.nav-1 {
+  max-width:50%
+}
+
+.changeW {
+  margin: 0 25px ;
+  max-width: 150px
+}
+
+.productList {
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.prod-item {
+  text-align:center;
+}
+
+
+.plsflx {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.changeH {
+  max-height:150px;
+  border-radius: 25px;
+  max-width: 150px;
+  min-height: 150px;
+}
+
+/* PRODUCTSHOW CSS */
+.fullbox {
+  display: flex;
+  justify-content: center;
+  margin-top: 1%;
+  flex-wrap: wrap;
+}
+
+.showbox {
+  display: flex;
+  max-width:35%;
+}
+
+.showimage {
+  flex-basis: 40%;
+  max-width:100%
+}
+
+.flexrow {
+  display:flex;
+  justify-content: space-between;
+}
+
+.titlebox {
+  flex-basis: 40%;
+  display: flex;
+  margin: 2%;
+  flex-direction:column;
+}
+
+.titlebox h3 {
+  margin-bottom: .5px;
+}
+
+.titlebox p {
+  margin-bottom: 2px;
+}
+
+hr {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.redtext {
+  font-weight: 300;
+  font-size: 20px;
+  color:#ce2802;
+}
+
+.rate {
+  color:yellow;
+}
+
+.pmargin {
+  margin-top: 5px;
+  margin-left: 40px;
+  color:#0378aa;
+}
+
+.stayline {
+  display: inline;
+}
+
+.prddesc {
+  margin: 30px 0;
+  text-indent: 30px;
+}
+
+.titlegrow {
+
+}
+
+.cartbox {
+  display: flex;
+  border-radius: 4px;
+  border: 1px solid gray;
+  width:15%;
+  text-align: right;
+  flex-direction: column;
+  align-content: center;
+
+}
+
+@media screen and (max-width: 1100px){
+  .cartbox {
+    flex-direction:row;
+    width:100%;
+    flex-wrap: wrap;
+  }
+  .titlebox {
+    width:100%;
+    flex-basis:100%;
+  }
+}
+
+
+.stock {
+  color:green;
+  font-weight: 800px;
+}
+
+.cartbox div {
+  text-align: left;
+  margin: 15px;
+}
+
+.ablue {
+  color:#0378aa;
+ }
+
+ .cartbox select {
+   margin-left: 5px;
+ }
+
+ .addtocart {
+   width: 100%;
+   padding: 8px 32px;
+   border-radius: 10px;
+ }
+
+ .addtocart i {
+   flex-basis: 10%;
+ }
+
+ .addtocart p {
+   flex-basis:95%;
+
+ }
+
+ .addtocart:hover {
+   cursor:pointer;
+   background-color:#e7e7e7;
+   transition-duration: .4s;
+   box-shadow: 0 2px #5b5b5b;
+ }
+
+ .addtocart:active {
+   box-shadow: none;
+   top: 4px
+ }
+
+.editDelete {
+  display:flex;
+  justify-content: space-between;
+  margin: 5px 0
+}
+
+.reviewlist {
+  display: flex;
+  flex-direction: column;
+}
+
+ #notblack {
+   color:white;
+ }
+
+ #smallerForm {
+   width:100vh;
+   height: 85%;
+ }
+
+ @media screen and (max-width: 650px){
+   #smallerForm {
+     max-width: 50vh
+   }
+ }
+
+ .center {
+   text-align: center;
+   font-weight: 1000;
+   margin-bottom: 40px;
+ }
+
+ .reviewFlex {
+   display: flex;
+   justify-content: space-around;
+   margin-top: 20px;
+ }
+
+ .reviewbasis {
+   flex-basis: 70%
+ }
+
+ .searchcss {
+
+ }
+
+ .smallInput {
+   max-width: 25%;
+ }
+
+.searchcontainer {
+  display:flex;
+  padding:40px;
+  justify-content: center;
+}
+
+.ccontainer {
+  display: flex;
+  justify-content: space-around;
+}
+
+input {
+  background-color: #D3D3D3;
+  border-color: #D3D3D3;
+
+}
+
+.searchcontainer input {
+  height: 40px;
+  width:30%;
+  border: 1px solid #003366;
+}
+
+.searchcontainer select {
+  height: 40px;
+  width:30%;
+  border: 1px solid #003366;
+}
+
+.searchcontainer i {
+height:40px;
+border-color: #003366;
+}
+
+#dblueicon {
+  border: 0px solid #003366;
+  width: 2em;
+  height: 2em;
+  padding: .5em 0!important;
+}
+
+#dblueicon:hover {
+  cursor:pointer;
+}
+
+
+select {
+  background-color: #D3D3D3;
+  border-color: #D3D3D3;
+
+}

@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getUsers , goPush} from '../actions'
+import { getUsers} from '../actions'
+import history from '../history'
 
 
 class UserShow extends React.Component {
@@ -11,7 +12,8 @@ class UserShow extends React.Component {
 
   createItem(user){
     return (
-      <div>{user[0]} ,  {user[1]},   {user[2]}</div>
+      <tr><th>{user[0]}</th><th>{user[1]}</th><th>{user[2]}</th><th>{user[4]}</th></tr>
+
     )
   }
 
@@ -27,8 +29,19 @@ class UserShow extends React.Component {
   render(){
       console.log(this.renderList())
       return (<div>
-        <div><strong>User_ID</strong> ,<strong>User_Name</strong>  , <strong>Plan_ID</strong></div>
-        <div>{this.renderList()}</div>
+        <table className='ui celled table'>
+          <thead>
+            <tr>
+              <th><strong>User ID</strong></th>
+              <th><strong> Name</strong></th>
+              <th><strong>Plan ID</strong></th>
+              <th><strong>Plan Name</strong></th>
+            </tr>
+          </thead>
+          {this.renderList()}
+        </table>
+
+
         </div>
       )
   }

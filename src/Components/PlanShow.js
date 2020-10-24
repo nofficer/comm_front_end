@@ -11,7 +11,8 @@ class PlanShow extends React.Component {
 
   createItem(plan){
     return (
-      <div>{plan[0]} ,  {plan[1]},   {plan[2]}</div>
+
+      <tr><th>{plan[0]}</th><th>{plan[1]}</th><th>{plan[2]}</th></tr>
     )
   }
 
@@ -27,9 +28,18 @@ class PlanShow extends React.Component {
   render(){
       console.log(this.renderList())
       return (<div>
-        <div><strong>Plan ID</strong> ,<strong>Plan_Name</strong>  , <strong>Attainment_Rule</strong></div>
-        <div>{this.renderList()}</div>
+        <table className='ui celled table'>
+        <thead>
+          <tr>
+            <th><strong>Plan ID</strong></th>
+            <th><strong>Plan Name</strong></th>
+            <th><strong>Attainment Rule</strong></th>
+          </tr>
+        </thead>
+        {this.renderList()}
+        </table>
         </div>
+
       )
   }
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 
 
-class UserForm extends React.Component {
+class PlanForm extends React.Component {
 
   renderError({error, touched}){
     if (touched && error) {
@@ -39,12 +39,11 @@ class UserForm extends React.Component {
 
   return (
     <form className='ui form error' onSubmit={this.props.handleSubmit(this.onSubmit)}>
-      <Field name='user_id' component={this.renderInput} label='Enter Employee ID' />
-      <Field name='name' component={this.renderInput} label='Enter Name' />
-      <Field name="plan_id" component="select" label='Enter Plan_ID'>
-                <option value="">Select a plan...</option>
-                {this.props.populateDropdown.map(plan =>
-                  <option value={plan[0]} key={plan[1]}>{plan[1]}</option>)}
+      <Field name='plan_name' component={this.renderInput} label='Enter Plan Name' />
+      <Field name="plan_attainment" component="select" label='Select Plan Attainment RUle'>
+                <option value="">Select an attainment rule...</option>
+                {this.props.populateDropdown.map(attainRule =>
+                  <option value={attainRule[2]} key={attainRule[0]}>{attainRule[2]}</option>)}
               </Field>
       <br/>
       <button className='ui button primary'>Submit</button>
@@ -57,20 +56,22 @@ class UserForm extends React.Component {
 
 const validate = (formValues) => {
 	const errors = {};
-	if(!formValues.name) {
+	if(!formValues.plan_name) {
 		//only ran if the user did not enter a title
-		errors.name = 'You must enter a name'
+		errors.plan_name = 'You must enter a name'
 	}
-	if (!formValues.plan_id) {
-		errors.plan_id = 'You must enter a plan id'
+  console.log(formValues.plan_attainment)
+
+  if(!formValues.plan_attainment) {
+		//only ran if the user did not enter a title
+    errors.plan_name = "You must enter both a plan name and select an attainment rule"
 	}
-  if(!formValues.user_id){
-    errors.user_id = 'You must enter a user id'
-  }
+
+
   return errors
 }
 
 export default reduxForm({
-	form: 'userForm',
+	form: 'planForm',
 	validate: validate
-})(UserForm);
+})(PlanForm);

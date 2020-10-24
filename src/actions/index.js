@@ -1,12 +1,44 @@
-import { GET_PLANS, GET_USERS, CREATE_USER, CREATE_CALC, CHANGE_DONE, GO_PUSH } from './types'
+import { GET_PLANS, GET_USERS, CREATE_USER, CREATE_CALC, CHANGE_DONE, GO_PUSH, CREATE_PLAN, GET_ATTAINMENT_RULES, CREATE_ATTAINMENT_RULE, GET_TRANS } from './types'
 import db from '../apis/db'
 import history from '../history'
+
+export const getTrans = () => {
+  return async (dispatch) => {
+    const response = await db.get('/getTrans')
+    dispatch({type:GET_TRANS, payload: response.data})
+  }
+}
+
+export const createAttainRule = (formValues) => {
+  return async (dispatch) => {
+    const response = await db.post('/insertAttainmentRule',formValues)
+    dispatch({type:CREATE_ATTAINMENT_RULE, payload: response.data})
+    history.push('/attainRuleShow')
+  }
+}
+
+
+export const createPlan = (formValues) => {
+  return async (dispatch) => {
+    const response = await db.post('/insertPlan',formValues)
+    dispatch({type:CREATE_PLAN, payload: response.data})
+    history.push('/planShow')
+  }
+}
 
 export const getPlans = () => {
 
   return async (dispatch) => {
     const response = await db.get('/getPlans')
     dispatch({type:GET_PLANS, payload: response.data})
+  }
+}
+
+export const getAttainmentRules = () => {
+
+  return async (dispatch) => {
+    const response = await db.get('/getAttainmentRules')
+    dispatch({type:GET_ATTAINMENT_RULES, payload: response.data})
   }
 }
 
@@ -22,9 +54,9 @@ export const createUser = (formValues) => {
 
   return async (dispatch) => {
     const response = await db.post('/insertUser',formValues)
-    history.push('/UserShow')
-    dispatch({type:CREATE_USER, payload: response.data})
 
+    dispatch({type:CREATE_USER, payload: response.data})
+    history.push('/userShow')
   }
 }
 
