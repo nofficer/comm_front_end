@@ -1,5 +1,5 @@
 import {
-  CREATE_TRANS, GET_TRANS
+  CREATE_TRANS, GET_TRANS,GET_TRAN,DELETE_TRANS,EDIT_TRANS
 } from '../actions/types'
 
 const INITIAL_STATE = {
@@ -12,6 +12,12 @@ export default (state=INITIAL_STATE, action) => {
       return {...state, trans: action.payload};
     case GET_TRANS:
       return{...state, trans: action.payload}
+    case GET_TRAN:
+      return{...state,trans:action.payload}
+    case EDIT_TRANS:
+      return{...state,trans:action.payload}
+    case DELETE_TRANS:
+      return{...state,trans:action.payload}
     default:
       return state
   }

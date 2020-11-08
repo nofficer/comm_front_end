@@ -7,7 +7,7 @@ import UploadForm from './UploadForm'
 
 
 
-class Landing extends React.Component {
+class ImportTrans extends React.Component {
   componentDidMount(){
 
   }
@@ -19,7 +19,8 @@ class Landing extends React.Component {
   render(){
       return (
         <div className='ui text container ' >
-          <h1 className='centertext'>Landing</h1>
+          <h1 className='centertext'>Import Deals</h1>
+          <UploadForm onSubmit={this.onSubmit}/>
         </div>
       )
   }
@@ -31,4 +32,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, {uploadFile,onChangeFile})(Landing)
+export default connect(mapStateToProps, {uploadFile,onChangeFile})(ImportTrans)

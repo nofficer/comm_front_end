@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getAttainmentRules } from '../actions'
+import { getAttainmentRules,deleteAttainmentRule } from '../actions'
+import { Link } from 'react-router-dom'
+
 
 
 class AttainRuleShow extends React.Component {
@@ -11,7 +13,16 @@ class AttainRuleShow extends React.Component {
 
   createItem(attainRule){
     return (
-      <tr><th>{attainRule[0]}</th><th>{attainRule[1]}</th><th>{attainRule[2]}</th><th>{attainRule[3]}</th><th>{attainRule[4]}</th></tr>
+      <tr>
+        <th>{attainRule[0]}</th><th>{attainRule[2]}</th><th>{attainRule[1]}</th><th>{attainRule[3]}</th><th>{attainRule[4]}</th>
+
+        <Link onClick={(e) => e.stopPropagation()} to={`/attainRuleShow/edit/${attainRule[0]}`} className='ui small button primary'>
+          Edit
+        </Link>
+        <button onClick={() => this.props.deleteAttainmentRule({"rule_id": attainRule[0]}) } className='ui small button negative'>
+          Delete
+        </button>
+      </tr>
     )
   }
 
@@ -34,10 +45,11 @@ class AttainRuleShow extends React.Component {
           <thead>
             <tr>
               <th><strong>Attainment Rule ID</strong></th>
-              <th><strong>Source</strong></th>
               <th><strong>Attainment Rule Name</strong></th>
+              <th><strong>Source</strong></th>
               <th><strong>Filter</strong></th>
               <th><strong>Metric</strong></th>
+              <th><strong>Options</strong></th>
             </tr>
           </thead>
           {this.renderList()}
@@ -54,4 +66,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { getAttainmentRules })(AttainRuleShow)
+export default connect(mapStateToProps, { getAttainmentRules,deleteAttainmentRule })(AttainRuleShow)

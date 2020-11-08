@@ -2,7 +2,7 @@ import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 
 
-class RuleForm extends React.Component {
+class AttainRuleForm extends React.Component {
 
   renderError({error, touched}){
     if (touched && error) {
@@ -40,9 +40,9 @@ class RuleForm extends React.Component {
   return (
     <form className='ui form error' onSubmit={this.props.handleSubmit(this.onSubmit)}>
       <Field name='rule_name' component={this.renderInput} label='Enter Rule Name' />
-      <Field name='source' component={this.renderInput} label='Enter Rule Source' />
-      <Field name='filter' component={this.renderInput} label='Enter Rule Filter' />
-      <Field name='metric' component={this.renderInput} label='Enter Rule Metric' />
+      <Field name='rule_source' component={this.renderInput} label='Enter Rule Source' />
+      <Field name='rule_filter' component={this.renderInput} label='Enter Rule Filter' />
+      <Field name='rule_value' component={this.renderInput} label='Enter Rule Metric' />
 
       <br/>
       <button className='ui button primary'>Submit</button>
@@ -78,5 +78,6 @@ const validate = (formValues) => {
 
 export default reduxForm({
 	form: 'ruleForm',
-	validate: validate
-})(RuleForm);
+	validate: validate,
+  enableReinitialize: true
+})(AttainRuleForm);

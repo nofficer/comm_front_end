@@ -36,7 +36,7 @@ class UserForm extends React.Component {
 
 
   render(){
-
+    
   return (
     <form className='ui form error' onSubmit={this.props.handleSubmit(this.onSubmit)}>
       <Field name='user_id' component={this.renderInput} label='Enter Employee ID' />
@@ -64,7 +64,7 @@ const validate = (formValues) => {
 	if (!formValues.plan_id) {
 		errors.plan_id = 'You must enter a plan id'
 	}
-  if(!formValues.user_id){
+  if(!formValues.user_id || Number.isNaN(Number(formValues.user_id))){
     errors.user_id = 'You must enter a user id'
   }
   return errors
@@ -72,5 +72,6 @@ const validate = (formValues) => {
 
 export default reduxForm({
 	form: 'userForm',
-	validate: validate
+	validate: validate,
+  enableReinitialize: true
 })(UserForm);

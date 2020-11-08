@@ -43,7 +43,7 @@ class PlanForm extends React.Component {
       <Field name="plan_attainment" component="select" label='Select Plan Attainment RUle'>
                 <option value="">Select an attainment rule...</option>
                 {this.props.populateDropdown.map(attainRule =>
-                  <option value={attainRule[2]} key={attainRule[0]}>{attainRule[2]}</option>)}
+                  <option value={attainRule[2]} key={attainRule[2]}>{attainRule[2]}</option>)}
               </Field>
       <br/>
       <button className='ui button primary'>Submit</button>
@@ -73,5 +73,6 @@ const validate = (formValues) => {
 
 export default reduxForm({
 	form: 'planForm',
-	validate: validate
+	validate: validate,
+  enableReinitialize: true
 })(PlanForm);

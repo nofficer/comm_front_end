@@ -8,7 +8,13 @@ class Header extends React.Component {
 
   render() {
     return (
+
     <div className='ui ten item menu'>
+      <div className='item'>
+        <Link to='/ImportTrans'>
+            Import Deals
+        </Link>
+      </div>
         <div className='item'>
         <Link to='/planShow'>
           Plans
@@ -32,7 +38,7 @@ class Header extends React.Component {
 
           <div className='item'>
           <Link to ='/userShow'>
-            ShowUsers
+            Users
           </Link>
           </div>
           <div className='item'>
@@ -43,6 +49,11 @@ class Header extends React.Component {
           <div className='item'>
           <Link to='/transShow'>
             Transactions
+          </Link>
+          </div>
+          <div className='item'>
+          <Link to='/transCreate'>
+            Create Transaction
           </Link>
           </div>
           <div className='item'>
