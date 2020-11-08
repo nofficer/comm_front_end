@@ -19,16 +19,15 @@ class PlanShow extends React.Component {
         <Link onClick={(e) => e.stopPropagation()} to={`/planShow/edit/${plan[0]}`} className='ui small button primary'>
           Edit
         </Link>
-        <button onClick={() => this.props.deletePlan({"plan_id": plan[0]}) } className='ui small button negative'>
+        <Link onClick={(e) => e.stopPropagation()} to={`/planShow/delete/${plan[0]}`} className='ui small button negative'>
           Delete
-        </button>
+        </Link>
 
       </tr>
     )
   }
 
   renderList(){
-    console.log(this.props.plans)
     return this.props.plans.map((plan) => {
       return (this.createItem(plan))
     })
@@ -37,8 +36,9 @@ class PlanShow extends React.Component {
 
 
   render(){
-      console.log(this.renderList())
+
       return (<div>
+        <h1>Plans</h1>
         <table className='ui celled table'>
         <thead>
           <tr>

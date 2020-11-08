@@ -18,9 +18,9 @@ class TransShow extends React.Component {
           <Link onClick={(e) => e.stopPropagation()} to={`/transShow/edit/${trans[0]}`} className='ui small button primary'>
             Edit
           </Link>
-          <button onClick={() => this.props.deleteTrans({"trans_id": trans[0]}) } className='ui small button negative'>
+          <Link onClick={(e) => e.stopPropagation()} to={`/transShow/delete/${trans[0]}`} className='ui small button negative'>
             Delete
-          </button>
+          </Link>
           </tr>
 
     )
@@ -45,6 +45,7 @@ class TransShow extends React.Component {
 
 
       return (<div>
+        <h1>Transactions</h1>
         <table className='ui celled table'>
           <thead>
             <tr>

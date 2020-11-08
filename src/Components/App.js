@@ -19,6 +19,12 @@ import UserEdit from './UserEdit'
 import Header from './Header'
 import Calc from './Calc'
 import history from '../history'
+import Example from './myhook'
+import PlanDelete from './PlanDelete'
+import AttainRuleDelete from './AttainRuleDelete'
+import TransDelete from './TransDelete'
+import ImportError from './ImportError'
+import UserDelete from './UserDelete'
 
 const App = () => {
   return (
@@ -29,6 +35,7 @@ const App = () => {
         <div className='container2'>
           <Switch>
             <Route path ='/' exact component={Landing}/>
+            <Route path ='/ImportError' exact component={ImportError}/>
             <Route path ='/ImportTrans' exact component={ImportTrans}/>
             <Route path ='/attainRuleCreate' exact component={AttainRuleCreate}/>
             <Route path='/planCreate' exact component={PlanCreate}/>
@@ -36,6 +43,7 @@ const App = () => {
             <Route path ='/planShow' exact component={PlanShow}/>
             <Route path='/userCreate' exact component={UserCreate} />
             <Route path='/userShow' exact component={UserShow}/>
+            <Route path='/userShow/delete/:user_id' exact component={UserDelete}/>
             <Route path='/calc' exact component={Calc}/>
             <Route path='/transShow' exact component={TransShow}/>
             <Route path='/transCreate' exact component={TransCreate}/>
@@ -43,6 +51,10 @@ const App = () => {
             <Route path='/userShow/edit/:user_id' exact component={UserEdit}/>
             <Route path='/attainRuleShow/edit/:rule_id' exact component ={AttainRuleEdit}/>
             <Route path='/planShow/edit/:plan_id' exact component ={PlanEdit}/>
+            <Route path='/planShow/delete/:plan_id' exact component ={PlanDelete}/>
+            <Route path='/attainRuleShow/delete/:rule_id' exact component ={AttainRuleDelete}/>
+            <Route path='/TransShow/delete/:trans_id' exact component = {TransDelete}/>
+
           </Switch>
           </div>
         </div>

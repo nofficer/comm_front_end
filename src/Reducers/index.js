@@ -6,6 +6,7 @@ import calcReducer from './calcReducer'
 import transReducer from './transReducer'
 import attainRuleReducer from './attainRuleReducer'
 import fileReducer from './fileReducer'
+import checkReducer from './checkReducer'
 
 
 export default combineReducers ({
@@ -15,5 +16,6 @@ export default combineReducers ({
   calc: calcReducer,
   attainmentRules: attainRuleReducer,
   trans: transReducer,
-  file: fileReducer
+  file: fileReducer,
+  check: checkReducer
 })

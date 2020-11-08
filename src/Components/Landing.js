@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { uploadFile,onChangeFile} from '../actions'
 import UploadForm from './UploadForm'
-
+import Example from './myhook'
 
 
 
@@ -20,6 +20,7 @@ class Landing extends React.Component {
       return (
         <div className='ui text container ' >
           <h1 className='centertext'>Landing</h1>
+
         </div>
       )
   }

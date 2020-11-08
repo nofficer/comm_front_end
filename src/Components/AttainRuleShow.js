@@ -14,20 +14,20 @@ class AttainRuleShow extends React.Component {
   createItem(attainRule){
     return (
       <tr>
-        <th>{attainRule[0]}</th><th>{attainRule[2]}</th><th>{attainRule[1]}</th><th>{attainRule[3]}</th><th>{attainRule[4]}</th>
+        <th>{attainRule[0]}</th><th>{attainRule[1]}</th><th>{attainRule[2]}</th><th>{attainRule[3]}</th><th>{attainRule[4]}</th>
 
         <Link onClick={(e) => e.stopPropagation()} to={`/attainRuleShow/edit/${attainRule[0]}`} className='ui small button primary'>
           Edit
         </Link>
-        <button onClick={() => this.props.deleteAttainmentRule({"rule_id": attainRule[0]}) } className='ui small button negative'>
+        <Link onClick={(e) => e.stopPropagation()} to={`/attainRuleShow/delete/${attainRule[0]}`} className='ui small button negative'>
           Delete
-        </button>
+        </Link>
       </tr>
     )
   }
 
   renderList(){
-    console.log(this.props.attainmentRules)
+
     return this.props.attainmentRules.map((attainRule) => {
       return (this.createItem(attainRule))
     })
@@ -36,9 +36,9 @@ class AttainRuleShow extends React.Component {
 
 
   render(){
-      console.log(this.renderList())
-      return (<div className='ui grid'>
 
+      return (<div className='ui grid'>
+        <h1>Attainment Rules</h1>
 
         <table className='ui celled table'>
 

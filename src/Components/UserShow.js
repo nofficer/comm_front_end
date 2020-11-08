@@ -18,9 +18,9 @@ class UserShow extends React.Component {
         <Link onClick={(e) => e.stopPropagation()} to={`/userShow/edit/${user[0]}`} className='ui small button primary'>
           Edit
         </Link>
-        <button onClick={() => this.props.deleteUser({"user_id": user[0]}) } className='ui small button negative'>
+        <Link onClick={(e) => e.stopPropagation()} to={`/userShow/delete/${user[0]}`} className='ui small button negative'>
           Delete
-        </button>
+        </Link>
 
       </tr>
     )
@@ -38,6 +38,7 @@ class UserShow extends React.Component {
   render(){
 
       return (<div>
+        <h1>Users</h1>
         <table className='ui celled table'>
           <thead>
             <tr>

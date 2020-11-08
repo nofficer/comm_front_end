@@ -1,6 +1,27 @@
-import { GET_PLANS, GET_USERS,  GET_USER, CREATE_USER, EDIT_USER, CREATE_CALC, CHANGE_DONE, GO_PUSH, CREATE_PLAN, EDIT_PLAN, GET_ATTAINMENT_RULES, CREATE_ATTAINMENT_RULE, EDIT_ATTAINMENT_RULE, GET_TRANS, CREATE_TRANS, EDIT_TRANS, GET_TRAN, DELETE_TRANS, DELETE_ATTAINMENT_RULE,DELETE_PLAN,DELETE_USER,GET_ATTAINMENT_RULE,GET_PLAN,UPLOAD_FILE,ONCHANGE_FILE } from './types'
+import { GET_PLANS, GET_USERS,  GET_USER, CREATE_USER, EDIT_USER, CREATE_CALC, CHANGE_DONE, GO_PUSH, CREATE_PLAN, EDIT_PLAN, GET_ATTAINMENT_RULES, CREATE_ATTAINMENT_RULE, EDIT_ATTAINMENT_RULE, GET_TRANS, CREATE_TRANS, EDIT_TRANS, GET_TRAN, DELETE_TRANS, DELETE_ATTAINMENT_RULE,DELETE_PLAN,DELETE_USER,GET_ATTAINMENT_RULE,GET_PLAN,UPLOAD_FILE,ONCHANGE_FILE,CHECK_RULE_USE,CHECK_PLAN_USE,CHECK_USER_USE } from './types'
 import db from '../apis/db'
 import history from '../history'
+
+export const checkUserUse = (user_id) => {
+  return async (dispatch) => {
+    const response = await db.post('/checkUserUse',user_id)
+    dispatch({type:CHECK_USER_USE, payload:response.data})
+  }
+}
+
+export const checkPlanUse = (plan_id) => {
+  return async (dispatch) => {
+    const response = await db.post('/checkPlanUse',plan_id)
+    dispatch({type:CHECK_PLAN_USE, payload:response.data})
+  }
+}
+
+export const checkRuleUse = (rule_id) => {
+  return async (dispatch) => {
+    const response = await db.post('/checkRuleUse',rule_id)
+    dispatch({type:CHECK_RULE_USE, payload:response.data})
+  }
+}
 
 export const uploadFile = (data) => {
   return async (dispatch) => {

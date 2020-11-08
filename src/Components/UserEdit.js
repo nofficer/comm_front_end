@@ -27,7 +27,6 @@ class UserEdit extends React.Component {
 
 // {'trans_gp':this.props.trans['trans_gp'], 'trans_rev':this.props.trans['trans_rev'], 'trans_seller_id':this.props.trans['trans_seller_id'],'trans_type':this.props.trans['trans_type']} initialValues={this.props.trans}
   render(){
-      console.log(this.props.users)
       return (
         <div><UserForm onSubmit={this.onSubmit} initialValues={this.props.users}  populateDropdown={this.populateDropdown()} date={moment().format('YYYY-MM-DD')}  /></div>
       )

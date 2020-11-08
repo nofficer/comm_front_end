@@ -28,6 +28,7 @@ class PlanForm extends React.Component {
   }
 
   onSubmit = (formValues) => {
+    console.log(formValues)
     this.props.onSubmit(formValues)
   }
 
@@ -43,7 +44,7 @@ class PlanForm extends React.Component {
       <Field name="plan_attainment" component="select" label='Select Plan Attainment RUle'>
                 <option value="">Select an attainment rule...</option>
                 {this.props.populateDropdown.map(attainRule =>
-                  <option value={attainRule[2]} key={attainRule[2]}>{attainRule[2]}</option>)}
+                  <option value={attainRule[0]} key={attainRule[0]}>{attainRule[1]}</option>)}
               </Field>
       <br/>
       <button className='ui button primary'>Submit</button>
@@ -60,7 +61,6 @@ const validate = (formValues) => {
 		//only ran if the user did not enter a title
 		errors.plan_name = 'You must enter a name'
 	}
-  console.log(formValues.plan_attainment)
 
   if(!formValues.plan_attainment) {
 		//only ran if the user did not enter a title

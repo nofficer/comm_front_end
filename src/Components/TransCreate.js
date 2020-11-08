@@ -29,6 +29,7 @@ class TransCreate extends React.Component {
   }
 }
 
+
 const mapStateToProps = (state) => {
   return {
     trans: Object.values(state.trans.trans),
