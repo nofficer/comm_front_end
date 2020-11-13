@@ -15,12 +15,42 @@ class Header extends React.Component {
     return (
 
 
-    <div className='ui five item menu'>
+    <div className='ui six item menu'>
         <div className='item'>
           <Link to='/'>
               Home
           </Link>
         </div>
+        <div class="ui simple dropdown item">
+
+
+        <Link to='/rateTableShow'>
+            Rate Tables
+        </Link>
+
+
+          <div class="menu">
+
+
+              <div className='item'>
+                <Link to='/rateTableShow'>
+                    Rate Tables
+                </Link>
+              </div>
+
+              <div className='item'>
+                <Link to='/rateTableCreate'>
+                    Create Rate Table
+                </Link>
+              </div>
+
+
+
+        </div>
+
+      </div>
+
+      
 
         <div class="ui simple dropdown item">
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 
 
-class PlanForm extends React.Component {
+class AttainRuleForm extends React.Component {
 
   renderError({error, touched}){
     if (touched && error) {
@@ -28,7 +28,6 @@ class PlanForm extends React.Component {
   }
 
   onSubmit = (formValues) => {
-    console.log(formValues)
     this.props.onSubmit(formValues)
   }
 
@@ -40,12 +39,11 @@ class PlanForm extends React.Component {
 
   return (
     <form className='ui form error' onSubmit={this.props.handleSubmit(this.onSubmit)}>
-      <Field name='plan_name' component={this.renderInput} label='Enter Plan Name' />
-      <Field name="plan_attainment" component="select" label='Select Plan Attainment RUle'>
-                <option value="">Select an attainment rule...</option>
-                {this.props.populateDropdown.map(attainRule =>
-                  <option value={attainRule[1]} key={attainRule[1]}>{attainRule[1]}</option>)}
-              </Field>
+      <Field name='rule_name' component={this.renderInput} label='Enter Rule Name' />
+      <Field name='rule_source' component={this.renderInput} label='Enter Rule Source' />
+      <Field name='rule_filter' component={this.renderInput} label='Enter Rule Filter' />
+      <Field name='rule_value' component={this.renderInput} label='Enter Rule Metric' />
+
       <br/>
       <button className='ui button primary'>Submit</button>
     </form>
@@ -57,14 +55,21 @@ class PlanForm extends React.Component {
 
 const validate = (formValues) => {
 	const errors = {};
-	if(!formValues.plan_name) {
+	if(!formValues.rule_name) {
 		//only ran if the user did not enter a title
-		errors.plan_name = 'You must enter a name'
+		errors.rule_name = 'You must enter a name'
 	}
-
-  if(!formValues.plan_attainment) {
+  if(!formValues.source) {
 		//only ran if the user did not enter a title
-    errors.plan_name = "You must enter both a plan name and select an attainment rule"
+		errors.source = 'You must enter a source'
+	}
+  if(!formValues.filter) {
+		//only ran if the user did not enter a title
+		errors.filter = 'You must enter a filter'
+	}
+  if(!formValues.metric) {
+		//only ran if the user did not enter a title
+		errors.metric = 'You must enter a metric'
 	}
 
 
@@ -72,7 +77,7 @@ const validate = (formValues) => {
 }
 
 export default reduxForm({
-	form: 'planForm',
+	form: 'ruleForm',
 	validate: validate,
   enableReinitialize: true
-})(PlanForm);
+})(AttainRuleForm);

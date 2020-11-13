@@ -17,7 +17,6 @@ class PlanEdit extends React.Component {
   }
 
   populateDropdown(){
-    console.log(this.props.attainmentRules)
     return this.props.attainmentRules
   }
 

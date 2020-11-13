@@ -25,6 +25,7 @@ import AttainRuleDelete from './AttainRuleDelete'
 import TransDelete from './TransDelete'
 import ImportError from './ImportError'
 import UserDelete from './UserDelete'
+import RateTableShow from './Rate_Tables/RateTableShow'
 
 const App = () => {
   return (
@@ -35,8 +36,9 @@ const App = () => {
         <div className='container2'>
           <Switch>
             <Route path ='/' exact component={Landing}/>
-            <Route path ='/ImportError' exact component={ImportError}/>
-            <Route path ='/ImportTrans' exact component={ImportTrans}/>
+            <Route path ='/rateTableShow' exact component={RateTableShow}/>
+            <Route path ='/importError' exact component={ImportError}/>
+            <Route path ='/importTrans' exact component={ImportTrans}/>
             <Route path ='/attainRuleCreate' exact component={AttainRuleCreate}/>
             <Route path='/planCreate' exact component={PlanCreate}/>
             <Route path ='/attainRuleShow' exact component={AttainRuleShow}/>
@@ -53,7 +55,8 @@ const App = () => {
             <Route path='/planShow/edit/:plan_id' exact component ={PlanEdit}/>
             <Route path='/planShow/delete/:plan_id' exact component ={PlanDelete}/>
             <Route path='/attainRuleShow/delete/:rule_id' exact component ={AttainRuleDelete}/>
-            <Route path='/TransShow/delete/:trans_id' exact component = {TransDelete}/>
+            <Route path='/transShow/delete/:trans_id' exact component = {TransDelete}/>
+
 
           </Switch>
           </div>
