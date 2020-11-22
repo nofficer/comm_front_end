@@ -16,11 +16,31 @@ class Header extends React.Component {
 
 
     <div className='ui six item menu'>
-        <div className='item'>
-          <Link to='/'>
-              Home
-          </Link>
-        </div>
+    <div class="ui simple dropdown item">
+
+
+    <Link to='/'>
+        Home
+    </Link>
+
+
+      <div class=" ui vertical menu ">
+
+
+          <div className=''>
+            <a className="blue active item"><Link to='/calc'>
+                Calc
+            </Link></a>
+
+          </div>
+
+
+
+
+
+    </div>
+
+  </div>
         <div class="ui simple dropdown item">
 
 
@@ -31,6 +51,11 @@ class Header extends React.Component {
 
           <div class="menu">
 
+              <div className='item'>
+                <Link to='/import'>
+                    Import Rates
+                </Link>
+              </div>
 
               <div className='item'>
                 <Link to='/rateTableShow'>
@@ -46,11 +71,13 @@ class Header extends React.Component {
 
 
 
+
+
         </div>
 
       </div>
 
-      
+
 
         <div class="ui simple dropdown item">
 
@@ -63,7 +90,7 @@ class Header extends React.Component {
           <div class="menu">
 
               <div className='item'>
-                <Link to='/ImportTrans'>
+                <Link to='/import'>
                     Import Deals
                 </Link>
               </div>
@@ -145,7 +172,7 @@ class Header extends React.Component {
           </div>
 
           <div className='item'>
-          <Link to ='/calc'>
+          <Link to ='/AEcalc'>
             AE Calculator
           </Link>
           </div>

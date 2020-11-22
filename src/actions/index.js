@@ -1,10 +1,34 @@
-import { GET_PLANS, GET_USERS,  GET_USER, CREATE_USER, EDIT_USER, CREATE_CALC, CHANGE_DONE, GO_PUSH, CREATE_PLAN, EDIT_PLAN, GET_ATTAINMENT_RULES, CREATE_ATTAINMENT_RULE, EDIT_ATTAINMENT_RULE, GET_TRANS, CREATE_TRANS, EDIT_TRANS, GET_TRAN, DELETE_TRANS, DELETE_ATTAINMENT_RULE,DELETE_PLAN,DELETE_USER,GET_ATTAINMENT_RULE,GET_PLAN,UPLOAD_FILE,ONCHANGE_FILE,CHECK_RULE_USE,CHECK_PLAN_USE,CHECK_USER_USE,GET_RATE_TABLE,GET_RATE_TABLES } from './types'
+import { GET_PLANS, GET_USERS,  GET_USER, CREATE_USER, EDIT_USER, CREATE_CALC, CHANGE_DONE, GO_PUSH, CREATE_PLAN, EDIT_PLAN, GET_ATTAINMENT_RULES, CREATE_ATTAINMENT_RULE, EDIT_ATTAINMENT_RULE, GET_TRANS, CREATE_TRANS, EDIT_TRANS, GET_TRAN, DELETE_TRANS, DELETE_ATTAINMENT_RULE,DELETE_PLAN,DELETE_USER,GET_ATTAINMENT_RULE,GET_PLAN,UPLOAD_FILE,ONCHANGE_FILE,CHECK_RULE_USE,CHECK_PLAN_USE,CHECK_USER_USE,GET_RATE_TABLE,GET_RATE_TABLES,CREATE_RATE_TABLE,EDIT_RATE_TABLE,DELETE_RATE_TABLE,ERROR_HANDLE } from './types'
 import db from '../apis/db'
 import history from '../history'
 
 
 
 
+
+export const deleteRateTable = (rate_id) => {
+  return async (dispatch) => {
+    const response = await db.post('/deleteRateTable', rate_id)
+    dispatch({type:DELETE_RATE_TABLE, payload: response.data})
+    history.push('/RateTableShow')
+  }
+}
+
+export const editRateTable = (formValues,rate_id) => {
+  return async (dispatch) => {
+    const response = await db.post('/updateRateTable' , formValues,rate_id)
+    dispatch({type:EDIT_RATE_TABLE, payload: response.data})
+    history.push('/RateTableShow')
+  }
+}
+export const createRateTable = (formValues) => {
+  return async (dispatch) => {
+    console.log(formValues)
+    const response = await db.post('/insertRateTable' , formValues)
+    dispatch({type:CREATE_RATE_TABLE, payload: response.data})
+    history.push('/RateTableShow')
+  }
+}
 export const getRateTable = (rate_id) => {
   return async (dispatch) => {
     const response = await db.post('/getRateTable' , rate_id)
@@ -40,11 +64,18 @@ export const checkRuleUse = (rule_id) => {
   }
 }
 
-export const uploadFile = (data) => {
+export const uploadFile = (data,type) => {
   return async (dispatch) => {
-    const response = await db.post('/import_file',data)
+    const response = await db.post('/import_fileB',data)
     dispatch({type:UPLOAD_FILE, payload:response.data})
-    history.push('/transShow')
+    var url = './'+type + 'Show'
+    if(response.data == "Done"){
+      history.push(url)
+    }
+    else{
+        history.push({pathname:'/ImportError',state:{detail:response.data}})
+    }
+
   }
 
 }

@@ -13,7 +13,7 @@ class ImportError extends React.Component {
     return (
       <React.Fragment>
                 <button
-                onClick={() => history.push('/ImportTrans')}
+                onClick={() => history.push('/import')}
                 >OK
                 </button>
 
@@ -28,7 +28,7 @@ class ImportError extends React.Component {
       title="Import Error"
       content={history.location.state.detail}
       actions={this.renderActions()}
-      onDismiss={() => history.push('/ImportTrans')}
+      onDismiss={() => history.push('/import')}
     />)
 
 

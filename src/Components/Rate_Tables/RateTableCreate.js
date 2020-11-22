@@ -1,18 +1,22 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getPlans, createAttainRule, getAttainmentRules } from '../../actions'
+import { getPlans, createRateTable } from '../../actions'
 
 import { Field, reduxForm } from 'redux-form'
 
-import AttainRuleForm from './AttainRuleForm'
+import RateTableForm from './RateTableForm'
 
-class AttainRuleCreate extends React.Component {
+class RateTableCreate extends React.Component {
   componentDidMount(){
-    this.props.getAttainmentRules()
+    this.props.getPlans()
   }
 
   onSubmit = (formValues) => {
-    this.props.createAttainRule(formValues)
+    this.props.createRateTable(formValues)
+  }
+
+  populateDropdown(){
+    return this.props.plans
   }
 
 
@@ -20,15 +24,16 @@ class AttainRuleCreate extends React.Component {
 
   render(){
       return (
-        <div><AttainRuleForm onSubmit={this.onSubmit} /></div>
+        <div><RateTableForm onSubmit={this.onSubmit} populateDropdown={this.populateDropdown()} /></div>
       )
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    attainmentRules: Object.values(state.attainmentRules.attainmentRules)
+    plans: Object.values(state.plans.plans),
+    rateTables: Object.values(state.rateTables.rateTables)
   }
 }
 
-export default connect(mapStateToProps, { createAttainRule, getAttainmentRules })(AttainRuleCreate)
+export default connect(mapStateToProps, { createRateTable,getPlans })(RateTableCreate)

@@ -1,35 +1,41 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getPlans, editAttainmentRule, getAttainmentRule } from '../../actions'
+import { getPlans, getRateTable,editRateTable } from '../../actions'
 
 import { Field, reduxForm } from 'redux-form'
 
-import AttainRuleForm from './AttainRuleForm'
+import RateTableForm from './RateTableForm'
 
-class AttainRuleEdit extends React.Component {
+class RateTableEdit extends React.Component {
   componentDidMount(){
-    this.props.getAttainmentRule({"rule_id": this.props.match.params.rule_id})
+    this.props.getRateTable({"rate_id": this.props.match.params.rate_id})
+    this.props.getPlans()
   }
 
   onSubmit = (formValues) => {
-    this.props.editAttainmentRule(formValues)
+    this.props.editRateTable(formValues,{"rate_id": this.props.match.params.rate_id})
+  }
+
+  populateDropdown(){
+    return this.props.plans
   }
 
 
 
 
   render(){
-    console.log(this.props.attainmentRule)
+
       return (
-        <div><AttainRuleForm onSubmit={this.onSubmit} initialValues={this.props.attainmentRule} /></div>
+        <div><RateTableForm onSubmit={this.onSubmit} initialValues={this.props.rateTable} populateDropdown={this.populateDropdown()} /></div>
       )
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    attainmentRule: state.attainmentRules.attainmentRules
+    rateTable: state.rateTables.rateTables,
+    plans: Object.values(state.plans.plans)
   }
 }
 
-export default connect(mapStateToProps, { editAttainmentRule, getAttainmentRule })(AttainRuleEdit)
+export default connect(mapStateToProps, { editRateTable, getRateTable, getPlans})(RateTableEdit)

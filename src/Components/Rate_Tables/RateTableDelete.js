@@ -1,52 +1,34 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getAttainmentRule ,deleteAttainmentRule,getAttainmentRules,checkRuleUse} from '../../actions'
+import { getRateTable ,deleteRateTable,getRateTables} from '../../actions'
 import { Link } from 'react-router-dom'
-import Modal from '../Modal'
-import history from '../history'
+import Modal from '../../Modal'
+import history from '../../history'
 
-class AttainRuleDelete extends React.Component {
+class RateTableDelete extends React.Component {
 
   componentDidMount(){
-    this.props.getAttainmentRule({"rule_id": this.props.match.params.rule_id})
-    this.props.checkRuleUse({"rule_id": this.props.match.params.rule_id})
+    this.props.getRateTable({"rate_id": this.props.match.params.rate_id})
   }
 
   renderContent(){
     if(!this.props.rule){
-      return 'Are you sure you wish to delete this rule?'
+      return 'Are you sure you wish to delete this rate?'
     }
-    else if(this.props.check != "In Use") {
-      return `Are you sure you wish to delete ${this.props.rule.rule_name}`
-    }
-    else{
-      return `You cannot delete ${this.props.rule.rule_name} because it is in use`
-    }
-
   }
 
   renderActions(){
-    const id = this.props.match.params.rule_id
-    if(this.props.check != "In Use"){
       return (
 
         <React.Fragment>
                   <button
-                  onClick={() => this.props.deleteAttainmentRule({"rule_id": this.props.rule.rule_id})}
+                  onClick={() => this.props.deleteRateTable({"rate_id": this.props.rateTable.rate_id})}
                   className='ui button negative'>Delete
                   </button>
-                  <Link className='ui button' to='/attainRuleShow'>Cancel</Link>
+                  <Link className='ui button' to='/RateTableShow'>Cancel</Link>
         </React.Fragment>
       )
-    }
-    else{
-      return (
 
-        <React.Fragment>
-                  <Link className='ui button' to='/attainRuleShow'>Cancel</Link>
-        </React.Fragment>
-      )
-    }
 
   }
 
@@ -54,10 +36,10 @@ class AttainRuleDelete extends React.Component {
 
   render(){
     return(<Modal
-      title="Delete AttainRule"
+      title="Delete RateTable"
       content={this.renderContent()}
       actions={this.renderActions()}
-      onDismiss={() => history.push('/attainRuleShow')}
+      onDismiss={() => history.push('/RateTableShow')}
     />)
 
 
@@ -67,9 +49,8 @@ class AttainRuleDelete extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    rule: state.attainmentRules.attainmentRules,
-    check: state.check.check
+    rateTable: state.rateTables.rateTables
   }
 }
 
-export default connect(mapStateToProps, { getAttainmentRule,deleteAttainmentRule,getAttainmentRules,checkRuleUse })(AttainRuleDelete)
+export default connect(mapStateToProps, { getRateTable,deleteRateTable,getRateTables})(RateTableDelete)

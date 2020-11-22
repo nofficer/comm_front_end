@@ -7,7 +7,7 @@ import UploadForm from './UploadForm'
 
 
 
-class ImportTrans extends React.Component {
+class Import extends React.Component {
   componentDidMount(){
 
   }
@@ -17,9 +17,9 @@ class ImportTrans extends React.Component {
   }
 
   render(){
+    console.log(this.props.type)
       return (
         <div className='ui text container ' >
-          <h1 className='centertext'>Import Deals</h1>
           <UploadForm onSubmit={this.onSubmit}/>
         </div>
       )
@@ -32,4 +32,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, {uploadFile,onChangeFile})(ImportTrans)
+export default connect(mapStateToProps, {uploadFile,onChangeFile})(Import)

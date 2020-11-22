@@ -4,8 +4,11 @@ import { uploadFile,onChangeFile} from '../actions'
 import Modal from '../Modal'
 import { CSVReader } from 'react-papaparse'
 import history from '../history'
+import { Radio } from 'semantic-ui-react'
 
 const buttonRef = React.createRef()
+var importType = ''
+
 
 class CSVReaderV extends Component {
   componentDidMount(){
@@ -37,49 +40,116 @@ class CSVReaderV extends Component {
   }
 
   handleSubmit = () => {
-    var numchecker = true
-    var datechecker = true
-    var wrongnumindex = []
-    var wrongdateindex = []
-    var i;
-    for (i=0;i < this.my_data.length; i++){
-      if(this.isNumeric(this.my_data[i]["Revenue"]) && this.isNumeric(this.my_data[i]["GP"])){
-          console.log("It is numeric")
+
+
+    //DEALS UPLOAD WITH VALIDATION
+    if(importType == 'Deals'){
+      //TYPE CHECKING BELOW
+                var numchecker = true
+                var datechecker = true
+                var wrongnumindex = []
+                var wrongdateindex = []
+                var i;
+                for (i=0;i < this.my_data.length; i++){
+                  if(this.isNumeric(this.my_data[i]["Revenue"]) && this.isNumeric(this.my_data[i]["GP"])){
+
+                  }
+                  else{
+                    numchecker = false
+                    wrongnumindex.push(i)
+                  }
+
+                }
+
+                var p;
+                for (p=0;p < this.my_data.length; p++){
+                  if(this.isValidDate(this.my_data[p]["Date"]) ){
+
+                  }
+                  else{
+                    datechecker=false
+                    wrongdateindex.push(p)
+                  }
+                }
+
+
+                if(numchecker && datechecker){
+                  this.my_data.push({table: "TRANSACTIONS"})
+                  this.props.uploadFile(this.my_data,'trans')
+                }
+                else if(numchecker==false&&datechecker==true){
+                  history.push({pathname:'/ImportError',state:{detail:`Wrong number format at line(s) ${wrongnumindex}`}})
+                }
+                else if (datechecker==false&&numchecker==true){
+
+                  history.push({pathname:'/ImportError',state:{detail:`Wrong date format at line(s) ${wrongdateindex}`}})
+                }
+
+                else{
+                  history.push({pathname:'/ImportError',state:{detail:`Wrong date format at line(s) ${wrongdateindex} and wrong number format at line(s) ${wrongnumindex}`}})
+                }
+              }
+
+  //RATES UPLOAD VALIDATION AND EXEUCTION
+    else if(importType == 'Rates'){
+      //TYPE CHECKING BELOW
+      var numchecker = true
+      var datechecker = true
+      var wrongnumindex = []
+      var wrongdateindex = []
+      var i;
+      for (i=0;i < this.my_data.length; i++){
+        if(this.isNumeric(this.my_data[i]["plan_id"]) && this.isNumeric(this.my_data[i]["attain_start"]) && this.isNumeric(this.my_data[i]["attain_end"]) && this.isNumeric(this.my_data[i]["tier"]) && this.isNumeric(this.my_data[i]["rate"])){
+
+        }
+        else{
+          numchecker = false
+          wrongnumindex.push(i)
+        }
+
+      }
+
+      var p;
+      for (p=0;p < this.my_data.length; p++){
+
+        if(this.isValidDate(this.my_data[p]["start"]) && this.isValidDate(this.my_data[p]["end"]) ){
+
+        }
+        else{
+          datechecker=false
+
+          wrongdateindex.push(p)
+        }
+      }
+
+      if(numchecker && datechecker){
+
+        this.my_data.push({table: "RATE"})
+        this.props.uploadFile(this.my_data,'rateTable')
+        }
+      else if(numchecker==false&&datechecker==true){
+          history.push({pathname:'/ImportError',state:{detail:`Wrong number format at line(s) ${wrongnumindex}`}})
+        }
+      else if (datechecker==false&&numchecker==true){
+
+        history.push({pathname:'/ImportError',state:{detail:`Wrong date format at line(s) ${wrongdateindex}`}})
       }
       else{
-        numchecker = false
-        wrongnumindex.push(i)
-      }
-
-    }
-
-    var p;
-    for (p=0;p < this.my_data.length; p++){
-      console.log(this.my_data[p]["Date"])
-      if(this.isValidDate(this.my_data[p]["Date"]) ){
-          console.log("It is valid date")
-      }
-      else{
-        datechecker=false
-        wrongdateindex.push(p)
+        history.push({pathname:'/ImportError',state:{detail:`Wrong date format at line(s) ${wrongdateindex} and wrong number format at line(s) ${wrongnumindex}`}})
       }
     }
 
-
-    if(numchecker && datechecker){
-      this.props.uploadFile(this.my_data)
-    }
-    else if(numchecker==false&&datechecker==true){
-      history.push({pathname:'/ImportError',state:{detail:`Wrong number format at line(s) ${wrongnumindex}`}})
-    }
-    else if (datechecker==false&&numchecker==true){
-      console.log("its running")
-      history.push({pathname:'/ImportError',state:{detail:`Wrong date format at line(s) ${wrongdateindex}`}})
+//USERS UPLOAD EXECUTION WITH NO VALIDATION
+    else if(importType =='Users'){
+      this.my_data.push({table: "USERS"})
+      this.props.uploadFile(this.my_data,'user')
     }
 
     else{
-      history.push({pathname:'/ImportError',state:{detail:`Wrong date format at line(s) ${wrongdateindex} and wrong number format at line(s) ${wrongnumindex}`}})
+      history.push({pathname:'/ImportError',state:{detail:`Please select an input type`}})
     }
+
+
 
 
   }
@@ -117,7 +187,8 @@ isValidDate(dateString)
     return day > 0 && day <= monthLength[month - 1];
 };
 
-  updateData = (results) => {
+  updateData = (results,file) => {
+    console.log(file)
     this.my_data = results.data
 
 
@@ -128,6 +199,11 @@ isValidDate(dateString)
     if (buttonRef.current) {
       buttonRef.current.removeFile(e)
     }
+  }
+
+  handleChange = (e) => {
+    importType = e.target.value
+    document.getElementById("myh1id").innerHTML = "Import " + importType
   }
 
   render() {
@@ -142,8 +218,15 @@ isValidDate(dateString)
         header:true,
         skipEmptyLines: true}}
         onRemoveFile={this.handleOnRemoveFile}
+        accept='.csv'
       >
+
         {({ file }) => (
+          <div>
+          <div className='ui text container ' >
+            <h1 id='myh1id' className='centertext'>Import</h1>
+
+          </div>
           <aside
             style={{
               display: 'flex',
@@ -179,7 +262,12 @@ isValidDate(dateString)
                 width: '60%'
               }}
             >
+
               {file && file.name}
+
+
+
+
             </div>
             <button
               style={{
@@ -205,7 +293,19 @@ isValidDate(dateString)
             >
               Submit
             </button>
+
           </aside>
+          <select class="ui dropdown" onChange={this.handleChange}>
+            <option value="error">Select an import type</option>
+            <option value="Deals">Transactions</option>
+            <option value="Rates">Rates</option>
+            <option value="Users">Users</option>
+          </select>
+
+          </div>
+
+
+
         )}
       </CSVReader>
     )

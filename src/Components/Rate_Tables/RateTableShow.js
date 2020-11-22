@@ -54,7 +54,7 @@ class RateTableShow extends React.Component {
               <th><strong>Tier</strong></th>
               <th><strong>Rate</strong></th>
               <th><strong>Options</strong></th>
-              
+
             </tr>
           </thead>
           {this.renderList()}
@@ -67,7 +67,7 @@ class RateTableShow extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    rateTables: Object.values(state.rateTables.rateTables)
+    rateTables: Object.values(state.rateTables.rateTables),
   }
 }
 

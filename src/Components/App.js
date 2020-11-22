@@ -7,7 +7,7 @@ import PlanShow from './PlanShow'
 import PlanCreate from './PlanCreate'
 import UserShow from './UserShow'
 import AttainRuleShow from './AttainRuleShow'
-import ImportTrans from './ImportTrans'
+import Import from './Import'
 import AttainRuleCreate from './AttainRuleCreate'
 import TransShow from './TransShow'
 import TransEdit from './TransEdit'
@@ -17,7 +17,7 @@ import PlanEdit from './PlanEdit'
 import TransCreate from './TransCreate'
 import UserEdit from './UserEdit'
 import Header from './Header'
-import Calc from './Calc'
+import AECalc from './AECalc'
 import history from '../history'
 import Example from './myhook'
 import PlanDelete from './PlanDelete'
@@ -26,6 +26,13 @@ import TransDelete from './TransDelete'
 import ImportError from './ImportError'
 import UserDelete from './UserDelete'
 import RateTableShow from './Rate_Tables/RateTableShow'
+import RateTableCreate from './Rate_Tables/RateTableCreate'
+import RateTableEdit from './Rate_Tables/RateTableEdit'
+import RateTableDelete from './Rate_Tables/RateTableDelete'
+import Calc from './Calc/Calc'
+
+
+
 
 const App = () => {
   return (
@@ -36,9 +43,13 @@ const App = () => {
         <div className='container2'>
           <Switch>
             <Route path ='/' exact component={Landing}/>
+            <Route path ='/calc' exact component={Calc}/>
             <Route path ='/rateTableShow' exact component={RateTableShow}/>
+            <Route path ='/rateTableCreate' exact component={RateTableCreate}/>
+            <Route path ='/rateTableShow/edit/:rate_id' exact component={RateTableEdit}/>
+            <Route path ='/rateTableShow/delete/:rate_id' exact component={RateTableDelete}/>
             <Route path ='/importError' exact component={ImportError}/>
-            <Route path ='/importTrans' exact component={ImportTrans}/>
+            <Route path ='/import' exact component={Import}/>
             <Route path ='/attainRuleCreate' exact component={AttainRuleCreate}/>
             <Route path='/planCreate' exact component={PlanCreate}/>
             <Route path ='/attainRuleShow' exact component={AttainRuleShow}/>
@@ -46,7 +57,7 @@ const App = () => {
             <Route path='/userCreate' exact component={UserCreate} />
             <Route path='/userShow' exact component={UserShow}/>
             <Route path='/userShow/delete/:user_id' exact component={UserDelete}/>
-            <Route path='/calc' exact component={Calc}/>
+            <Route path='/AEcalc' exact component={AECalc}/>
             <Route path='/transShow' exact component={TransShow}/>
             <Route path='/transCreate' exact component={TransCreate}/>
             <Route path='/transShow/edit/:trans_id' exact component={TransEdit}/>
