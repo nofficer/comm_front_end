@@ -13,7 +13,7 @@ export default (state=INITIAL_STATE, action) => {
     case GET_TRANS:
       return{...state, trans: action.payload}
     case GET_TRAN:
-      return{...state,trans:action.payload}
+      return{...state,tran:action.payload}
     case EDIT_TRANS:
       return{...state,trans:action.payload}
     case DELETE_TRANS:

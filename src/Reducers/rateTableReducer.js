@@ -3,13 +3,14 @@ import {
 } from '../actions/types'
 
 const INITIAL_STATE = {
-  rateTables: []
+  rateTables: [],
+  rateTable: {}
 }
 
 export default (state=INITIAL_STATE, action) => {
   switch(action.type) {
     case GET_RATE_TABLE:
-      return {...state, rateTables: action.payload}
+      return {...state, rateTable: action.payload}
     case GET_RATE_TABLES:
       return {...state, rateTables: action.payload}
     case GET_RATE_TABLES_PLANS:

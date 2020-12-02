@@ -1,9 +1,12 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 import RenderDatePicker from './DatePicker'
+import { connect } from 'react-redux'
+import { getTime } from '../actions'
 
 
-
+var monthVar = ''
+var yearVar = ''
 
 class TransForm extends React.Component {
 
@@ -32,6 +35,10 @@ class TransForm extends React.Component {
   }
 
   onSubmit = (formValues) => {
+    if(this.props.pass_id){
+      formValues['trans_id'] = this.props.pass_id
+    }
+
     this.props.onSubmit(formValues)
   }
 
@@ -39,26 +46,57 @@ class TransForm extends React.Component {
 //
 
 
-
   render(){
+    monthVar = this.props.month['current.month_id']
+    yearVar = this.props.month['cal_year']
+    if(this.props.editing == "yes"){
+      return (
+        <form className='ui form error' onSubmit={this.props.handleSubmit(this.onSubmit)}>
+        <Field name="seller_id" component="select" label='Select Seller'>
+                  <option value="">Select seller...</option>
+                  {this.props.populateDropdown.map(transaction =>
+                    <option value={transaction[0]} key={transaction[0]}>{transaction[1]}</option>)}
+                </Field>
+          <Field name='type' component={this.renderInput} label='Enter Transaction Type' />
+          <Field name='date' component={this.renderInput} label='Select Transaction Date (YYYY-MM-DD)'/>
+          <Field name='revenue' component={this.renderInput} label='Enter Transaction Revenue' />
+          <Field name='gp'  component={this.renderInput} label='Enter Transaction GP' />
+          <Field name='order_num'  component={this.renderInput} label='Enter Order Number' />
+          <Field name='transaction_location'  component={this.renderInput} label='Enter Transaction Location' />
+          <Field name='split_percent'  component={this.renderInput} label='Enter Split Percent' />
+          <Field name='custom_field'  component={this.renderInput} label='Enter Custom Field' />
+          <Field name='payout_multiplier'  component={this.renderInput} label='Enter Payout Multiplier' />
+          <br/>
+          <button className='ui button primary'>Submit</button>
+        </form>
+      )
+    }
+    else {
+      return (
+        <form className='ui form error' onSubmit={this.props.handleSubmit(this.onSubmit)}>
+        <Field name='trans_id' component={this.renderInput} label='Enter Transaction ID' />
+        <Field name="seller_id" component="select" label='Select Seller'>
+                  <option value="">Select seller...</option>
+                  {this.props.populateDropdown.map(transaction =>
+                    <option value={transaction[0]} key={transaction[0]}>{transaction[1]}</option>)}
+                </Field>
+          <Field name='type' component={this.renderInput} label='Enter Transaction Type' />
+          <Field name='date' component={this.renderInput} label='Select Transaction Date (YYYY-MM-DD)'/>
+          <Field name='revenue' component={this.renderInput} label='Enter Transaction Revenue' />
+          <Field name='gp'  component={this.renderInput} label='Enter Transaction GP' />
+          <Field name='order_num'  component={this.renderInput} label='Enter Order Number' />
+          <Field name='transaction_location'  component={this.renderInput} label='Enter Transaction Location' />
+          <Field name='split_percent'  component={this.renderInput} label='Enter Split Percent' />
+          <Field name='custom_field'  component={this.renderInput} label='Enter Custom Field' />
+          <Field name='payout_multiplier'  component={this.renderInput} label='Enter Payout Multiplier' />
+          <br/>
+          <button className='ui button primary'>Submit</button>
+        </form>
+      )
+    }
 
   //console.log(this.props.initialValues.trans_date)
-  return (
-    <form className='ui form error' onSubmit={this.props.handleSubmit(this.onSubmit)}>
-    <Field name="trans_seller_id" component="select" label='Select Seller'>
-              <option value="">Select seller...</option>
-              {this.props.populateDropdown.map(transaction =>
-                <option value={transaction[0]} key={transaction[0]}>{transaction[1]}</option>)}
-            </Field>
-      <Field name='trans_type' component={this.renderInput} label='Enter Transaction Type' />
-      <Field name='trans_date' component={this.renderInput} label='Select Transaction Date (DD-MM-YYYY)'/>
-      <Field name='trans_rev' component={this.renderInput} label='Enter Transaction Revenue' />
-      <Field name='trans_gp'  component={this.renderInput} label='Enter Transaction GP' />
-      <Field name='order_number'  component={this.renderInput} label='Enter Order Number' />
-      <br/>
-      <button className='ui button primary'>Submit</button>
-    </form>
-  )
+
 
   }
 }
@@ -73,14 +111,14 @@ return !isNaN(str) && // use type coercion to parse the _entirety_ of the string
 function isValidDate(dateString)
 {
     // First check for the pattern
-    if(!/^\d{1,2}\-\d{1,2}\-\d{4}$/.test(dateString))
+    if(!/^\d{4}\-\d{1,2}\-\d{1,2}$/.test(dateString))
         return false;
 
     // Parse the date parts to integers
     var parts = dateString.split("-");
-    var day = parseInt(parts[0], 10);
+    var day = parseInt(parts[2], 10);
     var month = parseInt(parts[1], 10);
-    var year = parseInt(parts[2], 10);
+    var year = parseInt(parts[0], 10);
 
     // Check the ranges of month and year
     if(year < 1000 || year > 3000 || month == 0 || month > 12)
@@ -92,6 +130,15 @@ function isValidDate(dateString)
     if(year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
         monthLength[1] = 29;
 
+
+
+    if(month<monthVar){
+      return false
+    }
+    if(year<yearVar){
+      return false
+    }
+
     // Check the range of the day
     return day > 0 && day <= monthLength[month - 1];
 };
@@ -100,31 +147,59 @@ function isValidDate(dateString)
 
 
 const validate = (formValues) => {
-
 	const errors = {};
-	if(!formValues.trans_type) {
+	if(!formValues.type) {
 		//only ran if the user did not enter a title
-		errors.trans_type = 'You must enter a type'
+		errors.type = 'You must enter a type'
 	}
-  if(!formValues.trans_date || !isValidDate(formValues.trans_date)) {
+  if(!formValues.date || !isValidDate(formValues.date)) {
 		//only ran if the user did not enter a title
-		errors.trans_date = 'You must enter a date'
-	}
-
-  if(!formValues.trans_rev || !isNumeric(formValues.trans_rev)) {
-		//only ran if the user did not enter a title
-		errors.trans_rev = 'You must enter a revenue amount which is a number'
-	}
-  if(!formValues.trans_gp || !isNumeric(formValues.trans_gp)) {
-		//only ran if the user did not enter a title
-		errors.trans_gp = 'You must enter a gross profit amount which is a number'
+		errors.date = 'You must enter a date that is within the current or future period'
 	}
 
+  if(!formValues.revenue || !isNumeric(formValues.revenue)) {
+		//only ran if the user did not enter a title
+		errors.rev = 'You must enter a revenue amount which is a number'
+	}
+  if(!formValues.gp || !isNumeric(formValues.gp)) {
+		//only ran if the user did not enter a title
+		errors.gp = 'You must enter a gross profit amount which is a number'
+	}
+  if(!formValues.order_num) {
+		//only ran if the user did not enter a title
+		errors.order_num = 'You must enter an order number'
+	}
+  if(!formValues.transaction_location) {
+    //only ran if the user did not enter a title
+    errors.transaction_location = 'You must enter an order number'
+  }
+  if(!formValues.split_percent) {
+    //only ran if the user did not enter a title
+    errors.split_percent = 'You must enter a split percent'
+  }
+  if(!formValues.custom_field) {
+    //only ran if the user did not enter a title
+    errors.custom_field = 'You must enter a number'
+  }
+  if(!formValues.trans_id) {
+    errors.trans_id = "You must enter a transaction ID"
+  }
+  if(!formValues.payout_multiplier) {
+    errors.custom_field = "You must enter a payout multiplier"
+  }
+
+  //NEED TO ADD NEW COLUMSN TO FORMVALUES
 
 
 
 
   return errors
+}
+
+const mapStateToProps = (state) => {
+  return {
+    month: state.month.month
+  }
 }
 
 
@@ -133,4 +208,4 @@ export default reduxForm({
 	form: 'transForm',
 	validate: validate,
   enableReinitialize:true
-})(TransForm);
+})(connect(mapStateToProps,{getTime})(TransForm));

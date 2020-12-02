@@ -29,12 +29,17 @@ import RateTableShow from './Rate_Tables/RateTableShow'
 import RateTableCreate from './Rate_Tables/RateTableCreate'
 import RateTableEdit from './Rate_Tables/RateTableEdit'
 import RateTableDelete from './Rate_Tables/RateTableDelete'
-import Calc from './Calc/Calc'
+import Report from './Accounts/Report'
+import PayoutShow from './Calc/PayoutShow'
+import Time from './Time/Time'
+import PayoutHistoryShow from './Calc/PayoutHistoryShow'
+import AreYouSure from './Time/AreYouSure'
 
-
+import Login from './Accounts/Login'
 
 
 const App = () => {
+
   return (
     <div>
       <Router history={history}>
@@ -43,7 +48,8 @@ const App = () => {
         <div className='container2'>
           <Switch>
             <Route path ='/' exact component={Landing}/>
-            <Route path ='/calc' exact component={Calc}/>
+            <Route path ='/time' exact component={Time}/>
+
             <Route path ='/rateTableShow' exact component={RateTableShow}/>
             <Route path ='/rateTableCreate' exact component={RateTableCreate}/>
             <Route path ='/rateTableShow/edit/:rate_id' exact component={RateTableEdit}/>
@@ -57,7 +63,7 @@ const App = () => {
             <Route path='/userCreate' exact component={UserCreate} />
             <Route path='/userShow' exact component={UserShow}/>
             <Route path='/userShow/delete/:user_id' exact component={UserDelete}/>
-            <Route path='/AEcalc' exact component={AECalc}/>
+
             <Route path='/transShow' exact component={TransShow}/>
             <Route path='/transCreate' exact component={TransCreate}/>
             <Route path='/transShow/edit/:trans_id' exact component={TransEdit}/>
@@ -67,8 +73,11 @@ const App = () => {
             <Route path='/planShow/delete/:plan_id' exact component ={PlanDelete}/>
             <Route path='/attainRuleShow/delete/:rule_id' exact component ={AttainRuleDelete}/>
             <Route path='/transShow/delete/:trans_id' exact component = {TransDelete}/>
-
-
+            <Route path='/payoutShow' exact component = {PayoutShow}/>
+            <Route path='/payoutHistoryShow' exact component = {PayoutHistoryShow}/>
+            <Route path ='/areyousure' exact component={AreYouSure}/>
+            <Route path ='/login' exact component={Login}/>
+            <Route path ='/report' exact component={Report}/>
           </Switch>
           </div>
         </div>

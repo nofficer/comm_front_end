@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getPlans, createUser } from '../actions'
-
+import { getPlans, createUser ,getTime} from '../actions'
+import Login from './Accounts/Login'
 import { Field, reduxForm } from 'redux-form'
 // import { createProduct } from '../../actions'
 import UserForm from './UserForm'
@@ -9,6 +9,7 @@ import UserForm from './UserForm'
 class UserCreate extends React.Component {
   componentDidMount(){
     this.props.getPlans()
+    this.props.getTime()
   }
 
   onSubmit = (formValues) => {
@@ -21,16 +22,28 @@ class UserCreate extends React.Component {
 
 
   render(){
+    if(this.props.account['role'] == 'admin'){
       return (
         <div><UserForm onSubmit={this.onSubmit} populateDropdown={this.populateDropdown()} /></div>
       )
+    }
+
+    else if(typeof(this.props.account['user_id']) == "number"){
+      return "You do not have sufficient permissions to access this page"
+    }
+    else{
+      return <Login/>
+    }
+
+
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    plans: Object.values(state.plans.plans)
+    plans: Object.values(state.plans.plans),
+    account: state.account.account
   }
 }
 
-export default connect(mapStateToProps, { getPlans, createUser })(UserCreate)
+export default connect(mapStateToProps, { getPlans, createUser,getTime })(UserCreate)

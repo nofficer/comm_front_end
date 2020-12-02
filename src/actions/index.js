@@ -1,12 +1,121 @@
-import { GET_PLANS, GET_USERS,  GET_USER, CREATE_USER, EDIT_USER, CREATE_CALC, CHANGE_DONE, GO_PUSH, CREATE_PLAN, EDIT_PLAN, GET_ATTAINMENT_RULES, CREATE_ATTAINMENT_RULE, EDIT_ATTAINMENT_RULE, GET_TRANS, CREATE_TRANS, EDIT_TRANS, GET_TRAN, DELETE_TRANS, DELETE_ATTAINMENT_RULE,DELETE_PLAN,DELETE_USER,GET_ATTAINMENT_RULE,GET_PLAN,UPLOAD_FILE,ONCHANGE_FILE,CHECK_RULE_USE,CHECK_PLAN_USE,CHECK_USER_USE,GET_RATE_TABLE,GET_RATE_TABLES,CREATE_RATE_TABLE,EDIT_RATE_TABLE,DELETE_RATE_TABLE,ERROR_HANDLE } from './types'
+import { GET_PLANS, GET_USERS,  GET_USER, CREATE_USER, EDIT_USER, CREATE_CALC, CHANGE_DONE, GO_PUSH, CREATE_PLAN, EDIT_PLAN, GET_ATTAINMENT_RULES, CREATE_ATTAINMENT_RULE, EDIT_ATTAINMENT_RULE, GET_TRANS, CREATE_TRANS, EDIT_TRANS, GET_TRAN, DELETE_TRANS, DELETE_ATTAINMENT_RULE,DELETE_PLAN,DELETE_USER,GET_ATTAINMENT_RULE,GET_PLAN,UPLOAD_FILE,ONCHANGE_FILE,CHECK_RULE_USE,CHECK_PLAN_USE,CHECK_USER_USE,GET_RATE_TABLE,GET_RATE_TABLES,CREATE_RATE_TABLE,EDIT_RATE_TABLE,DELETE_RATE_TABLE,ERROR_HANDLE,CALC_PLANS,GET_PAYOUTS,EDIT_PAYOUT,GET_PAYOUT,DELETE_PAYOUT,LOAD,GET_TIME,UPDATE_TIME,REVERT_TIME,LOGIN,SET_ACCOUNT,LOGOUT,GET_PAYOUTS_USER } from './types'
 import db from '../apis/db'
 import history from '../history'
 
+export const logout = () => {
+  console.log("User logging out")
+  localStorage.clear()
+  sessionStorage.clear()
+  return({type:LOGOUT})
+}
+
+    //Removed this for security concerns
+export const setAccount = () => {
+  console.log("wtff")
+  var account = "none"
+  if(localStorage.getItem('role')){
+    account = {}
+    console.log("Localstorage setting")
+
+    account['role'] = localStorage.getItem('role')
+    account['user_id'] = parseInt(localStorage.getItem('user_id'))
+    account['username'] = localStorage.getItem('username')
+  }
+  else if(sessionStorage.getItem('role')){
+    account = {}
+    console.log("Sessionstorage setting")
+    account['role'] = sessionStorage.getItem('role')
+    account['user_id'] = parseInt(sessionStorage.getItem('user_id'))
+    account['username'] = sessionStorage.getItem('username')
+  }
+
+  return({type:SET_ACCOUNT, payload:account})
+}
+
+export const login = (formValues,save)=>{
+  return async (dispatch) => {
+    const response = await db.post('/userLogin',formValues)
+    dispatch({type:LOGIN, payload: response.data})
+    if(typeof(response.data['user_id']) == 'number' ){
+      // sessionStorage.setItem('role',response.data['role'])
+      // sessionStorage.setItem('user_id',response.data['user_id'])
+      // sessionStorage.setItem('username',response.data['username'])
+      history.push('/')
+    }
+
+  }
+}
+
+export const loadCalcs = () =>{
+
+  return({type:LOAD})
+}
+
+export const revertTime = () => {
+
+  return async (dispatch) => {
+    const response = await db.post('/revertTime')
+    dispatch({type:REVERT_TIME, payload: response.data})
+    history.push('/time')
+  }
+}
+
+export const updateTime = () => {
+
+  return async (dispatch) => {
+    const response = await db.post('/updateTime')
+    dispatch({type:UPDATE_TIME, payload: response.data})
+    history.push('/time')
+  }
+}
+
+export const getTime = () => {
+
+  return async (dispatch) => {
+    const response = await db.get('/getTime')
+    dispatch({type:GET_TIME, payload: response.data})
+
+  }
+}
+
+export const getPayoutsHistory = () => {
+  console.log("action running")
+  return async (dispatch) => {
+    const response = await db.get('/getPayoutsHistory')
+    dispatch({type:GET_PAYOUTS, payload: response.data})
+
+  }
+}
 
 
+export const getPayouts = () => {
+  console.log("action running")
+  return async (dispatch) => {
+    const response = await db.get('/getPayouts')
+    dispatch({type:GET_PAYOUTS, payload: response.data})
 
+  }
+}
+
+export const getPayouts_user = (user_id) => {
+
+  return async (dispatch) => {
+    const response = await db.post('/getPayouts_user',user_id)
+    dispatch({type:GET_PAYOUTS_USER, payload: response.data})
+
+  }
+}
+
+export const calcPlans = () => {
+  console.log("action running")
+  return async (dispatch) => {
+    const response = await db.get('/calc_plans')
+    dispatch({type:CALC_PLANS, payload: response.data})
+  }
+}
 
 export const deleteRateTable = (rate_id) => {
+  console.log(rate_id)
   return async (dispatch) => {
     const response = await db.post('/deleteRateTable', rate_id)
     dispatch({type:DELETE_RATE_TABLE, payload: response.data})

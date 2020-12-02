@@ -3,7 +3,8 @@ import {
 } from '../actions/types'
 
 const INITIAL_STATE = {
-  attainmentRules: []
+  attainmentRules: [],
+  rule:{}
 }
 
 export default (state=INITIAL_STATE, action) => {
@@ -11,7 +12,7 @@ export default (state=INITIAL_STATE, action) => {
     case GET_ATTAINMENT_RULES:
       return {...state, attainmentRules: action.payload};
     case GET_ATTAINMENT_RULE:
-      return {...state, attainmentRules: action.payload};
+      return {...state, rule: action.payload};
     case CREATE_ATTAINMENT_RULE:
       return {...state, attainmentRules: action.payload};
     case DELETE_ATTAINMENT_RULE:

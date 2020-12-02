@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { uploadFile,onChangeFile} from '../actions'
+import { uploadFile,onChangeFile,getTime} from '../actions'
 import Modal from '../Modal'
 import { CSVReader } from 'react-papaparse'
 import history from '../history'
@@ -8,10 +8,12 @@ import { Radio } from 'semantic-ui-react'
 
 const buttonRef = React.createRef()
 var importType = ''
+var dupType = 'ignore'
 
 
 class CSVReaderV extends Component {
   componentDidMount(){
+    this.props.getTime()
     const my_data = []
   }
 
@@ -51,7 +53,7 @@ class CSVReaderV extends Component {
                 var wrongdateindex = []
                 var i;
                 for (i=0;i < this.my_data.length; i++){
-                  if(this.isNumeric(this.my_data[i]["Revenue"]) && this.isNumeric(this.my_data[i]["GP"])){
+                  if(this.isNumeric(this.my_data[i]["revenue"]) && this.isNumeric(this.my_data[i]["gp"])){
 
                   }
                   else{
@@ -63,10 +65,13 @@ class CSVReaderV extends Component {
 
                 var p;
                 for (p=0;p < this.my_data.length; p++){
-                  if(this.isValidDate(this.my_data[p]["Date"]) ){
+
+                  if(this.isValidDate(this.my_data[p]['date']) && this.isWithinPeriod(this.my_data[p]['date']) ){
 
                   }
+
                   else{
+
                     datechecker=false
                     wrongdateindex.push(p)
                   }
@@ -74,19 +79,20 @@ class CSVReaderV extends Component {
 
 
                 if(numchecker && datechecker){
-                  this.my_data.push({table: "TRANSACTIONS"})
+                  this.my_data.push({dupType:dupType})
+                  this.my_data.push({table: "transactions"})
                   this.props.uploadFile(this.my_data,'trans')
                 }
                 else if(numchecker==false&&datechecker==true){
-                  history.push({pathname:'/ImportError',state:{detail:`Wrong number format at line(s) ${wrongnumindex}`}})
+                  history.push({pathname:'/ImportError',state:{detail:`Wrong number format at line(s)${wrongnumindex}`}})
                 }
                 else if (datechecker==false&&numchecker==true){
 
-                  history.push({pathname:'/ImportError',state:{detail:`Wrong date format at line(s) ${wrongdateindex}`}})
+                  history.push({pathname:'/ImportError',state:{detail:`Wrong date format at line(s) OR invalid date outside current period at line(s) ${wrongdateindex}`}})
                 }
 
                 else{
-                  history.push({pathname:'/ImportError',state:{detail:`Wrong date format at line(s) ${wrongdateindex} and wrong number format at line(s) ${wrongnumindex}`}})
+                  history.push({pathname:'/ImportError',state:{detail:`Wrong date format at line(s) OR invalid date outside current period at line(s) ${wrongdateindex} and wrong number format at line(s) ${wrongnumindex}`}})
                 }
               }
 
@@ -123,25 +129,26 @@ class CSVReaderV extends Component {
       }
 
       if(numchecker && datechecker){
-
-        this.my_data.push({table: "RATE"})
+        this.my_data.push({dupType:dupType})
+        this.my_data.push({table: "rate"})
         this.props.uploadFile(this.my_data,'rateTable')
         }
       else if(numchecker==false&&datechecker==true){
-          history.push({pathname:'/ImportError',state:{detail:`Wrong number format at line(s) ${wrongnumindex}`}})
+          history.push({pathname:'/ImportError',state:{detail:`Wrong number format  ${wrongnumindex}`}})
         }
       else if (datechecker==false&&numchecker==true){
 
-        history.push({pathname:'/ImportError',state:{detail:`Wrong date format at line(s) ${wrongdateindex}`}})
+        history.push({pathname:'/ImportError',state:{detail:`Wrong date format  ${wrongdateindex}`}})
       }
       else{
-        history.push({pathname:'/ImportError',state:{detail:`Wrong date format at line(s) ${wrongdateindex} and wrong number format at line(s) ${wrongnumindex}`}})
+        history.push({pathname:'/ImportError',state:{detail:`Wrong date format  ${wrongdateindex} and wrong number format at line(s) ${wrongnumindex}`}})
       }
     }
 
 //USERS UPLOAD EXECUTION WITH NO VALIDATION
     else if(importType =='Users'){
-      this.my_data.push({table: "USERS"})
+      this.my_data.push({dupType:dupType})
+      this.my_data.push({table: "users"})
       this.props.uploadFile(this.my_data,'user')
     }
 
@@ -155,40 +162,84 @@ class CSVReaderV extends Component {
   }
 
   isNumeric(str) {
+
   if (typeof str != "string") return false // we only process strings!
   return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
          !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
 }
 
 
-isValidDate(dateString)
+isWithinPeriod(dateString)
 {
+
+
     // First check for the pattern
-    if(!/^\d{1,2}\-\d{1,2}\-\d{4}$/.test(dateString))
+    if(!/^\d{4}\-\d{1,2}\-\d{1,2}$/.test(dateString))
         return false;
 
     // Parse the date parts to integers
     var parts = dateString.split("-");
-    var day = parseInt(parts[0], 10);
+
+    var year = parseInt(parts[0], 10);
     var month = parseInt(parts[1], 10);
-    var year = parseInt(parts[2], 10);
+    var day = parseInt(parts[2], 10);
 
     // Check the ranges of month and year
     if(year < 1000 || year > 3000 || month == 0 || month > 12)
         return false;
 
-    var monthLength = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
+    var monthLength = [ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
 
     // Adjust for leap years
     if(year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
         monthLength[1] = 29;
 
+    if(year<this.props.month['cal_year']){
+      console.log("Wrong year")
+      return false
+    }
+
     // Check the range of the day
-    return day > 0 && day <= monthLength[month - 1];
+
+    return (parseInt(month) >= parseInt(this.props.month['current.month_id']));
+};
+
+
+isValidDate(dateString)
+{
+
+
+    // First check for the pattern
+    if(!/^\d{4}\-\d{1,2}\-\d{1,2}$/.test(dateString))
+        return false;
+
+    // Parse the date parts to integers
+    var parts = dateString.split("-");
+
+    var year = parseInt(parts[0], 10);
+    var month = parseInt(parts[1], 10);
+    var day = parseInt(parts[2], 10);
+
+    // Check the ranges of month and year
+    if(year < 1000 || year > 3000 || month == 0 || month > 12)
+        return false;
+
+    var monthLength = [ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
+
+    // Adjust for leap years
+    if(year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
+        monthLength[1] = 29;
+
+
+
+
+    // Check the range of the day
+
+    return (day > 0 && day <= monthLength[month - 1]);
 };
 
   updateData = (results,file) => {
-    console.log(file)
+
     this.my_data = results.data
 
 
@@ -204,6 +255,11 @@ isValidDate(dateString)
   handleChange = (e) => {
     importType = e.target.value
     document.getElementById("myh1id").innerHTML = "Import " + importType
+  }
+
+  handleDuplicate = (e) => {
+    dupType = e.target.value
+
   }
 
   render() {
@@ -301,6 +357,12 @@ isValidDate(dateString)
             <option value="Rates">Rates</option>
             <option value="Users">Users</option>
           </select>
+          <select class="ui dropdown" onChange={this.handleDuplicate}>
+            <option value="ignore">On duplicate...</option>
+            <option value="update">Update</option>
+            <option value="ignore">Ignore</option>
+
+          </select>
 
           </div>
 
@@ -314,8 +376,8 @@ isValidDate(dateString)
 
 const mapStateToProps = (state) => {
   return {
-
+    month: state.month.month
   }
 }
 
-export default connect(mapStateToProps, {uploadFile})(CSVReaderV)
+export default connect(mapStateToProps, {uploadFile,getTime})(CSVReaderV)

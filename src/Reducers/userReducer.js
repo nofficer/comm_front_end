@@ -3,7 +3,8 @@ import {
 } from '../actions/types'
 
 const INITIAL_STATE = {
-  users: []
+  users: [],
+  user:{}
 }
 
 export default (state=INITIAL_STATE, action) => {
@@ -17,7 +18,7 @@ export default (state=INITIAL_STATE, action) => {
     case DELETE_USER:
       return {...state, users:action.payload};
     case GET_USER:
-      return {...state, users:action.payload};
+      return {...state, user:action.payload};
     default:
       return state
   }

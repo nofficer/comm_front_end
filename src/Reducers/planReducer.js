@@ -11,7 +11,7 @@ export default (state=INITIAL_STATE, action) => {
     case GET_PLANS:
       return {...state, plans: action.payload};
       case GET_PLAN:
-        return {...state, plans: action.payload};
+        return {...state, plan: action.payload};
       case CREATE_PLAN:
       return {...state, plans: action.payload}
       case EDIT_PLAN:

@@ -36,20 +36,39 @@ class UserForm extends React.Component {
 
 
   render(){
-    
-  return (
-    <form className='ui form error' onSubmit={this.props.handleSubmit(this.onSubmit)}>
-      <Field name='user_id' component={this.renderInput} label='Enter Employee ID' />
-      <Field name='name' component={this.renderInput} label='Enter Name' />
-      <Field name="plan_id" component="select" label='Enter Plan_ID'>
-                <option value="">Select a plan...</option>
-                {this.props.populateDropdown.map(plan =>
-                  <option value={plan[0]} key={plan[1]}>{plan[1]}</option>)}
-              </Field>
-      <br/>
-      <button className='ui button primary'>Submit</button>
-    </form>
-  )
+    if(this.props.editing == "yes") {
+      return (
+        <form className='ui form error' onSubmit={this.props.handleSubmit(this.onSubmit)}>
+
+          <Field name='name' component={this.renderInput} label='Enter Name' />
+          <Field name="plan_id" component="select" label='Enter Plan_ID'>
+                    <option value="">Select a plan...</option>
+                    {this.props.populateDropdown.map(plan =>
+                      <option value={plan[0]} key={plan[1]}>{plan[1]}</option>)}
+                  </Field>
+          <Field name='user_location' component={this.renderInput} label='Enter Location' />
+          <br/>
+          <button className='ui button primary'>Submit</button>
+        </form>
+      )
+    }
+    else{
+      return (
+        <form className='ui form error' onSubmit={this.props.handleSubmit(this.onSubmit)}>
+          <Field name='user_id' component={this.renderInput} label='Enter Employee ID' />
+          <Field name='name' component={this.renderInput} label='Enter Name' />
+          <Field name="plan_id" component="select" label='Enter Plan_ID'>
+                    <option value="">Select a plan...</option>
+                    {this.props.populateDropdown.map(plan =>
+                      <option value={plan[0]} key={plan[1]}>{plan[1]}</option>)}
+                  </Field>
+          <Field name='user_location' component={this.renderInput} label='Enter Location' />
+          <br/>
+          <button className='ui button primary'>Submit</button>
+        </form>
+      )
+    }
+
 
   }
 }
@@ -67,6 +86,9 @@ const validate = (formValues) => {
   if(!formValues.user_id || Number.isNaN(Number(formValues.user_id))){
     errors.user_id = 'You must enter a user id'
   }
+  if (!formValues.user_location) {
+		errors.user_location = 'You must enter a location'
+	}
   return errors
 }
 

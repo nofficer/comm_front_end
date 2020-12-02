@@ -19,7 +19,7 @@ class Landing extends React.Component {
   render(){
       return (
         <div className='ui text container ' >
-          <h1 className='centertext'>Landing</h1>
+          <h1 className='centertext'>Commissions App</h1>
 
         </div>
       )

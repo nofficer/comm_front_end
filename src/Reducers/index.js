@@ -8,7 +8,9 @@ import attainRuleReducer from './attainRuleReducer'
 import fileReducer from './fileReducer'
 import checkReducer from './checkReducer'
 import rateTableReducer from './rateTableReducer'
-
+import payoutReducer from './payoutReducer'
+import timeReducer from './timeReducer'
+import accountReducer from './accountReducer'
 
 export default combineReducers ({
   form: formReducer,
@@ -19,5 +21,8 @@ export default combineReducers ({
   trans: transReducer,
   file: fileReducer,
   check: checkReducer,
-  rateTables: rateTableReducer
+  rateTables: rateTableReducer,
+  payouts: payoutReducer,
+  month: timeReducer,
+  account: accountReducer
 })

@@ -1,7 +1,20 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getRateTables } from '../../actions'
+import { getRateTables,getTime } from '../../actions'
 import { Link } from 'react-router-dom'
+
+
+
+
+
+
+
+
+
+import Login from '../Accounts/Login'
+
+
+
 
 
 
@@ -9,6 +22,7 @@ class RateTableShow extends React.Component {
 
   componentDidMount(){
     this.props.getRateTables()
+    this.props.getTime()
   }
 
   createItem(rateTable){
@@ -36,7 +50,7 @@ class RateTableShow extends React.Component {
 
 
   render(){
-
+    if(this.props.account['role'] == 'admin'){
       return (<div className='ui grid'>
         <h1>Rate Tables</h1>
 
@@ -62,13 +76,24 @@ class RateTableShow extends React.Component {
 
         </div>
       )
+    }
+
+    else if(typeof(this.props.account['user_id']) == "number"){
+      return "You do not have sufficient permissions to access this page"
+    }
+    else{
+      return <Login/>
+    }
+
+
   }
 }
 
 const mapStateToProps = (state) => {
   return {
     rateTables: Object.values(state.rateTables.rateTables),
+    account: state.account.account
   }
 }
 
-export default connect(mapStateToProps, { getRateTables })(RateTableShow)
+export default connect(mapStateToProps, { getRateTables,getTime })(RateTableShow)

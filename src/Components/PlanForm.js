@@ -44,7 +44,7 @@ class PlanForm extends React.Component {
       <Field name="plan_attainment" component="select" label='Select Plan Attainment RUle'>
                 <option value="">Select an attainment rule...</option>
                 {this.props.populateDropdown.map(attainRule =>
-                  <option value={attainRule[1]} key={attainRule[1]}>{attainRule[1]}</option>)}
+                  <option value={attainRule[0]} key={attainRule[1]}>{attainRule[1]}</option>)}
               </Field>
       <br/>
       <button className='ui button primary'>Submit</button>

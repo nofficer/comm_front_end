@@ -1,15 +1,23 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getAttainmentRule ,deleteAttainmentRule,getAttainmentRules,checkRuleUse} from '../actions'
+import { getAttainmentRule ,deleteAttainmentRule,getAttainmentRules,checkRuleUse,getTime} from '../actions'
 import { Link } from 'react-router-dom'
 import Modal from '../Modal'
 import history from '../history'
+
+import Login from './Accounts/Login'
+
+
+
+
+
 
 class AttainRuleDelete extends React.Component {
 
   componentDidMount(){
     this.props.getAttainmentRule({"rule_id": this.props.match.params.rule_id})
     this.props.checkRuleUse({"rule_id": this.props.match.params.rule_id})
+    this.props.getTime()
   }
 
   renderContent(){
@@ -53,12 +61,22 @@ class AttainRuleDelete extends React.Component {
 
 
   render(){
-    return(<Modal
-      title="Delete AttainRule"
-      content={this.renderContent()}
-      actions={this.renderActions()}
-      onDismiss={() => history.push('/attainRuleShow')}
-    />)
+    if(this.props.account['role'] == 'admin'){
+      return(<Modal
+        title="Delete AttainRule"
+        content={this.renderContent()}
+        actions={this.renderActions()}
+        onDismiss={() => history.push('/attainRuleShow')}
+      />)
+    }
+
+    else if(typeof(this.props.account['user_id']) == "number"){
+      return "You do not have sufficient permissions to access this page"
+    }
+    else{
+      return <Login/>
+    }
+
 
 
 }
@@ -67,9 +85,11 @@ class AttainRuleDelete extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    rule: state.attainmentRules.attainmentRules,
-    check: state.check.check
+    rule: state.attainmentRules.rule,
+    attainmentRules: state.attainmentRules.attainmentRules,
+    check: state.check.check,
+    account: state.account.account
   }
 }
 
-export default connect(mapStateToProps, { getAttainmentRule,deleteAttainmentRule,getAttainmentRules,checkRuleUse })(AttainRuleDelete)
+export default connect(mapStateToProps, { getAttainmentRule,deleteAttainmentRule,getAttainmentRules,checkRuleUse,getTime })(AttainRuleDelete)

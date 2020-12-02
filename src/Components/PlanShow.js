@@ -1,13 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getPlans ,deletePlan,getAttainmentRules} from '../actions'
+import { getPlans ,deletePlan,getAttainmentRules,getTime} from '../actions'
 import { Link } from 'react-router-dom'
+import Login from './Accounts/Login'
 
 class PlanShow extends React.Component {
 
   componentDidMount(){
     this.props.getPlans()
     this.props.getAttainmentRules()
+    this.props.getTime()
   }
 
   createItem(plan){
@@ -37,6 +39,7 @@ class PlanShow extends React.Component {
 
   render(){
 
+    if(this.props.account['role'] == 'admin'){
       return (<div>
         <h1>Plans</h1>
         <table className='ui celled table'>
@@ -53,13 +56,24 @@ class PlanShow extends React.Component {
         </div>
 
       )
+    }
+
+    else if(typeof(this.props.account['user_id']) == "number"){
+      return "You do not have sufficient permissions to access this page"
+    }
+    else{
+      return <Login/>
+    }
+
+
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    plans: Object.values(state.plans.plans)
+    plans: Object.values(state.plans.plans),
+    account: state.account.account
   }
 }
 
-export default connect(mapStateToProps, { getPlans,deletePlan,getAttainmentRules })(PlanShow)
+export default connect(mapStateToProps, { getPlans,deletePlan,getAttainmentRules,getTime })(PlanShow)
