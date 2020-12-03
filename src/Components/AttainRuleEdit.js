@@ -16,19 +16,24 @@ class AttainRuleEdit extends React.Component {
   componentDidMount(){
     this.props.getAttainmentRule({"rule_id": this.props.match.params.rule_id})
     this.props.getTime()
+    this.props.getPlans()
   }
 
   onSubmit = (formValues) => {
     this.props.editAttainmentRule(formValues)
   }
 
+  populateDropdown(){
+
+    return this.props.plans
+  }
 
 
 
   render(){
     if(this.props.account['role'] == 'admin'){
       return (
-        <div><AttainRuleForm onSubmit={this.onSubmit} initialValues={this.props.attainmentRule} /></div>
+        <div><AttainRuleForm onSubmit={this.onSubmit} initialValues={this.props.attainmentRule} populateDropdown={this.populateDropdown()} /></div>
       )
     }
 
@@ -48,8 +53,9 @@ const mapStateToProps = (state) => {
   return {
     attainmentRule: state.attainmentRules.rule,
     attainmentRules: state.attainmentRules.attainmentRules,
-    account: state.account.account
+    account: state.account.account,
+    plans: state.plans.plans
   }
 }
 
-export default connect(mapStateToProps, { editAttainmentRule, getAttainmentRule ,getTime})(AttainRuleEdit)
+export default connect(mapStateToProps, { editAttainmentRule, getAttainmentRule ,getTime,getPlans})(AttainRuleEdit)

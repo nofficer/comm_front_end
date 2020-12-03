@@ -11,6 +11,8 @@ import rateTableReducer from './rateTableReducer'
 import payoutReducer from './payoutReducer'
 import timeReducer from './timeReducer'
 import accountReducer from './accountReducer'
+import goalReducer from './goalReducer'
+import errorReducer from './errorReducer'
 
 export default combineReducers ({
   form: formReducer,
@@ -24,5 +26,7 @@ export default combineReducers ({
   rateTables: rateTableReducer,
   payouts: payoutReducer,
   month: timeReducer,
-  account: accountReducer
+  account: accountReducer,
+  goals: goalReducer,
+  errors: errorReducer
 })

@@ -17,7 +17,7 @@ class Header extends React.Component {
       if(this.props.account['role'] == "admin"){return (
 
 
-      <div className='ui seven item menu'>
+      <div className='ui eight item menu'>
       <div class="ui simple dropdown item">
 
 
@@ -120,6 +120,41 @@ class Header extends React.Component {
           </div>
 
         </div>
+        <div class="ui simple dropdown item">
+
+
+        <Link to='/goalShow'>
+            Goals
+        </Link>
+
+
+          <div class="menu">
+
+              <div className='item'>
+                <Link to='/import'>
+                    Import Goals
+                </Link>
+              </div>
+
+              <div className='item'>
+                <Link to='/goalShow'>
+                    Goals
+                </Link>
+              </div>
+
+              <div className='item'>
+                <Link to='/goalCreate'>
+                    Create Goals
+                </Link>
+              </div>
+
+
+
+
+
+        </div>
+
+      </div>
 
 
 
@@ -224,6 +259,8 @@ class Header extends React.Component {
 
             </div>
             </div>
+
+
       </div>
     )}
     else {

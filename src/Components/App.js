@@ -35,6 +35,11 @@ import Time from './Time/Time'
 import PayoutHistoryShow from './Calc/PayoutHistoryShow'
 import AreYouSure from './Time/AreYouSure'
 
+import GoalShow from './Goals/GoalShow'
+import GoalCreate from './Goals/GoalCreate'
+import GoalEdit from './Goals/GoalEdit'
+import GoalDelete from './Goals/GoalDelete'
+
 import Login from './Accounts/Login'
 
 
@@ -78,6 +83,11 @@ const App = () => {
             <Route path ='/areyousure' exact component={AreYouSure}/>
             <Route path ='/login' exact component={Login}/>
             <Route path ='/report' exact component={Report}/>
+
+            <Route path ='/goalShow' exact component={GoalShow}/>
+            <Route path ='/goalCreate' exact component={GoalCreate}/>
+            <Route path ='/goalShow/edit/:goal_id' exact component={GoalEdit}/>
+            <Route path ='/goalShow/delete/:goal_id' exact component={GoalDelete}/>
           </Switch>
           </div>
         </div>

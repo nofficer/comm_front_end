@@ -41,11 +41,6 @@ class PlanForm extends React.Component {
   return (
     <form className='ui form error' onSubmit={this.props.handleSubmit(this.onSubmit)}>
       <Field name='plan_name' component={this.renderInput} label='Enter Plan Name' />
-      <Field name="plan_attainment" component="select" label='Select Plan Attainment RUle'>
-                <option value="">Select an attainment rule...</option>
-                {this.props.populateDropdown.map(attainRule =>
-                  <option value={attainRule[0]} key={attainRule[1]}>{attainRule[1]}</option>)}
-              </Field>
       <br/>
       <button className='ui button primary'>Submit</button>
     </form>
@@ -62,10 +57,6 @@ const validate = (formValues) => {
 		errors.plan_name = 'You must enter a name'
 	}
 
-  if(!formValues.plan_attainment) {
-		//only ran if the user did not enter a title
-    errors.plan_name = "You must enter both a plan name and select an attainment rule"
-	}
 
 
   return errors

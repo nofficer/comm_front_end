@@ -1,10 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getPayouts,calcPlans,loadCalcs } from '../../actions'
+import { getPayouts,calcPlans,loadCalcs,clearError } from '../../actions'
 import { Link } from 'react-router-dom'
 import Loader from '../../Loader'
 import Login from '../Accounts/Login'
-
+import Modal from '../../Modal'
+import history from '../../history'
 
 class PayoutShow extends React.Component {
 
@@ -25,7 +26,7 @@ class PayoutShow extends React.Component {
   createItem(payout){
     return (
       <tr>
-        <th>{payout[0]}</th><th>{payout[1]}</th><th>{payout[2]}</th><th>{payout[3]}</th><th>{payout[4]}</th><th>{payout[5]}</th><th>{payout[6]}</th><th>{payout[7]}</th><th>{payout[8]}</th><th>{payout[9]}</th><th>{payout[10]}</th><th>{payout[11]}</th><th>{payout[12]}</th><th>{payout[13]}</th>
+        <th>{payout[0]}</th><th>{payout[1]}</th><th>{payout[2]}</th><th>{payout[3]}</th><th>{payout[4]}</th><th>{payout[5]}</th><th>{payout[6]}</th><th>{payout[7]}</th><th>{payout[8]}</th><th>{payout[9]}</th><th>{payout[10]}</th><th>{payout[11]}</th><th>{payout[12]}</th><th>{payout[13]}</th><th>{payout[14]}</th>
 
         <Link onClick={(e) => e.stopPropagation()} to={`/payoutShow/edit/${payout[0]}`} className='ui small button primary'>
           Edit
@@ -74,6 +75,7 @@ class PayoutShow extends React.Component {
             <th><strong>order_num</strong></th>
             <th><strong>custom_field</strong></th>
             <th><strong>period_id</strong></th>
+            <th><strong>Rule</strong></th>
             <th><strong>Options</strong></th>
           </tr>
         </thead>
@@ -84,12 +86,17 @@ class PayoutShow extends React.Component {
   }
 
   render(){
-
+    console.log(this.props.errors)
     if(this.props.account['user_id'] == 1){
       if(this.props.calcs == 'Running'){
         return (
           <Loader filler="Calculations Running..."/>
         )
+    }
+    else if(this.props.errors == "goal") {
+      console.log("happening")
+      return<Modal  onDismiss={() => this.props.clearError()} title="Calculation Error" content="Please ensure all users on a plan with goal_use set to 'Yes' have a goal for the corresponding attainment rule and period"/>
+
     }
     else {
       return (<div>
@@ -116,8 +123,9 @@ const mapStateToProps = (state) => {
   return {
     payouts: Object.values(state.payouts.payouts),
     calcs: state.payouts.calcs,
-    account: state.account.account
+    account: state.account.account,
+    errors: state.errors.errors
   }
 }
 
-export default connect(mapStateToProps, { getPayouts,calcPlans,loadCalcs })(PayoutShow)
+export default connect(mapStateToProps, { getPayouts,calcPlans,loadCalcs,clearError })(PayoutShow)

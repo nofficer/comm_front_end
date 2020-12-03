@@ -1,6 +1,49 @@
-import { GET_PLANS, GET_USERS,  GET_USER, CREATE_USER, EDIT_USER, CREATE_CALC, CHANGE_DONE, GO_PUSH, CREATE_PLAN, EDIT_PLAN, GET_ATTAINMENT_RULES, CREATE_ATTAINMENT_RULE, EDIT_ATTAINMENT_RULE, GET_TRANS, CREATE_TRANS, EDIT_TRANS, GET_TRAN, DELETE_TRANS, DELETE_ATTAINMENT_RULE,DELETE_PLAN,DELETE_USER,GET_ATTAINMENT_RULE,GET_PLAN,UPLOAD_FILE,ONCHANGE_FILE,CHECK_RULE_USE,CHECK_PLAN_USE,CHECK_USER_USE,GET_RATE_TABLE,GET_RATE_TABLES,CREATE_RATE_TABLE,EDIT_RATE_TABLE,DELETE_RATE_TABLE,ERROR_HANDLE,CALC_PLANS,GET_PAYOUTS,EDIT_PAYOUT,GET_PAYOUT,DELETE_PAYOUT,LOAD,GET_TIME,UPDATE_TIME,REVERT_TIME,LOGIN,SET_ACCOUNT,LOGOUT,GET_PAYOUTS_USER } from './types'
+import { GET_PLANS, GET_USERS,  GET_USER, CREATE_USER, EDIT_USER, CREATE_CALC, CHANGE_DONE, GO_PUSH, CREATE_PLAN, EDIT_PLAN, GET_ATTAINMENT_RULES, CREATE_ATTAINMENT_RULE, EDIT_ATTAINMENT_RULE, GET_TRANS, CREATE_TRANS, EDIT_TRANS, GET_TRAN, DELETE_TRANS, DELETE_ATTAINMENT_RULE,DELETE_PLAN,DELETE_USER,GET_ATTAINMENT_RULE,GET_PLAN,UPLOAD_FILE,ONCHANGE_FILE,CHECK_RULE_USE,CHECK_PLAN_USE,CHECK_USER_USE,GET_RATE_TABLE,GET_RATE_TABLES,CREATE_RATE_TABLE,EDIT_RATE_TABLE,DELETE_RATE_TABLE,ERROR_HANDLE,CALC_PLANS,GET_PAYOUTS,EDIT_PAYOUT,GET_PAYOUT,DELETE_PAYOUT,LOAD,GET_TIME,UPDATE_TIME,REVERT_TIME,LOGIN,SET_ACCOUNT,LOGOUT,GET_PAYOUTS_USER,GET_GOAL,GET_GOALS,CREATE_GOAL,EDIT_GOAL,DELETE_GOAL,CLEAR } from './types'
 import db from '../apis/db'
 import history from '../history'
+
+export const clearError = () => {
+  history.push('/')
+  return({type:CLEAR})
+}
+
+export const deleteGoal = (goal_id) => {
+
+  return async (dispatch) => {
+    const response = await db.post('/deleteGoal', goal_id)
+    dispatch({type:DELETE_GOAL, payload: response.data})
+    history.push('/GoalShow')
+  }
+}
+
+export const editGoal = (formValues,goal_id) => {
+  return async (dispatch) => {
+    const response = await db.post('/updateGoal' , formValues,goal_id)
+    dispatch({type:EDIT_GOAL, payload: response.data})
+    history.push('/GoalShow')
+  }
+}
+export const createGoal = (formValues) => {
+  return async (dispatch) => {
+    console.log(formValues)
+    const response = await db.post('/insertGoal' , formValues)
+    dispatch({type:CREATE_GOAL, payload: response.data})
+    history.push('/GoalShow')
+  }
+}
+export const getGoal = (goal_id) => {
+  return async (dispatch) => {
+    const response = await db.post('/getGoal' , goal_id)
+    dispatch({type:GET_GOAL, payload: response.data})
+  }
+}
+
+export const getGoals = () => {
+  return async (dispatch) => {
+    const response = await db.get('/getGoals')
+    dispatch({type:GET_GOALS, payload: response.data})
+  }
+}
 
 export const logout = () => {
   console.log("User logging out")

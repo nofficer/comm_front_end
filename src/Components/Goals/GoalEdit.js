@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getPlans, getRateTable,editRateTable,getTime,getAttainmentRules } from '../../actions'
+import { getPlans, getGoal,editGoal,getTime,getAttainmentRules,getUsers } from '../../actions'
 import Login from '../Accounts/Login'
 
 
@@ -9,24 +9,27 @@ import Login from '../Accounts/Login'
 
 import { Field, reduxForm } from 'redux-form'
 
-import RateTableForm from './RateTableForm'
+import GoalForm from './GoalForm'
 
-class RateTableEdit extends React.Component {
+class GoalEdit extends React.Component {
   componentDidMount(){
-    this.props.getRateTable({"rate_id": this.props.match.params.rate_id})
+    this.props.getGoal({"goal_id": this.props.match.params.goal_id})
     this.props.getPlans()
     this.props.getTime()
     this.props.getAttainmentRules()
+    this.props.getUsers()
   }
 
   onSubmit = (formValues) => {
-    this.props.editRateTable(formValues,{"rate_id": this.props.match.params.rate_id})
+    this.props.editGoal(formValues,{"goal_id": this.props.match.params.goal_id})
   }
 
   populateDropdown(){
     return this.props.attainmentRules
   }
-
+  populateDropdownUser(){
+    return this.props.users
+  }
 
 
 
@@ -34,7 +37,7 @@ class RateTableEdit extends React.Component {
 
     if(this.props.account['role'] == 'admin'){
       return (
-        <div><RateTableForm onSubmit={this.onSubmit} editing="yes" initialValues={this.props.rateTable} populateDropdown={this.populateDropdown()} /></div>
+        <div><GoalForm onSubmit={this.onSubmit} editing="yes" initialValues={this.props.goal} populateDropdown={this.populateDropdown()} populateDropdownUser={this.populateDropdownUser()}  /></div>
       )
     }
 
@@ -55,8 +58,10 @@ const mapStateToProps = (state) => {
     rateTable: state.rateTables.rateTable,
     plans: Object.values(state.plans.plans),
     account: state.account.account,
-    attainmentRules: state.attainmentRules.attainmentRules
+    attainmentRules: state.attainmentRules.attainmentRules,
+    users: state.users.users,
+    goal: state.goals.goal
   }
 }
 
-export default connect(mapStateToProps, { editRateTable, getRateTable, getPlans,getTime,getAttainmentRules})(RateTableEdit)
+export default connect(mapStateToProps, { editGoal, getGoal, getPlans,getTime,getAttainmentRules,getUsers})(GoalEdit)

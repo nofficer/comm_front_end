@@ -16,12 +16,12 @@ class AttainRuleShow extends React.Component {
   createItem(attainRule){
     return (
       <tr>
-        <th>{attainRule[0]}</th><th>{attainRule[1]}</th><th>{attainRule[2]}</th><th>{attainRule[3]}</th><th>{attainRule[4].toUpperCase()}</th><th>{attainRule[5].toUpperCase()}</th>
+        <th>{attainRule[0]}</th><th>{attainRule[1]}</th><th>{attainRule[2]}</th><th>{attainRule[3]}</th><th>{attainRule[4].toUpperCase()}</th><th>{attainRule[5].toUpperCase()}</th><th>{attainRule[6]}</th><th>{attainRule[8].toUpperCase()}</th>
 
         <Link onClick={(e) => e.stopPropagation()} to={`/attainRuleShow/edit/${attainRule[0]}`} className='ui small button primary'>
           Edit
         </Link>
-        <Link onClick={(e) => e.stopPropagation()} to={`/attainRuleShow/delete/${attainRule[0]}`} className='ui small button negative'>
+        <Link onClick={(e) => e.stopPropagation()} to={{pathname:`/attainRuleShow/delete/${attainRule[0]}`, state:{plan_id:attainRule[7]}}} className='ui small button negative'>
           Delete
         </Link>
       </tr>
@@ -52,6 +52,8 @@ class AttainRuleShow extends React.Component {
               <th><strong>Filter</strong></th>
               <th><strong>Metric</strong></th>
               <th><strong>Timeframe</strong></th>
+              <th><strong>Plan Name</strong></th>
+              <th><strong>Goal Use</strong></th>
               <th><strong>Options</strong></th>
             </tr>
           </thead>

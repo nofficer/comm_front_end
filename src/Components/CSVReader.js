@@ -105,7 +105,7 @@ class CSVReaderV extends Component {
       var wrongdateindex = []
       var i;
       for (i=0;i < this.my_data.length; i++){
-        if(this.isNumeric(this.my_data[i]["plan_id"]) && this.isNumeric(this.my_data[i]["attain_start"]) && this.isNumeric(this.my_data[i]["attain_end"]) && this.isNumeric(this.my_data[i]["tier"]) && this.isNumeric(this.my_data[i]["rate"])){
+        if(this.isNumeric(this.my_data[i]["attainment_rule_id"]) && this.isNumeric(this.my_data[i]["attain_start"]) && this.isNumeric(this.my_data[i]["attain_end"]) && this.isNumeric(this.my_data[i]["tier"]) && this.isNumeric(this.my_data[i]["rate"])){
 
         }
         else{
@@ -147,9 +147,92 @@ class CSVReaderV extends Component {
 
 //USERS UPLOAD EXECUTION WITH NO VALIDATION
     else if(importType =='Users'){
-      this.my_data.push({dupType:dupType})
-      this.my_data.push({table: "users"})
-      this.props.uploadFile(this.my_data,'user')
+      var numchecker = true
+      var datechecker = true
+      var wrongnumindex = []
+      var wrongdateindex = []
+      var i;
+      for (i=0;i < this.my_data.length; i++){
+        if(this.isNumeric(this.my_data[i]["user_id"]) && this.isNumeric(this.my_data[i]["plan_id"])) {
+
+        }
+        else{
+          numchecker = false
+          wrongnumindex.push(i)
+        }
+
+      }
+
+      if(numchecker && datechecker){
+        this.my_data.push({dupType:dupType})
+        this.my_data.push({table: "users"})
+        this.props.uploadFile(this.my_data,'user')
+        }
+      else if(numchecker==false&&datechecker==true){
+          history.push({pathname:'/ImportError',state:{detail:`Wrong number format  ${wrongnumindex}`}})
+        }
+      else if (datechecker==false&&numchecker==true){
+
+        history.push({pathname:'/ImportError',state:{detail:`Wrong date format  ${wrongdateindex}`}})
+      }
+      else{
+        history.push({pathname:'/ImportError',state:{detail:`Wrong date format  ${wrongdateindex} and wrong number format at line(s) ${wrongnumindex}`}})
+      }
+
+
+
+
+    }
+
+    else if(importType=='Goals'){
+      var numchecker = true
+      var datechecker = true
+      var wrongnumindex = []
+      var wrongdateindex = []
+      var p;
+      for (p=0;p < this.my_data.length; p++){
+
+        if(this.isValidDate(this.my_data[p]['start']) && this.isValidDate(this.my_data[p]['end']) ){
+
+        }
+
+
+        else{
+
+          datechecker=false
+          wrongdateindex.push(p)
+        }
+      }
+
+      var i;
+      for (i=0;i < this.my_data.length; i++){
+        if(this.isNumeric(this.my_data[i]["goal_id"]) && this.isNumeric(this.my_data[i]["user_id"]) && this.isNumeric(this.my_data[i]["goal"]) && this.isNumeric(this.my_data[i]["attainment_rule_id"])){
+
+        }
+        else{
+          numchecker = false
+          wrongnumindex.push(i)
+        }
+
+      }
+
+      if(numchecker && datechecker){
+        this.my_data.push({dupType:dupType})
+        this.my_data.push({table: "goals"})
+        this.props.uploadFile(this.my_data,'goal')
+        }
+      else if(numchecker==false&&datechecker==true){
+          history.push({pathname:'/ImportError',state:{detail:`Wrong number format  ${wrongnumindex}`}})
+        }
+      else if (datechecker==false&&numchecker==true){
+
+        history.push({pathname:'/ImportError',state:{detail:`Wrong date format  ${wrongdateindex}`}})
+      }
+      else{
+        history.push({pathname:'/ImportError',state:{detail:`Wrong date format  ${wrongdateindex} and wrong number format at line(s) ${wrongnumindex}`}})
+      }
+
+
     }
 
     else{
@@ -356,6 +439,7 @@ isValidDate(dateString)
             <option value="Deals">Transactions</option>
             <option value="Rates">Rates</option>
             <option value="Users">Users</option>
+            <option value="Goals">Goals</option>
           </select>
           <select class="ui dropdown" onChange={this.handleDuplicate}>
             <option value="ignore">On duplicate...</option>

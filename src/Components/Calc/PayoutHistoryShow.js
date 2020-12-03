@@ -26,7 +26,7 @@ class PayoutShow extends React.Component {
   createItem(payout){
     return (
       <tr>
-        <th>{payout[0]}</th><th>{payout[1]}</th><th>{payout[2]}</th><th>{payout[3]}</th><th>{payout[4]}</th><th>{payout[5]}</th><th>{payout[6]}</th><th>{payout[7]}</th><th>{payout[8]}</th><th>{payout[9]}</th><th>{payout[10]}</th><th>{payout[11]}</th><th>{payout[12]}</th><th>{payout[13]}</th>
+        <th>{payout[0]}</th><th>{payout[1]}</th><th>{payout[2]}</th><th>{payout[3]}</th><th>{payout[4]}</th><th>{payout[5]}</th><th>{payout[6]}</th><th>{payout[7]}</th><th>{payout[8]}</th><th>{payout[9]}</th><th>{payout[10]}</th><th>{payout[11]}</th><th>{payout[12]}</th><th>{payout[13]}</th><th>{payout[14]}</th>
 
 
       </tr>
@@ -56,20 +56,21 @@ class PayoutShow extends React.Component {
 
         <thead>
           <tr>
-            <th><strong>Payout ID</strong></th>
-            <th><strong>Transaction ID</strong></th>
-            <th><strong>Seller ID</strong></th>
-            <th><strong>Payee</strong></th>
-            <th><strong>Revenue</strong></th>
-            <th><strong>GP</strong></th>
-            <th><strong>Attainment</strong></th>
-            <th><strong>Payout</strong></th>
-            <th><strong>Split Percent</strong></th>
-            <th><strong>Location</strong></th>
-            <th><strong>Payout Multiplier</strong></th>
-            <th><strong>order_num</strong></th>
-            <th><strong>custom_field</strong></th>
-            <th><strong>period_id</strong></th>
+          <th><strong>Payout ID</strong></th>
+          <th><strong>Transaction ID</strong></th>
+          <th><strong>Seller ID</strong></th>
+          <th><strong>Payee</strong></th>
+          <th><strong>Revenue</strong></th>
+          <th><strong>GP</strong></th>
+          <th><strong>Attainment</strong></th>
+          <th><strong>Payout</strong></th>
+          <th><strong>Split Percent</strong></th>
+          <th><strong>Location</strong></th>
+          <th><strong>Payout Multiplier</strong></th>
+          <th><strong>order_num</strong></th>
+          <th><strong>custom_field</strong></th>
+          <th><strong>period_id</strong></th>
+          <th><strong>Rule</strong></th>
 
           </tr>
         </thead>

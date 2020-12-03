@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { uploadFile,onChangeFile} from '../actions'
+import { uploadFile,onChangeFile,getPayouts} from '../actions'
 import UploadForm from './UploadForm'
 import Example from './myhook'
 
@@ -9,7 +9,7 @@ import Example from './myhook'
 
 class Landing extends React.Component {
   componentDidMount(){
-
+    this.props.getPayouts()
   }
 
   onSubmit = (formValues) => {
@@ -32,4 +32,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, {uploadFile,onChangeFile})(Landing)
+export default connect(mapStateToProps, {uploadFile,onChangeFile,getPayouts})(Landing)

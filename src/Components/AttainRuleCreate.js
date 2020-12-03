@@ -15,10 +15,15 @@ class AttainRuleCreate extends React.Component {
   componentDidMount(){
     this.props.getAttainmentRules()
     this.props.getTime()
+    this.props.getPlans()
   }
 
   onSubmit = (formValues) => {
     this.props.createAttainRule(formValues)
+  }
+
+  populateDropdown(){
+    return this.props.plans
   }
 
 
@@ -27,7 +32,7 @@ class AttainRuleCreate extends React.Component {
   render(){
     if(this.props.account['role'] == 'admin'){
       return (
-        <div><AttainRuleForm onSubmit={this.onSubmit} /></div>
+        <div><AttainRuleForm onSubmit={this.onSubmit} populateDropdown={this.populateDropdown()} /></div>
       )
     }
 
@@ -44,8 +49,9 @@ class AttainRuleCreate extends React.Component {
 const mapStateToProps = (state) => {
   return {
     attainmentRules: Object.values(state.attainmentRules.attainmentRules),
-    account: state.account.account
+    account: state.account.account,
+    plans: state.plans.plans
   }
 }
 
-export default connect(mapStateToProps, { createAttainRule, getAttainmentRules,getTime })(AttainRuleCreate)
+export default connect(mapStateToProps, { createAttainRule, getAttainmentRules,getTime,getPlans })(AttainRuleCreate)

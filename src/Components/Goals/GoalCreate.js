@@ -1,23 +1,27 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { createRateTable,getTime,getAttainmentRules } from '../../actions'
+import { createGoal,getTime,getAttainmentRules,getUsers } from '../../actions'
 import Login from '../Accounts/Login'
 import { Field, reduxForm } from 'redux-form'
 
-import RateTableForm from './RateTableForm'
+import GoalForm from './GoalForm'
 
-class RateTableCreate extends React.Component {
+class GoalCreate extends React.Component {
   componentDidMount(){
     this.props.getAttainmentRules()
     this.props.getTime()
+    this.props.getUsers()
   }
 
   onSubmit = (formValues) => {
-    this.props.createRateTable(formValues)
+    this.props.createGoal(formValues)
   }
 
   populateDropdown(){
     return this.props.attainmentRules
+  }
+  populateDropdownUser(){
+    return this.props.users
   }
 
 
@@ -26,7 +30,7 @@ class RateTableCreate extends React.Component {
   render(){
     if(this.props.account['role'] == 'admin'){
         return (
-          <div><RateTableForm onSubmit={this.onSubmit} populateDropdown={this.populateDropdown()} /></div>
+          <div><GoalForm onSubmit={this.onSubmit} populateDropdown={this.populateDropdown()} populateDropdownUser={this.populateDropdownUser()} /></div>
         )
     }
 
@@ -45,8 +49,9 @@ const mapStateToProps = (state) => {
     plans: Object.values(state.plans.plans),
     rateTables: Object.values(state.rateTables.rateTables),
     account: state.account.account,
-    attainmentRules: state.attainmentRules.attainmentRules
+    attainmentRules: state.attainmentRules.attainmentRules,
+    users: state.users.users
   }
 }
 
-export default connect(mapStateToProps, { createRateTable,getTime,getAttainmentRules })(RateTableCreate)
+export default connect(mapStateToProps, { createGoal,getTime,getAttainmentRules,getUsers })(GoalCreate)

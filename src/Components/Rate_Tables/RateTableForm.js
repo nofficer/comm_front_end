@@ -44,10 +44,10 @@ class RateTableForm extends React.Component {
 
 
 
-        <Field name="plan_id" component="select" label='Enter Plan_ID'>
-                  <option value="">Select a plan...</option>
-                  {this.props.populateDropdown.map(plan =>
-                    <option value={plan[0]} key={plan[1]}>{plan[1]}</option>)}
+        <Field name="attainment_rule_id" component="select" label='Enter Attainment Rule ID'>
+                  <option value="">Select an attainment rule...</option>
+                  {this.props.populateDropdown.map(rule =>
+                    <option value={rule[0]} key={rule[1]}>{rule[1]}</option>)}
                 </Field>
 
         <Field name='start' component={this.renderInput} label='Enter Rate Effective Start Date (YYYY-MM-DD)'/>
@@ -69,10 +69,10 @@ class RateTableForm extends React.Component {
       return (
       <form className='ui form error' onSubmit={this.props.handleSubmit(this.onSubmit)}>
         <Field name='rate_id' component={this.renderInput} label='Enter Rate ID'/>
-        <Field name="plan_id" component="select" label='Enter Plan_ID'>
-                  <option value="">Select a plan...</option>
-                  {this.props.populateDropdown.map(plan =>
-                    <option value={plan[0]} key={plan[1]}>{plan[1]}</option>)}
+        <Field name="attainment_rule_id" component="select" label='Enter Attainment Rule ID'>
+                  <option value="">Select an attainment rule...</option>
+                  {this.props.populateDropdown.map(rule =>
+                    <option value={rule[0]} key={rule[1]}>{rule[1]}</option>)}
                 </Field>
 
         <Field name='start' component={this.renderInput} label='Enter Rate Effective Start Date (YYYY-MM-DD)'/>
@@ -98,21 +98,48 @@ class RateTableForm extends React.Component {
 }
 
 
+
+function isValidDate(dateString)
+{
+    // First check for the pattern
+    if(!/^\d{4}\-\d{1,2}\-\d{1,2}$/.test(dateString))
+        return false;
+
+    // Parse the date parts to integers
+    var parts = dateString.split("-");
+    var day = parseInt(parts[2], 10);
+    var month = parseInt(parts[1], 10);
+    var year = parseInt(parts[0], 10);
+
+    // Check the ranges of month and year
+    if(year < 1000 || year > 3000 || month == 0 || month > 12)
+        return false;
+
+    var monthLength = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
+
+    // Adjust for leap years
+    if(year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
+        monthLength[1] = 29;
+
+    // Check the range of the day
+    return day > 0 && day <= monthLength[month - 1];
+};
+
 const validate = (formValues) => {
 	const errors = {};
-	if(!formValues.plan_id) {
+	if(!formValues.attainment_rule_id) {
 		//only ran if the user did not enter a title
-		errors.start = 'You must also select a PLAN'
+		errors.start = 'You must also select an attainment rule'
 	}
   if(!formValues.rate_type) {
     //only ran if the user did not enter a title
     errors.rate = 'You must also select a RATE TYPE'
   }
-  if(!formValues.start) {
+  if(!formValues.start || !isValidDate(formValues.start)) {
     //only ran if the user did not enter a title
     errors.start = 'You must enter a start date'
   }
-  if(!formValues.end) {
+  if(!formValues.end || !isValidDate(formValues.end)) {
     //only ran if the user did not enter a title
     errors.end = 'You must enter an end date'
   }

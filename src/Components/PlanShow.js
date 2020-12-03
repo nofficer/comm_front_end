@@ -16,7 +16,7 @@ class PlanShow extends React.Component {
     return (
 
       <tr>
-        <th>{plan[0]}</th><th>{plan[1]}</th><th>{plan[2]}</th>
+        <th>{plan[0]}</th><th>{plan[1]}</th>
 
         <Link onClick={(e) => e.stopPropagation()} to={`/planShow/edit/${plan[0]}`} className='ui small button primary'>
           Edit
@@ -47,7 +47,6 @@ class PlanShow extends React.Component {
           <tr>
             <th><strong>Plan ID</strong></th>
             <th><strong>Plan Name</strong></th>
-            <th><strong>Attainment Rule</strong></th>
             <th><strong>Options</strong></th>
           </tr>
         </thead>

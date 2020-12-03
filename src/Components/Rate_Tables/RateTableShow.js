@@ -28,7 +28,7 @@ class RateTableShow extends React.Component {
   createItem(rateTable){
     return (
       <tr>
-        <th>{rateTable[0]}</th><th>{rateTable[1]}</th><th>{rateTable[2]}</th><th>{rateTable[3]}</th><th>{rateTable[4]}</th><th>{rateTable[5]}</th><th>{rateTable[6]}</th><th>{rateTable[7]}</th><th>{rateTable[8]}</th>
+        <th>{rateTable[0]}</th><th>{rateTable[10]}</th><th>{rateTable[2]}</th><th>{rateTable[3]}</th><th>{rateTable[4]}</th><th>{rateTable[5]}</th><th>{rateTable[6]}</th><th>{rateTable[7]}</th><th>{rateTable[8]}</th>
 
         <Link onClick={(e) => e.stopPropagation()} to={`/rateTableShow/edit/${rateTable[0]}`} className='ui small button primary'>
           Edit
@@ -59,7 +59,7 @@ class RateTableShow extends React.Component {
           <thead>
             <tr>
               <th><strong>Rate Table ID</strong></th>
-              <th><strong>Plan ID</strong></th>
+              <th><strong>Attainment Rule Name</strong></th>
               <th><strong>Rate Type</strong></th>
               <th><strong>Start Date</strong></th>
               <th><strong>End Date</strong></th>
