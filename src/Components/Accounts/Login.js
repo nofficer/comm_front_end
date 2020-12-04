@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {login,setAccount} from '../../actions'
+import {login} from '../../actions'
 import LoginForm from './LoginForm'
 
 
@@ -51,4 +51,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { login,setAccount })(Login)
+export default connect(mapStateToProps, { login })(Login)

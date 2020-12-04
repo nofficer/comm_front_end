@@ -66,7 +66,7 @@ class RateTableShow extends React.Component {
               <th><strong>Attainment Range Low</strong></th>
               <th><strong>Attainment Range High</strong></th>
               <th><strong>Tier</strong></th>
-              <th><strong>Rate</strong></th>
+              <th><strong>Rate %</strong></th>
               <th><strong>Options</strong></th>
 
             </tr>

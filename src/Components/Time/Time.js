@@ -28,9 +28,11 @@ class Time extends React.Component {
       if(this.props.month['current.month_id'] == 1){
         return (
           <div className='ui text container ' >
-            <h1 className='centertext'>Current month: {months[this.props.month['current.month_id']]}</h1>
+            <h1 className='centertext'>Current Month: {months[this.props.month['current.month_id']]}</h1>
 
             <button onClick={this.handleClick}>Next</button>
+
+            <h2 className='centertext'>Current Year: {months[this.props.month['cal_year']]}</h2>
 
           </div>
         )
@@ -41,6 +43,7 @@ class Time extends React.Component {
             <h1 className='centertext'>Current month: {months[this.props.month['current.month_id']]}</h1>
             <button onClick={this.handleClickRevert}>Revert to Previous</button>
             <button onClick={this.handleClick}>Next</button>
+            <h4 >Current Year: {this.props.month['cal_year']}</h4>
 
           </div>
         )

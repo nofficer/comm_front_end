@@ -1,12 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import {setAccount,logout} from '../actions'
+import {logout} from '../actions'
 
 
 class Header extends React.Component {
   componentDidMount(){
-     this.props.setAccount()
+     // this.props.setAccount()
   }
   renderSignIn(){
 
@@ -325,4 +325,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { setAccount,logout })(Header)
+export default connect(mapStateToProps, { logout })(Header)

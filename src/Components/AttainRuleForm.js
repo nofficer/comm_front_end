@@ -71,7 +71,7 @@ class AttainRuleForm extends React.Component {
                 </Field>
                 <p>Goal to be applied to attainment calculation?</p>
       <Field name="goal_use" component="select" label='Select Usage'>
-
+                <option value="no">Select Goal Dependency...</option>
                 <option value="yes">Yes</option>
                 <option value="no">No</option>
               </Field>
@@ -86,9 +86,14 @@ class AttainRuleForm extends React.Component {
 
 const validate = (formValues) => {
 	const errors = {};
+  console.log(formValues)
 	if(!formValues.rule_name) {
 		//only ran if the user did not enter a title
 		errors.rule_name = 'You must enter a name'
+	}
+  if(!formValues.goal_use) {
+		//only ran if the user did not enter a title
+		errors.metric = 'You must choose whether attainment is goal dependent'
 	}
   if(formValues.source == "nothin") {
 		//only ran if the user did not enter a title

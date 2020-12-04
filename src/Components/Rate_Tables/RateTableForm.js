@@ -59,7 +59,7 @@ class RateTableForm extends React.Component {
         <Field name="rate_type" component="select" label='Enter Plan_ID'>
                   <option value="">Select a rate type...</option>
                   <option value="FIXED">FIXED</option>
-                  <option value="RAMPED">RAMPED</option>
+
                 </Field>
         <br/>
         <button className='ui button primary'>Submit</button>
@@ -84,7 +84,7 @@ class RateTableForm extends React.Component {
         <Field name="rate_type" component="select" label='Enter Plan_ID'>
                   <option value="">Select a rate type...</option>
                   <option value="FIXED">FIXED</option>
-                  <option value="RAMPED">RAMPED</option>
+
                 </Field>
         <br/>
         <button className='ui button primary'>Submit</button>

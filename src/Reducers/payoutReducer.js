@@ -3,7 +3,8 @@ import {
 } from '../actions/types'
 
 const INITIAL_STATE = {
-  payouts: []
+  payouts: [],
+  summary: []
 }
 
 export default (state=INITIAL_STATE, action) => {
@@ -21,7 +22,7 @@ export default (state=INITIAL_STATE, action) => {
     case CALC_PLANS:
       return{...state, payouts: action.payload,calcs: 'Done'}
     case GET_PAYOUTS_USER:
-      return{...state,payouts: action.payload}
+      return{...state,summary: action.payload}
     default:
       return state
   }
