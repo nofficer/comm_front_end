@@ -1,5 +1,5 @@
 import axios from 'axios'
 
 export default axios.create({
-  baseURL: 'https://easycomp-297800.uc.r.appspot.com'
+  baseURL: 'http://127.0.0.1:8080'
 })

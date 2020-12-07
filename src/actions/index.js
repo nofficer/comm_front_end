@@ -1,6 +1,18 @@
-import { GET_PLANS, GET_USERS,  GET_USER, CREATE_USER, EDIT_USER, CREATE_CALC, CHANGE_DONE, GO_PUSH, CREATE_PLAN, EDIT_PLAN, GET_ATTAINMENT_RULES, CREATE_ATTAINMENT_RULE, EDIT_ATTAINMENT_RULE, GET_TRANS, CREATE_TRANS, EDIT_TRANS, GET_TRAN, DELETE_TRANS, DELETE_ATTAINMENT_RULE,DELETE_PLAN,DELETE_USER,GET_ATTAINMENT_RULE,GET_PLAN,UPLOAD_FILE,ONCHANGE_FILE,CHECK_RULE_USE,CHECK_PLAN_USE,CHECK_USER_USE,GET_RATE_TABLE,GET_RATE_TABLES,CREATE_RATE_TABLE,EDIT_RATE_TABLE,DELETE_RATE_TABLE,ERROR_HANDLE,CALC_PLANS,GET_PAYOUTS,EDIT_PAYOUT,GET_PAYOUT,DELETE_PAYOUT,LOAD,GET_TIME,UPDATE_TIME,REVERT_TIME,LOGIN,SET_ACCOUNT,LOGOUT,GET_PAYOUTS_USER,GET_GOAL,GET_GOALS,CREATE_GOAL,EDIT_GOAL,DELETE_GOAL,CLEAR,SELECT_MONTH } from './types'
+import { GET_PLANS, GET_USERS,  GET_USER, CREATE_USER, EDIT_USER, CREATE_CALC, CHANGE_DONE, GO_PUSH, CREATE_PLAN, EDIT_PLAN, GET_ATTAINMENT_RULES, CREATE_ATTAINMENT_RULE, EDIT_ATTAINMENT_RULE, GET_TRANS, CREATE_TRANS, EDIT_TRANS, GET_TRAN, DELETE_TRANS, DELETE_ATTAINMENT_RULE,DELETE_PLAN,DELETE_USER,GET_ATTAINMENT_RULE,GET_PLAN,UPLOAD_FILE,ONCHANGE_FILE,CHECK_RULE_USE,CHECK_PLAN_USE,CHECK_USER_USE,GET_RATE_TABLE,GET_RATE_TABLES,CREATE_RATE_TABLE,EDIT_RATE_TABLE,DELETE_RATE_TABLE,ERROR_HANDLE,CALC_PLANS,GET_PAYOUTS,EDIT_PAYOUT,GET_PAYOUT,DELETE_PAYOUT,LOAD,GET_TIME,UPDATE_TIME,REVERT_TIME,LOGIN,SET_ACCOUNT,LOGOUT,GET_PAYOUTS_USER,GET_GOAL,GET_GOALS,CREATE_GOAL,EDIT_GOAL,DELETE_GOAL,CLEAR,SELECT_MONTH,UPDATE_ACCOUNT } from './types'
 import db from '../apis/db'
 import history from '../history'
+
+
+
+
+export const updateAccount = (formValues) => {
+  return async (dispatch) => {
+    const response = await db.post('/updateAccount', formValues)
+    dispatch({type:UPDATE_ACCOUNT})
+    history.push('/')
+  }
+
+}
 
 export const selectMonth = (month) => {
   console.log("Selecting month")
@@ -153,6 +165,29 @@ export const getPayouts_user = (userMonth) => {
 
   }
 }
+
+export const updatePayout = (formValues) => {
+  return async (dispatch) => {
+    const response = await db.post('/updatePayout',formValues)
+    dispatch({type:EDIT_PAYOUT, payload:response.data})
+    history.push('/payoutShow')
+  }
+}
+
+export const deletePayout = (payout_id) => {
+  return async (dispatch) => {
+    const response = await db.post('/deletePayout',payout_id)
+    dispatch({type:DELETE_PAYOUT, payload:response.data})
+  }
+}
+
+export const getPayout = (payout_id) => {
+  return async (dispatch) => {
+    const response = await db.post('/getPayout',payout_id)
+    dispatch({type:GET_PAYOUT, payload:response.data})
+  }
+}
+
 
 export const calcPlans = () => {
 

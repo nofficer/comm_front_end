@@ -14,13 +14,17 @@ class UserShow extends React.Component {
 
   createItem(user){
     return (
-      <tr><td>{user[0]}</td><td>{user[1]}</td><td>{user[2]}</td><td>{user[5]}</td><td>{user[3]}</td>
+      <tr><td>{user[0]}</td><td>{user[1]}</td><td>{user[2]}</td><td>{user[3]}</td><td>{user[4]}</td><td>{user[5]}</td><td>{user[6]}</td>
       <td><Link onClick={(e) => e.stopPropagation()} to={`/userShow/edit/${user[0]}`} className='ui small button primary'>
         Edit
       </Link>
       <Link onClick={(e) => e.stopPropagation()} to={`/userShow/delete/${user[0]}`} className='ui small button negative'>
         Delete
-      </Link></td>
+      </Link>
+      <button onClick={(e) => e.stopPropagation(history.push({pathname:'/passwordChange',state:{detail:user[0]} } ) ) } className='ui small button positive'>
+        Change Password
+      </button>
+      </td>
 
 
 
@@ -49,6 +53,8 @@ class UserShow extends React.Component {
               <th><strong>Plan ID</strong></th>
               <th><strong>Plan Name</strong></th>
               <th><strong>Location</strong></th>
+              <th><strong>Username</strong></th>
+              <th><strong>Role</strong></th>
               <th><strong>Options</strong></th>
             </tr>
           </thead>

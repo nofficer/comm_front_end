@@ -16,12 +16,12 @@ class UserForm extends React.Component {
     }
   }
 
-  renderInput = ({ input, label, meta }) => {
+  renderInput = ({ input, label, meta,type }) => {
     const className=`field ${meta.error && meta.touched ? 'error' : ''}`
     return (
       <div className={className}>
       <label id='notblack'>{label}</label>
-      <input {...input} autoComplete='off'  />
+      <input type={type} {...input} autoComplete='off'  />
       {this.renderError(meta)}
       </div>
     )
@@ -47,6 +47,22 @@ class UserForm extends React.Component {
                       <option value={plan[0]} key={plan[1]}>{plan[1]}</option>)}
                   </Field>
           <Field name='user_location' component={this.renderInput} label='Enter Location' />
+          <Field name='username' component={this.renderInput} label='Enter Username' />
+          <Field name="role" component="select" label='Select Role'>
+                    <option value="">Select a role...</option>
+                    <option value="admin">Admin</option>
+                    <option value="seller">Seller</option>
+                  </Field>
+          <br/>
+          <button className='ui button primary'>Submit</button>
+        </form>
+      )
+    }
+    if(this.props.editing == "password"){
+      return(
+        <form className='ui form error' onSubmit={this.props.handleSubmit(this.onSubmit)}>
+
+          <Field name='password' type='password' component={this.renderInput} label='Enter a new Password' />
           <br/>
           <button className='ui button primary'>Submit</button>
         </form>
@@ -63,6 +79,13 @@ class UserForm extends React.Component {
                       <option value={plan[0]} key={plan[1]}>{plan[1]}</option>)}
                   </Field>
           <Field name='user_location' component={this.renderInput} label='Enter Location' />
+          <Field name='username' component={this.renderInput} label='Enter Username' />
+          <Field name='password' type='password' component={this.renderInput} label='Enter Password' />
+          <Field name="role" component="select" label='Select Role'>
+                    <option value="">Select a role...</option>
+                    <option value="admin">Admin</option>
+                    <option value="seller">Seller</option>
+                  </Field>
           <br/>
           <button className='ui button primary'>Submit</button>
         </form>
@@ -88,6 +111,15 @@ const validate = (formValues) => {
   }
   if (!formValues.user_location) {
 		errors.user_location = 'You must enter a location'
+	}
+  if (!formValues.username) {
+		errors.username = 'You must enter a username'
+	}
+  if (!formValues.password) {
+		errors.password = 'You must enter a password'
+	}
+  if (!formValues.role) {
+		errors.user_location = 'You must also select a role type'
 	}
   return errors
 }

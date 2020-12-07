@@ -1,11 +1,11 @@
 
 
 import {
-  LOGIN,LOGOUT,SET_ACCOUNT,SELECT_MONTH
+  LOGIN,LOGOUT,SET_ACCOUNT,SELECT_MONTH,UPDATE_ACCOUNT
 } from '../actions/types'
 
 const INITIAL_STATE = {
-  account: {user_id:1,username:"Nathan.officer@cdw.ca",role:"admin"},
+  account: {},
   selected_month: ''
 }
 
@@ -19,7 +19,10 @@ export default (state=INITIAL_STATE, action) => {
       return {...state, account: "none"};
     case SELECT_MONTH:
       return {...state, selected_month:action.payload}
+    case UPDATE_ACCOUNT:
+      return {...state};
     default:
       return state
   }
 }
+//user_id:1,username:"Nathan.officer@cdw.ca",role:"admin"

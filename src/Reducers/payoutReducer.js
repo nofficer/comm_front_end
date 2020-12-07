@@ -4,7 +4,8 @@ import {
 
 const INITIAL_STATE = {
   payouts: [],
-  summary: []
+  summary: [],
+  payout: {}
 }
 
 export default (state=INITIAL_STATE, action) => {
@@ -16,7 +17,7 @@ export default (state=INITIAL_STATE, action) => {
     case EDIT_PAYOUT:
       return {...state, payouts: action.payload}
     case GET_PAYOUT:
-      return {...state, payouts: action.payload}
+      return {...state, payout: action.payload}
     case LOAD:
       return {...state, calcs:'Running'}
     case CALC_PLANS:

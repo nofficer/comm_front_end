@@ -81,7 +81,7 @@ class PayoutShow extends React.Component {
   }
 
   render(){
-    if(this.props.account['user_id'] == 1){
+    if(this.props.account['role'] == 'admin'){
       if(this.props.calcs == 'Running'){
         return (
           <Loader filler="Calculations Running..."/>

@@ -31,9 +31,7 @@ class PayoutShow extends React.Component {
         <Link onClick={(e) => e.stopPropagation()} to={`/payoutShow/edit/${payout[0]}`} className='ui small button primary'>
           Edit
         </Link>
-        <Link onClick={(e) => e.stopPropagation()} to={`/payoutShow/delete/${payout[0]}`} className='ui small button negative'>
-          Delete
-        </Link>
+
         </td>
       </tr>
     )
@@ -88,7 +86,7 @@ class PayoutShow extends React.Component {
 
   render(){
     console.log(this.props.errors)
-    if(this.props.account['user_id'] == 1){
+    if(this.props.account['role'] == 'admin'){
       if(this.props.calcs == 'Running'){
         return (
           <Loader filler="Calculations Running..."/>

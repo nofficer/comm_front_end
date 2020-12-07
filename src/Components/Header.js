@@ -269,7 +269,7 @@ class Header extends React.Component {
       return(
 
 
-            <div className='ui two item menu'>
+            <div className='ui three item menu'>
 
             <div class="ui simple dropdown item">
             <div onClick={(e) => e.stopPropagation(history.push('/report'))} className='item'>
@@ -290,6 +290,15 @@ class Header extends React.Component {
               </Link>
               </div>
               </div>
+
+              <div class="ui simple dropdown item">
+              <div onClick={(e) => e.stopPropagation(history.push({pathname:'/passwordchange',state:{detail:this.props.account['user_id']}}))} className='item'>
+
+                  Change Passowrd
+
+              </div>
+              </div>
+
 
 
 

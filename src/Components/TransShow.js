@@ -16,7 +16,7 @@ class TransShow extends React.Component {
     if(parseInt(trans[11]) < parseInt(this.props.month['current.month_id'])){
       return (
         <tr><td>{trans[0]}</td><td>{trans[1]}</td><td>{trans[2]}</td><td>{trans[3].split("T")[0]}</td><td>{trans[4]}</td><td>{trans[5]}</td><td>{trans[6]}</td><td>{trans[7]}</td><td>{trans[8]}</td><td>{trans[9]}</td><td>{trans[10]}</td><td>{trans[11]}</td>
-
+          <td></td>
             </tr>
 
       )

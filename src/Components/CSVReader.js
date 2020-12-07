@@ -234,6 +234,12 @@ class CSVReaderV extends Component {
 
 
     }
+    else if(importType =='Accounts'){
+      this.my_data.push({dupType:dupType})
+      this.my_data.push({table: "accounts"})
+      this.props.uploadFile(this.my_data,'user')
+    }
+
 
     else{
       history.push({pathname:'/ImportError',state:{detail:`Please select an input type`}})
@@ -440,6 +446,7 @@ isValidDate(dateString)
             <option value="Rates">Rates</option>
             <option value="Users">Users</option>
             <option value="Goals">Goals</option>
+            <option value="Accounts">Accounts</option>
           </select>
           <select class="ui dropdown" onChange={this.handleDuplicate}>
             <option value="ignore">On duplicate...</option>

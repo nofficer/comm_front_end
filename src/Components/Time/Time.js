@@ -24,7 +24,7 @@ class Time extends React.Component {
   }
 
   render(){
-    if(this.props.account['user_id'] == 1){
+    if(this.props.account['role'] == 'admin'){
       if(this.props.month['current.month_id'] == 1){
         return (
           <div className='ui text container ' >
