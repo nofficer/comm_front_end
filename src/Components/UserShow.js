@@ -14,14 +14,15 @@ class UserShow extends React.Component {
 
   createItem(user){
     return (
-      <tr><th>{user[0]}</th><th>{user[1]}</th><th>{user[2]}</th><th>{user[5]}</th><th>{user[3]}</th>
+      <tr><td>{user[0]}</td><td>{user[1]}</td><td>{user[2]}</td><td>{user[5]}</td><td>{user[3]}</td>
+      <td><Link onClick={(e) => e.stopPropagation()} to={`/userShow/edit/${user[0]}`} className='ui small button primary'>
+        Edit
+      </Link>
+      <Link onClick={(e) => e.stopPropagation()} to={`/userShow/delete/${user[0]}`} className='ui small button negative'>
+        Delete
+      </Link></td>
 
-        <Link onClick={(e) => e.stopPropagation()} to={`/userShow/edit/${user[0]}`} className='ui small button primary'>
-          Edit
-        </Link>
-        <Link onClick={(e) => e.stopPropagation()} to={`/userShow/delete/${user[0]}`} className='ui small button negative'>
-          Delete
-        </Link>
+
 
       </tr>
     )

@@ -28,14 +28,15 @@ class RateTableShow extends React.Component {
   createItem(rateTable){
     return (
       <tr>
-        <th>{rateTable[0]}</th><th>{rateTable[10]}</th><th>{rateTable[2]}</th><th>{rateTable[3]}</th><th>{rateTable[4]}</th><th>{rateTable[5]}</th><th>{rateTable[6]}</th><th>{rateTable[7]}</th><th>{rateTable[8]}</th>
-
+        <td>{rateTable[0]}</td><td>{rateTable[10]}</td><td>{rateTable[2]}</td><td>{rateTable[3]}</td><td>{rateTable[4]}</td><td>{rateTable[5]}</td><td>{rateTable[6]}</td><td>{rateTable[7]}</td><td>{rateTable[8]}</td>
+        <td>
         <Link onClick={(e) => e.stopPropagation()} to={`/rateTableShow/edit/${rateTable[0]}`} className='ui small button primary'>
           Edit
         </Link>
         <Link onClick={(e) => e.stopPropagation()} to={`/rateTableShow/delete/${rateTable[0]}`} className='ui small button negative'>
           Delete
         </Link>
+        </td>
       </tr>
     )
   }

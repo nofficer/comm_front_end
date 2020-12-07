@@ -18,3 +18,17 @@ code {
   padding-top: 30vh;
   font-size: 100px;
 }
+
+.pagetitle {
+  text-align:center;
+  margin:auto;
+}
+
+.rightitem {
+  float:right;
+  margin-right:15px;
+}
+
+.marginleft {
+  margin-left:15px
+}

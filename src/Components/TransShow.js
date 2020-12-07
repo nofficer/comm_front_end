@@ -15,7 +15,7 @@ class TransShow extends React.Component {
   createItem(trans){
     if(parseInt(trans[11]) < parseInt(this.props.month['current.month_id'])){
       return (
-        <tr><th>{trans[0]}</th><th>{trans[1]}</th><th>{trans[2]}</th><th>{trans[3].split("T")[0]}</th><th>{trans[4]}</th><th>{trans[5]}</th><th>{trans[6]}</th><th>{trans[7]}</th><th>{trans[8]}</th><th>{trans[9]}</th><th>{trans[10]}</th><th>{trans[11]}</th>
+        <tr><td>{trans[0]}</td><td>{trans[1]}</td><td>{trans[2]}</td><td>{trans[3].split("T")[0]}</td><td>{trans[4]}</td><td>{trans[5]}</td><td>{trans[6]}</td><td>{trans[7]}</td><td>{trans[8]}</td><td>{trans[9]}</td><td>{trans[10]}</td><td>{trans[11]}</td>
 
             </tr>
 
@@ -23,13 +23,15 @@ class TransShow extends React.Component {
     }
     else{
       return (
-        <tr><th>{trans[0]}</th><th>{trans[1]}</th><th>{trans[2]}</th><th>{trans[3].split("T")[0]}</th><th>{trans[4]}</th><th>{trans[5]}</th><th>{trans[6]}</th><th>{trans[7]}</th><th>{trans[8]}</th><th>{trans[9]}</th><th>{trans[10]}</th><th>{trans[11]}</th>
+        <tr><td>{trans[0]}</td><td>{trans[1]}</td><td>{trans[2]}</td><td>{trans[3].split("T")[0]}</td><td>{trans[4]}</td><td>{trans[5]}</td><td>{trans[6]}</td><td>{trans[7]}</td><td>{trans[8]}</td><td>{trans[9]}</td><td>{trans[10]}</td><td>{trans[11]}</td>
+          <td>
             <Link onClick={(e) => e.stopPropagation()} to={`/transShow/edit/${trans[0]}`} className='ui small button primary'>
               Edit
             </Link>
             <Link onClick={(e) => e.stopPropagation()} to={`/transShow/delete/${trans[0]}`} className='ui small button negative'>
               Delete
             </Link>
+            </td>
             </tr>
 
       )
@@ -57,7 +59,7 @@ class TransShow extends React.Component {
     if(this.props.account['role'] == 'admin'){
       return (<div>
         <h1>Transactions</h1>
-        <table className='ui celled striped inverted single line table'>
+        <table className='ui celled  table'>
           <thead>
             <tr>
 

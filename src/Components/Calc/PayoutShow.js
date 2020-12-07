@@ -26,14 +26,15 @@ class PayoutShow extends React.Component {
   createItem(payout){
     return (
       <tr>
-        <th>{payout[0]}</th><th>{payout[1]}</th><th>{payout[2]}</th><th>{payout[3]}</th><th>{payout[4]}</th><th>{payout[5]}</th><th>{payout[6]}</th><th>{payout[7]}</th><th>{payout[8]}</th><th>{payout[9]}</th><th>{payout[10]}</th><th>{payout[11]}</th><th>{payout[12]}</th><th>{payout[13]}</th><th>{payout[14]}</th>
-
+        <td>{payout[0]}</td><td>{payout[1]}</td><td>{payout[2]}</td><td>{payout[3]}</td><td>${payout[4]}</td><td>${payout[5]}</td><td>${payout[6]}</td><td>${payout[7]}</td><td>{payout[8]}</td><td>{payout[9]}</td><td>{payout[10]}</td><td>{payout[11]}</td><td>{payout[12]}</td><td>{payout[13]}</td><td>{payout[14]}</td>
+        <td>
         <Link onClick={(e) => e.stopPropagation()} to={`/payoutShow/edit/${payout[0]}`} className='ui small button primary'>
           Edit
         </Link>
         <Link onClick={(e) => e.stopPropagation()} to={`/payoutShow/delete/${payout[0]}`} className='ui small button negative'>
           Delete
         </Link>
+        </td>
       </tr>
     )
   }
@@ -55,9 +56,9 @@ class PayoutShow extends React.Component {
 
     return (<div className='ui  grid'>
       <h1>Payouts</h1>
-      <button onClick={this.runCalc}>Calc</button>
+      <button className='ui button primary' onClick={this.runCalc}>Run Calcs</button>
 
-      <table className='ui inverted celled table'>
+      <table className='ui celled table'>
 
         <thead>
           <tr>

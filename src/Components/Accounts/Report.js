@@ -61,10 +61,12 @@ class PayoutShow extends React.Component {
   createItem(payout){
     if(payout[15] == this.props.account['user_id'] && payout[13] == this.props.selected_month){
       statement_details.push(payout)
+      console.log(this.props.selected_month)
       return (
         <tr>
-          <th>{payout[0]}</th><th>{payout[1]}</th><th>{payout[2]}</th><th>{payout[3]}</th><th>$ {payout[4]}</th><th>$ {payout[5]}</th><th>$ {payout[6]}</th><th>{payout[7]}</th><th>{payout[8]}</th><th>{payout[9]}</th><th>{payout[10]}</th><th>{payout[11]}</th><th>{payout[12]}</th><th>{payout[13]}</th><th>{payout[14]}</th>
+          <td>{payout[0]}</td><td>{payout[1]}</td><td>{payout[2]}</td><td>{payout[3]}</td><td>$ {payout[4]}</td><td>$ {payout[5]}</td><td>$ {payout[6]}</td><td>{payout[7]}</td><td>{payout[8]}</td><td>{payout[9]}</td><td>{payout[10]}</td><td>{payout[11]}</td><td>{payout[12]}</td><td>{payout[13]}</td><td>{payout[14]}</td>
         </tr>
+
       )
     }
 
@@ -75,7 +77,7 @@ class PayoutShow extends React.Component {
     statement_details.push([summary['rule_name'],summary['attainment'],summary['payout']])
       return (
         <tr>
-          <th>{summary['rule_name']}</th><th>$ {summary['attainment']}</th><th>$ {summary['payout']}</th>
+          <td>{summary['rule_name']}</td><td>$ {summary['attainment']}</td><td>$ {summary['payout']}</td>
         </tr>
       )
 
@@ -111,26 +113,34 @@ class PayoutShow extends React.Component {
   }
   renderContent(){
       return (<div className='ui  grid'>
-        <h1>Payouts</h1>
-        <select onChange={this.handleChange}>
-          <option value={this.props.month['current.month_id']}>Select a period...</option>
-          <option value="1">January</option>
-          <option value="2">February</option>
-          <option value="3">March</option>
-          <option value="4">April</option>
-          <option value="5">May</option>
-          <option value="6">June</option>
-          <option value="7">July</option>
-          <option value="8">August</option>
-          <option value="9">September</option>
-          <option value="10">October</option>
-          <option value="11">November</option>
-          <option value="12">December</option>
 
-        </select>
-        <button onClick={this.generateStatement}>Download statement for {monthmap[this.props.selected_month]} </button>
+      <div class='sixteen wide column'><h1 className='pagetitle center aligned'>Commissions Report - {this.props.account['username']}</h1></div>
+      <div class="four wide column">
+      <select className='marginleft ui dropdown' onChange={this.handleChange}>
+        <option value={this.props.month['current.month_id']}>Select a period...</option>
+        <option value="1">January</option>
+        <option value="2">February</option>
+        <option value="3">March</option>
+        <option value="4">April</option>
+        <option value="5">May</option>
+        <option value="6">June</option>
+        <option value="7">July</option>
+        <option value="8">August</option>
+        <option value="9">September</option>
+        <option value="10">October</option>
+        <option value="11">November</option>
+        <option value="12">December</option>
+
+      </select>
+      </div>
+      <div class="four wide column"></div>
+      <div class="four wide column"></div>
+      <div class="four wide column"><button className='rightitem ui button positive' onClick={this.generateStatement}>Download statement for {monthmap[this.props.selected_month]} </button></div>
+
+
+
         <h1>Summary Performance </h1>
-        <table className='ui inverted celled center aligned table'>
+        <table className='ui celled center aligned table'>
         <thead>
           <tr>
             <th><strong>Attainment Rule</strong></th>
@@ -140,8 +150,8 @@ class PayoutShow extends React.Component {
           </thead>
           {this.renderSummary()}
         </table>
-
-        <table className='ui inverted celled table'>
+        <h1>Detailed Transaction Listing</h1>
+        <table className='ui celled table'>
 
           <thead>
             <tr>
@@ -165,6 +175,7 @@ class PayoutShow extends React.Component {
           </thead>
           {this.renderList()}
         </table>
+
 
         </div>)
 

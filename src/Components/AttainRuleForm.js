@@ -71,7 +71,7 @@ class AttainRuleForm extends React.Component {
                 </Field>
                 <p>Goal to be applied to attainment calculation?</p>
       <Field name="goal_use" component="select" label='Select Usage'>
-                <option value="no">Select Goal Dependency...</option>
+                <option value="none">Select Goal Dependency...</option>
                 <option value="yes">Yes</option>
                 <option value="no">No</option>
               </Field>

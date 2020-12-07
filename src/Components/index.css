@@ -360,3 +360,8 @@ select {
   border-color: #D3D3D3;
 
 }
+
+.pagetitle {
+  text-align:center;
+  margin:auto;
+}

@@ -3,6 +3,7 @@ import db from '../apis/db'
 import history from '../history'
 
 export const selectMonth = (month) => {
+  console.log("Selecting month")
   return({type:SELECT_MONTH, payload:month})
 }
 
@@ -86,7 +87,7 @@ export const login = (formValues,save)=>{
       // sessionStorage.setItem('role',response.data['role'])
       // sessionStorage.setItem('user_id',response.data['user_id'])
       // sessionStorage.setItem('username',response.data['username'])
-      history.push('/')
+      history.push('/report')
     }
 
   }

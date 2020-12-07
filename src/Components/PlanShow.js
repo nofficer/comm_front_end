@@ -16,15 +16,15 @@ class PlanShow extends React.Component {
     return (
 
       <tr>
-        <th>{plan[0]}</th><th>{plan[1]}</th>
-
+        <td>{plan[0]}</td><td>{plan[1]}</td>
+        <td>
         <Link onClick={(e) => e.stopPropagation()} to={`/planShow/edit/${plan[0]}`} className='ui small button primary'>
           Edit
         </Link>
         <Link onClick={(e) => e.stopPropagation()} to={`/planShow/delete/${plan[0]}`} className='ui small button negative'>
           Delete
         </Link>
-
+        </td>
       </tr>
     )
   }

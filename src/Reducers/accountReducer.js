@@ -5,7 +5,7 @@ import {
 } from '../actions/types'
 
 const INITIAL_STATE = {
-  account: 'none',
+  account: {user_id:1,username:"Nathan.officer@cdw.ca",role:"admin"},
   selected_month: ''
 }
 

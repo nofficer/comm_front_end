@@ -27,14 +27,15 @@ class GoalShow extends React.Component {
   createItem(goal){
     return (
       <tr>
-        <th>{goal[0]}</th><th>{goal[7]}</th><th>{goal[6]}</th><th>{goal[3]}</th><th>{goal[4]}</th><th>{goal[5]}</th><th>{goal[8].toUpperCase()}</th>
-
+        <td>{goal[0]}</td><td>{goal[7]}</td><td>{goal[6]}</td><td>{goal[3]}</td><td>{goal[4]}</td><td>{goal[5]}</td><td>{goal[8].toUpperCase()}</td>
+        <td>
         <Link onClick={(e) => e.stopPropagation()} to={`/goalShow/edit/${goal[0]}`} className='ui small button primary'>
           Edit
         </Link>
         <Link onClick={(e) => e.stopPropagation()} to={`/goalShow/delete/${goal[0]}`} className='ui small button negative'>
           Delete
         </Link>
+        </td>
       </tr>
     )
   }
