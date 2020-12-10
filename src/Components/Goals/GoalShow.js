@@ -3,13 +3,6 @@ import { connect } from 'react-redux'
 import { getGoals,getTime } from '../../actions'
 import { Link } from 'react-router-dom'
 
-
-
-
-
-
-
-
 import Login from '../Accounts/Login'
 
 
@@ -52,7 +45,9 @@ class GoalShow extends React.Component {
   render(){
     if(this.props.account['role'] == 'admin'){
       return (<div className='ui grid'>
-        <h1>Goals</h1>
+      <div className='sixteen wide column'>
+        <h1 className='pagetitle'>Goals</h1>
+        </div>
 
         <table className='ui celled table'>
 

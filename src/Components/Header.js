@@ -1,12 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import {logout} from '../actions'
+import {logout,selectMonth,getTime} from '../actions'
 import history from '../history'
 
 
 class Header extends React.Component {
   componentDidMount(){
+    this.props.getTime()
+    this.props.selectMonth(this.props.month['current.month_id'])
      // this.props.setAccount()
   }
   renderSignIn(){
@@ -271,32 +273,34 @@ class Header extends React.Component {
 
             <div className='ui three item menu'>
 
-            <div class="ui simple dropdown item">
-            <div onClick={(e) => e.stopPropagation(history.push('/report'))} className='item'>
+
+            <div onClick={(e) => e.stopPropagation(history.push('/report'))} className='item ui simple dropdown hoveritem'>
             <Link to='/report'>
                 Payouts
             </Link>
             </div>
-            </div>
 
 
 
 
-              <div class="ui simple dropdown item">
-              <div onClick={(e) => e.stopPropagation(this.props.logout())} className='item'>
+
+
+              <div onClick={(e) => e.stopPropagation(this.props.logout())} className='item ui simple dropdown hoveritem'>
 
               <Link onClick={(e) => e.stopPropagation(this.props.logout())}  to='/'>
                   Log out
               </Link>
               </div>
-              </div>
 
-              <div class="ui simple dropdown item">
-              <div onClick={(e) => e.stopPropagation(history.push({pathname:'/passwordchange',state:{detail:this.props.account['user_id']}}))} className='item'>
 
-                  Change Passowrd
 
-              </div>
+              <div onClick={(e) => e.stopPropagation(history.push({pathname:'/passwordchange',state:{detail:this.props.account['user_id']}}))} className='item ui simple dropdown hoveritem'>
+
+              Change Passowrd
+
+
+
+
               </div>
 
 
@@ -332,8 +336,9 @@ class Header extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    account: state.account.account
+    account: state.account.account,
+    month:state.month.month
   }
 }
 
-export default connect(mapStateToProps, { logout })(Header)
+export default connect(mapStateToProps, { logout,selectMonth,getTime })(Header)

@@ -1,11 +1,12 @@
 import {
-  GET_PAYOUTS,DELETE_PAYOUT,EDIT_PAYOUT,GET_PAYOUT,CALC_PLANS,LOAD,GET_PAYOUTS_USER
+  GET_PAYOUTS,DELETE_PAYOUT,EDIT_PAYOUT,GET_PAYOUT,CALC_PLANS,LOAD,GET_PAYOUTS_USER,GET_PAYROLL
 } from '../actions/types'
 
 const INITIAL_STATE = {
   payouts: [],
   summary: [],
-  payout: {}
+  payout: {},
+  payroll: []
 }
 
 export default (state=INITIAL_STATE, action) => {
@@ -24,6 +25,8 @@ export default (state=INITIAL_STATE, action) => {
       return{...state, payouts: action.payload,calcs: 'Done'}
     case GET_PAYOUTS_USER:
       return{...state,summary: action.payload}
+    case GET_PAYROLL:
+      return{...state,payroll:action.payload}
     default:
       return state
   }

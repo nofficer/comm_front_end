@@ -30,7 +30,7 @@ class UserEdit extends React.Component {
   render(){
     if(this.props.account['role'] == 'admin'){
       return (
-        <div><UserForm onSubmit={this.onSubmit} initialValues={this.props.user} editing="yes"  populateDropdown={this.populateDropdown()} date={moment().format('YYYY-MM-DD')}  /></div>
+        <div><UserForm title={this.props.user['name']} onSubmit={this.onSubmit} initialValues={this.props.user} editing="yes"  populateDropdown={this.populateDropdown()} date={moment().format('YYYY-MM-DD')}  /></div>
       )
     }
 

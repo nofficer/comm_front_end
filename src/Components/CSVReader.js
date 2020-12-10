@@ -65,6 +65,7 @@ class CSVReaderV extends Component {
 
                 var p;
                 for (p=0;p < this.my_data.length; p++){
+                  console.log(this.my_data[p]['date'])
 
                   if(this.isValidDate(this.my_data[p]['date']) && this.isWithinPeriod(this.my_data[p]['date']) ){
 

@@ -16,7 +16,7 @@ class AttainRuleDelete extends React.Component {
 
   componentDidMount(){
     this.props.getAttainmentRule({"rule_id": this.props.match.params.rule_id})
-    // this.props.checkRuleUse({"plan_id": this.props.location.state['plan_id']})
+    this.props.checkRuleUse({"rule_id": this.props.match.params.rule_id})
     this.props.getTime()
   }
 

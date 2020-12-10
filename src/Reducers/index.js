@@ -13,6 +13,7 @@ import timeReducer from './timeReducer'
 import accountReducer from './accountReducer'
 import goalReducer from './goalReducer'
 import errorReducer from './errorReducer'
+import filterReducer from './filterReducer'
 
 export default combineReducers ({
   form: formReducer,
@@ -28,5 +29,6 @@ export default combineReducers ({
   month: timeReducer,
   account: accountReducer,
   goals: goalReducer,
-  errors: errorReducer
+  errors: errorReducer,
+  filter:filterReducer
 })

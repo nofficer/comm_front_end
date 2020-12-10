@@ -29,7 +29,15 @@ class PasswordChange extends React.Component {
 
 // {'trans_gp':this.props.trans['trans_gp'], 'trans_rev':this.props.trans['trans_rev'], 'trans_seller_id':this.props.trans['trans_seller_id'],'trans_type':this.props.trans['trans_type']} initialValues={this.props.trans}
   render(){
-    return <div> <UserForm onSubmit={this.onSubmit} editing="password" populateDropdown={this.populateDropdown()} /></div>
+    if(this.props.account['role'] == 'admin'){
+      return <div> <UserForm title='Enter New Password' onSubmit={this.onSubmit} editing="password" populateDropdown={this.populateDropdown()} /></div>
+    }
+    else if (this.props.account['user_id'] == history.location.state.detail){
+      return <div> <UserForm title='Enter New Password'  onSubmit={this.onSubmit} editing="password" populateDropdown={this.populateDropdown()} /></div>
+    }
+    else{
+      return("You don't have permission to do that")
+    }
 }
 }
 

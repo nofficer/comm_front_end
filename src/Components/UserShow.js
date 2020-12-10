@@ -14,7 +14,7 @@ class UserShow extends React.Component {
 
   createItem(user){
     return (
-      <tr><td>{user[0]}</td><td>{user[1]}</td><td>{user[2]}</td><td>{user[3]}</td><td>{user[4]}</td><td>{user[5]}</td><td>{user[6]}</td>
+      <tr><td>{user[0]}</td><td>{user[1]}</td><td>{user[2]}</td><td>{user[3]}</td><td>{user[4]}</td><td>{user[5]}</td><td>{user[6]}</td><td>{user[7]}</td>
       <td><Link onClick={(e) => e.stopPropagation()} to={`/userShow/edit/${user[0]}`} className='ui small button primary'>
         Edit
       </Link>
@@ -44,7 +44,7 @@ class UserShow extends React.Component {
   render(){
     if(this.props.account['role'] == 'admin'){
       return (<div>
-        <h1>Users</h1>
+        <h1 className='pagetitle'>Users</h1>
         <table className='ui celled table'>
           <thead>
             <tr>
@@ -55,6 +55,7 @@ class UserShow extends React.Component {
               <th><strong>Location</strong></th>
               <th><strong>Username</strong></th>
               <th><strong>Role</strong></th>
+              <th><strong>Annual TI</strong></th>
               <th><strong>Options</strong></th>
             </tr>
           </thead>

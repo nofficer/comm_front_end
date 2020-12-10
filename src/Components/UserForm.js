@@ -20,7 +20,7 @@ class UserForm extends React.Component {
     const className=`field ${meta.error && meta.touched ? 'error' : ''}`
     return (
       <div className={className}>
-      <label id='notblack'>{label}</label>
+      <label id='notblack'></label>
       <input type={type} {...input} autoComplete='off'  />
       {this.renderError(meta)}
       </div>
@@ -38,57 +38,330 @@ class UserForm extends React.Component {
   render(){
     if(this.props.editing == "yes") {
       return (
-        <form className='ui form error' onSubmit={this.props.handleSubmit(this.onSubmit)}>
+        <div>
+        <div className='ui grid'>
+        <div className='ui grid'>
+          <div class='sixteen wide column'>
+            <h1 className='pagetitle center aligned'></h1>
+          </div>
+        </div>
+        <div className='ui grid'>
+          <div class='sixteen wide column'>
+            <h1 className='pagetitle center aligned'></h1>
+          </div>
+        </div>
+        <div class='six wide column'>
 
-          <Field name='name' component={this.renderInput} label='Enter Name' />
-          <Field name="plan_id" component="select" label='Enter Plan_ID'>
-                    <option value="">Select a plan...</option>
-                    {this.props.populateDropdown.map(plan =>
-                      <option value={plan[0]} key={plan[1]}>{plan[1]}</option>)}
-                  </Field>
-          <Field name='user_location' component={this.renderInput} label='Enter Location' />
-          <Field name='username' component={this.renderInput} label='Enter Username' />
-          <Field name="role" component="select" label='Select Role'>
-                    <option value="">Select a role...</option>
-                    <option value="admin">Admin</option>
-                    <option value="seller">Seller</option>
-                  </Field>
-          <br/>
-          <button className='ui button primary'>Submit</button>
+        </div>
+          <div class='four wide column'>
+          <div className='ui center aligned grid'>
+            <h1 className='pagetitle'>{this.props.title}</h1>
+            </div>
+          </div>
+          <div class='six wide column'>
+
+          </div>
+        </div>
+        <div className='ui grid'>
+          <div class='sixteen wide column'>
+            <h1 className='pagetitle center aligned'></h1>
+          </div>
+        </div>
+        <div className='ui grid'>
+          <div class='sixteen wide column'>
+            <h1 className='pagetitle center aligned'></h1>
+          </div>
+        </div>
+
+        <div className='ui grid'>
+          <div class='sixteen wide column'>
+              <div class="ui horizontal divider">
+                *
+              </div>
+          </div>
+        </div>
+
+
+        <div className='ui grid'>
+          <div class='sixteen wide column'>
+            <h1 className='pagetitle center aligned'></h1>
+          </div>
+        </div>
+
+
+        <form className='ui form error' onSubmit={this.props.handleSubmit(this.onSubmit)}>
+        <div className='ui grid'>
+
+        <div class='four wide column'>
+        <p>Enter Name</p>
+        <Field name='name' component={this.renderInput} label='Enter Name' />
+        </div>
+
+
+
+        <div class='four wide column'>
+        <p>Select Plan</p>
+        <Field name="plan_id" component="select" label='Enter Plan_ID'>
+                  <option value="">Select a plan...</option>
+                  {this.props.populateDropdown.map(plan =>
+                    <option value={plan[0]} key={plan[1]}>{plan[1]}</option>)}
+                </Field>
+        </div>
+
+        <div class='four wide column'>
+        <p>Enter Location</p>
+        <Field name='user_location' component={this.renderInput} label='Enter Location' />
+        </div>
+
+        <div class='four wide column'>
+        <p>Select Role</p>
+        <Field name="role" component="select" label='Select Role'>
+                  <option value="">Select a role...</option>
+                  <option value="admin">Admin</option>
+                  <option value="seller">Seller</option>
+                </Field>
+        </div>
+
+        <div class='two wide column'>
+        <p>Enter Annual Target Incentive</p>
+        <Field name='annual_ti' component={this.renderInput} label='Enter Annual_Ti' />
+        </div>
+
+        <br/>
+        </div>
+
+
+        <div className='ui grid'>
+          <div class='sixteen wide column'>
+            <h1 className='pagetitle center aligned'></h1>
+          </div>
+        </div>
+        <div className='ui grid'>
+          <div class='sixteen wide column'>
+            <h1 className='pagetitle center aligned'></h1>
+          </div>
+        </div>
+        <div class="ui horizontal divider">
+        *
+        </div>
+        <div className='ui grid'>
+        <div class='six wide column'>
+
+        </div>
+          <div class='four wide column'>
+            <button className='fluid ui button primary'>Submit</button>
+          </div>
+          <div class='six wide column'>
+
+          </div>
+        </div>
         </form>
+        </div>
       )
     }
     if(this.props.editing == "password"){
       return(
-        <form className='ui form error' onSubmit={this.props.handleSubmit(this.onSubmit)}>
+        <div>
+        <div className='ui grid'>
+        <div class='six wide column'>
 
-          <Field name='password' type='password' component={this.renderInput} label='Enter a new Password' />
-          <br/>
-          <button className='ui button primary'>Submit</button>
+        </div>
+        <div className='ui grid'>
+          <div class='sixteen wide column'>
+            <h1 className='pagetitle center aligned'></h1>
+          </div>
+        </div>
+        <div className='ui grid'>
+          <div class='sixteen wide column'>
+            <h1 className='pagetitle center aligned'></h1>
+          </div>
+        </div>
+          <div class='four wide column'>
+          <div className='ui center aligned grid'>
+            <h1 className='pagetitle'>{this.props.title}</h1>
+            </div>
+          </div>
+          <div class='six wide column'>
+
+          </div>
+          <div className='ui grid'>
+            <div class='sixteen wide column'>
+              <h1 className='pagetitle center aligned'></h1>
+            </div>
+          </div>
+          <div className='ui grid'>
+            <div class='sixteen wide column'>
+              <h1 className='pagetitle center aligned'></h1>
+            </div>
+          </div>
+        </div>
+        <form className='ui form error' onSubmit={this.props.handleSubmit(this.onSubmit)}>
+        <div className='ui grid'>
+        <div className='six wide column'>
+        </div>
+        <div className='four wide column'>
+        <Field name='password' type='password' component={this.renderInput} label='Enter a new Password' />
+        <br/>
+        </div>
+        <div className='six wide column'>
+        </div>
+
+
+
+
+
+        </div>
+
+        <div className='ui grid'>
+        <div className='six wide column'>
+        </div>
+        <div className='four wide column'>
+        <button className='ui button fluid primary'>Submit</button>
+        </div>
+        <div className='six wide column'>
+        </div>
+
+
+
+
+
+        </div>
+
+
         </form>
+        </div>
       )
     }
     else{
       return (
+        <div>
+        <div className='ui grid'>
+        <div className='ui grid'>
+          <div class='sixteen wide column'>
+            <h1 className='pagetitle center aligned'></h1>
+          </div>
+        </div>
+        <div className='ui grid'>
+          <div class='sixteen wide column'>
+            <h1 className='pagetitle center aligned'></h1>
+          </div>
+        </div>
+        <div class='sixteen wide column'>
+        <div className='ui center aligned grid'>
+          <h1 className='pagetitle center aligned'>{this.props.title}</h1>
+          </div>
+        </div>
+        <div className='ui grid'>
+          <div class='sixteen wide column'>
+            <h1 className='pagetitle center aligned'></h1>
+          </div>
+        </div>
+        <div className='ui grid'>
+          <div class='sixteen wide column'>
+            <h1 className='pagetitle center aligned'></h1>
+          </div>
+        </div>
+
+        <div class='sixteen wide column'>
+          <div class="ui horizontal divider">
+            *
+          </div>
+        </div>
+        </div>
+        <div className='ui grid'>
+          <div class='sixteen wide column'>
+            <h1 className='pagetitle center aligned'></h1>
+          </div>
+        </div>
+
         <form className='ui form error' onSubmit={this.props.handleSubmit(this.onSubmit)}>
-          <Field name='user_id' component={this.renderInput} label='Enter Employee ID' />
-          <Field name='name' component={this.renderInput} label='Enter Name' />
-          <Field name="plan_id" component="select" label='Enter Plan_ID'>
-                    <option value="">Select a plan...</option>
-                    {this.props.populateDropdown.map(plan =>
-                      <option value={plan[0]} key={plan[1]}>{plan[1]}</option>)}
-                  </Field>
-          <Field name='user_location' component={this.renderInput} label='Enter Location' />
-          <Field name='username' component={this.renderInput} label='Enter Username' />
-          <Field name='password' type='password' component={this.renderInput} label='Enter Password' />
-          <Field name="role" component="select" label='Select Role'>
-                    <option value="">Select a role...</option>
-                    <option value="admin">Admin</option>
-                    <option value="seller">Seller</option>
-                  </Field>
+        <div className='ui grid'>
+        <div className='two wide column'>
+        <p>Enter Employee ID</p>
+        <Field name='user_id' component={this.renderInput} label='Enter Employee ID' />
+
+        </div>
+
+        <div className='two wide column'>
+        <p>Enter Name</p>
+        <Field name='name' component={this.renderInput} label='Enter Name' />
+        </div>
+
+        <div className='two wide column'>
+        <p>Select Plan</p>
+        <Field name="plan_id" component="select" label='Enter Plan_ID'>
+                  <option value="">Select a plan...</option>
+                  {this.props.populateDropdown.map(plan =>
+                    <option value={plan[0]} key={plan[1]}>{plan[1]}</option>)}
+                </Field>
+        </div>
+
+        <div className='two wide column'>
+        <p>Enter Location</p>
+        <Field name='user_location' component={this.renderInput} label='Enter Location' />
+        </div>
+
+        <div className='two wide column'>
+        <p>Enter Username</p>
+        <Field name='username' component={this.renderInput} label='Enter Username' />
+        </div>
+
+        <div className='two wide column'>
+        <p>Enter Password</p>
+        <Field name='password' type='password' component={this.renderInput} label='Enter Password' />
+        </div>
+
+        <div className='two wide column'>
+        <p>Select Role</p>
+        <Field name="role" component="select" label='Select Role'>
+                  <option value="">Select a role...</option>
+                  <option value="admin">Admin</option>
+                  <option value="seller">Seller</option>
+                </Field>
+        </div>
+
+
+        <div class='two wide column'>
+        <p>Enter Annual Target Incentive</p>
+        <Field name='annual_ti' component={this.renderInput} label='Enter Annual_Ti' />
+        </div>
+
+
+
+
+
+
+
           <br/>
-          <button className='ui button primary'>Submit</button>
+
+          </div>
+          <div className='ui grid'>
+            <div class='sixteen wide column'>
+              <h1 className='pagetitle center aligned'></h1>
+            </div>
+          </div>
+          <div className='ui grid'>
+            <div class='sixteen wide column'>
+              <h1 className='pagetitle center aligned'></h1>
+            </div>
+          </div>
+          <div class="ui horizontal divider">
+          *
+          </div>
+          <div className='ui grid'>
+          <div class='six wide column'>
+
+          </div>
+            <div class='four wide column'>
+              <button className='fluid ui button primary'>Submit</button>
+            </div>
+            <div class='six wide column'>
+
+            </div>
+          </div>
         </form>
+        </div>
+
       )
     }
 

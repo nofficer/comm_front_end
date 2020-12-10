@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getPayouts,calcPlans,loadCalcs,clearError } from '../../actions'
+import { getPayouts,calcPlans,loadCalcs,clearError,setFilter,getFilter } from '../../actions'
 import { Link } from 'react-router-dom'
 import Loader from '../../Loader'
 import Login from '../Accounts/Login'
@@ -20,13 +20,51 @@ class PayoutShow extends React.Component {
 
   componentDidMount(){
     this.props.getPayouts()
+    this.props.getFilter()
+
+  }
+
+  paymap = {
+    'payout_id':0,
+    'transaction_id':1,
+    'seller_id':2,
+    'payee':3,
+    'revenue':4,
+    'gp':5,
+    'attainment':6,
+    'payout':7,
+    'split_percent':8,
+    'location':9,
+    'payout_multiplier':10,
+    'order_num':11,
+    'custom_field':12,
+    'period_id':13,
+    'rule':14
+
+  }
+
+  filterObj = {
 
   }
 
   createItem(payout){
+
+    var filters = Object.keys(this.props.filter)
+    var check = true
+    filters.map((filter) => {
+      console.log(payout[this.paymap[filter]])
+      console.log(this.props.filter[filter])
+      if(!payout[this.paymap[filter]].toString().toLowerCase().includes(this.props.filter[filter].toLowerCase())){
+        check = false
+      }
+    })
+
+    if(
+      check
+    ){
     return (
       <tr>
-        <td>{payout[0]}</td><td>{payout[1]}</td><td>{payout[2]}</td><td>{payout[3]}</td><td>${payout[4]}</td><td>${payout[5]}</td><td>${payout[6]}</td><td>${payout[7]}</td><td>{payout[8]}</td><td>{payout[9]}</td><td>{payout[10]}</td><td>{payout[11]}</td><td>{payout[12]}</td><td>{payout[13]}</td><td>{payout[14]}</td>
+        <td>{payout[0]}</td><td>{payout[1]}</td><td>{payout[2]}</td><td>{payout[3]}</td><td>${payout[4]}</td><td>${payout[5]}</td><td>{payout[6]}</td><td>${payout[7]}</td><td>{payout[8]}</td><td>{payout[9]}</td><td>{payout[10]}</td><td>{payout[11]}</td><td>{payout[12]}</td><td>{payout[13]}</td><td>{payout[14]}</td>
         <td>
         <Link onClick={(e) => e.stopPropagation()} to={`/payoutShow/edit/${payout[0]}`} className='ui small button primary'>
           Edit
@@ -34,8 +72,12 @@ class PayoutShow extends React.Component {
 
         </td>
       </tr>
-    )
+    )}
   }
+
+
+
+
 
   renderList(){
 
@@ -53,12 +95,93 @@ class PayoutShow extends React.Component {
 
 
     return (<div className='ui  grid'>
-      <h1>Payouts</h1>
-      <button className='ui button primary' onClick={this.runCalc}>Run Calcs</button>
+    <div className='one wide column'>
+
+    </div>
+
+    <div className='fourteen wide column'>
+    <div className='ui center aligned grid'>
+      <h1 className='pagetitle'>Payouts</h1>
+      </div>
+      </div>
+    <div className='one wide column'></div>
+    <div className='six wide column'></div>
+    <div className='four wide column'>
+      <div className='ui button fluid positive' onClick={this.runCalc}>Run Calcs</div>
+    </div>
+    <div className='six wide column'></div>
+
 
       <table className='ui celled table'>
 
         <thead>
+        <tr>
+          <td>
+            <div class="ui input">
+              <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('payout_id',e.target.value))} placeholder="Search..."/>
+            </div>
+          </td>
+          <td>
+            <div class="ui input">
+              <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('transaction_id',e.target.value))} placeholder="Search..."/>
+            </div>
+          </td><td>
+            <div class="ui input">
+              <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('seller_id',e.target.value))} placeholder="Search..."/>
+            </div>
+          </td><td>
+            <div class="ui input">
+              <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('payee',e.target.value))} placeholder="Search..."/>
+            </div>
+          </td><td>
+            <div class="ui input">
+              <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('revenue',e.target.value))} placeholder="Search..."/>
+            </div>
+          </td><td>
+            <div class="ui input">
+              <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('gp',e.target.value))} placeholder="Search..."/>
+            </div>
+          </td><td>
+            <div class="ui input">
+              <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('attainment',e.target.value))} placeholder="Search..."/>
+            </div>
+          </td><td>
+            <div class="ui input">
+              <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('payout',e.target.value))} placeholder="Search..."/>
+            </div>
+          </td><td>
+            <div class="ui input">
+              <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('split_percent',e.target.value))} placeholder="Search..."/>
+            </div>
+          </td><td>
+            <div class="ui input">
+              <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('location',e.target.value))} placeholder="Search..."/>
+            </div>
+          </td><td>
+            <div class="ui input">
+              <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('payout_multiplier',e.target.value))} placeholder="Search..."/>
+            </div>
+          </td><td>
+            <div class="ui input">
+              <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('order_num',e.target.value))} placeholder="Search..."/>
+            </div>
+          </td><td>
+            <div class="ui input">
+              <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('custom_field',e.target.value))} placeholder="Search..."/>
+            </div>
+          </td><td>
+            <div class="ui input">
+              <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('period_id',e.target.value))} placeholder="Search..."/>
+            </div>
+          </td><td>
+            <div class="ui input">
+              <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('rule'))} placeholder="Search..."/>
+            </div>
+          </td><td>
+
+          </td>
+        </tr>
+
           <tr>
             <th><strong>Payout ID</strong></th>
             <th><strong>Transaction ID</strong></th>
@@ -81,15 +204,16 @@ class PayoutShow extends React.Component {
         {this.renderList()}
       </table>
 
+
       </div>)
   }
 
   render(){
-    console.log(this.props.errors)
+
     if(this.props.account['role'] == 'admin'){
       if(this.props.calcs == 'Running'){
         return (
-          <Loader filler="Calculations Running..."/>
+          <Loader filler="Calculations Running - Please do not exit or refresh this page"/>
         )
     }
     else if(this.props.errors == "goal") {
@@ -123,8 +247,9 @@ const mapStateToProps = (state) => {
     payouts: Object.values(state.payouts.payouts),
     calcs: state.payouts.calcs,
     account: state.account.account,
-    errors: state.errors.errors
+    errors: state.errors.errors,
+    filter: state.filter.filter
   }
 }
 
-export default connect(mapStateToProps, { getPayouts,calcPlans,loadCalcs,clearError })(PayoutShow)
+export default connect(mapStateToProps, { getPayouts,calcPlans,loadCalcs,clearError,setFilter,getFilter })(PayoutShow)

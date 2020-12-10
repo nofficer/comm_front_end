@@ -17,10 +17,17 @@ class Landing extends React.Component {
   }
 
   render(){
-      return (
+      return (<div className='ui grid'>
+      <div className='sixteen wide column'></div>
+      <div className='sixteen wide column'></div>
+      <div className='sixteen wide column'></div>
+      <div className='sixteen wide column'></div>
         <div className='ui text container ' >
+        <div className='ui center aligned grid'>
           <h1 className='centertext'>EasyComp</h1>
+          </div>
 
+        </div>
         </div>
       )
   }

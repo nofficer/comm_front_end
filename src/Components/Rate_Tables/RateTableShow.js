@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getRateTables,getTime } from '../../actions'
+import { getRateTables,getTime,setFilter } from '../../actions'
 import { Link } from 'react-router-dom'
 
 
@@ -20,25 +20,56 @@ import Login from '../Accounts/Login'
 
 class RateTableShow extends React.Component {
 
+  filterMap = {
+    'rate_id':0,
+    'rule_name':10,
+    'rate_type':2,
+    'start':3,
+    'end':4,
+    'attain_start':5,
+    'attain_end':6,
+    'tier':7,
+    'rate':8
+
+
+  }
+
   componentDidMount(){
     this.props.getRateTables()
     this.props.getTime()
   }
 
   createItem(rateTable){
-    return (
-      <tr>
-        <td>{rateTable[0]}</td><td>{rateTable[10]}</td><td>{rateTable[2]}</td><td>{rateTable[3]}</td><td>{rateTable[4]}</td><td>{rateTable[5]}</td><td>{rateTable[6]}</td><td>{rateTable[7]}</td><td>{rateTable[8]}</td>
-        <td>
-        <Link onClick={(e) => e.stopPropagation()} to={`/rateTableShow/edit/${rateTable[0]}`} className='ui small button primary'>
-          Edit
-        </Link>
-        <Link onClick={(e) => e.stopPropagation()} to={`/rateTableShow/delete/${rateTable[0]}`} className='ui small button negative'>
-          Delete
-        </Link>
-        </td>
-      </tr>
-    )
+    var filters = Object.keys(this.props.filter)
+    var check = true
+    filters.map((filter) => {
+      console.log(rateTable[this.filterMap[filter]])
+      console.log(this.props.filter[filter])
+      if(!rateTable[this.filterMap[filter]].toString().toLowerCase().includes(this.props.filter[filter].toLowerCase())){
+        check = false
+      }
+    })
+
+    if(
+      check
+    ){
+
+          return (
+            <tr>
+              <td>{rateTable[0]}</td><td>{rateTable[10]}</td><td>{rateTable[2]}</td><td>{rateTable[3]}</td><td>{rateTable[4]}</td><td>{rateTable[5]}</td><td>{rateTable[6]}</td><td>{rateTable[7]}</td><td>{rateTable[8]}</td>
+              <td>
+              <Link onClick={(e) => e.stopPropagation()} to={`/rateTableShow/edit/${rateTable[0]}`} className='ui small button primary'>
+                Edit
+              </Link>
+              <Link onClick={(e) => e.stopPropagation()} to={`/rateTableShow/delete/${rateTable[0]}`} className='ui small button negative'>
+                Delete
+              </Link>
+              </td>
+            </tr>
+          )
+    }
+
+
   }
 
   renderList(){
@@ -53,11 +84,61 @@ class RateTableShow extends React.Component {
   render(){
     if(this.props.account['role'] == 'admin'){
       return (<div className='ui grid'>
-        <h1>Rate Tables</h1>
+      <div className='sixteen wide column'>
+        <h1 className='pagetitle'>Rate Tables</h1>
+        </div>
 
         <table className='ui celled table'>
 
           <thead>
+          <tr>
+            <td>
+              <div class="ui input">
+                <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('rate_id',e.target.value))} placeholder="Search..."/>
+              </div>
+            </td>
+            <td>
+              <div class="ui input">
+                <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('rule_name',e.target.value))} placeholder="Search..."/>
+              </div>
+            </td>
+            <td>
+              <div class="ui input">
+                <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('rate_type',e.target.value))} placeholder="Search..."/>
+              </div>
+            </td>
+            <td>
+              <div class="ui input">
+                <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('start',e.target.value))} placeholder="Search..."/>
+              </div>
+            </td>
+            <td>
+              <div class="ui input">
+                <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('end',e.target.value))} placeholder="Search..."/>
+              </div>
+            </td>
+            <td>
+              <div class="ui input">
+                <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('attain_start',e.target.value))} placeholder="Search..."/>
+              </div>
+            </td>
+            <td>
+              <div class="ui input">
+                <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('attain_end',e.target.value))} placeholder="Search..."/>
+              </div>
+            </td>
+            <td>
+              <div class="ui input">
+                <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('tier',e.target.value))} placeholder="Search..."/>
+              </div>
+            </td>
+            <td>
+              <div class="ui input">
+                <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('rate',e.target.value))} placeholder="Search..."/>
+              </div>
+            </td>
+            <td></td>
+            </tr>
             <tr>
               <th><strong>Rate Table ID</strong></th>
               <th><strong>Attainment Rule Name</strong></th>
@@ -93,8 +174,9 @@ class RateTableShow extends React.Component {
 const mapStateToProps = (state) => {
   return {
     rateTables: Object.values(state.rateTables.rateTables),
-    account: state.account.account
+    account: state.account.account,
+    filter: state.filter.filter
   }
 }
 
-export default connect(mapStateToProps, { getRateTables,getTime })(RateTableShow)
+export default connect(mapStateToProps, { getRateTables,getTime,setFilter })(RateTableShow)

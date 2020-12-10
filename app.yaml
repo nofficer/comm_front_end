@@ -13,3 +13,7 @@ handlers:
   - url: .*
     static_files: build/index.html
     upload: build/index.html
+
+  - url: /static/css/(.*)
+    static_files: build/static/css/\1
+    upload: build/static/css/(.*)

@@ -59,12 +59,30 @@ class PayoutShow extends React.Component {
   }
 
   createItem(payout){
-    if(payout[15] == this.props.account['user_id'] && payout[13] == this.props.selected_month){
+    if(payout[15] == this.props.account['user_id'] && this.props.selected_month == "all"){
+      payout[4] = parseInt(payout[4])
+      payout[5] = parseInt(payout[5])
+      payout[6] = parseInt(payout[6])
+      payout[7] = parseInt(payout[7])
       statement_details.push(payout)
-      console.log(this.props.selected_month)
+
       return (
         <tr>
-          <td>{payout[0]}</td><td>{payout[1]}</td><td>{payout[2]}</td><td>{payout[3]}</td><td>$ {payout[4]}</td><td>$ {payout[5]}</td><td>$ {payout[6]}</td><td>{payout[7]}</td><td>{payout[8]}</td><td>{payout[9]}</td><td>{payout[10]}</td><td>{payout[11]}</td><td>{payout[12]}</td><td>{payout[13]}</td><td>{payout[14]}</td>
+          <td>{payout[0]}</td><td>{payout[1]}</td><td>{payout[2]}</td><td>{payout[3]}</td><td>$ {payout[4]}</td><td>$ {payout[5]}</td><td>{payout[6]}</td><td>${payout[7]}</td><td>{payout[8]}</td><td>{payout[9]}</td><td>{payout[10]}</td><td>{payout[11]}</td><td>{payout[12]}</td><td>{payout[13]}</td><td>{payout[14]}</td>
+        </tr>
+
+      )
+    }
+    else if(payout[15] == this.props.account['user_id'] && payout[13] == this.props.selected_month){
+      payout[4] = parseInt(payout[4])
+      payout[5] = parseInt(payout[5])
+      payout[6] = parseInt(payout[6])
+      payout[7] = parseInt(payout[7])
+      statement_details.push(payout)
+
+      return (
+        <tr>
+          <td>{payout[0]}</td><td>{payout[1]}</td><td>{payout[2]}</td><td>{payout[3]}</td><td>$ {payout[4]}</td><td>$ {payout[5]}</td><td>{payout[6]}</td><td>$ {payout[7]}</td><td>{payout[8]}</td><td>{payout[9]}</td><td>{payout[10]}</td><td>{payout[11]}</td><td>{payout[12]}</td><td>{payout[13]}</td><td>{payout[14]}</td>
         </tr>
 
       )
@@ -74,12 +92,26 @@ class PayoutShow extends React.Component {
 
   createSummaryItem(summary){
 
-    statement_details.push([summary['rule_name'],summary['attainment'],summary['payout']])
-      return (
-        <tr>
-          <td>{summary['rule_name']}</td><td>$ {summary['attainment']}</td><td>$ {summary['payout']}</td>
-        </tr>
-      )
+    if(this.props.selected_month == "all"){
+      statement_details.push([summary['rule_name'],summary['attainment'],summary['payout'],monthmap[summary['month_id']]])
+      console.log(statement_details)
+        return (
+          <tr>
+            <td> {monthmap[summary['month_id']]}</td><td>{summary['rule_name']}</td><td> {summary['attainment']}</td><td>$ {summary['payout']}</td>
+          </tr>
+        )
+    }
+    else if(summary['month_id'] == this.props.selected_month){
+      statement_details.push([summary['rule_name'],summary['attainment'],summary['payout'],monthmap[summary['month_id']]])
+      console.log(statement_details)
+        return (
+          <tr>
+            <td> {monthmap[summary['month_id']]}</td><td>{summary['rule_name']}</td><td> {summary['attainment']}</td><td>$ {summary['payout']}</td>
+          </tr>
+        )
+    }
+
+
 
 
   }
@@ -102,22 +134,42 @@ class PayoutShow extends React.Component {
   }
 
   renderSummary(){
-    statement_details = [[`${monthmap[this.props.month['current.month_id']]} Commission statement for  ${this.props.account['username']}`],[],['Summary Performance'],[],['Rule','Attainment','Payout']]
+    statement_details = [[`${monthmap[this.props.selected_month]} Commission statement for  ${this.props.account['username']}`],[],['Summary Performance'],[],['Rule','Attainment','Payout','Month']]
     return this.props.summary.map((summary) => {
       return (this.createSummaryItem(summary))
     })
   }
-  runCalc = () => {
-    this.props.loadCalcs()
-    this.props.calcPlans()
+  renderTotal(){
+     var total_payout = 0
+     this.props.summary.map((summary) => {
+       if(this.props.selected_month=="all"){
+         total_payout+=parseInt(summary['payout'])
+       }
+       else if (summary['month_id']==this.props.selected_month){
+         total_payout+=parseInt(summary['payout'])
+       }
+
+    })
+    return <h2 className="marginleft ui dropdown">{monthmap[this.props.selected_month]} Payout: $ {total_payout}</h2>
   }
+
+
   renderContent(){
       return (<div className='ui  grid'>
 
       <div class='sixteen wide column'><h1 className='pagetitle center aligned'>Commissions Report - {this.props.account['username']}</h1></div>
+      <div class="sixteen wide column">
+
+      </div>
+      <div class="four wide column"><h2 className='marginleft'>{this.renderTotal()}</h2></div>
+      <div class="eight wide column"></div>
+      <div class="four wide column"></div>
+
       <div class="four wide column">
+
       <select className='marginleft ui dropdown' onChange={this.handleChange}>
-        <option value={this.props.month['current.month_id']}>Select a period...</option>
+        <option value="none">Select a period...</option>
+        <option value="all">Year To Date</option>
         <option value="1">January</option>
         <option value="2">February</option>
         <option value="3">March</option>
@@ -139,18 +191,27 @@ class PayoutShow extends React.Component {
 
 
 
-        <h1>Summary Performance </h1>
+      <div class="four wide column"></div>
+      <div class="eight wide column"><h2 className='pagetitle center aligned'>Summary Performance</h2></div>
+      <div class="four wide column"></div>
+
         <table className='ui celled center aligned table'>
         <thead>
           <tr>
+            <th><strong>Month</strong></th>
             <th><strong>Attainment Rule</strong></th>
             <th><strong>Attainment</strong></th>
             <th><strong>Payout</strong></th>
+
           </tr>
           </thead>
           {this.renderSummary()}
         </table>
-        <h1>Detailed Transaction Listing</h1>
+
+        <div class="four wide column"></div>
+        <div class="eight wide column"><h2 className='pagetitle center aligned'>Detailed Transaction Listing</h2></div>
+        <div class="four wide column"></div>
+
         <table className='ui celled table'>
 
           <thead>

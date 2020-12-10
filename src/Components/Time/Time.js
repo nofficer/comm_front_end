@@ -27,23 +27,81 @@ class Time extends React.Component {
     if(this.props.account['role'] == 'admin'){
       if(this.props.month['current.month_id'] == 1){
         return (
-          <div className='ui text container ' >
-            <h1 className='centertext'>Current Month: {months[this.props.month['current.month_id']]}</h1>
+          <div className='ui grid'>
+          <div className='six wide column'></div>
+          <div className='four wide column'><h1 className='centertext'>{months[this.props.month['current.month_id']]}</h1></div>
+          <div className='six wide column'></div>
+          <div className='six wide column'></div>
+          <div className='four wide column'><h1 className='pagetitle'>{this.props.month['cal_year']}</h1></div>
+          <div className='six wide column'></div>
 
-            <button onClick={this.handleClick}>Next</button>
+            <div className='sixteen wide column bottom'>
+                      <div class="ui placeholder segment">
+              <div class="ui two column stackable center aligned grid">
 
-            <h2 className='centertext'>Current Year: {months[this.props.month['cal_year']]}</h2>
+                <div class="middle aligned row">
 
+                  <div class="column">
+                    <div class="ui icon header">
+                      <i class="arrow right icon"></i>
+                      Next period
+                    </div>
+                    <div onClick={this.handleClick} class="ui primary button">
+                      Next
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+            <div className='sixteen wide column bottom'></div>
+            <div className='six wide column'></div>
+            <div className='four wide column'><div className='ui fluid button positive'>Export Payroll File for {months[this.props.month['current.month_id']]}</div></div>
+            <div className='six wide column'></div>
           </div>
         )
       }
       else {
         return (
-          <div className='ui text container ' >
-            <h1 className='centertext'>Current month: {months[this.props.month['current.month_id']]}</h1>
-            <button onClick={this.handleClickRevert}>Revert to Previous</button>
-            <button onClick={this.handleClick}>Next</button>
-            <h4 >Current Year: {this.props.month['cal_year']}</h4>
+          <div className='ui grid'>
+          <div className='six wide column'></div>
+          <div className='four wide column'><h1 className='centertext'>{months[this.props.month['current.month_id']]}</h1></div>
+          <div className='six wide column'></div>
+          <div className='six wide column'></div>
+          <div className='four wide column'><h1 className='pagetitle'>{this.props.month['cal_year']}</h1></div>
+          <div className='six wide column'></div>
+
+            <div className='sixteen wide column bottom'>
+                      <div class="ui placeholder segment">
+              <div class="ui two column stackable center aligned grid">
+                <div class="ui vertical divider">Or</div>
+                <div class="middle aligned row">
+                <div class="column">
+                  <div class="ui icon header">
+                    <i class="arrow left icon"></i>
+                    Previous period
+                  </div>
+                  <div onClick={this.handleClickRevert} class="ui negative button">
+                    Revert
+                  </div>
+                </div>
+                  <div class="column">
+                    <div class="ui icon header">
+                      <i class="arrow right icon"></i>
+                      Next period
+                    </div>
+                    <div onClick={this.handleClick} class="ui primary button">
+                      Next
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+            <div className='sixteen wide column bottom'></div>
+            <div className='six wide column'></div>
+            <div className='four wide column'><div className='ui fluid button positive'>Export Payroll File for {months[this.props.month['current.month_id']]}</div></div>
+            <div className='six wide column'></div>
 
           </div>
         )

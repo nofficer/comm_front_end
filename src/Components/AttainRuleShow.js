@@ -41,7 +41,7 @@ class AttainRuleShow extends React.Component {
   render(){
     if(this.props.account['role'] == 'admin'){
       return (<div className='ui grid'>
-        <h1>Attainment Rules</h1>
+        <h1 className='pagetitle'>Attainment Rules</h1>
 
         <table className='ui celled table'>
 

@@ -24,7 +24,7 @@ class UserCreate extends React.Component {
   render(){
     if(this.props.account['role'] == 'admin'){
       return (
-        <div><UserForm onSubmit={this.onSubmit} populateDropdown={this.populateDropdown()} /></div>
+        <div><UserForm title='Creating new User' onSubmit={this.onSubmit} populateDropdown={this.populateDropdown()} /></div>
       )
     }
 
