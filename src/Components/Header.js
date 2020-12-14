@@ -1,12 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import {logout,selectMonth,getTime} from '../actions'
+import {logout,selectMonth,getTime,clearFilter} from '../actions'
 import history from '../history'
 
 
 class Header extends React.Component {
   componentDidMount(){
+    this.props.clearFilter()
     this.props.getTime()
     this.props.selectMonth(this.props.month['current.month_id'])
      // this.props.setAccount()
@@ -341,4 +342,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { logout,selectMonth,getTime })(Header)
+export default connect(mapStateToProps, { logout,selectMonth,getTime,clearFilter })(Header)

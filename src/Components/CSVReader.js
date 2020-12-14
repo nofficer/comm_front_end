@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { uploadFile,onChangeFile,getTime} from '../actions'
+import { uploadFile,onChangeFile,getTime,loading} from '../actions'
 import Modal from '../Modal'
 import { CSVReader } from 'react-papaparse'
 import history from '../history'
@@ -83,6 +83,7 @@ class CSVReaderV extends Component {
                   this.my_data.push({dupType:dupType})
                   this.my_data.push({table: "transactions"})
                   this.props.uploadFile(this.my_data,'trans')
+                  this.props.loading()
                 }
                 else if(numchecker==false&&datechecker==true){
                   history.push({pathname:'/ImportError',state:{detail:`Wrong number format at line(s)${wrongnumindex}`}})
@@ -133,6 +134,7 @@ class CSVReaderV extends Component {
         this.my_data.push({dupType:dupType})
         this.my_data.push({table: "rate"})
         this.props.uploadFile(this.my_data,'rateTable')
+        this.props.loading()
         }
       else if(numchecker==false&&datechecker==true){
           history.push({pathname:'/ImportError',state:{detail:`Wrong number format  ${wrongnumindex}`}})
@@ -168,6 +170,7 @@ class CSVReaderV extends Component {
         this.my_data.push({dupType:dupType})
         this.my_data.push({table: "users"})
         this.props.uploadFile(this.my_data,'user')
+        this.props.loading()
         }
       else if(numchecker==false&&datechecker==true){
           history.push({pathname:'/ImportError',state:{detail:`Wrong number format  ${wrongnumindex}`}})
@@ -221,6 +224,7 @@ class CSVReaderV extends Component {
         this.my_data.push({dupType:dupType})
         this.my_data.push({table: "goals"})
         this.props.uploadFile(this.my_data,'goal')
+        this.props.loading()
         }
       else if(numchecker==false&&datechecker==true){
           history.push({pathname:'/ImportError',state:{detail:`Wrong number format  ${wrongnumindex}`}})
@@ -239,6 +243,7 @@ class CSVReaderV extends Component {
       this.my_data.push({dupType:dupType})
       this.my_data.push({table: "accounts"})
       this.props.uploadFile(this.my_data,'user')
+      this.props.loading()
     }
 
 
@@ -472,4 +477,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, {uploadFile,getTime})(CSVReaderV)
+export default connect(mapStateToProps, {uploadFile,getTime,loading})(CSVReaderV)

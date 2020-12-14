@@ -12,7 +12,7 @@ class ImportError extends React.Component {
 
     return (
       <React.Fragment>
-                <button
+                <button className='ui button'
                 onClick={() => history.push('/import')}
                 >OK
                 </button>

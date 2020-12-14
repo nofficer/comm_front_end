@@ -1,5 +1,5 @@
 import {
-  SET_FILTER,GET_FILTER
+  SET_FILTER,GET_FILTER,CLEAR_FILTER
 } from '../actions/types'
 
 const INITIAL_STATE = {
@@ -18,8 +18,12 @@ export default (state=INITIAL_STATE, action) => {
       return {...state};
     case GET_FILTER:
       return {...state}
+    case CLEAR_FILTER:
+      return {filter:{}}
     default:
       return state
+
+
   }
 }
 //user_id:1,username:"Nathan.officer@cdw.ca",role:"admin"

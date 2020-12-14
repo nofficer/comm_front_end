@@ -14,6 +14,8 @@ export default (state=INITIAL_STATE, action) => {
       return {...state, calc: action.payload};
     case CHANGE_DONE:
       return{...state, calc: action.payload};
+
+
     default:
       return state
   }

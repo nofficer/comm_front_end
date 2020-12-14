@@ -10,9 +10,13 @@ handlers:
     static_files: build/\1
     upload: build/.*\.(json|ico|js)$
 
+ - url: /static
+    static_dir: public
+
   - url: .*
     static_files: build/index.html
     upload: build/index.html
+
 
   - url: /static/css/(.*)
     static_files: build/static/css/\1

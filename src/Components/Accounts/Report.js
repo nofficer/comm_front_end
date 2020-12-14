@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getPayoutsHistory,calcPlans,loadCalcs, selectMonth,getTime,getPayouts_user } from '../../actions'
+import { getPayoutsHistory,calcPlans,loadCalcs, selectMonth,getTime,getPayouts_user,clearFilter,setFilter } from '../../actions'
 import { Link } from 'react-router-dom'
 import Loader from '../../Loader'
 import Login from '../Accounts/Login'
@@ -36,12 +36,12 @@ class PayoutShow extends React.Component {
     }
     wb.SheetNames.push('Statement')
     var ws_data = statement_details
+
     var ws = XLSX.utils.aoa_to_sheet(ws_data)
     wb.Sheets['Statement'] = ws
-    console.log(statement_details)
+
 
     var wbout = XLSX.write(wb,{bookType:'xlsx', type: 'binary'});
-
 
     saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'EasyComp Commission Statement.xlsx' )
   }
@@ -58,7 +58,46 @@ class PayoutShow extends React.Component {
 
   }
 
+  filterMap = {
+    'payout_id':0,
+    'trans_id':1,
+    'seller_id':2,
+    'payee':3,
+    'revenue':4,
+    'gp':5,
+    'attainment':6,
+    'payout':7,
+    'split_percent':8,
+    'location':9,
+    'payout_multiplier':10,
+    'order_num':11,
+    'custom_field':12,
+    'period_id':13,
+    'attainment_rule':14
+  }
+
   createItem(payout){
+    var filters = Object.keys(this.props.filter)
+    var check = true
+    filters.map((filter) => {
+
+      if(payout[this.filterMap[filter]] == null){
+        check = false
+      }
+      else if(payout[this.filterMap[filter]] != null){
+        if(!payout[this.filterMap[filter]].toString().toLowerCase().includes(this.props.filter[filter].toLowerCase())){
+            check = false
+          }
+      }
+
+
+        }
+    )
+
+    if(
+      check
+    ){
+
     if(payout[15] == this.props.account['user_id'] && this.props.selected_month == "all"){
       payout[4] = parseInt(payout[4])
       payout[5] = parseInt(payout[5])
@@ -87,6 +126,7 @@ class PayoutShow extends React.Component {
 
       )
     }
+  }
 
   }
 
@@ -216,6 +256,83 @@ class PayoutShow extends React.Component {
 
           <thead>
             <tr>
+              <td>
+                <div class="ui input">
+                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('payout_id',e.target.value))} placeholder="Search..."/>
+                </div>
+              </td>
+              <td>
+                <div class="ui input">
+                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('trans_id',e.target.value))} placeholder="Search..."/>
+                </div>
+              </td>
+              <td>
+                <div class="ui input">
+                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('seller_id',e.target.value))} placeholder="Search..."/>
+                </div>
+              </td>
+              <td>
+                <div class="ui input">
+                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('payee',e.target.value))} placeholder="Search..."/>
+                </div>
+              </td>
+              <td>
+                <div class="ui input">
+                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('revenue',e.target.value))} placeholder="Search..."/>
+                </div>
+              </td>
+              <td>
+                <div class="ui input">
+                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('gp',e.target.value))} placeholder="Search..."/>
+                </div>
+              </td>
+              <td>
+                <div class="ui input">
+                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('attainment',e.target.value))} placeholder="Search..."/>
+                </div>
+              </td>
+              <td>
+                <div class="ui input">
+                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('payout',e.target.value))} placeholder="Search..."/>
+                </div>
+              </td>
+              <td>
+                <div class="ui input">
+                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('split_percent',e.target.value))} placeholder="Search..."/>
+                </div>
+              </td>
+              <td>
+                <div class="ui input">
+                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('location',e.target.value))} placeholder="Search..."/>
+                </div>
+              </td>
+              <td>
+                <div class="ui input">
+                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('payout_multiplier',e.target.value))} placeholder="Search..."/>
+                </div>
+              </td>
+              <td>
+                <div class="ui input">
+                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('order_num',e.target.value))} placeholder="Search..."/>
+                </div>
+              </td>
+              <td>
+                <div class="ui input">
+                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('custom_field',e.target.value))} placeholder="Search..."/>
+                </div>
+              </td>
+              <td>
+                <div class="ui input">
+                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('period_id',e.target.value))} placeholder="Search..."/>
+                </div>
+              </td>
+              <td>
+                <div class="ui input">
+                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('attainment_rule',e.target.value))} placeholder="Search..."/>
+                </div>
+              </td>
+            </tr>
+            <tr>
               <th><strong>Payout ID</strong></th>
               <th><strong>Transaction ID</strong></th>
               <th><strong>Seller ID</strong></th>
@@ -275,8 +392,9 @@ const mapStateToProps = (state) => {
     account: state.account.account,
     month: state.month.month,
     selected_month: state.account.selected_month,
-    summary: state.payouts.summary
+    summary: state.payouts.summary,
+    filter:state.filter.filter
   }
 }
 
-export default connect(mapStateToProps, { getPayoutsHistory,calcPlans,loadCalcs,selectMonth,getTime,getPayouts_user })(PayoutShow)
+export default connect(mapStateToProps, { getPayoutsHistory,calcPlans,loadCalcs,selectMonth,getTime,getPayouts_user,clearFilter,setFilter })(PayoutShow)

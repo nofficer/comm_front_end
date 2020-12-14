@@ -5,7 +5,7 @@ import {
 } from '../actions/types'
 
 const INITIAL_STATE = {
-  account: {},
+  account: {role:'admin',username:'admin',user_id:0},
   selected_month: ''
 }
 

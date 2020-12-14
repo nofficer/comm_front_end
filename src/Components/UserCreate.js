@@ -28,6 +28,7 @@ class UserCreate extends React.Component {
       )
     }
 
+
     else if(typeof(this.props.account['user_id']) == "number"){
       return "You do not have sufficient permissions to access this page"
     }
@@ -42,7 +43,8 @@ class UserCreate extends React.Component {
 const mapStateToProps = (state) => {
   return {
     plans: Object.values(state.plans.plans),
-    account: state.account.account
+    account: state.account.account,
+    error:state.errors.errors
   }
 }
 

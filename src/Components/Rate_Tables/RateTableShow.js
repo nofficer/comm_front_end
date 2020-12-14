@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getRateTables,getTime,setFilter } from '../../actions'
+import { getRateTables,getTime,setFilter,clearFilter } from '../../actions'
 import { Link } from 'react-router-dom'
 
 
@@ -35,6 +35,7 @@ class RateTableShow extends React.Component {
   }
 
   componentDidMount(){
+    this.props.clearFilter()
     this.props.getRateTables()
     this.props.getTime()
   }
@@ -43,12 +44,19 @@ class RateTableShow extends React.Component {
     var filters = Object.keys(this.props.filter)
     var check = true
     filters.map((filter) => {
-      console.log(rateTable[this.filterMap[filter]])
-      console.log(this.props.filter[filter])
-      if(!rateTable[this.filterMap[filter]].toString().toLowerCase().includes(this.props.filter[filter].toLowerCase())){
+
+      if(rateTable[this.filterMap[filter]] == null){
         check = false
       }
-    })
+      else if(rateTable[this.filterMap[filter]] != null){
+        if(!rateTable[this.filterMap[filter]].toString().toLowerCase().includes(this.props.filter[filter].toLowerCase())){
+            check = false
+          }
+      }
+
+
+        }
+    )
 
     if(
       check
@@ -179,4 +187,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { getRateTables,getTime,setFilter })(RateTableShow)
+export default connect(mapStateToProps, { getRateTables,getTime,setFilter,clearFilter })(RateTableShow)

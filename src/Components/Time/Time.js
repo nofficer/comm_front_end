@@ -1,9 +1,22 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getTime,updateTime,revertTime} from '../../actions'
+import { getTime,updateTime,revertTime,getPayroll,selectMonth} from '../../actions'
 import history from '../../history'
 import Modal from '../../Modal'
 import Login from '../Accounts/Login'
+
+
+import XLSX from 'xlsx';
+import monthmap from '../monthmap'
+
+import { saveAs } from 'file-saver'
+
+function s2ab(s){
+    var buf = new ArrayBuffer(s.length)
+    var view = new Uint8Array(buf)
+    for (var i =0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+    return buf;
+  }
 
 
 var months = {1:"January",2:"February",3:"March",4:"April",5:"May",6:"June",7:"July",8:"August",9:"September",10:"October",11:"November",12:"December"}
@@ -15,8 +28,46 @@ class Time extends React.Component {
 
   }
 
+
+
+  buildPayFile(payroll){
+    var statement_details = payroll
+    statement_details.unshift(['ID','Name','Payout'])
+    statement_details.unshift([''])
+    statement_details.unshift(['Payroll Export File - ' + monthmap[this.props.selected_month]])
+
+    var wb = XLSX.utils.book_new();
+    wb.Props = {
+      Title: `Payroll Export ${monthmap[this.props.selected_month]}`,
+      Subject: "Payroll",
+      Author: "EasyComp",
+      CreatedDate: new Date(2020,1,1)
+    }
+    wb.SheetNames.push('Payroll')
+    var ws_data = statement_details
+    console.log(ws_data)
+    var ws = XLSX.utils.aoa_to_sheet(ws_data);
+    wb.Sheets['Payroll'] = ws;
+
+    var wbout = XLSX.write(wb,{bookType:'xlsx', type: 'binary'});
+
+
+    saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'Payroll Export '+ monthmap[this.props.selected_month]+ '.xlsx' )
+  }
+
+  handlePayroll(e){
+    this.props.getPayroll({month_id:e.target.value})
+    this.props.selectMonth(e.target.value)
+
+  }
+
   handleClick = () =>{
     history.push({pathname:'/areyousure',state:{change:'next'}})
+  }
+
+  exportPayroll = () => {
+    //console.log(this.props.payroll)
+    this.buildPayFile(this.props.payroll)
   }
 
   handleClickRevert = () => {
@@ -24,6 +75,7 @@ class Time extends React.Component {
   }
 
   render(){
+
     if(this.props.account['role'] == 'admin'){
       if(this.props.month['current.month_id'] == 1){
         return (
@@ -55,8 +107,34 @@ class Time extends React.Component {
             </div>
             </div>
             <div className='sixteen wide column bottom'></div>
+
+
             <div className='six wide column'></div>
-            <div className='four wide column'><div className='ui fluid button positive'>Export Payroll File for {months[this.props.month['current.month_id']]}</div></div>
+            <div className='four wide column'>
+
+
+            <select onChange={(e) => e.stopPropagation(this.handlePayroll(e))} name="months" multiple="" class="ui fluid dropdown">
+            <option value="">Select a month to export...</option>
+          <option value="1">January</option>
+          <option value="2">February</option>
+          <option value="3">March</option>
+          <option value="4">April</option>
+          <option value="5">May</option>
+          <option value="6">June</option>
+          <option value="7">July</option>
+          <option value="8">August</option>
+          <option value="9">September</option>
+          <option value="10">October</option>
+          <option value="11">November</option>
+          <option value="12">December</option>
+          </select>
+
+
+            </div>
+            <div className='six wide column'></div>
+
+            <div className='six wide column'></div>
+            <div className='four wide column'><div onClick={this.exportPayroll} className='ui fluid button positive'>Export Payroll File for {months[this.props.selected_month]}</div></div>
             <div className='six wide column'></div>
           </div>
         )
@@ -100,9 +178,33 @@ class Time extends React.Component {
             </div>
             <div className='sixteen wide column bottom'></div>
             <div className='six wide column'></div>
-            <div className='four wide column'><div className='ui fluid button positive'>Export Payroll File for {months[this.props.month['current.month_id']]}</div></div>
-            <div className='six wide column'></div>
+            <div className='four wide column'>
 
+
+            <select onChange={(e) => e.stopPropagation(this.handlePayroll(e))} name="months" multiple="" class="ui fluid dropdown">
+            <option value="">Select a month to export...</option>
+          <option value="1">January</option>
+          <option value="2">February</option>
+          <option value="3">March</option>
+          <option value="4">April</option>
+          <option value="5">May</option>
+          <option value="6">June</option>
+          <option value="7">July</option>
+          <option value="8">August</option>
+          <option value="9">September</option>
+          <option value="10">October</option>
+          <option value="11">November</option>
+          <option value="12">December</option>
+          </select>
+
+
+            </div>
+            <div className='six wide column'></div>
+            <div className='six wide column'></div>
+              <div className='four wide column'>
+                <div onClick={this.exportPayroll} className='ui fluid button positive'>Export Payroll File for {months[this.props.selected_month]}</div>
+              </div>
+            <div className='six wide column'></div>
           </div>
         )
       }
@@ -121,8 +223,10 @@ class Time extends React.Component {
 const mapStateToProps = (state) => {
   return {
     month: state.month.month,
-    account:state.account.account
+    account:state.account.account,
+    payroll: state.payouts.payroll,
+    selected_month: state.account.selected_month
   }
 }
 
-export default connect(mapStateToProps, {getTime,updateTime,revertTime})(Time)
+export default connect(mapStateToProps, {getTime,updateTime,revertTime,getPayroll,selectMonth})(Time)

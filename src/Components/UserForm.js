@@ -369,6 +369,13 @@ class UserForm extends React.Component {
   }
 }
 
+function isNumeric(str) {
+if (typeof str != "string") return false // we only process strings!
+return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+       !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
+}
+
+
 
 const validate = (formValues) => {
 	const errors = {};
@@ -379,7 +386,7 @@ const validate = (formValues) => {
 	if (!formValues.plan_id) {
 		errors.plan_id = 'You must enter a plan id'
 	}
-  if(!formValues.user_id || Number.isNaN(Number(formValues.user_id))){
+  if(!formValues.user_id || !isNumeric(formValues.user_id)){
     errors.user_id = 'You must enter a user id'
   }
   if (!formValues.user_location) {
@@ -394,6 +401,9 @@ const validate = (formValues) => {
   if (!formValues.role) {
 		errors.user_location = 'You must also select a role type'
 	}
+  if (!formValues.annual_ti || !isNumeric(formValues.annual_ti)){
+    errors.annual_ti = 'You must enter an annual target incentive which is a number'
+  }
   return errors
 }
 

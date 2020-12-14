@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getPayouts,calcPlans,loadCalcs,clearError,setFilter,getFilter } from '../../actions'
+import { getPayouts,calcPlans,loadCalcs,clearError,setFilter,getFilter,clearFilter } from '../../actions'
 import { Link } from 'react-router-dom'
 import Loader from '../../Loader'
 import Login from '../Accounts/Login'
@@ -19,12 +19,13 @@ class PayoutShow extends React.Component {
 }
 
   componentDidMount(){
+    this.props.clearFilter()
     this.props.getPayouts()
     this.props.getFilter()
 
   }
 
-  paymap = {
+  filterMap = {
     'payout_id':0,
     'transaction_id':1,
     'seller_id':2,
@@ -43,21 +44,26 @@ class PayoutShow extends React.Component {
 
   }
 
-  filterObj = {
 
-  }
 
   createItem(payout){
 
     var filters = Object.keys(this.props.filter)
     var check = true
     filters.map((filter) => {
-      console.log(payout[this.paymap[filter]])
-      console.log(this.props.filter[filter])
-      if(!payout[this.paymap[filter]].toString().toLowerCase().includes(this.props.filter[filter].toLowerCase())){
+
+      if(payout[this.filterMap[filter]] == null){
         check = false
       }
-    })
+      else if(payout[this.filterMap[filter]] != null){
+        if(!payout[this.filterMap[filter]].toString().toLowerCase().includes(this.props.filter[filter].toLowerCase())){
+            check = false
+          }
+      }
+
+
+        }
+    )
 
     if(
       check
@@ -101,7 +107,7 @@ class PayoutShow extends React.Component {
 
     <div className='fourteen wide column'>
     <div className='ui center aligned grid'>
-      <h1 className='pagetitle'>Payouts</h1>
+      <h1 className=''>Payouts</h1>
       </div>
       </div>
     <div className='one wide column'></div>
@@ -252,4 +258,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { getPayouts,calcPlans,loadCalcs,clearError,setFilter,getFilter })(PayoutShow)
+export default connect(mapStateToProps, { getPayouts,calcPlans,loadCalcs,clearError,setFilter,getFilter,clearFilter })(PayoutShow)

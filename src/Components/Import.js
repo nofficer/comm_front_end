@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { uploadFile,onChangeFile} from '../actions'
 import UploadForm from './UploadForm'
-
+import Loader from '../Loader'
 import Login from './Accounts/Login'
 
 
@@ -19,11 +19,17 @@ class Import extends React.Component {
 
   render(){
     if(this.props.account['role'] == 'admin'){
-      return (
-        <div className='ui text container ' >
-          <UploadForm onSubmit={this.onSubmit}/>
-        </div>
-      )
+        if(this.props.loading == 'loading'){
+          return (<Loader filler='Importing File...'/>)
+        }
+        else {
+          return (
+            <div className='ui text container ' >
+              <UploadForm onSubmit={this.onSubmit}/>
+            </div>
+          )
+        }
+
     }
 
     else if(typeof(this.props.account['user_id']) == "number"){
@@ -38,7 +44,8 @@ class Import extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    account: state.account.account
+    account: state.account.account,
+    loading: state.file.loading
   }
 }
 
