@@ -47,51 +47,198 @@ class TransForm extends React.Component {
 
 
   render(){
+
     monthVar = this.props.month['current.month_id']
     yearVar = this.props.month['cal_year']
     if(this.props.editing == "yes"){
-      return (
+      return(
+        <div>
+        <div className='ui grid'>
+        <div class='sixteen wide column'>
+
+        </div>
+        <div class='sixteen wide column'>
+
+        </div>
+
+        <div class='six wide column'>
+
+        </div>
+          <div class='four wide column'>
+          <div className='ui center aligned grid'>
+            <h1 className='pagetitle'>{this.props.title}</h1>
+            </div>
+          </div>
+          <div class='six wide column'>
+
+          </div>
+        </div>
+        <div className='ui grid'>
+          <div class='sixteen wide column'>
+            <h1 className='pagetitle center aligned'></h1>
+          </div>
+        </div>
+        <div className='ui grid'>
+          <div class='sixteen wide column'>
+            <h1 className='pagetitle center aligned'></h1>
+          </div>
+        </div>
+
+        <div className='ui grid'>
+          <div class='sixteen wide column'>
+              <div class="ui horizontal divider">
+                *
+              </div>
+          </div>
+        </div>
+
+
+        <div className='ui grid'>
+          <div class='sixteen wide column'>
+            <h1 className='pagetitle center aligned'></h1>
+          </div>
+        </div>
         <form className='ui form error' onSubmit={this.props.handleSubmit(this.onSubmit)}>
-        <Field name="seller_id" component="select" label='Select Seller'>
+        <div className='ui grid'>
+
+
+        <div className='six wide column'></div>
+        <div className='four wide column'><Field name="seller_id" component="select" label='Select Seller'>
                   <option value="">Select seller...</option>
                   {this.props.populateDropdown.map(transaction =>
                     <option value={transaction[0]} key={transaction[0]}>{transaction[1]}</option>)}
                 </Field>
+        </div>
+        <div className='six wide column'></div>
+
+        <div className='four wide column'></div>
+        <div className='four wide column'>
+        <strong><p>Transaction ID</p></strong>
+        <Field name="trans_id" component="select" label='Trans ID'>
+
+                    <option value={this.props.populateDropdownID} key={this.props.populateDropdownID}>{this.props.populateDropdownID}</option>
+                </Field>
           <Field name='type' component={this.renderInput} label='Enter Transaction Type' />
           <Field name='date' component={this.renderInput} label='Select Transaction Date (YYYY-MM-DD)'/>
+
           <Field name='revenue' component={this.renderInput} label='Enter Transaction Revenue' />
           <Field name='gp'  component={this.renderInput} label='Enter Transaction GP' />
+          </div>
+          <div className='four wide column'>
+
           <Field name='order_num'  component={this.renderInput} label='Enter Order Number' />
           <Field name='transaction_location'  component={this.renderInput} label='Enter Transaction Location' />
           <Field name='split_percent'  component={this.renderInput} label='Enter Split Percent' />
           <Field name='custom_field'  component={this.renderInput} label='Enter Custom Field' />
-          <Field name='payout_multiplier'  component={this.renderInput} label='Enter Payout Multiplier' />
+          <Field name='payout_multiplier'  component={this.renderInput} label='Enter Payout Multiplier'   />
+
+
+
           <br/>
-          <button className='ui button primary'>Submit</button>
+          </div>
+
+
+          <div className='six wide column'></div>
+          <div className='four wide column'><button className='ui fluid button primary'>Submit</button></div>
+          <div className='six wide column'></div>
+
+          </div>
         </form>
+        </div>
       )
     }
     else {
       return (
+        <div>
+        <div className='ui grid'>
+        <div class='sixteen wide column'>
+
+        </div>
+        <div class='sixteen wide column'>
+
+        </div>
+
+        <div class='six wide column'>
+
+        </div>
+          <div class='four wide column'>
+          <div className='ui center aligned grid'>
+            <h1 className='pagetitle'>{this.props.title}</h1>
+            </div>
+          </div>
+          <div class='six wide column'>
+
+          </div>
+        </div>
+        <div className='ui grid'>
+          <div class='sixteen wide column'>
+            <h1 className='pagetitle center aligned'></h1>
+          </div>
+        </div>
+        <div className='ui grid'>
+          <div class='sixteen wide column'>
+            <h1 className='pagetitle center aligned'></h1>
+          </div>
+        </div>
+
+        <div className='ui grid'>
+          <div class='sixteen wide column'>
+              <div class="ui horizontal divider">
+                *
+              </div>
+          </div>
+        </div>
+
+
+        <div className='ui grid'>
+          <div class='sixteen wide column'>
+            <h1 className='pagetitle center aligned'></h1>
+          </div>
+        </div>
         <form className='ui form error' onSubmit={this.props.handleSubmit(this.onSubmit)}>
-        <Field name='trans_id' component={this.renderInput} label='Enter Transaction ID' />
-        <Field name="seller_id" component="select" label='Select Seller'>
+        <div className='ui grid'>
+
+
+        <div className='six wide column'></div>
+        <div className='four wide column'><Field name="seller_id" component="select" label='Select Seller'>
                   <option value="">Select seller...</option>
                   {this.props.populateDropdown.map(transaction =>
                     <option value={transaction[0]} key={transaction[0]}>{transaction[1]}</option>)}
                 </Field>
+        </div>
+        <div className='six wide column'></div>
+
+        <div className='four wide column'></div>
+        <div className='four wide column'>
+        <Field name='trans_id' component={this.renderInput} label='Enter Transaction ID' />
+
           <Field name='type' component={this.renderInput} label='Enter Transaction Type' />
           <Field name='date' component={this.renderInput} label='Select Transaction Date (YYYY-MM-DD)'/>
+
           <Field name='revenue' component={this.renderInput} label='Enter Transaction Revenue' />
           <Field name='gp'  component={this.renderInput} label='Enter Transaction GP' />
+          </div>
+          <div className='four wide column'>
+
           <Field name='order_num'  component={this.renderInput} label='Enter Order Number' />
           <Field name='transaction_location'  component={this.renderInput} label='Enter Transaction Location' />
           <Field name='split_percent'  component={this.renderInput} label='Enter Split Percent' />
           <Field name='custom_field'  component={this.renderInput} label='Enter Custom Field' />
-          <Field name='payout_multiplier'  component={this.renderInput} label='Enter Payout Multiplier' />
+          <Field name='payout_multiplier'  component={this.renderInput} label='Enter Payout Multiplier'   />
+
+
+
           <br/>
-          <button className='ui button primary'>Submit</button>
+          </div>
+
+
+          <div className='six wide column'></div>
+          <div className='four wide column'><button className='ui fluid button primary'>Submit</button></div>
+          <div className='six wide column'></div>
+
+          </div>
         </form>
+        </div>
       )
     }
 

@@ -74,20 +74,30 @@ class Time extends React.Component {
     history.push({pathname:'/areyousure',state:{change:'revert'}})
   }
 
+
   render(){
 
     if(this.props.account['role'] == 'admin'){
       if(this.props.month['current.month_id'] == 1){
         return (
           <div className='ui grid'>
-          <div className='six wide column'></div>
-          <div className='four wide column'><h1 className='centertext'>{months[this.props.month['current.month_id']]}</h1></div>
-          <div className='six wide column'></div>
-          <div className='six wide column'></div>
-          <div className='four wide column'><h1 className='pagetitle'>{this.props.month['cal_year']}</h1></div>
-          <div className='six wide column'></div>
+          <div class='sixteen wide column'></div>
+          <div class='sixteen wide column'></div>
+          <div class='sixteen wide column'>
+          <div className='ui center aligned grid'>
+            <h1 className='ui header bigfont'>{months[this.props.month['current.month_id']]}</h1>
+            </div>
+          </div>
+          <div class='sixteen wide column'>
+          <div className='ui center aligned grid'>
+            <h1 className='ui header bigfont'>{this.props.month['cal_year']}</h1>
+            </div>
+          </div>
+          <div class='sixteen wide column'></div>
+          <div class='sixteen wide column'></div>
 
-            <div className='sixteen wide column bottom'>
+
+            <div className='sixteen wide column'>
                       <div class="ui placeholder segment">
               <div class="ui two column stackable center aligned grid">
 
@@ -142,12 +152,21 @@ class Time extends React.Component {
       else {
         return (
           <div className='ui grid'>
-          <div className='six wide column'></div>
-          <div className='four wide column'><h1 className='centertext'>{months[this.props.month['current.month_id']]}</h1></div>
-          <div className='six wide column'></div>
-          <div className='six wide column'></div>
-          <div className='four wide column'><h1 className='pagetitle'>{this.props.month['cal_year']}</h1></div>
-          <div className='six wide column'></div>
+          <div class='sixteen wide column'></div>
+          <div class='sixteen wide column'></div>
+          <div class='sixteen wide column'>
+          <div className='ui center aligned grid'>
+            <h1 className='ui header bigfont'>{months[this.props.month['current.month_id']]}</h1>
+            </div>
+          </div>
+          <div class='sixteen wide column'></div>
+          <div class='sixteen wide column'>
+          <div className='ui center aligned grid'>
+            <h1 className='ui header bigfont'>{this.props.month['cal_year']}</h1>
+            </div>
+          </div>
+          <div class='sixteen wide column'></div>
+          <div class='sixteen wide column'></div>
 
             <div className='sixteen wide column bottom'>
                       <div class="ui placeholder segment">

@@ -56,7 +56,7 @@ const App = () => {
         <div className='container2'>
           <Switch>
             <Route path ='/' exact component={Landing}/>
-            <Route path ='/time' exact component={Time}/>
+            <Route path ='/admin' exact component={Time}/>
 
             <Route path ='/rateTableShow' exact component={RateTableShow}/>
             <Route path ='/rateTableCreate' exact component={RateTableCreate}/>

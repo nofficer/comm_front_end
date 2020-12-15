@@ -779,7 +779,7 @@ a.ui.inverted.black.header.header.header:hover {
 *******************************/
 
 .bigfont {
-  font-size: 6rem;
+  font-size: 6rem !important;
 }
 
 

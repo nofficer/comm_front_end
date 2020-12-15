@@ -91,9 +91,17 @@ class RateTableShow extends React.Component {
 
   render(){
     if(this.props.account['role'] == 'admin'){
-      return (<div className='ui grid'>
-      <div className='sixteen wide column'>
-        <h1 className='pagetitle'>Rate Tables</h1>
+      return (<div>
+        <div className='ui grid'>
+        <div class='sixteen wide column'></div>
+        <div class='sixteen wide column'></div>
+        <div class='sixteen wide column'>
+        <div className='ui center aligned grid'>
+          <h1 className=''>Rate Tables</h1>
+          </div>
+        </div>
+        <div class='sixteen wide column'></div>
+        <div class='sixteen wide column'></div>
         </div>
 
         <table className='ui celled table'>

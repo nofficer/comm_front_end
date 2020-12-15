@@ -27,11 +27,13 @@ class TransEdit extends React.Component {
   }
 
 
+
+
 // {'trans_gp':this.props.trans['trans_gp'], 'trans_rev':this.props.trans['trans_rev'], 'trans_seller_id':this.props.trans['trans_seller_id'],'trans_type':this.props.trans['trans_type']} initialValues={this.props.trans}
   render(){
     if(this.props.account['role'] == 'admin'){
       return (
-        <div><TransForm onSubmit={this.onSubmit} initialValues={this.props.tran} month={this.props.month} editing="yes"  populateDropdown={this.populateDropdown()} date={moment().format('YYYY-MM-DD')}  /></div>
+        <div><TransForm title='Editing Transaction' populateDropdownID={this.props.match.params.trans_id} onSubmit={this.onSubmit} initialValues={this.props.tran} month={this.props.month} editing="yes"  populateDropdown={this.populateDropdown()} date={moment().format('YYYY-MM-DD')}  /></div>
       )
     }
 

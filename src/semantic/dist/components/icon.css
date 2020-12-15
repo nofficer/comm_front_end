@@ -6898,6 +6898,11 @@ i.icon.youtube.play:before {
   content: "\f167";
   font-family: 'brand-icons';
 }
+.bigicon {
+  height: 6rem !important;
+  font-size: 6rem !important;
+  width: 6rem !important;
+}
 
 
 /*******************************

@@ -39,56 +39,169 @@ class RateTableForm extends React.Component {
 
   render(){
     if(this.props.editing == "yes"){
-      return (
+      return  (
+        <div>
+        <div className='ui grid'>
+        <div class='sixteen wide column'>
+
+        </div>
+        <div class='sixteen wide column'>
+
+        </div>
+
+        <div class='six wide column'>
+
+        </div>
+          <div class='four wide column'>
+          <div className='ui center aligned grid'>
+            <h1 className='pagetitle'>{this.props.title}</h1>
+            </div>
+          </div>
+          <div class='six wide column'>
+
+          </div>
+        </div>
+        <div className='ui grid'>
+          <div class='sixteen wide column'>
+            <h1 className='pagetitle center aligned'></h1>
+          </div>
+        </div>
+        <div className='ui grid'>
+          <div class='sixteen wide column'>
+            <h1 className='pagetitle center aligned'></h1>
+          </div>
+        </div>
+
+        <div className='ui grid'>
+          <div class='sixteen wide column'>
+              <div class="ui horizontal divider">
+                *
+              </div>
+          </div>
+        </div>
+
+
+        <div className='ui grid'>
+          <div class='sixteen wide column'>
+            <h1 className='pagetitle center aligned'></h1>
+          </div>
+        </div>
       <form className='ui form error' onSubmit={this.props.handleSubmit(this.onSubmit)}>
+      <div className='ui grid'>
+      <div className='four wide column'></div>
+      <div className='four wide column'>
 
-
-
-        <Field name="attainment_rule_id" component="select" label='Enter Attainment Rule ID'>
-                  <option value="">Select an attainment rule...</option>
-                  {this.props.populateDropdown.map(rule =>
-                    <option value={rule[0]} key={rule[1]}>{rule[1]}</option>)}
-                </Field>
-
-        <Field name='start' component={this.renderInput} label='Enter Rate Effective Start Date (YYYY-MM-DD)'/>
-        <Field name='end' component={this.renderInput} label='Enter Rate Effective End Date (YYYY-MM-DD)'/>
-        <Field name='attain_start' component={this.renderInput} label='Enter Attainment Threshold LOW'/>
+      <Field name='start' component={this.renderInput} label='Enter Rate Effective Start Date (YYYY-MM-DD)'/>
+      <Field name='end' component={this.renderInput} label='Enter Rate Effective End Date (YYYY-MM-DD)'/>
+      <Field name='tier' component={this.renderInput} label='Enter Tier'/>
+      <Field name="attainment_rule_id" component="select" label='Enter Attainment Rule ID'>
+                <option value="">Select an attainment rule...</option>
+                {this.props.populateDropdown.map(rule =>
+                  <option value={rule[0]} key={rule[1]}>{rule[1]}</option>)}
+              </Field>
+      </div>
+        <div className='four wide column'><Field name='attain_start' component={this.renderInput} label='Enter Attainment Threshold LOW'/>
         <Field name='attain_end' component={this.renderInput} label='Enter Attainment Threshold HIGH'/>
-        <Field name='tier' component={this.renderInput} label='Enter Tier'/>
+
         <Field name='rate' component={this.renderInput} label='Enter Rate'/>
         <Field name="rate_type" component="select" label='Enter Plan_ID'>
                   <option value="">Select a rate type...</option>
                   <option value="FIXED">FIXED</option>
                   <option value="RAMPED">RAMPED</option>
-                </Field>
+                </Field></div>
+
         <br/>
-        <button className='ui button primary'>Submit</button>
+
+        <div className='four wide column'></div>
+        <div className='six wide column'></div>
+        <div className='four wide column'><button className='ui fluid button primary'>Submit</button></div>
+        <div className='six wide column'></div>
+        </div>
       </form>
+      </div>
     )}
     else{
       return (
-      <form className='ui form error' onSubmit={this.props.handleSubmit(this.onSubmit)}>
-        <Field name='rate_id' component={this.renderInput} label='Enter Rate ID'/>
-        <Field name="attainment_rule_id" component="select" label='Enter Attainment Rule ID'>
-                  <option value="">Select an attainment rule...</option>
-                  {this.props.populateDropdown.map(rule =>
-                    <option value={rule[0]} key={rule[1]}>{rule[1]}</option>)}
-                </Field>
+        <div>
+        <div className='ui grid'>
+        <div class='sixteen wide column'>
 
-        <Field name='start' component={this.renderInput} label='Enter Rate Effective Start Date (YYYY-MM-DD)'/>
-        <Field name='end' component={this.renderInput} label='Enter Rate Effective End Date (YYYY-MM-DD)'/>
-        <Field name='attain_start' component={this.renderInput} label='Enter Attainment Threshold LOW'/>
+        </div>
+        <div class='sixteen wide column'>
+
+        </div>
+
+        <div class='six wide column'>
+
+        </div>
+          <div class='four wide column'>
+          <div className='ui center aligned grid'>
+            <h1 className='pagetitle'>{this.props.title}</h1>
+            </div>
+          </div>
+          <div class='six wide column'>
+
+          </div>
+        </div>
+        <div className='ui grid'>
+          <div class='sixteen wide column'>
+            <h1 className='pagetitle center aligned'></h1>
+          </div>
+        </div>
+        <div className='ui grid'>
+          <div class='sixteen wide column'>
+            <h1 className='pagetitle center aligned'></h1>
+          </div>
+        </div>
+
+        <div className='ui grid'>
+          <div class='sixteen wide column'>
+              <div class="ui horizontal divider">
+                *
+              </div>
+          </div>
+        </div>
+
+
+        <div className='ui grid'>
+          <div class='sixteen wide column'>
+            <h1 className='pagetitle center aligned'></h1>
+          </div>
+        </div>
+      <form className='ui form error' onSubmit={this.props.handleSubmit(this.onSubmit)}>
+      <div className='ui grid'>
+      <div className='four wide column'></div>
+      <div className='four wide column'><Field name='rate_id' component={this.renderInput} label='Enter Rate ID'/>
+
+
+      <Field name='start' component={this.renderInput} label='Enter Rate Effective Start Date (YYYY-MM-DD)'/>
+      <Field name='end' component={this.renderInput} label='Enter Rate Effective End Date (YYYY-MM-DD)'/>
+      <Field name='tier' component={this.renderInput} label='Enter Tier'/>
+      <Field name="attainment_rule_id" component="select" label='Enter Attainment Rule ID'>
+                <option value="">Select an attainment rule...</option>
+                {this.props.populateDropdown.map(rule =>
+                  <option value={rule[0]} key={rule[1]}>{rule[1]}</option>)}
+              </Field>
+      </div>
+        <div className='four wide column'><Field name='attain_start' component={this.renderInput} label='Enter Attainment Threshold LOW'/>
         <Field name='attain_end' component={this.renderInput} label='Enter Attainment Threshold HIGH'/>
-        <Field name='tier' component={this.renderInput} label='Enter Tier'/>
+
         <Field name='rate' component={this.renderInput} label='Enter Rate'/>
         <Field name="rate_type" component="select" label='Enter Plan_ID'>
                   <option value="">Select a rate type...</option>
                   <option value="FIXED">FIXED</option>
                   <option value="RAMPED">RAMPED</option>
-                </Field>
+                </Field></div>
+
         <br/>
-        <button className='ui button primary'>Submit</button>
+
+        <div className='four wide column'></div>
+        <div className='six wide column'></div>
+        <div className='four wide column'><button className='ui fluid button primary'>Submit</button></div>
+        <div className='six wide column'></div>
+        </div>
       </form>
+      </div>
     )
     }
 

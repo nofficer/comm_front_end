@@ -374,9 +374,17 @@ isValidDate(dateString)
 
         {({ file }) => (
           <div>
-          <div className='ui text container ' >
-            <h1 id='myh1id' className='centertext'>Import</h1>
+          <div className='ui grid'>
+          <div className='six wide column'></div>
+          <div className='four wide column'><div className='ui center aligned grid'><h1 id='myh1id' className='ui header bigfont'>Import</h1></div></div>
 
+          <div className='six wide column'></div>
+          <div className='sixteen wide column'></div>
+          <div className='sixteen wide column'></div>
+          <div className='sixteen wide column'></div>
+          <div className='ui text container '>
+
+          </div>
           </div>
           <aside
             style={{

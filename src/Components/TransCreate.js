@@ -26,7 +26,7 @@ class TransCreate extends React.Component {
   render(){
     if(this.props.account['role'] == 'admin'){
       return (
-        <div><TransForm onSubmit={this.onSubmit} month={this.props.month}  populateDropdown={this.populateDropdown()} date={moment().format('YYYY-MM-DD')}  /></div>
+        <div><TransForm title='Creating Transaction' onSubmit={this.onSubmit} month={this.props.month}  populateDropdown={this.populateDropdown()} date={moment().format('YYYY-MM-DD')}  /></div>
       )
     }
 

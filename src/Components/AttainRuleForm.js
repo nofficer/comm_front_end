@@ -42,12 +42,12 @@ class AttainRuleForm extends React.Component {
       <div className='ui grid'>
       <div className='ui grid'>
         <div class='sixteen wide column'>
-          <h1 className='pagetitle center aligned'></h1>
+          <h1 className='center aligned'></h1>
         </div>
       </div>
       <div className='ui grid'>
         <div class='sixteen wide column'>
-          <h1 className='pagetitle center aligned'></h1>
+          <h1 className='center aligned'></h1>
         </div>
       </div>
         <div class='sixteen wide column'>
@@ -57,11 +57,11 @@ class AttainRuleForm extends React.Component {
         </div>
         <div className='ui grid'>
           <div class='sixteen wide column'>
-            <h1 className='pagetitle center aligned'></h1>
+            <h1 className='center aligned'></h1>
           </div>
         </div><div className='ui grid'>
           <div class='sixteen wide column'>
-            <h1 className='pagetitle center aligned'></h1>
+            <h1 className='center aligned'></h1>
           </div>
         </div>
 

@@ -81,9 +81,17 @@ class GoalShow extends React.Component {
 
     else{
     if(this.props.account['role'] == 'admin'){
-      return (<div className='ui grid'>
-      <div className='sixteen wide column'>
-        <h1 className='pagetitle'>Goals</h1>
+      return (<div>
+        <div className='ui grid'>
+        <div class='sixteen wide column'></div>
+        <div class='sixteen wide column'></div>
+        <div class='sixteen wide column'>
+        <div className='ui center aligned grid'>
+          <h1 className=''>Goals</h1>
+          </div>
+        </div>
+        <div class='sixteen wide column'></div>
+        <div class='sixteen wide column'></div>
         </div>
 
         <table className='ui celled table'>

@@ -23310,7 +23310,7 @@ a.ui.inverted.black.header.header.header:hover {
 *******************************/
 
 .bigfont {
-  font-size: 6rem;
+  font-size: 6rem !important;
 }
 
 /*******************************
@@ -32214,6 +32214,12 @@ i.icon.ycombinator:before {
 i.icon.youtube.play:before {
   content: "\f167";
   font-family: 'brand-icons';
+}
+
+.bigicon {
+  height: 6rem !important;
+  font-size: 6rem !important;
+  width: 6rem !important;
 }
 
 /*******************************

@@ -25,7 +25,7 @@ class PlanCreate extends React.Component {
   render(){
     if(this.props.account['role'] == 'admin'){
       return (
-        <div><PlanForm onSubmit={this.onSubmit} populateDropdown={this.populateDropdown()} /></div>
+        <div><PlanForm title='Creating Plan' onSubmit={this.onSubmit} populateDropdown={this.populateDropdown()} /></div>
       )
     }
 

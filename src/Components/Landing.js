@@ -33,7 +33,7 @@ class Landing extends React.Component {
 
         <div className='sixteen wide column'>
           <div className='ui center aligned grid'>
-          <i class="calculator icon"></i>
+          <i class="calculator icon bigicon"></i>
           </div>
           </div>
         </div>

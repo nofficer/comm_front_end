@@ -34,15 +34,10 @@ class Header extends React.Component {
         <div class=" ui vertical menu ">
 
 
-            <div onClick={(e) => e.stopPropagation(history.push('/payoutShow'))} className=''>
-              <a className="blue active item">
-                  Calc
-              </a>
 
-            </div>
-            <div onClick={(e) => e.stopPropagation(history.push('/time'))} className=''>
-              <a className="blue active item"><Link to='/time'>
-                  Time
+            <div onClick={(e) => e.stopPropagation(history.push('/admin'))} className=''>
+              <a className="blue active item"><Link to='/admin'>
+                  Admin
               </Link></a>
 
             </div>

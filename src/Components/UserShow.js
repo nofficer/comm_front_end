@@ -85,7 +85,18 @@ class UserShow extends React.Component {
     else {
       if(this.props.account['role'] == 'admin'){
         return (<div>
-          <h1 className='pagetitle'>Users</h1>
+          <div className='ui grid'>
+          <div class='sixteen wide column'></div>
+          <div class='sixteen wide column'></div>
+          <div class='sixteen wide column'>
+          <div className='ui center aligned grid'>
+            <h1 className=''>Users</h1>
+            </div>
+          </div>
+          <div class='sixteen wide column'></div>
+          <div class='sixteen wide column'></div>
+          </div>
+
           <table className='ui celled table'>
             <thead>
 
