@@ -1,12 +1,14 @@
 import {
-  GET_PAYOUTS,DELETE_PAYOUT,EDIT_PAYOUT,GET_PAYOUT,CALC_PLANS,LOAD,GET_PAYOUTS_USER,GET_PAYROLL
+  GET_PAYOUTS,DELETE_PAYOUT,EDIT_PAYOUT,GET_PAYOUT,CALC_PLANS,LOAD,GET_PAYOUTS_USER,GET_PAYROLL,GET_LIABILITY,GET_LIABILITIES,EDIT_LIABILITY,DELETE_LIABILITY
 } from '../actions/types'
 
 const INITIAL_STATE = {
   payouts: [],
   summary: [],
   payout: {},
-  payroll: []
+  payroll: [],
+  liability: {},
+  liabilities: []
 }
 
 export default (state=INITIAL_STATE, action) => {
@@ -27,6 +29,14 @@ export default (state=INITIAL_STATE, action) => {
       return{...state,summary: action.payload}
     case GET_PAYROLL:
       return{...state,payroll:action.payload}
+    case GET_LIABILITY:
+      return {...state, liability:action.payload}
+    case GET_LIABILITIES:
+      return{...state, liabilities: action.payload}
+    case EDIT_LIABILITY:
+      return{...state, liabilities: action.payload}
+    case DELETE_LIABILITY:
+      return{...state, liabilities: action.payload}
     default:
       return state
   }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import {logout,selectMonth,getTime,clearFilter} from '../actions'
+import {logout,selectMonth,getTime,clearFilter,checkUser} from '../actions'
 import history from '../history'
 
 
@@ -10,6 +10,7 @@ class Header extends React.Component {
     this.props.clearFilter()
     this.props.getTime()
     this.props.selectMonth(this.props.month['current.month_id'])
+    this.props.checkUser()
      // this.props.setAccount()
   }
   renderSignIn(){
@@ -337,4 +338,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { logout,selectMonth,getTime,clearFilter })(Header)
+export default connect(mapStateToProps, { logout,selectMonth,getTime,clearFilter,checkUser })(Header)

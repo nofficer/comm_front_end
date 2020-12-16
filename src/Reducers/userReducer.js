@@ -1,10 +1,12 @@
 import {
-  GET_USERS,CREATE_USER,DELETE_USER,EDIT_USER,GET_USER
+  GET_USERS,CREATE_USER,DELETE_USER,EDIT_USER,GET_USER,GET_ROLE_HIERARCHY,CREATE_ROLE_HIERARCHY,EDIT_ROLE_HIERARCHY,DELETE_ROLE_HIERARCHY,GET_ROLE_HIERARCHIES
 } from '../actions/types'
 
 const INITIAL_STATE = {
   users: [],
-  user:{}
+  user:{},
+  role_hierarchy: {},
+  role_hierarchies: []
 }
 
 export default (state=INITIAL_STATE, action) => {
@@ -19,6 +21,16 @@ export default (state=INITIAL_STATE, action) => {
       return {...state, users:action.payload};
     case GET_USER:
       return {...state, user:action.payload};
+    case GET_ROLE_HIERARCHY:
+      return {...state, role_hierarchy:action.payload};
+    case GET_ROLE_HIERARCHIES:
+      return {...state, role_hierarchies:action.payload};
+    case EDIT_ROLE_HIERARCHY:
+      return {...state, role_hierarchies:action.payload};
+    case DELETE_ROLE_HIERARCHY:
+      return {...state, role_hierarchies:action.payload};
+    case CREATE_ROLE_HIERARCHY:
+      return {...state, role_hierarchies:action.payload};
     default:
       return state
   }

@@ -1,6 +1,80 @@
-import { GET_PLANS, GET_USERS,  GET_USER, CREATE_USER, EDIT_USER, CREATE_CALC, CHANGE_DONE, GO_PUSH, CREATE_PLAN, EDIT_PLAN, GET_ATTAINMENT_RULES, CREATE_ATTAINMENT_RULE, EDIT_ATTAINMENT_RULE, GET_TRANS, CREATE_TRANS, EDIT_TRANS, GET_TRAN, DELETE_TRANS, DELETE_ATTAINMENT_RULE,DELETE_PLAN,DELETE_USER,GET_ATTAINMENT_RULE,GET_PLAN,UPLOAD_FILE,ONCHANGE_FILE,CHECK_RULE_USE,CHECK_PLAN_USE,CHECK_USER_USE,GET_RATE_TABLE,GET_RATE_TABLES,CREATE_RATE_TABLE,EDIT_RATE_TABLE,DELETE_RATE_TABLE,ERROR_HANDLE,CALC_PLANS,GET_PAYOUTS,EDIT_PAYOUT,GET_PAYOUT,DELETE_PAYOUT,LOAD,GET_TIME,UPDATE_TIME,REVERT_TIME,LOGIN,SET_ACCOUNT,LOGOUT,GET_PAYOUTS_USER,GET_GOAL,GET_GOALS,CREATE_GOAL,EDIT_GOAL,DELETE_GOAL,CLEAR,SELECT_MONTH,UPDATE_ACCOUNT,GET_PAYROLL,SET_FILTER,GET_FILTER,CLEAR_FILTER,LOADING } from './types'
+import { GET_PLANS, GET_USERS,  GET_USER, CREATE_USER, EDIT_USER, CREATE_CALC, CHANGE_DONE, GO_PUSH, CREATE_PLAN, EDIT_PLAN, GET_ATTAINMENT_RULES, CREATE_ATTAINMENT_RULE, EDIT_ATTAINMENT_RULE, GET_TRANS, CREATE_TRANS, EDIT_TRANS, GET_TRAN, DELETE_TRANS, DELETE_ATTAINMENT_RULE,DELETE_PLAN,DELETE_USER,GET_ATTAINMENT_RULE,GET_PLAN,UPLOAD_FILE,ONCHANGE_FILE,CHECK_RULE_USE,CHECK_PLAN_USE,CHECK_USER_USE,GET_RATE_TABLE,GET_RATE_TABLES,CREATE_RATE_TABLE,EDIT_RATE_TABLE,DELETE_RATE_TABLE,ERROR_HANDLE,CALC_PLANS,GET_PAYOUTS,EDIT_PAYOUT,GET_PAYOUT,DELETE_PAYOUT,LOAD,GET_TIME,UPDATE_TIME,REVERT_TIME,LOGIN,SET_ACCOUNT,LOGOUT,GET_PAYOUTS_USER,GET_GOAL,GET_GOALS,CREATE_GOAL,EDIT_GOAL,DELETE_GOAL,CLEAR,SELECT_MONTH,UPDATE_ACCOUNT,GET_PAYROLL,SET_FILTER,GET_FILTER,CLEAR_FILTER,LOADING,
+GET_ROLE_HIERARCHY,CREATE_ROLE_HIERARCHY,EDIT_ROLE_HIERARCHY,DELETE_ROLE_HIERARCHY,GET_ROLE_HIERARCHIES,
+GET_LIABILITY,GET_LIABILITIES,EDIT_LIABILITY,DELETE_LIABILITY,
+CHECK_USER } from './types'
 import db from '../apis/db'
 import history from '../history'
+
+export const getLiability = (liability_id) => {
+  return async (dispatch) => {
+    const response = await db.post('/getLiability', liability_id)
+    dispatch({type:GET_LIABILITY, payload: response.data})
+
+  }
+}
+
+export const getLiabilities = () => {
+  return async (dispatch) => {
+    const response = await db.get('/getLiabilities')
+    dispatch({type:GET_LIABILITIES, payload: response.data})
+
+  }
+}
+
+export const editLiability = (formValues) => {
+  return async (dispatch) => {
+    const response = await db.post('/updateLiability', formValues)
+    dispatch({type:EDIT_LIABILITY, payload: response.data})
+    history.push('/LiabilityShow')
+  }
+}
+
+export const deleteLiability = (liability_id) => {
+  return async (dispatch) => {
+    const response = await db.post('/deleteLiability', liability_id)
+    dispatch({type:DELETE_LIABILITY, payload: response.data})
+  }
+}
+
+export const getRoleHierarchy = (user_id) => {
+  return async (dispatch) => {
+    const response = await db.post('/getRoleHierarchy', user_id)
+    dispatch({type:GET_ROLE_HIERARCHY, payload: response.data})
+
+  }
+}
+
+export const getRoleHierarchies = () => {
+  return async (dispatch) => {
+    const response = await db.get('/getRoleHierarchies')
+    dispatch({type:GET_ROLE_HIERARCHIES, payload: response.data})
+
+  }
+}
+
+export const deleteRoleHierarchy = (user_id) => {
+  return async (dispatch) => {
+    const response = await db.post('/deleteRoleHierarchy', user_id)
+    dispatch({type:DELETE_ROLE_HIERARCHY, payload: response.data})
+
+  }
+}
+
+export const editRoleHierarchy = (formValues) => {
+  return async (dispatch) => {
+    const response = await db.post('/editRoleHierarchy', formValues)
+    dispatch({type:EDIT_ROLE_HIERARCHY, payload: response.data})
+
+  }
+}
+
+export const insertRoleHierarchy = (formValues) => {
+  return async (dispatch) => {
+    const response = await db.post('/insertRoleHierarchy', formValues)
+    dispatch({type:CREATE_ROLE_HIERARCHY, payload: response.data})
+
+  }
+}
 
 
 export const clearFilter = () => {
@@ -135,12 +209,22 @@ export const login = (formValues,save)=>{
     const response = await db.post('/userLogin',formValues)
     dispatch({type:LOGIN, payload: response.data})
     if(typeof(response.data['user_id']) == 'number' ){
-      // sessionStorage.setItem('role',response.data['role'])
-      // sessionStorage.setItem('user_id',response.data['user_id'])
-      // sessionStorage.setItem('username',response.data['username'])
+
+      sessionStorage.setItem('username',response.data['username'])
+      sessionStorage.setItem('password',response.data['password'])
       history.push('/')
     }
 
+  }
+}
+
+export const checkUser = () => {
+  var savedUser = {}
+  savedUser['username'] = sessionStorage.getItem('username')
+  savedUser['password'] = sessionStorage.getItem('password')
+  return async (dispatch) => {
+    const response = await db.post('/checkUser',savedUser)
+    dispatch({type:CHECK_USER,payload:response.data})
   }
 }
 
@@ -154,7 +238,7 @@ export const revertTime = () => {
   return async (dispatch) => {
     const response = await db.post('/revertTime')
     dispatch({type:REVERT_TIME, payload: response.data})
-    history.push('/time')
+    history.push('/admin')
   }
 }
 
@@ -163,7 +247,7 @@ export const updateTime = () => {
   return async (dispatch) => {
     const response = await db.post('/updateTime')
     dispatch({type:UPDATE_TIME, payload: response.data})
-    history.push('/time')
+    history.push('/admin')
   }
 }
 

@@ -46,6 +46,10 @@ import Login from './Accounts/Login'
 import PasswordChange from './Accounts/PasswordChange'
 
 
+import LiabilityShow from './Liability/LiabilityShow'
+import LiabilityEdit from './Liability/LiabilityEdit'
+import LiabilityDelete from './Liability/LiabilityDelete'
+
 const App = () => {
 
   return (
@@ -57,6 +61,9 @@ const App = () => {
           <Switch>
             <Route path ='/' exact component={Landing}/>
             <Route path ='/admin' exact component={Time}/>
+            <Route path ='/liabilityShow' exact component={LiabilityShow}/>
+            <Route path ='/liabilityShow/edit/:liability_id' exact component={LiabilityEdit}/>
+            <Route path ='/liabilityShow/delete/:liability_id' exact component={LiabilityDelete}/>
 
             <Route path ='/rateTableShow' exact component={RateTableShow}/>
             <Route path ='/rateTableCreate' exact component={RateTableCreate}/>

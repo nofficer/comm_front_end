@@ -31,8 +31,9 @@ class Time extends React.Component {
 
 
   buildPayFile(payroll){
-    var statement_details = payroll
-    statement_details.unshift(['ID','Name','Payout'])
+
+    var statement_details = [...payroll]
+    statement_details.unshift(['ID','Name','Payout','Liability Balance (Inclusive of current month payout)'])
     statement_details.unshift([''])
     statement_details.unshift(['Payroll Export File - ' + monthmap[this.props.selected_month]])
 
@@ -45,7 +46,7 @@ class Time extends React.Component {
     }
     wb.SheetNames.push('Payroll')
     var ws_data = statement_details
-    console.log(ws_data)
+
     var ws = XLSX.utils.aoa_to_sheet(ws_data);
     wb.Sheets['Payroll'] = ws;
 
@@ -53,6 +54,7 @@ class Time extends React.Component {
 
 
     saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'Payroll Export '+ monthmap[this.props.selected_month]+ '.xlsx' )
+
   }
 
   handlePayroll(e){
@@ -66,6 +68,7 @@ class Time extends React.Component {
   }
 
   exportPayroll = () => {
+
     //console.log(this.props.payroll)
     this.buildPayFile(this.props.payroll)
   }
@@ -118,6 +121,12 @@ class Time extends React.Component {
             </div>
             <div className='sixteen wide column bottom'></div>
 
+
+            <div className='six wide column'></div>
+              <div className='four wide column'>
+                <div onClick={(e) => {e.stopPropagation(history.push('/liabilityShow'))}} className='ui fluid button orange'>Review Liability Balances</div>
+              </div>
+            <div className='six wide column'></div>
 
             <div className='six wide column'></div>
             <div className='four wide column'>
@@ -196,6 +205,13 @@ class Time extends React.Component {
             </div>
             </div>
             <div className='sixteen wide column bottom'></div>
+
+            <div className='six wide column'></div>
+              <div className='four wide column'>
+                <div onClick={(e) => {e.stopPropagation(history.push('/liabilityShow'))}} className='ui fluid button orange'>Review Liability Balances</div>
+              </div>
+            <div className='six wide column'></div>
+
             <div className='six wide column'></div>
             <div className='four wide column'>
 
@@ -224,6 +240,7 @@ class Time extends React.Component {
                 <div onClick={this.exportPayroll} className='ui fluid button positive'>Export Payroll File for {months[this.props.selected_month]}</div>
               </div>
             <div className='six wide column'></div>
+
           </div>
         )
       }
