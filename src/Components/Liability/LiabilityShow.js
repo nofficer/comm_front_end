@@ -4,6 +4,7 @@ import { getLiabilities,getTime,clearFilter,setFilter } from '../../actions'
 import { Link } from 'react-router-dom'
 import Modal from '../../Modal'
 import Login from '../Accounts/Login'
+import monthmap from '../monthmap'
 
 
 
@@ -42,7 +43,7 @@ class LiabilityShow extends React.Component {
     ){
     return (
       <tr>
-        <td>{liability['liability_id']}</td><td>{liability['user_id']}</td><td>{liability['liability_amount']}</td><td>{liability['month_id']}</td><td>{liability['year_id']}</td>
+        <td>{liability['liability_id']}</td><td>{liability['user_id']}</td><td>{liability['liability_amount']}</td><td>{monthmap[liability['month_id']]}</td><td>{liability['month_id']}</td><td>{liability['year_id']}</td>
         <td>
         <Link onClick={(e) => e.stopPropagation()} to={`/liabilityShow/edit/${liability['liability_id']}`} className='ui small button primary'>
           Edit
@@ -102,6 +103,9 @@ class LiabilityShow extends React.Component {
               </div>
             </td>
             <td>
+
+            </td>
+            <td>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('month_id',e.target.value))} placeholder="Search..."/>
               </div>
@@ -119,6 +123,7 @@ class LiabilityShow extends React.Component {
               <th><strong>Liability ID</strong></th>
               <th><strong>User ID</strong></th>
               <th><strong>Liability Balance</strong></th>
+              <th><strong>Month</strong></th>
               <th><strong>Month ID</strong></th>
               <th><strong>Year ID</strong></th>
               <th><strong>Options</strong></th>
