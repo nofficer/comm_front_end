@@ -42,6 +42,12 @@ class Header extends React.Component {
               </Link></a>
 
             </div>
+            <div onClick={(e) => e.stopPropagation(history.push('/report'))} className=''>
+              <a className="blue active item"><Link to='/report'>
+                  Report
+              </Link></a>
+
+            </div>
             <div onClick={(e) => e.stopPropagation(this.props.logout())} className=''>
               <a  className="blue active item"><Link onClick={(e) => e.stopPropagation(this.props.logout())}  to='/'>
                   Log out

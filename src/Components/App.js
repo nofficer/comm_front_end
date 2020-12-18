@@ -55,9 +55,9 @@ const App = () => {
   return (
     <div>
       <Router history={history}>
-        <div className='container'>
+        <div>
         <Header />
-        <div className='container2'>
+        <div>
           <Switch>
             <Route path ='/' exact component={Landing}/>
             <Route path ='/admin' exact component={Time}/>

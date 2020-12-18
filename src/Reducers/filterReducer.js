@@ -9,6 +9,7 @@ const INITIAL_STATE = {
 export default (state=INITIAL_STATE, action) => {
   switch(action.type) {
     case SET_FILTER:
+    console.log(action.payload)
     if(action.payload[1].length > 0){
       state.filter[action.payload[0]] = action.payload[1]
     }

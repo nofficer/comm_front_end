@@ -30,7 +30,7 @@ class PayoutShow extends React.Component {
     'transaction_id':1,
     'seller_id':2,
     'payee':3,
-    'revenue':4,
+    'revenue':6,
     'gp':5,
     'attainment':6,
     'payout':7,
@@ -40,7 +40,8 @@ class PayoutShow extends React.Component {
     'order_num':11,
     'custom_field':12,
     'period_id':13,
-    'rule':14
+    'rule':14,
+    'type':16
 
   }
 
@@ -70,7 +71,7 @@ class PayoutShow extends React.Component {
     ){
     return (
       <tr>
-        <td>{payout[0]}</td><td>{payout[1]}</td><td>{payout[2]}</td><td>{payout[3]}</td><td>${payout[4]}</td><td>${payout[5]}</td><td>{payout[6]}</td><td>${payout[7]}</td><td>{payout[8]}</td><td>{payout[9]}</td><td>{payout[10]}</td><td>{payout[11]}</td><td>{payout[12]}</td><td>{payout[13]}</td><td>{payout[14]}</td>
+        <td>{payout[0]}</td><td>{payout[1]}</td><td>{payout[2]}</td><td>{payout[3]}</td><td>${payout[4]}</td><td>${payout[5]}</td><td>{payout[6]}</td><td>${payout[7]}</td><td>{payout[8]}</td><td>{payout[9]}</td><td>{payout[10]}</td><td>{payout[11]}</td><td>{payout[12]}</td><td>{payout[13]}</td><td>{payout[14]}</td><td>{payout[16]}</td>
         <td>
         <Link onClick={(e) => e.stopPropagation()} to={`/payoutShow/edit/${payout[0]}`} className='ui small button primary'>
           Edit
@@ -181,9 +182,15 @@ class PayoutShow extends React.Component {
             </div>
           </td><td>
             <div class="ui input">
-              <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('rule'))} placeholder="Search..."/>
+              <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('rule',e.target.value))} placeholder="Search..."/>
             </div>
-          </td><td>
+          </td>
+          <td>
+            <div class="ui input">
+              <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('type',e.target.value))} placeholder="Search..."/>
+            </div>
+          </td>
+          <td>
 
           </td>
         </tr>
@@ -204,6 +211,7 @@ class PayoutShow extends React.Component {
             <th><strong>custom_field</strong></th>
             <th><strong>period_id</strong></th>
             <th><strong>Rule</strong></th>
+            <th><strong>Type</strong></th>
             <th><strong>Options</strong></th>
           </tr>
         </thead>

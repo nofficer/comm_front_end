@@ -71,7 +71,9 @@ class PayoutShow extends React.Component {
     'order_num':11,
     'custom_field':12,
     'period_id':13,
-    'rule':14
+    'rule':14,
+    'type':16,
+    'date':17
 
   }
 
@@ -100,7 +102,7 @@ class PayoutShow extends React.Component {
 
     return (
       <tr>
-        <td>{payout[0]}</td><td>{payout[1]}</td><td>{payout[2]}</td><td>{payout[3]}</td><td>${payout[4]}</td><td>${payout[5]}</td><td>{payout[6]}</td><td>${payout[7]}</td><td>{payout[8]}</td><td>{payout[9]}</td><td>{payout[10]}</td><td>{payout[11]}</td><td>{payout[12]}</td><td>{payout[13]}</td><td>{payout[14]}</td>
+        <td>{payout[0]}</td><td>{payout[1]}</td><td>{payout[2]}</td><td>{payout[3]}</td><td>${payout[4]}</td><td>${payout[5]}</td><td>{payout[6]}</td><td>${payout[7]}</td><td>{payout[8]}</td><td>{payout[9]}</td><td>{payout[10]}</td><td>{payout[11]}</td><td>{payout[12]}</td><td>{payout[13]}</td><td>{payout[14]}</td><td>{payout[16]}</td><td>{payout[17]}</td>
 
 
       </tr>
@@ -122,7 +124,7 @@ class PayoutShow extends React.Component {
   }
   renderContent(){
       statement_details = []
-      statement_details.push(["Payout_ID", "Transaction_ID","Seller_ID","Payee","Revenue","GP","Attainment","Payout","Split_Percent","Location","Payout_Multiplier","Order_Number","Custom_Field","Period_ID","Rule"])
+      statement_details.push(["Payout_ID", "Transaction_ID","Seller_ID","Payee","Revenue","GP","Attainment","Payout","Split_Percent","Location","Payout_Multiplier","Order_Number","Custom_Field","Period_ID","Rule","Type"])
 
     return (<div className='ui  grid'>
     <div className='sixteen wide column'></div>
@@ -204,6 +206,16 @@ class PayoutShow extends React.Component {
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('rule'))} placeholder="Search..."/>
             </div>
           </td>
+          <td>
+            <div class="ui input">
+              <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('type',e.target.value))} placeholder="Search..."/>
+            </div>
+          </td>
+          <td>
+            <div class="ui input">
+              <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('date',e.target.value))} placeholder="Search..."/>
+            </div>
+          </td>
         </tr>
           <tr>
           <th><strong>Payout ID</strong></th>
@@ -221,7 +233,8 @@ class PayoutShow extends React.Component {
           <th><strong>custom_field</strong></th>
           <th><strong>period_id</strong></th>
           <th><strong>Rule</strong></th>
-
+          <th><strong>Type</strong></th>
+          <th><strong>Date</strong></th>
           </tr>
         </thead>
         {this.renderList()}

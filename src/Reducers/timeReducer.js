@@ -1,5 +1,5 @@
 import {
-  GET_TIME,UPDATE_TIME,REVERT_TIME
+  GET_TIME,UPDATE_TIME,REVERT_TIME,UPDATE_FYE
 } from '../actions/types'
 
 const INITIAL_STATE = {
@@ -14,7 +14,8 @@ export default (state=INITIAL_STATE, action) => {
       return {...state, month: action.payload};
     case REVERT_TIME:
       return {...state, month: action.payload};
-
+    case UPDATE_FYE:
+      return {...state, month: action.payload};
     default:
       return state
   }

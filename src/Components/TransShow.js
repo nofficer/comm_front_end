@@ -50,24 +50,50 @@ class TransShow extends React.Component {
     if(
       check
     ){
-      if(parseInt(trans[11]) < parseInt(this.props.month['current.month_id'])){
+      var cur_year = this.props.month['cal_year']
+      var trans_year = trans[3].split('-')[0]
+      var cur_month = parseInt(this.props.month['current.month_id'])
+      var trans_month = parseInt(trans[11])
+
+      if(cur_year<trans_year){
+
         return (
           <tr><td>{trans[0]}</td><td>{trans[1]}</td><td>{trans[2]}</td><td>{trans[3].split("T")[0]}</td><td>{trans[4]}</td><td>{trans[5]}</td><td>{trans[6]}</td><td>{trans[7]}</td><td>{trans[8]}</td><td>{trans[9]}</td><td>{trans[10]}</td><td>{trans[11]}</td>
-            <td></td>
+            <td>
+            <Link onClick={(e) => e.stopPropagation()} to={`/transShow/edit/${trans[0]}`} className='ui small button primary'>
+              Edit
+            </Link>
+            <Link onClick={(e) => e.stopPropagation()} to={`/transShow/delete/${trans[0]}`} className='ui small button negative'>
+              Delete
+            </Link>
+            </td>
               </tr>
 
         )
       }
+      else if(cur_year==trans_year && cur_month <= trans_month){
+
+        return (
+          <tr><td>{trans[0]}</td><td>{trans[1]}</td><td>{trans[2]}</td><td>{trans[3].split("T")[0]}</td><td>{trans[4]}</td><td>{trans[5]}</td><td>{trans[6]}</td><td>{trans[7]}</td><td>{trans[8]}</td><td>{trans[9]}</td><td>{trans[10]}</td><td>{trans[11]}</td>
+            <td>
+            <Link onClick={(e) => e.stopPropagation()} to={`/transShow/edit/${trans[0]}`} className='ui small button primary'>
+              Edit
+            </Link>
+            <Link onClick={(e) => e.stopPropagation()} to={`/transShow/delete/${trans[0]}`} className='ui small button negative'>
+              Delete
+            </Link>
+
+              </td>
+              </tr>
+
+        )
+      }
+
       else{
         return (
           <tr><td>{trans[0]}</td><td>{trans[1]}</td><td>{trans[2]}</td><td>{trans[3].split("T")[0]}</td><td>{trans[4]}</td><td>{trans[5]}</td><td>{trans[6]}</td><td>{trans[7]}</td><td>{trans[8]}</td><td>{trans[9]}</td><td>{trans[10]}</td><td>{trans[11]}</td>
             <td>
-              <Link onClick={(e) => e.stopPropagation()} to={`/transShow/edit/${trans[0]}`} className='ui small button primary'>
-                Edit
-              </Link>
-              <Link onClick={(e) => e.stopPropagation()} to={`/transShow/delete/${trans[0]}`} className='ui small button negative'>
-                Delete
-              </Link>
+
               </td>
               </tr>
 

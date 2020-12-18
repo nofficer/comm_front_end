@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getTime,updateTime,revertTime} from '../../actions'
+import { getTime,updateTime,revertTime,updateFYE} from '../../actions'
 import history from '../../history'
 import Modal from '../../Modal'
 import { Link } from 'react-router-dom'
@@ -25,6 +25,10 @@ class Time extends React.Component {
       return("Are you sure you wish to move to the next period? \
       This will result in all calculations, payouts and attainments in the current period to be moved to history and become unchangeable. You will no longer be able to run calculations for this period.")
     }
+    else if(history.location.state.change == 'FYE'){
+      return("Are you sure you wish to move to the next Fiscal Year? \
+      This will result in all calculations, payouts and attainments in the current period to be moved to prior year and become unchangeable. You will no longer be able to run calculations for this period or revert. This change is irreversible.")
+    }
   }
   else{
     history.push('/login')
@@ -45,7 +49,7 @@ class Time extends React.Component {
                     onClick={this.props.revertTime}
                     className='ui button negative'>Revert Period
                     </button>
-                    <Link className='ui button' to='/time'>Cancel</Link>
+                    <Link className='ui button' to='/admin'>Cancel</Link>
           </React.Fragment>
         )
       }
@@ -56,7 +60,18 @@ class Time extends React.Component {
                     onClick={this.props.updateTime}
                     className='ui button positive'>Next Period
                     </button>
-                    <Link className='ui button' to='/time'>Cancel</Link>
+                    <Link className='ui button' to='/admin'>Cancel</Link>
+          </React.Fragment>
+        )
+      }
+      else if(history.location.state.change == 'FYE'){
+        return (
+          <React.Fragment>
+                    <button
+                    onClick={this.props.updateFYE}
+                    className='ui button blue'>Next Fiscal Year
+                    </button>
+                    <Link className='ui button' to='/admin'>Cancel</Link>
           </React.Fragment>
         )
       }
@@ -77,7 +92,7 @@ class Time extends React.Component {
 
       content={this.renderContent()}
       actions={this.renderActions()}
-      onDismiss={() => history.push('/time')}
+      onDismiss={() => history.push('/admin')}
     />)
   }
 }
@@ -88,4 +103,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, {getTime,updateTime,revertTime})(Time)
+export default connect(mapStateToProps, {getTime,updateTime,revertTime,updateFYE})(Time)

@@ -278,8 +278,7 @@ function isValidDate(dateString)
         monthLength[1] = 29;
 
 
-
-    if(month<monthVar){
+    if(month<monthVar && year == yearVar){
       return false
     }
     if(year<yearVar){
@@ -333,6 +332,9 @@ const validate = (formValues) => {
   }
   if(!formValues.payout_multiplier) {
     errors.custom_field = "You must enter a payout multiplier"
+  }
+  if(!formValues.seller_id) {
+    errors.custom_field = "You must select a seller"
   }
 
   //NEED TO ADD NEW COLUMSN TO FORMVALUES

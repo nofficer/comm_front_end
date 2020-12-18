@@ -1,9 +1,22 @@
 import { GET_PLANS, GET_USERS,  GET_USER, CREATE_USER, EDIT_USER, CREATE_CALC, CHANGE_DONE, GO_PUSH, CREATE_PLAN, EDIT_PLAN, GET_ATTAINMENT_RULES, CREATE_ATTAINMENT_RULE, EDIT_ATTAINMENT_RULE, GET_TRANS, CREATE_TRANS, EDIT_TRANS, GET_TRAN, DELETE_TRANS, DELETE_ATTAINMENT_RULE,DELETE_PLAN,DELETE_USER,GET_ATTAINMENT_RULE,GET_PLAN,UPLOAD_FILE,ONCHANGE_FILE,CHECK_RULE_USE,CHECK_PLAN_USE,CHECK_USER_USE,GET_RATE_TABLE,GET_RATE_TABLES,CREATE_RATE_TABLE,EDIT_RATE_TABLE,DELETE_RATE_TABLE,ERROR_HANDLE,CALC_PLANS,GET_PAYOUTS,EDIT_PAYOUT,GET_PAYOUT,DELETE_PAYOUT,LOAD,GET_TIME,UPDATE_TIME,REVERT_TIME,LOGIN,SET_ACCOUNT,LOGOUT,GET_PAYOUTS_USER,GET_GOAL,GET_GOALS,CREATE_GOAL,EDIT_GOAL,DELETE_GOAL,CLEAR,SELECT_MONTH,UPDATE_ACCOUNT,GET_PAYROLL,SET_FILTER,GET_FILTER,CLEAR_FILTER,LOADING,
 GET_ROLE_HIERARCHY,CREATE_ROLE_HIERARCHY,EDIT_ROLE_HIERARCHY,DELETE_ROLE_HIERARCHY,GET_ROLE_HIERARCHIES,
-GET_LIABILITY,GET_LIABILITIES,EDIT_LIABILITY,DELETE_LIABILITY,
+GET_LIABILITY,GET_LIABILITIES,EDIT_LIABILITY,DELETE_LIABILITY,CAST_USER,UPDATE_FYE,SELECT_YEAR,
 CHECK_USER } from './types'
 import db from '../apis/db'
 import history from '../history'
+
+
+export const updateFYE = () => {
+  return async (dispatch) => {
+    const response = await db.get('/nextFYE')
+    dispatch({type:UPDATE_FYE, payload: response.data})
+
+}
+}
+
+export const castUser = (user_id) => {
+  return({type:CAST_USER, payload: {user_id:parseInt(user_id),role:'admin',username:'admin'}})
+}
 
 export const getLiability = (liability_id) => {
   return async (dispatch) => {
@@ -82,7 +95,7 @@ export const clearFilter = () => {
 }
 
 export const setFilter = (key,val) => {
-
+  console.log(val)
   return({type:SET_FILTER,payload:[key,val]})
 }
 
@@ -113,6 +126,12 @@ export const selectMonth = (month) => {
   console.log("Selecting month")
   return({type:SELECT_MONTH, payload:month})
 }
+
+export const selectYear = (year) => {
+  console.log("Selecting year")
+  return({type:SELECT_YEAR, payload:year})
+}
+
 
 export const clearError = () => {
   history.push('/')
@@ -268,6 +287,9 @@ export const getPayoutsHistory = () => {
 
   }
 }
+
+
+
 
 
 export const getPayouts = () => {
