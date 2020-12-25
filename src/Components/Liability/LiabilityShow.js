@@ -43,8 +43,8 @@ class LiabilityShow extends React.Component {
     ){
     return (
       <tr>
-        <td>{liability['liability_id']}</td><td>{liability['user_id']}</td><td>{liability['liability_amount']}</td><td>{monthmap[liability['month_id']]}</td><td>{liability['month_id']}</td><td>{liability['year_id']}</td>
-        <td>
+        <td className='center aligned'>{liability['liability_id']}</td><td className='center aligned'>{liability['user_id']}</td><td className='center aligned'>{liability['liability_amount']}</td><td className='center aligned'>{monthmap[liability['month_id']]}</td><td className='center aligned'>{liability['month_id']}</td><td className='center aligned'>{liability['year_id']}</td>
+        <td className='center aligned'>
         <Link onClick={(e) => e.stopPropagation()} to={`/liabilityShow/edit/${liability['liability_id']}`} className='ui small button primary'>
           Edit
         </Link>
@@ -87,46 +87,53 @@ class LiabilityShow extends React.Component {
 
           <thead>
           <tr>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('liability_id',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('user_id',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('liability_amount',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
 
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('month_id',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('year_id',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
 
             </td>
             </tr>
             <tr>
-              <th><strong>Liability ID</strong></th>
-              <th><strong>User ID</strong></th>
-              <th><strong>Liability Balance</strong></th>
-              <th><strong>Month</strong></th>
-              <th><strong>Month ID</strong></th>
-              <th><strong>Year ID</strong></th>
-              <th><strong>Options</strong></th>
+            <th className='center aligned'>
+<strong>Liability ID</strong></th>
+<th className='center aligned'>
+<strong>User ID</strong></th>
+<th className='center aligned'>
+<strong>Liability Balance</strong></th>
+<th className='center aligned'>
+<strong>Month</strong></th>
+<th className='center aligned'>
+<strong>Month ID</strong></th>
+<th className='center aligned'>
+<strong>Year ID</strong></th>
+<th className='center aligned'>
+<strong>Options</strong></th>
 
             </tr>
           </thead>

@@ -1,7 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {login} from '../../actions'
+import {login, getTime} from '../../actions'
 import LoginForm from './LoginForm'
+import LoginModal from '../../LoginModal'
+import history from '../../history'
 
 
 
@@ -9,7 +11,7 @@ import LoginForm from './LoginForm'
 
 class Login extends React.Component {
   componentDidMount(){
-
+    this.props.getTime()
   }
 
   save = 'no'
@@ -30,14 +32,14 @@ class Login extends React.Component {
   render(){
     if(this.props.account == "wrong_password"){
 
-      return <LoginForm onSubmit={this.onSubmit} issue='Incorrect Password'/>
+      return <LoginModal onDismiss={(e) => e.stopPropagation(history.push('/'))} title="Log in to EasyComp" onSubmit={this.onSubmit} issue='Incorrect Password'/>
     }
     else if(this.props.account == "wrong_username"){
 
-      return <LoginForm onSubmit={this.onSubmit} issue='Username not found'/>
+      return <LoginModal onDismiss={(e) => e.stopPropagation(history.push('/'))} title="Log in to EasyComp" onSubmit={this.onSubmit} issue='Username not found'/>
     }
       return (<div>
-        <LoginForm onSubmit={this.onSubmit}/>
+        <LoginModal onDismiss={(e) => e.stopPropagation(history.push('/'))} title="Log in to EasyComp" onSubmit={this.onSubmit}/>
 
         </div>
 
@@ -47,8 +49,9 @@ class Login extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    account: state.account.account
+    account: state.account.account,
+    month: state.month.month
   }
 }
 
-export default connect(mapStateToProps, { login })(Login)
+export default connect(mapStateToProps, { login,getTime })(Login)

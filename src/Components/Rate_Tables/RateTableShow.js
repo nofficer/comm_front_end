@@ -64,8 +64,8 @@ class RateTableShow extends React.Component {
 
           return (
             <tr>
-              <td>{rateTable[0]}</td><td>{rateTable[10]}</td><td>{rateTable[2]}</td><td>{rateTable[3]}</td><td>{rateTable[4]}</td><td>{rateTable[5]}</td><td>{rateTable[6]}</td><td>{rateTable[7]}</td><td>{rateTable[8]}</td>
-              <td>
+              <td className='center aligned'>{rateTable[0]}</td><td className='center aligned'>{rateTable[10]}</td><td className='center aligned'>{rateTable[2]}</td><td className='center aligned'>{rateTable[3]}</td><td className='center aligned'>{rateTable[4]}</td><td className='center aligned'>{rateTable[5]}</td><td className='center aligned'>{rateTable[6]}</td><td className='center aligned'>{rateTable[7]}</td><td className='center aligned'>{rateTable[8]}</td>
+              <td className='center aligned'>
               <Link onClick={(e) => e.stopPropagation()} to={`/rateTableShow/edit/${rateTable[0]}`} className='ui small button primary'>
                 Edit
               </Link>
@@ -108,64 +108,64 @@ class RateTableShow extends React.Component {
 
           <thead>
           <tr>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('rate_id',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('rule_name',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('rate_type',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('start',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('end',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('attain_start',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('attain_end',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('tier',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('rate',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td></td>
+            <td className='center aligned'></td>
             </tr>
             <tr>
-              <th><strong>Rate Table ID</strong></th>
-              <th><strong>Attainment Rule Name</strong></th>
-              <th><strong>Rate Type</strong></th>
-              <th><strong>Start Date</strong></th>
-              <th><strong>End Date</strong></th>
-              <th><strong>Attainment Range Low</strong></th>
-              <th><strong>Attainment Range High</strong></th>
-              <th><strong>Tier</strong></th>
-              <th><strong>Rate %</strong></th>
-              <th><strong>Options</strong></th>
+              <th className='center aligned'><strong>Rate Table ID</strong></th>
+              <th className='center aligned'><strong>Attainment Rule Name</strong></th>
+              <th className='center aligned'><strong>Rate Type</strong></th>
+              <th className='center aligned'><strong>Start Date</strong></th>
+              <th className='center aligned'><strong>End Date</strong></th>
+              <th className='center aligned'><strong>Attainment Range Low</strong></th>
+              <th className='center aligned'><strong>Attainment Range High</strong></th>
+              <th className='center aligned'><strong>Tier</strong></th>
+              <th className='center aligned'><strong>Rate %</strong></th>
+              <th className='center aligned'><strong>Options</strong></th>
 
             </tr>
           </thead>

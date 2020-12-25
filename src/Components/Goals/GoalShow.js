@@ -51,8 +51,8 @@ class GoalShow extends React.Component {
     ){
     return (
       <tr>
-        <td>{goal[0]}</td><td>{goal[7]}</td><td>{goal[6]}</td><td>{goal[3]}</td><td>{goal[4]}</td><td>{goal[5]}</td><td>{goal[8].toUpperCase()}</td>
-        <td>
+        <td className='center aligned'>{goal[0]}</td><td className='center aligned'>{goal[7]}</td><td className='center aligned'>{goal[6]}</td><td className='center aligned'>{goal[3]}</td><td className='center aligned'>{goal[4]}</td><td className='center aligned'>{goal[5]}</td><td className='center aligned'>{goal[8].toUpperCase()}</td>
+        <td className='center aligned'>
         <Link onClick={(e) => e.stopPropagation()} to={`/goalShow/edit/${goal[0]}`} className='ui small button primary'>
           Edit
         </Link>
@@ -98,55 +98,55 @@ class GoalShow extends React.Component {
 
           <thead>
           <tr>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('goal_id',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('user_name',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('rule_name',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('start',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('end',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('goal',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('timeframe',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
 
             </td>
             </tr>
             <tr>
-              <th><strong>Goal ID</strong></th>
-              <th><strong>User</strong></th>
-              <th><strong>Attainment Rule</strong></th>
-              <th><strong>Start Date</strong></th>
-              <th><strong>End Date</strong></th>
+            <th className='center aligned'><strong>Goal ID</strong></th>
+            <th className='center aligned'><strong>User</strong></th>
+            <th className='center aligned'><strong>Attainment Rule</strong></th>
+            <th className='center aligned'><strong>Start Date</strong></th>
+            <th className='center aligned'><strong>End Date</strong></th>
 
-              <th><strong>Goal</strong></th>
-              <th><strong>Timeframe</strong></th>
-              <th><strong>Options</strong></th>
+            <th className='center aligned'><strong>Goal</strong></th>
+            <th className='center aligned'><strong>Timeframe</strong></th>
+            <th className='center aligned'><strong>Options</strong></th>
 
             </tr>
           </thead>

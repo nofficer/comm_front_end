@@ -42,8 +42,8 @@ class PlanShow extends React.Component {
     return (
 
       <tr>
-        <td>{plan[0]}</td><td>{plan[1]}</td>
-        <td>
+        <td className='center aligned'>{plan[0]}</td><td className='center aligned'>{plan[1]}</td>
+        <td className='center aligned'>
         <Link onClick={(e) => e.stopPropagation()} to={`/planShow/edit/${plan[0]}`} className='ui small button primary'>
           Edit
         </Link>
@@ -82,21 +82,21 @@ class PlanShow extends React.Component {
         <table className='ui celled table'>
         <thead>
         <tr>
-          <td>
+          <td className='center aligned'>
             <div class="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('plan_id',e.target.value))} placeholder="Search..."/>
             </div>
           </td>
-          <td>
+          <td className='center aligned'>
             <div class="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('plan_name',e.target.value))} placeholder="Search..."/>
             </div>
           </td>
           </tr>
           <tr>
-            <th><strong>Plan ID</strong></th>
-            <th><strong>Plan Name</strong></th>
-            <th><strong>Options</strong></th>
+            <th className='center aligned'><strong>Plan ID</strong></th>
+            <th className='center aligned'><strong>Plan Name</strong></th>
+            <th className='center aligned'><strong>Options</strong></th>
           </tr>
         </thead>
         {this.renderList()}

@@ -98,11 +98,16 @@ class PayoutShow extends React.Component {
     if(
       check
     ){
+      payout[4] = Number(payout[4])
+      payout[5] = Number(payout[5])
+      payout[6] = Number(payout[6])
+      payout[7] = Number(payout[7])
       statement_details.push(payout)
+
 
     return (
       <tr>
-        <td>{payout[0]}</td><td>{payout[1]}</td><td>{payout[2]}</td><td>{payout[3]}</td><td>${payout[4]}</td><td>${payout[5]}</td><td>{payout[6]}</td><td>${payout[7]}</td><td>{payout[8]}</td><td>{payout[9]}</td><td>{payout[10]}</td><td>{payout[11]}</td><td>{payout[12]}</td><td>{payout[13]}</td><td>{payout[14]}</td><td>{payout[16]}</td><td>{payout[17]}</td>
+        <td className='center aligned'>{payout[0]}</td><td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>${payout[4]}</td><td className='center aligned'>${payout[5]}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>${payout[7]}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[12]}</td><td className='center aligned'>{payout[13]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[17]}</td>
 
 
       </tr>
@@ -144,97 +149,97 @@ class PayoutShow extends React.Component {
 
         <thead>
         <tr>
-          <td>
+          <td className='center aligned'>
             <div class="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('payout_id',e.target.value))} placeholder="Search..."/>
             </div>
           </td>
-          <td>
+          <td className='center aligned'>
             <div class="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('transaction_id',e.target.value))} placeholder="Search..."/>
             </div>
-          </td><td>
+          </td><td className='center aligned'>
             <div class="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('seller_id',e.target.value))} placeholder="Search..."/>
             </div>
-          </td><td>
+          </td><td className='center aligned'>
             <div class="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('payee',e.target.value))} placeholder="Search..."/>
             </div>
-          </td><td>
+          </td><td className='center aligned'>
             <div class="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('revenue',e.target.value))} placeholder="Search..."/>
             </div>
-          </td><td>
+          </td><td className='center aligned'>
             <div class="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('gp',e.target.value))} placeholder="Search..."/>
             </div>
-          </td><td>
+          </td><td className='center aligned'>
             <div class="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('attainment',e.target.value))} placeholder="Search..."/>
             </div>
-          </td><td>
+          </td><td className='center aligned'>
             <div class="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('payout',e.target.value))} placeholder="Search..."/>
             </div>
-          </td><td>
+          </td><td className='center aligned'>
             <div class="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('split_percent',e.target.value))} placeholder="Search..."/>
             </div>
-          </td><td>
+          </td><td className='center aligned'>
             <div class="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('location',e.target.value))} placeholder="Search..."/>
             </div>
-          </td><td>
+          </td><td className='center aligned'>
             <div class="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('payout_multiplier',e.target.value))} placeholder="Search..."/>
             </div>
-          </td><td>
+          </td><td className='center aligned'>
             <div class="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('order_num',e.target.value))} placeholder="Search..."/>
             </div>
-          </td><td>
+          </td><td className='center aligned'>
             <div class="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('custom_field',e.target.value))} placeholder="Search..."/>
             </div>
-          </td><td>
+          </td><td className='center aligned'>
             <div class="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('period_id',e.target.value))} placeholder="Search..."/>
             </div>
-          </td><td>
+          </td><td className='center aligned'>
             <div class="ui input">
-              <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('rule'))} placeholder="Search..."/>
+              <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('rule',e.target.value))} placeholder="Search..."/>
             </div>
           </td>
-          <td>
+          <td className='center aligned'>
             <div class="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('type',e.target.value))} placeholder="Search..."/>
             </div>
           </td>
-          <td>
+          <td className='center aligned'>
             <div class="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('date',e.target.value))} placeholder="Search..."/>
             </div>
           </td>
         </tr>
           <tr>
-          <th><strong>Payout ID</strong></th>
-          <th><strong>Transaction ID</strong></th>
-          <th><strong>Seller ID</strong></th>
-          <th><strong>Payee</strong></th>
-          <th><strong>Revenue</strong></th>
-          <th><strong>GP</strong></th>
-          <th><strong>Attainment</strong></th>
-          <th><strong>Payout</strong></th>
-          <th><strong>Split Percent</strong></th>
-          <th><strong>Location</strong></th>
-          <th><strong>Payout Multiplier</strong></th>
-          <th><strong>order_num</strong></th>
-          <th><strong>custom_field</strong></th>
-          <th><strong>period_id</strong></th>
-          <th><strong>Rule</strong></th>
-          <th><strong>Type</strong></th>
-          <th><strong>Date</strong></th>
+          <th className='center aligned'><strong>Payout ID</strong></th>
+          <th className='center aligned'><strong>Transaction ID</strong></th>
+          <th className='center aligned'><strong>Seller ID</strong></th>
+          <th className='center aligned'><strong>Payee</strong></th>
+          <th className='center aligned'><strong>Revenue</strong></th>
+          <th className='center aligned'><strong>GP</strong></th>
+          <th className='center aligned'><strong>Attainment</strong></th>
+          <th className='center aligned'><strong>Payout</strong></th>
+          <th className='center aligned'><strong>Split Percent</strong></th>
+          <th className='center aligned'><strong>Location</strong></th>
+          <th className='center aligned'><strong>Payout Multiplier</strong></th>
+          <th className='center aligned'><strong>order_num</strong></th>
+          <th className='center aligned'><strong>custom_field</strong></th>
+          <th className='center aligned'><strong>period_id</strong></th>
+          <th className='center aligned'><strong>Rule</strong></th>
+          <th className='center aligned'><strong>Type</strong></th>
+          <th className='center aligned'><strong>Date</strong></th>
           </tr>
         </thead>
         {this.renderList()}

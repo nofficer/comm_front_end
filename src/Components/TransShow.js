@@ -58,8 +58,8 @@ class TransShow extends React.Component {
       if(cur_year<trans_year){
 
         return (
-          <tr><td>{trans[0]}</td><td>{trans[1]}</td><td>{trans[2]}</td><td>{trans[3].split("T")[0]}</td><td>{trans[4]}</td><td>{trans[5]}</td><td>{trans[6]}</td><td>{trans[7]}</td><td>{trans[8]}</td><td>{trans[9]}</td><td>{trans[10]}</td><td>{trans[11]}</td>
-            <td>
+          <tr><td className='center aligned'>{trans[0]}</td><td className='center aligned'>{trans[1]}</td><td className='center aligned'>{trans[2]}</td><td className='center aligned'>{trans[3].split("T")[0]}</td><td className='center aligned'>{trans[4]}</td><td className='center aligned'>{trans[5]}</td><td className='center aligned'>{trans[6]}</td><td className='center aligned'>{trans[7]}</td><td className='center aligned'>{trans[8]}</td><td className='center aligned'>{trans[9]}</td><td className='center aligned'>{trans[10]}</td><td className='center aligned'>{trans[11]}</td>
+            <td className='center aligned'>
             <Link onClick={(e) => e.stopPropagation()} to={`/transShow/edit/${trans[0]}`} className='ui small button primary'>
               Edit
             </Link>
@@ -74,8 +74,8 @@ class TransShow extends React.Component {
       else if(cur_year==trans_year && cur_month <= trans_month){
 
         return (
-          <tr><td>{trans[0]}</td><td>{trans[1]}</td><td>{trans[2]}</td><td>{trans[3].split("T")[0]}</td><td>{trans[4]}</td><td>{trans[5]}</td><td>{trans[6]}</td><td>{trans[7]}</td><td>{trans[8]}</td><td>{trans[9]}</td><td>{trans[10]}</td><td>{trans[11]}</td>
-            <td>
+          <tr><td className='center aligned'>{trans[0]}</td><td className='center aligned'>{trans[1]}</td><td className='center aligned'>{trans[2]}</td><td className='center aligned'>{trans[3].split("T")[0]}</td><td className='center aligned'>{trans[4]}</td><td className='center aligned'>{trans[5]}</td><td className='center aligned'>{trans[6]}</td><td className='center aligned'>{trans[7]}</td><td className='center aligned'>{trans[8]}</td><td className='center aligned'>{trans[9]}</td><td className='center aligned'>{trans[10]}</td><td className='center aligned'>{trans[11]}</td>
+            <td className='center aligned'>
             <Link onClick={(e) => e.stopPropagation()} to={`/transShow/edit/${trans[0]}`} className='ui small button primary'>
               Edit
             </Link>
@@ -91,8 +91,8 @@ class TransShow extends React.Component {
 
       else{
         return (
-          <tr><td>{trans[0]}</td><td>{trans[1]}</td><td>{trans[2]}</td><td>{trans[3].split("T")[0]}</td><td>{trans[4]}</td><td>{trans[5]}</td><td>{trans[6]}</td><td>{trans[7]}</td><td>{trans[8]}</td><td>{trans[9]}</td><td>{trans[10]}</td><td>{trans[11]}</td>
-            <td>
+          <tr><td className='center aligned'>{trans[0]}</td><td className='center aligned'>{trans[1]}</td><td className='center aligned'>{trans[2]}</td><td className='center aligned'>{trans[3].split("T")[0]}</td><td className='center aligned'>{trans[4]}</td><td className='center aligned'>{trans[5]}</td><td className='center aligned'>{trans[6]}</td><td className='center aligned'>{trans[7]}</td><td className='center aligned'>{trans[8]}</td><td className='center aligned'>{trans[9]}</td><td className='center aligned'>{trans[10]}</td><td className='center aligned'>{trans[11]}</td>
+            <td className='center aligned'>
 
               </td>
               </tr>
@@ -140,85 +140,85 @@ class TransShow extends React.Component {
         <table className='ui celled  table'>
           <thead>
           <tr>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('trans_id',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('seller_id',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('type',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('date',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('revenue',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('gp',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('order_num',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('location',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('split_percent',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('custom_field',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('payout_multiplier',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('period',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
 
             </td>
             </tr>
             <tr>
 
-              <th><strong>Transaction ID</strong></th>
-              <th><strong>Transaction Seller</strong></th>
-              <th><strong>Transaction Type</strong></th>
-              <th><strong>Transaction Date</strong></th>
-              <th><strong>Revenue</strong></th>
-              <th><strong>Gross Profit</strong></th>
-              <th><strong>Order Number</strong></th>
-              <th><strong>Location</strong></th>
-              <th><strong>Split Percent</strong></th>
-              <th><strong>Custom Field</strong></th>
-              <th><strong>Payout Multiplier</strong></th>
-              <th><strong>Period</strong></th>
-              <th><strong>Options</strong></th>
+              <th className='center aligned'><strong>Transaction ID</strong></th>
+              <th className='center aligned'><strong>Transaction Seller</strong></th>
+              <th className='center aligned'><strong>Transaction Type</strong></th>
+              <th className='center aligned'><strong>Transaction Date</strong></th>
+              <th className='center aligned'><strong>Revenue</strong></th>
+              <th className='center aligned'><strong>Gross Profit</strong></th>
+              <th className='center aligned'><strong>Order Number</strong></th>
+              <th className='center aligned'><strong>Location</strong></th>
+              <th className='center aligned'><strong>Split Percent</strong></th>
+              <th className='center aligned'><strong>Custom Field</strong></th>
+              <th className='center aligned'><strong>Payout Multiplier</strong></th>
+              <th className='center aligned'><strong>Period</strong></th>
+              <th className='center aligned'><strong>Options</strong></th>
             </tr>
           </thead>
           {this.renderList()}

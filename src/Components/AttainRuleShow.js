@@ -48,8 +48,8 @@ class AttainRuleShow extends React.Component {
     ){
     return (
       <tr>
-        <td>{attainRule[0]}</td><td>{attainRule[1]}</td><td>{attainRule[2]}</td><td>{attainRule[3]}</td><td>{attainRule[4].toUpperCase()}</td><td>{attainRule[5].toUpperCase()}</td><td>{attainRule[6]}</td><td>{attainRule[8].toUpperCase()}</td>
-        <td>
+        <td className='center aligned'>{attainRule[0]}</td><td className='center aligned'>{attainRule[1]}</td><td className='center aligned'>{attainRule[2]}</td><td className='center aligned'>{attainRule[3]}</td><td className='center aligned'>{attainRule[4].toUpperCase()}</td><td className='center aligned'>{attainRule[5].toUpperCase()}</td><td className='center aligned'>{attainRule[6]}</td><td className='center aligned'>{attainRule[8].toUpperCase()}</td>
+        <td className='center aligned'>
         <Link onClick={(e) => e.stopPropagation()} to={`/attainRuleShow/edit/${attainRule[0]}`} className='ui small button primary'>
           Edit
         </Link>
@@ -90,55 +90,55 @@ class AttainRuleShow extends React.Component {
 
           <thead>
           <tr>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('rule_id',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('rule_name',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('calc_type',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('filter',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('metric',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('timeframe',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('goal_use',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
 
             </td>
             </tr>
             <tr>
-              <th><strong>Attainment Rule ID</strong></th>
-              <th><strong>Attainment Rule Name</strong></th>
-              <th><strong>Calculation Type</strong></th>
-              <th><strong>Filter</strong></th>
-              <th><strong>Metric</strong></th>
-              <th><strong>Timeframe</strong></th>
-              <th><strong>Plan Name</strong></th>
-              <th><strong>Goal Use</strong></th>
-              <th><strong>Options</strong></th>
+              <th className='center aligned'><strong>Attainment Rule ID</strong></th>
+              <th className='center aligned'><strong>Attainment Rule Name</strong></th>
+              <th className='center aligned'><strong>Calculation Type</strong></th>
+              <th className='center aligned'><strong>Filter</strong></th>
+              <th className='center aligned'><strong>Metric</strong></th>
+              <th className='center aligned'><strong>Timeframe</strong></th>
+              <th className='center aligned'><strong>Plan Name</strong></th>
+              <th className='center aligned'><strong>Goal Use</strong></th>
+              <th className='center aligned'><strong>Options</strong></th>
             </tr>
           </thead>
           {this.renderList()}

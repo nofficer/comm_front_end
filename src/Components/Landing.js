@@ -4,17 +4,22 @@ import { uploadFile,onChangeFile,getPayouts} from '../actions'
 import UploadForm from './UploadForm'
 import Example from './myhook'
 import { Header } from 'semantic-ui-react'
+import BarChart from './BarChart'
+
 
 
 
 class Landing extends React.Component {
   componentDidMount(){
     this.props.getPayouts()
+
   }
 
   onSubmit = (formValues) => {
 
   }
+
+
 
   render(){
       return (<div className='ui grid'>
@@ -36,6 +41,7 @@ class Landing extends React.Component {
           <i class="calculator icon bigicon"></i>
           </div>
           </div>
+          
         </div>
       )
   }

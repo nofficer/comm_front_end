@@ -163,37 +163,35 @@ class UserForm extends React.Component {
       return(
         <div>
         <div className='ui grid'>
-        <div class='six wide column'>
-
+        <div class='sixteen wide column'>
         </div>
-        <div className='ui grid'>
-          <div class='sixteen wide column'>
-            <h1 className='pagetitle center aligned'></h1>
-          </div>
+        <div class='sixteen wide column'>
         </div>
-        <div className='ui grid'>
-          <div class='sixteen wide column'>
-            <h1 className='pagetitle center aligned'></h1>
-          </div>
+        <div class='sixteen wide column'>
         </div>
+        <div class='sixteen wide column'>
+        </div>
+        <div class='sixteen wide column'>
+        </div>
+        <div class='sixteen wide column'>
+        </div>
+        <div class='sixteen wide column'>
+        </div>
+        <div class='sixteen wide column'>
+        </div>
+          <div className='six wide column'></div>
           <div class='four wide column'>
           <div className='ui center aligned grid'>
             <h1 className='pagetitle'>{this.props.title}</h1>
             </div>
           </div>
-          <div class='six wide column'>
+          <div class='six wide column'></div>
 
+          <div class='sixteen wide column'>
           </div>
-          <div className='ui grid'>
             <div class='sixteen wide column'>
-              <h1 className='pagetitle center aligned'></h1>
             </div>
-          </div>
-          <div className='ui grid'>
-            <div class='sixteen wide column'>
-              <h1 className='pagetitle center aligned'></h1>
-            </div>
-          </div>
+
         </div>
         <form className='ui form error' onSubmit={this.props.handleSubmit(this.onSubmit)}>
         <div className='ui grid'>

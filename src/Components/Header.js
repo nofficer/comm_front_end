@@ -42,7 +42,7 @@ class Header extends React.Component {
               </Link></a>
 
             </div>
-            <div onClick={(e) => e.stopPropagation(history.push('/report'))} className=''>
+            <div onClick={(e) => e.stopPropagation(history.push({pathname:'/report',state:{detail:this.props.month}}))} className=''>
               <a className="blue active item"><Link to='/report'>
                   Report
               </Link></a>
@@ -277,7 +277,7 @@ class Header extends React.Component {
             <div className='ui three item menu'>
 
 
-            <div onClick={(e) => e.stopPropagation(history.push('/report'))} className='item ui simple dropdown hoveritem'>
+            <div onClick={(e) => e.stopPropagation(history.push({pathname:'/report',state:{detail:this.props.month}}))} className='item ui simple dropdown hoveritem'>
             <Link to='/report'>
                 Payouts
             </Link>
@@ -299,7 +299,7 @@ class Header extends React.Component {
 
               <div onClick={(e) => e.stopPropagation(history.push({pathname:'/passwordchange',state:{detail:this.props.account['user_id']}}))} className='item ui simple dropdown hoveritem'>
 
-              Change Passowrd
+              Change Password
 
 
 

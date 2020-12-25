@@ -92,34 +92,35 @@ class GoalForm extends React.Component {
         <div className='ui grid'>
         <div className='four wide column'></div>
           <div className='four wide column'>
-
+          <p><strong>Select a User</strong></p>
+          <Field name="user_id" component="select" label='Enter User ID'>
+                    <option value="">Select a User..</option>
+                    {this.props.populateDropdownUser.map(user =>
+                      <option value={user[0]} key={user[1]}>{user[1]}</option>)}
+                  </Field>
 
 
 
 
         <Field name='goal' component={this.renderInput} label='Enter Goal'/>
-        <Field name="user_id" component="select" label='Enter User ID'>
-                  <option value="">Select a User..</option>
-                  {this.props.populateDropdownUser.map(user =>
-                    <option value={user[0]} key={user[1]}>{user[1]}</option>)}
-                </Field>
+
 
         </div>
 
         <div className='four wide column'>
-
-
+        <p><strong>Select an attainment rule</strong></p>
+        <Field name="attainment_rule_id" component="select" label='Enter Attainment Rule ID'>
+                  <option value="">Select an attainment rule...</option>
+                  {this.props.populateDropdown.map(rule =>
+                    <option value={rule[0]} key={rule[1]}>{rule[1]}</option>)}
+                </Field>
         <Field name='start' component={this.renderInput} label='Enter Rate Effective Start Date (YYYY-MM-DD)'/>
 
               <Field name='end' component={this.renderInput} label='Enter Rate Effective End Date (YYYY-MM-DD)'/>
 
 
 
-                <Field name="attainment_rule_id" component="select" label='Enter Attainment Rule ID'>
-                          <option value="">Select an attainment rule...</option>
-                          {this.props.populateDropdown.map(rule =>
-                            <option value={rule[0]} key={rule[1]}>{rule[1]}</option>)}
-                        </Field>
+
                         <br/>
                 </div>
 
@@ -190,22 +191,29 @@ class GoalForm extends React.Component {
         <div className='ui grid'>
         <div className='four wide column'></div>
           <div className='four wide column'>
+          <p><strong>Select a User</strong></p>
+          <Field name="user_id" component="select" label='Enter User ID'>
+                    <option value="">Select a User..</option>
+                    {this.props.populateDropdownUser.map(user =>
+                      <option value={user[0]} key={user[1]}>{user[1]}</option>)}
+                  </Field>
         <Field name='goal_id' component={this.renderInput} label='Enter Goal ID'/>
 
 
 
 
         <Field name='goal' component={this.renderInput} label='Enter Goal'/>
-        <Field name="user_id" component="select" label='Enter User ID'>
-                  <option value="">Select a User..</option>
-                  {this.props.populateDropdownUser.map(user =>
-                    <option value={user[0]} key={user[1]}>{user[1]}</option>)}
-                </Field>
+
 
         </div>
 
         <div className='four wide column'>
-
+        <p><strong>Select an attainment rule</strong></p>
+        <Field name="attainment_rule_id" component="select" label='Enter Attainment Rule ID'>
+                  <option value="">Select an attainment rule...</option>
+                  {this.props.populateDropdown.map(rule =>
+                    <option value={rule[0]} key={rule[1]}>{rule[1]}</option>)}
+                </Field>
 
         <Field name='start' component={this.renderInput} label='Enter Rate Effective Start Date (YYYY-MM-DD)'/>
 
@@ -213,11 +221,7 @@ class GoalForm extends React.Component {
 
 
 
-                <Field name="attainment_rule_id" component="select" label='Enter Attainment Rule ID'>
-                          <option value="">Select an attainment rule...</option>
-                          {this.props.populateDropdown.map(rule =>
-                            <option value={rule[0]} key={rule[1]}>{rule[1]}</option>)}
-                        </Field>
+
                         <br/>
                 </div>
 

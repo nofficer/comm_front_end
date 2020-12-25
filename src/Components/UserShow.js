@@ -47,8 +47,8 @@ class UserShow extends React.Component {
       check
     ){
     return (
-      <tr><td>{user[0]}</td><td>{user[1]}</td><td>{user[2]}</td><td>{user[3]}</td><td>{user[4]}</td><td>{user[5]}</td><td>{user[6]}</td><td>{user[7]}</td>
-      <td><Link onClick={(e) => e.stopPropagation()} to={`/userShow/edit/${user[0]}`} className='ui small button primary'>
+      <tr><td className='center aligned'>{user[0]}</td><td className='center aligned'>{user[1]}</td><td className='center aligned'>{user[2]}</td><td className='center aligned'>{user[3]}</td><td className='center aligned'>{user[4]}</td><td className='center aligned'>{user[5]}</td><td className='center aligned'>{user[6]}</td><td className='center aligned'>{user[7]}</td>
+      <td className='center aligned'><Link onClick={(e) => e.stopPropagation()} to={`/userShow/edit/${user[0]}`} className='ui small button primary'>
         Edit
       </Link>
       <Link onClick={(e) => e.stopPropagation()} to={`/userShow/delete/${user[0]}`} className='ui small button negative'>
@@ -102,61 +102,61 @@ class UserShow extends React.Component {
 
 
             <tr>
-              <td>
+              <td className='center aligned'>
                 <div class="ui input">
                   <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('user_id',e.target.value))} placeholder="Search..."/>
                 </div>
               </td>
-              <td>
+              <td className='center aligned'>
                 <div class="ui input">
                   <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('name',e.target.value))} placeholder="Search..."/>
                 </div>
               </td>
-              <td>
+              <td className='center aligned'>
               <div class="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('plan_id',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
-            <td>
+            <td className='center aligned'>
             <div class="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('plan_name',e.target.value))} placeholder="Search..."/>
             </div>
           </td>
-          <td>
+          <td className='center aligned'>
           <div class="ui input">
             <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('location',e.target.value))} placeholder="Search..."/>
           </div>
           </td>
-          <td>
+          <td className='center aligned'>
           <div class="ui input">
             <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('username',e.target.value))} placeholder="Search..."/>
           </div>
           </td>
-          <td>
+          <td className='center aligned'>
           <div class="ui input">
             <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('role',e.target.value))} placeholder="Search..."/>
           </div>
           </td>
-          <td>
+          <td className='center aligned'>
           <div class="ui input">
             <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('annual_ti',e.target.value))} placeholder="Search..."/>
           </div>
           </td>
-          <td>
+          <td className='center aligned'>
           </td>
               </tr>
 
 
               <tr>
-                <th><strong>User ID</strong></th>
-                <th><strong> Name</strong></th>
-                <th><strong>Plan ID</strong></th>
-                <th><strong>Plan Name</strong></th>
-                <th><strong>Location</strong></th>
-                <th><strong>Username</strong></th>
-                <th><strong>Role</strong></th>
-                <th><strong>Annual TI</strong></th>
-                <th><strong>Options</strong></th>
+                <th className='center aligned'><strong>User ID</strong></th>
+                <th className='center aligned'><strong> Name</strong></th>
+                <th className='center aligned'><strong>Plan ID</strong></th>
+                <th className='center aligned'><strong>Plan Name</strong></th>
+                <th className='center aligned'><strong>Location</strong></th>
+                <th className='center aligned'><strong>Username</strong></th>
+                <th className='center aligned'><strong>Role</strong></th>
+                <th className='center aligned'><strong>Annual TI</strong></th>
+                <th className='center aligned'><strong>Options</strong></th>
               </tr>
             </thead>
             {this.renderList()}

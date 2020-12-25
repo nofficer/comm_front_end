@@ -5,6 +5,7 @@ import moment from 'moment'
 import _ from 'lodash'
 import { Field, reduxForm } from 'redux-form'
 import history from '../../history'
+import Login from './Login'
 
 import UserForm from '../UserForm'
 
@@ -36,7 +37,7 @@ class PasswordChange extends React.Component {
       return <div> <UserForm title='Enter New Password'  onSubmit={this.onSubmit} editing="password" populateDropdown={this.populateDropdown()} /></div>
     }
     else{
-      return("You don't have permission to do that")
+      return(<Login/>)
     }
 }
 }

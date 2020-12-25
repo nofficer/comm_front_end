@@ -302,8 +302,7 @@ export const getPayouts = () => {
 }
 
 export const getPayouts_user = (userMonth) => {
-  console.log("running userpayouts")
-  console.log(userMonth)
+
   return async (dispatch) => {
     const response = await db.post('/getPayouts_user',userMonth)
     dispatch({type:GET_PAYOUTS_USER, payload: response.data})
