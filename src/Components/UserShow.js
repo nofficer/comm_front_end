@@ -47,7 +47,7 @@ class UserShow extends React.Component {
       check
     ){
     return (
-      <tr><td className='center aligned'>{user[0]}</td><td className='center aligned'>{user[1]}</td><td className='center aligned'>{user[2]}</td><td className='center aligned'>{user[3]}</td><td className='center aligned'>{user[4]}</td><td className='center aligned'>{user[5]}</td><td className='center aligned'>{user[6]}</td><td className='center aligned'>{user[7]}</td>
+      <tr><td className='center aligned collapsing'>{user[0]}</td><td className='center aligned'>{user[1]}</td><td className='center aligned'>{user[2]}</td><td className='center aligned'>{user[3]}</td><td className='center aligned'>{user[4]}</td><td className='center aligned'>{user[5]}</td><td className='center aligned'>{user[6]}</td><td className='center aligned'>{user[7]}</td>
       <td className='center aligned'><Link onClick={(e) => e.stopPropagation()} to={`/userShow/edit/${user[0]}`} className='ui small button primary'>
         Edit
       </Link>
@@ -79,15 +79,20 @@ class UserShow extends React.Component {
     if(this.props.error == 'id'){
       return <Modal onDismiss={this.props.clearUserError} title='Error in User Creation' content='A user with that ID already exists' actions='Ok'/>
     }
+    else if(this.props.error == 'username'){
+      return <Modal onDismiss={this.props.clearUserError} title='Error in User Creation' content='That username is already taken' actions='Ok'/>
+    }
     else if(this.props.error == 'import'){
       return <Modal onDismiss={this.props.clearUserError} title='Error in User Creation' content={this.props.error} actions='Ok'/>
     }
     else {
       if(this.props.account['role'] == 'admin'){
-        return (<div>
+        return (
+          <div>
           <div className='ui grid'>
+
           <div class='sixteen wide column'></div>
-          <div class='sixteen wide column'></div>
+
           <div class='sixteen wide column'>
           <div className='ui center aligned grid'>
             <h1 className=''>Users</h1>
@@ -96,8 +101,8 @@ class UserShow extends React.Component {
           <div class='sixteen wide column'></div>
           <div class='sixteen wide column'></div>
           </div>
-
-          <table className='ui celled table'>
+          <div className='ui container containermargin'>
+          <table className='ui celled fluid table'>
             <thead>
 
 
@@ -162,8 +167,10 @@ class UserShow extends React.Component {
             {this.renderList()}
           </table>
 
-
           </div>
+          </div>
+
+
         )
       }
 

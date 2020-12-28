@@ -32,7 +32,7 @@ class AttainRuleCreate extends React.Component {
   render(){
     if(this.props.account['role'] == 'admin'){
       return (
-        <div><AttainRuleForm title="Creating Attainment Rule" onSubmit={this.onSubmit} populateDropdown={this.populateDropdown()} /></div>
+        <div className='ui container containermargin'><AttainRuleForm title="Creating Attainment Rule" onSubmit={this.onSubmit} populateDropdown={this.populateDropdown()} /></div>
       )
     }
 

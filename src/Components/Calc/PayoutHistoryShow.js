@@ -131,7 +131,9 @@ class PayoutShow extends React.Component {
       statement_details = []
       statement_details.push(["Payout_ID", "Transaction_ID","Seller_ID","Payee","Revenue","GP","Attainment","Payout","Split_Percent","Location","Payout_Multiplier","Order_Number","Custom_Field","Period_ID","Rule","Type"])
 
-    return (<div className='ui  grid'>
+    return (
+
+      <div className='ui  grid'>
     <div className='sixteen wide column'></div>
     <div className='one wide column'></div>
     <div className='fourteen wide column'>
@@ -140,11 +142,12 @@ class PayoutShow extends React.Component {
         </div>
       </div>
     <div className='one wide column'></div>
+    <div className='sixteen wide column'></div>
         <div className='six wide column'></div>
         <div class="four wide column"><button className='rightitem fluid ui button positive' onClick={this.generateStatement}>Export Payouts </button></div>
         <div className='six wide column'></div>
 
-
+    <div className='ui container containermargin'>
       <table className='ui celled table'>
 
         <thead>
@@ -244,7 +247,7 @@ class PayoutShow extends React.Component {
         </thead>
         {this.renderList()}
       </table>
-
+      </div>
       </div>)
   }
 

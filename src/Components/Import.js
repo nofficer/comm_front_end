@@ -24,10 +24,16 @@ class Import extends React.Component {
         }
         else {
           return (
-            <div className='ui text container ' >
+            <div className='ui text container containermargin' >
             <div className='ui grid'>
             <div class='sixteen wide column'></div>
-
+            <div class='sixteen wide column'></div>
+            <div class='sixteen wide column'></div>
+            <div class='sixteen wide column'></div>
+            <div class='sixteen wide column'></div>
+            <div class='sixteen wide column'></div>
+            <div class='sixteen wide column'></div>
+            <div class='sixteen wide column'></div>
             </div>
               <UploadForm onSubmit={this.onSubmit}/>
             </div>

@@ -101,8 +101,11 @@ class PayoutShow extends React.Component {
 
 
 
-    return (<div className='ui  grid'>
-    <div className='sixteen wide column'></div>
+    return (
+
+      <div className='ui  grid'>
+
+    <div class="sixteen wide column"></div>
     <div className='one wide column'>
 
     </div>
@@ -113,13 +116,14 @@ class PayoutShow extends React.Component {
       </div>
       </div>
     <div className='one wide column'></div>
+    <div className='sixteen wide column'></div>
     <div className='six wide column'></div>
     <div className='four wide column'>
-      <div className='ui button fluid positive' onClick={this.runCalc}>Run Calcs</div>
+      <div className='ui fluid button positive icon' onClick={this.runCalc}> Run Calcs  <i class="calculator icon   "></i></div>
     </div>
     <div className='six wide column'></div>
 
-
+    <div className='ui container containermargin'>
       <table className='ui celled table'>
 
         <thead>
@@ -218,6 +222,7 @@ class PayoutShow extends React.Component {
         </thead>
         {this.renderList()}
       </table>
+      </div>
 
 
       </div>)

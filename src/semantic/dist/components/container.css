@@ -100,7 +100,7 @@
 
 /* Text Container */
 .ui.text.container {
-  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: 'Roboto', 'Helvetica Neue', Arial, Helvetica, sans-serif;
   max-width: 700px;
   line-height: 1.5;
   font-size: 1.14285714rem;
@@ -137,6 +137,11 @@
          Theme Overrides
 *******************************/
 
+.containermargin {
+  padding-right: 2em !important;
+  padding-left: 2em !important;
+  width: 100% !important;
+}
 
 
 /*******************************

@@ -34,7 +34,7 @@ class RateTableEdit extends React.Component {
 
     if(this.props.account['role'] == 'admin'){
       return (
-        <div><RateTableForm title='Editing Rate' onSubmit={this.onSubmit} editing="yes" initialValues={this.props.rateTable} populateDropdown={this.populateDropdown()} /></div>
+        <div className='ui container containermargin'><RateTableForm title='Editing Rate' onSubmit={this.onSubmit} editing="yes" initialValues={this.props.rateTable} populateDropdown={this.populateDropdown()} /></div>
       )
     }
 

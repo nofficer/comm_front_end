@@ -11,6 +11,9 @@ import BarChart from '../BarChart'
 
 import { saveAs } from 'file-saver'
 
+import isMobile from 'react-device-detect';
+
+
 function s2ab(s){
     var buf = new ArrayBuffer(s.length)
     var view = new Uint8Array(buf)
@@ -19,6 +22,24 @@ function s2ab(s){
   }
 
 var statement_details = []
+
+
+function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
+  try {
+    decimalCount = Math.abs(decimalCount);
+    decimalCount = isNaN(decimalCount) ? 2 : decimalCount;
+
+    const negativeSign = amount < 0 ? "-" : "";
+
+    let i = parseInt(amount = Math.abs(Number(amount) || 0).toFixed(decimalCount)).toString();
+    let j = (i.length > 3) ? i.length % 3 : 0;
+
+    return negativeSign + (j ? i.substr(0, j) + thousands : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousands) + (decimalCount ? decimal + Math.abs(amount - i).toFixed(decimalCount).slice(2) : "");
+  } catch (e) {
+    console.log(e)
+  }
+};
+
 
 
 
@@ -120,7 +141,7 @@ class PayoutShow extends React.Component {
 
       return (
         <tr>
-          <td className='center aligned'>{payout[0]}</td><td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {payout[4]}</td><td className='center aligned'>$ {payout[5]}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>${payout[7]}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[12]}</td><td className='center aligned'>{payout[13]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[17]}</td>
+          <td className='center aligned'>{payout[0]}</td><td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {formatMoney(payout[4])}</td><td className='center aligned'>$ {formatMoney(formatMoney(payout[5]))}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>${formatMoney(payout[7])}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[12]}</td><td className='center aligned'>{payout[13]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[17]}</td>
         </tr>
 
       )
@@ -135,7 +156,7 @@ class PayoutShow extends React.Component {
 
       return (
         <tr>
-          <td className='center aligned'>{payout[0]}</td><td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {payout[4]}</td><td className='center aligned'>$ {payout[5]}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>$ {payout[7]}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[12]}</td><td className='center aligned'>{payout[13]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[17]}</td>
+          <td className='center aligned'>{payout[0]}</td><td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {formatMoney(payout[4])}</td><td className='center aligned'>$ {formatMoney(payout[5])}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>$ {formatMoney(payout[7])}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[12]}</td><td className='center aligned'>{payout[13]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[17]}</td>
         </tr>
 
       )
@@ -149,7 +170,7 @@ class PayoutShow extends React.Component {
 
       return (
         <tr>
-          <td className='center aligned'>{payout[0]}</td><td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {payout[4]}</td><td className='center aligned'>$ {payout[5]}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>$ {payout[7]}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[12]}</td><td className='center aligned'>{payout[13]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[17]}</td>
+          <td className='center aligned'>{payout[0]}</td><td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {formatMoney(payout[4])}</td><td className='center aligned'>$ {formatMoney(payout[5])}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>$ {formatMoney(payout[7])}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[12]}</td><td className='center aligned'>{payout[13]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[17]}</td>
         </tr>
 
       )
@@ -163,7 +184,7 @@ class PayoutShow extends React.Component {
 
       return (
         <tr>
-          <td className='center aligned'>{payout[0]}</td><td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {payout[4]}</td><td className='center aligned'>$ {payout[5]}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>$ {payout[7]}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[12]}</td><td className='center aligned'>{payout[13]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[17]}</td>
+          <td className='center aligned'>{payout[0]}</td><td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {formatMoney(payout[4])}</td><td className='center aligned'>$ {formatMoney(payout[5])}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>$ {formatMoney(payout[7])}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[12]}</td><td className='center aligned'>{payout[13]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[17]}</td>
         </tr>
 
       )
@@ -277,7 +298,7 @@ class PayoutShow extends React.Component {
             if(selected_month>= start_month && selected_month <= end_month){
               return(
               <tr>
-                <td className='center aligned'>{goal[6]}</td><td className='center aligned'>{goal[5]}</td><td className='center aligned'>{goal[3]}</td><td className='center aligned'>{goal[4]}</td><td className='center aligned'>{goal[8].toUpperCase()}</td>
+                <td className='center aligned'>{goal[6]}</td><td className='center aligned'>{formatMoney(goal[5])}</td><td className='center aligned'>{goal[3]}</td><td className='center aligned'>{goal[4]}</td><td className='center aligned'>{goal[8].toUpperCase()}</td>
               </tr>
             )
           }
@@ -365,19 +386,21 @@ class PayoutShow extends React.Component {
             <BarChart
             title={goal_rule}
             feed={{
-              labels: ['Remaining to Goal','Production'],
+              labels: ['Production','Remaining to Goal'],
               datasets: [
                 {
                   label: 'Production',
                   backgroundColor: [
-                    '#A9A9A9',
-                    '#C9DE00'
+                    '#C9DE00',
+                    '#d3d3d3'
+
                   ],
                   hoverBackgroundColor: [
-                  '#501800',
-                  '#4B5000'
+
+                  '#4B5000',
+                  '#501800'
                   ],
-                  data: [goal_amt-prod_total,prod_total]
+                  data: [prod_total,goal_amt-prod_total]
                 }
               ]
             }}
@@ -477,12 +500,24 @@ class PayoutShow extends React.Component {
 
   createSummaryLine(line){
     statement_details.push(line)
+    if(Number(line[1]) < 1){
+      return(
+        (
+          <tr>
+
+          <td className='center aligned'>{line[0]}</td>
+          <td className='center aligned'>{formatMoney(line[1],5)}</td>
+          <td className='center aligned'>$ {formatMoney(line[2])}</td>
+          </tr>
+        )
+      )
+    }
     return (
       <tr>
 
       <td className='center aligned'>{line[0]}</td>
-      <td className='center aligned'>{line[1]}</td>
-      <td className='center aligned'>{line[2]}</td>
+      <td className='center aligned'>{formatMoney(line[1])}</td>
+      <td className='center aligned'>$ {formatMoney(line[2])}</td>
       </tr>
     )
   }
@@ -531,7 +566,7 @@ class PayoutShow extends React.Component {
   renderContent(){
 
     if(this.props.account['role'] == 'admin'){
-      return (<div className='ui  grid'>
+      return (<div className='ui grid '>
 
 
       <div class='thirteen wide column'>
@@ -663,15 +698,17 @@ class PayoutShow extends React.Component {
         </div>
 
 
-
+      <div class="sixteen wide column"></div>
 
       <div class="sixteen wide column">
+
       <div className='ui center aligned grid'>
       <h2 className=''>Summary Performance</h2>
       </div>
       </div>
+      <div class="sixteen wide column"></div>
 
-
+      <div className='ui container containermargin'>
         <table className='ui celled center aligned table'>
         <thead>
           <tr>
@@ -683,14 +720,17 @@ class PayoutShow extends React.Component {
           </thead>
           {this.renderSummary()}
         </table>
-
+        </div>
+        <div class="sixteen wide column"></div>
+        <div class="sixteen wide column"></div>
         <div class="sixteen wide column">
         <div className='ui center aligned grid'>
         <h2 className=''>Detailed Transaction Listing</h2>
         </div>
         </div>
-
-        <table className='ui celled table'>
+        <div class="sixteen wide column"></div>
+        <div className='ui container containermargin'>
+        <table className='ui celled unstackable table'>
 
           <thead>
             <tr>
@@ -804,6 +844,7 @@ class PayoutShow extends React.Component {
           {this.renderList()}
           </tbody>
         </table>
+        </div>
 
 
         </div>)
@@ -812,11 +853,78 @@ class PayoutShow extends React.Component {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
     else{
-      return (<div className='ui  grid'>
 
-      <div class='fifteen wide column'>
+      if (isMobile) {
+       return (
+         <div className=''>
+
+
+
+
+           <table className='ui celled center aligned table'>
+             <thead><tr>
+               <th className='center aligned'>Select Statement</th>
+
+               </tr></thead>
+               <tr>
+                 <td className='center aligned' className='three wide'>
+                 <select className='ui dropdown' onChange={this.handleYearChange}>
+                   <option value={this.props.selected_year}>{this.props.selected_year}</option>
+                   <option value="all">All</option>
+                   <option value="2020">2020</option>
+                   <option value="2021">2021</option>
+                   <option value="2022">2022</option>
+
+
+                 </select>
+
+
+
+
+                 <select className='ui dropdown' onChange={this.handleChange}>
+                   <option value={monthmap[this.props.selected_month]}>{monthmap[this.props.selected_month]}</option>
+                   <option value="all">Year To Date</option>
+                   <option value="1">January</option>
+                   <option value="2">February</option>
+                   <option value="3">March</option>
+                   <option value="4">April</option>
+                   <option value="5">May</option>
+                   <option value="6">June</option>
+                   <option value="7">July</option>
+                   <option value="8">August</option>
+                   <option value="9">September</option>
+                   <option value="10">October</option>
+                   <option value="11">November</option>
+                   <option value="12">December</option>
+
+                 </select>
+                 <h1 >{this.renderTotal()}</h1>
+                 </td>
+
+               </tr>
+
+
+             <tr>
+
+             <td className='center aligned'>
+               <button className=' ui button positive' onClick={this.generateStatement}>Download statement for {monthmap[this.props.selected_month]} </button>
+             </td>
+
+             </tr>
+
+           </table>
+
+
+
+     </div>)
+   }
+      return (<div className='ui grid '>
+
+
+      <div class='thirteen wide column'>
+
       </div>
-      <div className='one wide column'>
+      <div className='three wide column'>
       <div className='ui center aligned grid'>
       <div class="sixteen wide column">{this.props.account['user_id']}</div>
 
@@ -825,7 +933,7 @@ class PayoutShow extends React.Component {
       <div class="sixteen wide column">
       <div className='ui center aligned grid'>
       <div class="sixteen wide column">
-      <h1 className='pagetitle center aligned'>Commission Statement</h1>
+      <h1 className='pagetitle center aligned'>Commission Statement </h1>
       </div>
 
       </div>
@@ -837,7 +945,7 @@ class PayoutShow extends React.Component {
 
       </div>
 
-      <div class="four wide column">
+      <div class="five wide column">
         <div className='ui grid'>
           <div className='sixteen wide column'>
             <div className='ui center aligned grid'>
@@ -903,7 +1011,13 @@ class PayoutShow extends React.Component {
       </div>
     </div>
 
-      <div class="seven wide column"></div>
+      <div class="six wide column">
+        <div className='ui center aligned grid'>
+
+          {this.generateCharts()}
+
+        </div>
+      </div>
         <div class="five wide column">
 
         <div className='ui grid'>
@@ -932,15 +1046,17 @@ class PayoutShow extends React.Component {
         </div>
 
 
-
+      <div class="sixteen wide column"></div>
 
       <div class="sixteen wide column">
+
       <div className='ui center aligned grid'>
       <h2 className=''>Summary Performance</h2>
       </div>
       </div>
+      <div class="sixteen wide column"></div>
 
-
+      <div className='ui container containermargin'>
         <table className='ui celled center aligned table'>
         <thead>
           <tr>
@@ -952,14 +1068,17 @@ class PayoutShow extends React.Component {
           </thead>
           {this.renderSummary()}
         </table>
-
+        </div>
+        <div class="sixteen wide column"></div>
+        <div class="sixteen wide column"></div>
         <div class="sixteen wide column">
         <div className='ui center aligned grid'>
         <h2 className=''>Detailed Transaction Listing</h2>
         </div>
         </div>
-
-        <table className='ui celled table'>
+        <div class="sixteen wide column"></div>
+        <div className='ui container containermargin'>
+        <table className='ui celled unstackable table'>
 
           <thead>
             <tr>
@@ -1073,6 +1192,7 @@ class PayoutShow extends React.Component {
           {this.renderList()}
           </tbody>
         </table>
+        </div>
 
 
         </div>)

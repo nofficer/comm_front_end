@@ -37,7 +37,7 @@ class GoalEdit extends React.Component {
 
     if(this.props.account['role'] == 'admin'){
       return (
-        <div><GoalForm title='Editing Goal' onSubmit={this.onSubmit} editing="yes" initialValues={this.props.goal} populateDropdown={this.populateDropdown()} populateDropdownUser={this.populateDropdownUser()}  /></div>
+        <div className='ui container containermargin'><GoalForm title='Editing Goal' onSubmit={this.onSubmit} editing="yes" initialValues={this.props.goal} populateDropdown={this.populateDropdown()} populateDropdownUser={this.populateDropdownUser()}  /></div>
       )
     }
 

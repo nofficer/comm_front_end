@@ -38,24 +38,18 @@ class UserForm extends React.Component {
   render(){
     if(this.props.editing == "yes") {
       return (
-        <div>
+        <div className='ui container containermargin'>
         <div className='ui grid'>
-        <div className='ui grid'>
-          <div class='sixteen wide column'>
-            <h1 className='pagetitle center aligned'></h1>
-          </div>
-        </div>
-        <div className='ui grid'>
-          <div class='sixteen wide column'>
-            <h1 className='pagetitle center aligned'></h1>
-          </div>
-        </div>
+
+        <div class='sixteen wide column'></div>
         <div class='six wide column'>
 
         </div>
           <div class='four wide column'>
           <div className='ui center aligned grid'>
-            <h1 className='pagetitle'>{this.props.title}</h1>
+            <div className='sixteen wide column'>
+              <h1 className='pagetitle'>Editing User - {this.props.title}</h1>
+              </div>
             </div>
           </div>
           <div class='six wide column'>
@@ -92,14 +86,27 @@ class UserForm extends React.Component {
         <form className='ui form error' onSubmit={this.props.handleSubmit(this.onSubmit)}>
         <div className='ui grid'>
 
+                <div class='six wide column'>
+
+                </div>
+                <div class='four wide column'>
+                  <p>Enter Annual Target Incentive</p>
+                  <Field name='annual_ti' component={this.renderInput} label='Enter Annual_Ti' />
+                </div>
+
+                <div class='six wide column'>
+
+                </div>
+
         <div class='four wide column'>
-        <p>Enter Name</p>
-        <Field name='name' component={this.renderInput} label='Enter Name' />
+
         </div>
 
 
 
         <div class='four wide column'>
+        <p>Enter Name</p>
+        <Field name='name' component={this.renderInput} label='Enter Name' />
         <p>Select Plan</p>
         <Field name="plan_id" component="select" label='Enter Plan_ID'>
                   <option value="">Select a plan...</option>
@@ -111,20 +118,18 @@ class UserForm extends React.Component {
         <div class='four wide column'>
         <p>Enter Location</p>
         <Field name='user_location' component={this.renderInput} label='Enter Location' />
-        </div>
-
-        <div class='four wide column'>
         <p>Select Role</p>
         <Field name="role" component="select" label='Select Role'>
                   <option value="">Select a role...</option>
                   <option value="admin">Admin</option>
                   <option value="seller">Seller</option>
                 </Field>
+
+
         </div>
 
-        <div class='two wide column'>
-        <p>Enter Annual Target Incentive</p>
-        <Field name='annual_ti' component={this.renderInput} label='Enter Annual_Ti' />
+        <div class='four wide column'>
+
         </div>
 
         <br/>
@@ -161,7 +166,7 @@ class UserForm extends React.Component {
     }
     if(this.props.editing == "password"){
       return(
-        <div>
+        <div className='ui container containermargin'>
         <div className='ui grid'>
         <div class='sixteen wide column'>
         </div>
@@ -232,18 +237,10 @@ class UserForm extends React.Component {
     }
     else{
       return (
-        <div>
+        <div className='ui container containermargin'>
         <div className='ui grid'>
-        <div className='ui grid'>
-          <div class='sixteen wide column'>
-            <h1 className='pagetitle center aligned'></h1>
-          </div>
-        </div>
-        <div className='ui grid'>
-          <div class='sixteen wide column'>
-            <h1 className='pagetitle center aligned'></h1>
-          </div>
-        </div>
+
+        <div class='sixteen wide column'></div>
         <div class='sixteen wide column'>
         <div className='ui center aligned grid'>
           <h1 className='pagetitle center aligned'>{this.props.title}</h1>
@@ -274,42 +271,37 @@ class UserForm extends React.Component {
 
         <form className='ui form error' onSubmit={this.props.handleSubmit(this.onSubmit)}>
         <div className='ui grid'>
-        <div className='two wide column'>
+        <div className='four wide column'></div>
+        <div className='four wide column'>
         <p>Enter Employee ID</p>
         <Field name='user_id' component={this.renderInput} label='Enter Employee ID' />
-
-        </div>
-
-        <div className='two wide column'>
         <p>Enter Name</p>
         <Field name='name' component={this.renderInput} label='Enter Name' />
+
+      <p>Enter Location</p>
+      <Field name='user_location' component={this.renderInput} label='Enter Location' />
+
+      <p>Select Plan</p>
+      <Field name="plan_id" component="select" label='Enter Plan_ID'>
+                <option value="">Select a plan...</option>
+                {this.props.populateDropdown.map(plan =>
+                  <option value={plan[0]} key={plan[1]}>{plan[1]}</option>)}
+              </Field>
+
+
+
         </div>
 
-        <div className='two wide column'>
-        <p>Select Plan</p>
-        <Field name="plan_id" component="select" label='Enter Plan_ID'>
-                  <option value="">Select a plan...</option>
-                  {this.props.populateDropdown.map(plan =>
-                    <option value={plan[0]} key={plan[1]}>{plan[1]}</option>)}
-                </Field>
-        </div>
 
-        <div className='two wide column'>
-        <p>Enter Location</p>
-        <Field name='user_location' component={this.renderInput} label='Enter Location' />
-        </div>
 
-        <div className='two wide column'>
+        <div className='four wide column'>
         <p>Enter Username</p>
         <Field name='username' component={this.renderInput} label='Enter Username' />
-        </div>
-
-        <div className='two wide column'>
         <p>Enter Password</p>
         <Field name='password' type='password' component={this.renderInput} label='Enter Password' />
-        </div>
 
-        <div className='two wide column'>
+        <p>Enter Annual Target Incentive</p>
+        <Field name='annual_ti' component={this.renderInput} label='Enter Annual_Ti' />
         <p>Select Role</p>
         <Field name="role" component="select" label='Select Role'>
                   <option value="">Select a role...</option>
@@ -318,11 +310,7 @@ class UserForm extends React.Component {
                 </Field>
         </div>
 
-
-        <div class='two wide column'>
-        <p>Enter Annual Target Incentive</p>
-        <Field name='annual_ti' component={this.renderInput} label='Enter Annual_Ti' />
-        </div>
+        <div className='four wide column'></div>
 
 
 

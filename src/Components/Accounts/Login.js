@@ -18,6 +18,7 @@ class Login extends React.Component {
 
   onSubmit = (formValues) => {
     this.props.login(formValues,this.save)
+    history.push({pathname:'/report',state:{detail:this.props.month}})
   }
 
   onClick = () => {

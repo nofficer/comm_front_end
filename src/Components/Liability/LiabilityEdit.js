@@ -31,7 +31,7 @@ class LiabilityEdit extends React.Component {
 
     if(this.props.account['role'] == 'admin'){
       return (
-        <div><LiabilityForm title='Editing Liability' onSubmit={this.onSubmit} editing="yes" initialValues={this.props.liability}  /></div>
+        <div className='ui container containermargin'><LiabilityForm title='Editing Liability' onSubmit={this.onSubmit} editing="yes" initialValues={this.props.liability}  /></div>
       )
     }
 

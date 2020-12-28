@@ -57,9 +57,7 @@ class TransForm extends React.Component {
         <div class='sixteen wide column'>
 
         </div>
-        <div class='sixteen wide column'>
 
-        </div>
 
         <div class='six wide column'>
 
@@ -154,9 +152,7 @@ class TransForm extends React.Component {
         <div class='sixteen wide column'>
 
         </div>
-        <div class='sixteen wide column'>
 
-        </div>
 
         <div class='six wide column'>
 

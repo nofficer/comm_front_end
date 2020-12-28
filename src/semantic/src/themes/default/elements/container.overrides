@@ -1,3 +1,9 @@
 /*******************************
          Theme Overrides
 *******************************/
+
+.containermargin {
+    padding-right:2em !important;
+    padding-left:2em !important;
+    width:100% !important;
+}

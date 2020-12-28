@@ -33,7 +33,7 @@ class AttainRuleEdit extends React.Component {
   render(){
     if(this.props.account['role'] == 'admin'){
       return (
-        <div><AttainRuleForm title={this.props.attainmentRule['rule_name']} onSubmit={this.onSubmit} initialValues={this.props.attainmentRule} populateDropdown={this.populateDropdown()} /></div>
+        <div className='ui container containermargin'><AttainRuleForm title={this.props.attainmentRule['rule_name']} onSubmit={this.onSubmit} initialValues={this.props.attainmentRule} populateDropdown={this.populateDropdown()} /></div>
       )
     }
 

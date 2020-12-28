@@ -70,10 +70,10 @@ class LiabilityShow extends React.Component {
 
 
     if(this.props.account['role'] == 'admin'){
-      return (<div>
+      return (<div className='ui container containermargin'>
         <div className='ui grid'>
         <div class='sixteen wide column'></div>
-        <div class='sixteen wide column'></div>
+
         <div class='sixteen wide column'>
         <div className='ui center aligned grid'>
           <h1 className=''>Liability Balances</h1>

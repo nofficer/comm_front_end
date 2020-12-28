@@ -42,9 +42,7 @@ class RateTableForm extends React.Component {
       return  (
         <div>
         <div className='ui grid'>
-        <div class='sixteen wide column'>
 
-        </div>
         <div class='sixteen wide column'>
 
         </div>
@@ -124,9 +122,7 @@ class RateTableForm extends React.Component {
       return (
         <div>
         <div className='ui grid'>
-        <div class='sixteen wide column'>
 
-        </div>
         <div class='sixteen wide column'>
 
         </div>

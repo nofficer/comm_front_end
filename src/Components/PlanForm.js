@@ -41,11 +41,7 @@ class PlanForm extends React.Component {
   return (
     <div>
     <div className='ui grid'>
-    <div className='ui grid'>
-      <div class='sixteen wide column'>
-        <h1 className='center aligned'></h1>
-      </div>
-    </div>
+
     <div className='ui grid'>
       <div class='sixteen wide column'>
         <h1 className='center aligned'></h1>

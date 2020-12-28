@@ -67,10 +67,10 @@ class PlanShow extends React.Component {
   render(){
 
     if(this.props.account['role'] == 'admin'){
-      return (<div>
+      return (<div className='ui container containermargin'>
         <div className='ui grid'>
         <div class='sixteen wide column'></div>
-        <div class='sixteen wide column'></div>
+
         <div class='sixteen wide column'>
         <div className='ui center aligned grid'>
           <h1 className=''>Plans</h1>

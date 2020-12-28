@@ -23,7 +23,7 @@ class Header extends React.Component {
 
 
       <div className='ui eight item menu'>
-      <div onClick={(e) => e.stopPropagation(history.push('/'))} class="ui simple dropdown item">
+      <div onClick={(e) => e.stopPropagation(history.push({pathname:'/',state:{detail:this.props.month}}))} class="ui simple dropdown item">
 
 
       <Link to='/'>

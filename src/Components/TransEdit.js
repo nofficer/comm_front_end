@@ -33,7 +33,7 @@ class TransEdit extends React.Component {
   render(){
     if(this.props.account['role'] == 'admin'){
       return (
-        <div><TransForm title='Editing Transaction' populateDropdownID={this.props.match.params.trans_id} onSubmit={this.onSubmit} initialValues={this.props.tran} month={this.props.month} editing="yes"  populateDropdown={this.populateDropdown()} date={moment().format('YYYY-MM-DD')}  /></div>
+        <div className='ui container containermargin'><TransForm title='Editing Transaction' populateDropdownID={this.props.match.params.trans_id} onSubmit={this.onSubmit} initialValues={this.props.tran} month={this.props.month} editing="yes"  populateDropdown={this.populateDropdown()} date={moment().format('YYYY-MM-DD')}  /></div>
       )
     }
 

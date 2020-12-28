@@ -73,10 +73,10 @@ class AttainRuleShow extends React.Component {
 
   render(){
     if(this.props.account['role'] == 'admin'){
-      return (<div>
-      <div className='ui grid'>
+      return (<div className='ui container containermargin'>
+      <div className='ui grid marginbox'>
       <div class='sixteen wide column'></div>
-      <div class='sixteen wide column'></div>
+
       <div class='sixteen wide column'>
       <div className='ui center aligned grid'>
         <h1 className=''>Attainment Rules</h1>

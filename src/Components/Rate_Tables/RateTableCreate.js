@@ -26,7 +26,7 @@ class RateTableCreate extends React.Component {
   render(){
     if(this.props.account['role'] == 'admin'){
         return (
-          <div><RateTableForm title='Creating Rate' onSubmit={this.onSubmit} populateDropdown={this.populateDropdown()} /></div>
+          <div className='ui container containermargin'><RateTableForm title='Creating Rate' onSubmit={this.onSubmit} populateDropdown={this.populateDropdown()} /></div>
         )
     }
 

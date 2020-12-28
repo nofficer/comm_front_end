@@ -140,7 +140,7 @@ export const clearError = () => {
 
 export const clearUserError = () => {
   console.log("This is running")
-  // history.push('/userShow')
+  history.push('/userCreate')
   return({type:CLEAR})
 }
 
@@ -231,7 +231,7 @@ export const login = (formValues,save)=>{
 
       sessionStorage.setItem('username',response.data['username'])
       sessionStorage.setItem('password',response.data['password'])
-      history.push('/')
+      
     }
 
   }
