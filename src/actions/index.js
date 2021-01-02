@@ -1,9 +1,11 @@
 import { GET_PLANS, GET_USERS,  GET_USER, CREATE_USER, EDIT_USER, CREATE_CALC, CHANGE_DONE, GO_PUSH, CREATE_PLAN, EDIT_PLAN, GET_ATTAINMENT_RULES, CREATE_ATTAINMENT_RULE, EDIT_ATTAINMENT_RULE, GET_TRANS, CREATE_TRANS, EDIT_TRANS, GET_TRAN, DELETE_TRANS, DELETE_ATTAINMENT_RULE,DELETE_PLAN,DELETE_USER,GET_ATTAINMENT_RULE,GET_PLAN,UPLOAD_FILE,ONCHANGE_FILE,CHECK_RULE_USE,CHECK_PLAN_USE,CHECK_USER_USE,GET_RATE_TABLE,GET_RATE_TABLES,CREATE_RATE_TABLE,EDIT_RATE_TABLE,DELETE_RATE_TABLE,ERROR_HANDLE,CALC_PLANS,GET_PAYOUTS,EDIT_PAYOUT,GET_PAYOUT,DELETE_PAYOUT,LOAD,GET_TIME,UPDATE_TIME,REVERT_TIME,LOGIN,SET_ACCOUNT,LOGOUT,GET_PAYOUTS_USER,GET_GOAL,GET_GOALS,CREATE_GOAL,EDIT_GOAL,DELETE_GOAL,CLEAR,SELECT_MONTH,UPDATE_ACCOUNT,GET_PAYROLL,SET_FILTER,GET_FILTER,CLEAR_FILTER,LOADING,
 GET_ROLE_HIERARCHY,CREATE_ROLE_HIERARCHY,EDIT_ROLE_HIERARCHY,DELETE_ROLE_HIERARCHY,GET_ROLE_HIERARCHIES,
-GET_LIABILITY,GET_LIABILITIES,EDIT_LIABILITY,DELETE_LIABILITY,CAST_USER,UPDATE_FYE,SELECT_YEAR,
+GET_LIABILITY,GET_LIABILITIES,EDIT_LIABILITY,DELETE_LIABILITY,CAST_USER,UPDATE_FYE,SELECT_YEAR,CLEAR_TRANS,
 CHECK_USER } from './types'
 import db from '../apis/db'
 import history from '../history'
+
+
 
 
 export const updateFYE = () => {
@@ -117,18 +119,24 @@ export const updateAccount = (formValues) => {
   return async (dispatch) => {
     const response = await db.post('/updateAccount', formValues)
     dispatch({type:UPDATE_ACCOUNT})
-    history.push('/')
+    if(response.data == 'wrong_password'){
+      history.push({pathname:'/passwordError',state:{detail:'Incorrect Password - Password not changed, please try again'}})
+    }
+    else{
+      history.push({pathname:'/passwordError',state:{detail:'Password Changed'}})
+    }
+
   }
 
 }
 
 export const selectMonth = (month) => {
-  console.log("Selecting month")
+
   return({type:SELECT_MONTH, payload:month})
 }
 
 export const selectYear = (year) => {
-  console.log("Selecting year")
+
   return({type:SELECT_YEAR, payload:year})
 }
 
@@ -227,11 +235,11 @@ export const login = (formValues,save)=>{
   return async (dispatch) => {
     const response = await db.post('/userLogin',formValues)
     dispatch({type:LOGIN, payload: response.data})
-    if(typeof(response.data['user_id']) == 'number' ){
+    if(typeof(response.data['user_id']) != 'undefined' ){
 
       sessionStorage.setItem('username',response.data['username'])
       sessionStorage.setItem('password',response.data['password'])
-      
+
     }
 
   }
@@ -241,6 +249,7 @@ export const checkUser = () => {
   var savedUser = {}
   savedUser['username'] = sessionStorage.getItem('username')
   savedUser['password'] = sessionStorage.getItem('password')
+
   return async (dispatch) => {
     const response = await db.post('/checkUser',savedUser)
     dispatch({type:CHECK_USER,payload:response.data})
@@ -288,6 +297,15 @@ export const getPayoutsHistory = () => {
   }
 }
 
+
+export const getPayouts_cy = () => {
+
+  return async (dispatch) => {
+    const response = await db.get('/getPayouts_cy')
+    dispatch({type:GET_PAYOUTS, payload: response.data})
+
+  }
+}
 
 
 
@@ -404,9 +422,12 @@ export const uploadFile = (data,type) => {
   return async (dispatch) => {
     const response = await db.post('/import_fileB',data)
     dispatch({type:UPLOAD_FILE, payload:response.data})
-    var url = './'+type + 'Show'
-    if(response.data == "Done"){
-      history.push(url)
+    var url = '/'+type + 'Show'
+    var ignored = response.data.slice(4,).split('-')[0]
+    var updated = response.data.slice(4,).split('-')[1]
+
+    if(response.data.slice(0,4) == "Done"){
+      history.push({pathname:'/ImportSuccess',state:{detail:response.data,ignored:ignored,updated:updated,url:url}})
     }
     else{
         history.push({pathname:'/ImportError',state:{detail:response.data}})
@@ -458,9 +479,13 @@ export const getTran = (trans_id) => {
   }
 }
 
-export const getTrans = () => {
+export const clearTrans = () => {
+  return({type:CLEAR_TRANS,payload:[]})
+}
+
+export const getTrans = (filter) => {
   return async (dispatch) => {
-    const response = await db.get('/getTrans')
+    const response = await db.post('/getTrans',filter)
     dispatch({type:GET_TRANS, payload: response.data})
   }
 }

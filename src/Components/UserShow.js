@@ -6,6 +6,24 @@ import { Link } from 'react-router-dom'
 import Login from './Accounts/Login'
 import Modal from '../Modal'
 
+
+function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
+  try {
+    decimalCount = Math.abs(decimalCount);
+    decimalCount = isNaN(decimalCount) ? 2 : decimalCount;
+
+    const negativeSign = amount < 0 ? "-" : "";
+
+    let i = parseInt(amount = Math.abs(Number(amount) || 0).toFixed(decimalCount)).toString();
+    let j = (i.length > 3) ? i.length % 3 : 0;
+
+    return negativeSign + (j ? i.substr(0, j) + thousands : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousands) + (decimalCount ? decimal + Math.abs(amount - i).toFixed(decimalCount).slice(2) : "");
+  } catch (e) {
+    console.log(e)
+  }
+};
+
+
 class UserShow extends React.Component {
 
   componentDidMount(){
@@ -47,7 +65,7 @@ class UserShow extends React.Component {
       check
     ){
     return (
-      <tr><td className='center aligned collapsing'>{user[0]}</td><td className='center aligned'>{user[1]}</td><td className='center aligned'>{user[2]}</td><td className='center aligned'>{user[3]}</td><td className='center aligned'>{user[4]}</td><td className='center aligned'>{user[5]}</td><td className='center aligned'>{user[6]}</td><td className='center aligned'>{user[7]}</td>
+      <tr><td className='center aligned collapsing'>{user[0]}</td><td className='center aligned'>{user[1]}</td><td className='center aligned'>{user[2]}</td><td className='center aligned'>{user[3]}</td><td className='center aligned'>{user[4]}</td><td className='center aligned'>{user[5]}</td><td className='center aligned'>{user[6]}</td><td className='center aligned'>{formatMoney(user[7])}</td>
       <td className='center aligned'><Link onClick={(e) => e.stopPropagation()} to={`/userShow/edit/${user[0]}`} className='ui small button primary'>
         Edit
       </Link>
@@ -84,6 +102,9 @@ class UserShow extends React.Component {
     }
     else if(this.props.error == 'import'){
       return <Modal onDismiss={this.props.clearUserError} title='Error in User Creation' content={this.props.error} actions='Ok'/>
+    }
+    else if(this.props.error == 'wrong'){
+        return <Modal onDismiss={this.props.clearUserError} title='Error in User Editing' content='Issue with editing user, unexpected value provided' actions='Ok'/>
     }
     else {
       if(this.props.account['role'] == 'admin'){

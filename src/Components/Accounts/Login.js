@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {login, getTime} from '../../actions'
+import {login, getTime,selectMonth,selectYear} from '../../actions'
 import LoginForm from './LoginForm'
 import LoginModal from '../../LoginModal'
 import history from '../../history'
@@ -12,11 +12,15 @@ import history from '../../history'
 class Login extends React.Component {
   componentDidMount(){
     this.props.getTime()
+
   }
 
   save = 'no'
 
   onSubmit = (formValues) => {
+    var dateData = this.props.month
+    this.props.selectMonth(dateData['current.month_id'].toString())
+    this.props.selectYear(dateData['cal_year'].toString())
     this.props.login(formValues,this.save)
     history.push({pathname:'/report',state:{detail:this.props.month}})
   }
@@ -55,4 +59,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { login,getTime })(Login)
+export default connect(mapStateToProps, { login,getTime,selectMonth,selectYear })(Login)

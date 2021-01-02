@@ -34,7 +34,7 @@ class UserEdit extends React.Component {
       )
     }
 
-    else if(typeof(this.props.account['user_id']) == "number"){
+    else if(typeof(this.props.account['role']) == "seller"){
       return "You do not have sufficient permissions to access this page"
     }
     else{

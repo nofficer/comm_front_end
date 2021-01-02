@@ -10,11 +10,24 @@ import { Link } from 'react-router-dom'
 
 
 
-
 import Login from '../Accounts/Login'
 
 
+function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
+  try {
+    decimalCount = Math.abs(decimalCount);
+    decimalCount = isNaN(decimalCount) ? 2 : decimalCount;
 
+    const negativeSign = amount < 0 ? "-" : "";
+
+    let i = parseInt(amount = Math.abs(Number(amount) || 0).toFixed(decimalCount)).toString();
+    let j = (i.length > 3) ? i.length % 3 : 0;
+
+    return negativeSign + (j ? i.substr(0, j) + thousands : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousands) + (decimalCount ? decimal + Math.abs(amount - i).toFixed(decimalCount).slice(2) : "");
+  } catch (e) {
+    console.log(e)
+  }
+};
 
 
 
@@ -64,7 +77,7 @@ class RateTableShow extends React.Component {
 
           return (
             <tr>
-              <td className='center aligned'>{rateTable[0]}</td><td className='center aligned'>{rateTable[10]}</td><td className='center aligned'>{rateTable[2]}</td><td className='center aligned'>{rateTable[3]}</td><td className='center aligned'>{rateTable[4]}</td><td className='center aligned'>{rateTable[5]}</td><td className='center aligned'>{rateTable[6]}</td><td className='center aligned'>{rateTable[7]}</td><td className='center aligned'>{rateTable[8]}</td>
+              <td className='center aligned'>{rateTable[0]}</td><td className='center aligned'>{rateTable[10]}</td><td className='center aligned'>{rateTable[2]}</td><td className='center aligned'>{rateTable[3]}</td><td className='center aligned'>{rateTable[4]}</td><td className='center aligned'>{formatMoney(rateTable[5])}</td><td className='center aligned'>{formatMoney(rateTable[6])}</td><td className='center aligned'>{rateTable[7]}</td><td className='center aligned'>{rateTable[8]}</td>
               <td className='center aligned'>
               <Link onClick={(e) => e.stopPropagation()} to={`/rateTableShow/edit/${rateTable[0]}`} className='ui small button primary'>
                 Edit
@@ -97,7 +110,7 @@ class RateTableShow extends React.Component {
 
         <div class='sixteen wide column'>
         <div className='ui center aligned grid'>
-          <h1 className=''>Rate Tables</h1>
+          <h1 className=''>Rates</h1>
           </div>
         </div>
         <div class='sixteen wide column'></div>

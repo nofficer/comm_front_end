@@ -65,7 +65,7 @@ class CSVReaderV extends Component {
 
                 var p;
                 for (p=0;p < this.my_data.length; p++){
-                  console.log(this.my_data[p]['date'])
+
 
                   if(this.isValidDate(this.my_data[p]['date']) && this.isWithinPeriod(this.my_data[p]['date']) ){
 
@@ -156,7 +156,7 @@ class CSVReaderV extends Component {
       var wrongdateindex = []
       var i;
       for (i=0;i < this.my_data.length; i++){
-        if(this.isNumeric(this.my_data[i]["user_id"]) && this.isNumeric(this.my_data[i]["plan_id"])) {
+        if(this.isNumeric(this.my_data[i]["plan_id"])) {
 
         }
         else{
@@ -210,7 +210,7 @@ class CSVReaderV extends Component {
 
       var i;
       for (i=0;i < this.my_data.length; i++){
-        if(this.isNumeric(this.my_data[i]["goal_id"]) && this.isNumeric(this.my_data[i]["user_id"]) && this.isNumeric(this.my_data[i]["goal"]) && this.isNumeric(this.my_data[i]["attainment_rule_id"])){
+        if(this.isNumeric(this.my_data[i]["user_id"]) && this.isNumeric(this.my_data[i]["goal"]) && this.isNumeric(this.my_data[i]["attainment_rule_id"])){
 
         }
         else{

@@ -27,6 +27,7 @@ class Time extends React.Component {
   componentDidMount(){
     this.props.getTime()
     this.props.getUsers()
+
   }
 
 

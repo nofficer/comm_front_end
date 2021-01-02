@@ -18,7 +18,7 @@ class Header extends React.Component {
   }
 
   render() {
-    if(typeof(this.props.account['user_id']) == "number"){
+    if(typeof(this.props.account['user_id']) != "undefined"){
       if(this.props.account['role'] == "admin"){return (
 
 
@@ -96,7 +96,7 @@ class Header extends React.Component {
 
 
           <Link to='/rateTableShow'>
-              Rate Tables
+              Rates
           </Link>
 
 
@@ -110,13 +110,13 @@ class Header extends React.Component {
 
                 <div onClick={(e) => e.stopPropagation(history.push('/rateTableShow'))} className='item'>
                   <Link to='/rateTableShow'>
-                      Rate Tables
+                      Rates
                   </Link>
                 </div>
 
                 <div onClick={(e) => e.stopPropagation(history.push('/rateTableCreate'))} className='item'>
                   <Link to='/rateTableCreate'>
-                      Create Rate Table
+                      Create Rate
                   </Link>
                 </div>
 

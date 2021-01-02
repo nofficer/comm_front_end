@@ -7,11 +7,13 @@ import Login from '../Accounts/Login'
 import XLSX from 'xlsx';
 import monthmap from '../monthmap'
 import history from '../../history'
+import DoughnutChart from '../DoughnutChart'
 import BarChart from '../BarChart'
-
 import { saveAs } from 'file-saver'
 
 import isMobile from 'react-device-detect';
+
+
 
 
 function s2ab(s){
@@ -61,7 +63,33 @@ class PayoutShow extends React.Component {
     var ws_data = statement_details
 
     var ws = XLSX.utils.aoa_to_sheet(ws_data)
+
+    ws['!merges'] = [ {s: {c: 0, r:0,font: {sz: 14, bold: true, color: '#FF00FF' } }, e: {c:3, r:0}},{s: {c: 0, r:4 }, e: {c:1, r:4}},{s: {c: 0, r:5 }, e: {c:1, r:5}},{s: {c: 0, r:6 }, e: {c:1, r:6}} ]
+    var wscols = [
+                    {wch:15},
+                    {wch:12},
+                    {wch:14},
+                    {wch:10},
+                    {wch:10},
+                    {wch:10},
+                    {wch:10},
+                    {wch:10},
+                    {wch:15},
+                    {wch:20},
+                    {wch:10},
+                    {wch:15},
+                    {wch:15},
+                    {wch:10},
+                    {wch:10},
+                    {wch:15},
+                    {wch:15},
+                ];
+
+    ws['!cols'] = wscols;
+
+
     wb.Sheets['Statement'] = ws
+
 
 
     var wbout = XLSX.write(wb,{bookType:'xlsx', type: 'binary'});
@@ -77,9 +105,16 @@ class PayoutShow extends React.Component {
 
     this.props.getTime()
     this.props.getPayouts_user({user_id:this.props.account['user_id'], month_id:this.props.month['current.month_id']})
-    var dateData = history.location.state.detail
-    this.props.selectMonth(dateData['current.month_id'])
-    this.props.selectYear(dateData['cal_year'])
+    try{
+      var dateData = history.location.state.detail
+      this.props.selectMonth(dateData['current.month_id'].toString())
+      this.props.selectYear(dateData['cal_year'].toString())
+    }
+    catch{
+      console.log('Unauthorized User dashboard access attempt')
+    }
+
+
     this.props.getPayoutsHistory()
     this.props.getUsers()
     this.props.getGoals()
@@ -285,20 +320,23 @@ class PayoutShow extends React.Component {
   }
 
   createGoalItem(goal){
+    var goal_amt = goal[5]
+    var start_year = Number(goal[3].split('-')[0])
+    var end_year = Number(goal[4].split('-')[0])
+    var start_month = Number(goal[3].split('-')[1])
+    var end_month = Number(goal[4].split('-')[1])
+    var selected_year = Number(this.props.selected_year)
+    var selected_month = Number(this.props.selected_month)
     if(this.props.account['user_id'] == goal[1]){
       if(this.props.selected_month != 'all' && this.props.selected_year != 'all'){
-        var start_year = Number(goal[3].split('-')[0])
-        var end_year = Number(goal[4].split('-')[0])
-        var start_month = Number(goal[3].split('-')[1])
-        var end_month = Number(goal[4].split('-')[1])
-        var selected_year = Number(this.props.selected_year)
-        var selected_month = Number(this.props.selected_month)
+
+
 
           if(selected_year >= start_year && selected_year <= end_year ){
             if(selected_month>= start_month && selected_month <= end_month){
               return(
               <tr>
-                <td className='center aligned'>{goal[6]}</td><td className='center aligned'>{formatMoney(goal[5])}</td><td className='center aligned'>{goal[3]}</td><td className='center aligned'>{goal[4]}</td><td className='center aligned'>{goal[8].toUpperCase()}</td>
+                <td className='center aligned'>{goal[6]}</td><td className='center aligned'>{formatMoney(goal_amt)}</td><td className='center aligned'>{goal[3]}</td><td className='center aligned'>{goal[4]}</td><td className='center aligned'>{goal[8].toUpperCase()}</td>
               </tr>
             )
           }
@@ -307,34 +345,31 @@ class PayoutShow extends React.Component {
       }
 
       else if(this.props.selected_month == 'all' && this.props.selected_year != 'all'){
-        var selected_year = Number(this.props.selected_year)
-        var start_year = Number(goal[3].split('-')[0])
-        var end_year = Number(goal[4].split('-')[0])
+
         if(selected_year >= start_year && selected_year <= end_year ){
           return(
           <tr>
-            <td className='center aligned'>{goal[6]}</td><td className='center aligned'>{goal[5]}</td><td className='center aligned'>{goal[3]}</td><td className='center aligned'>{goal[4]}</td><td className='center aligned'>{goal[8].toUpperCase()}</td>
+            <td className='center aligned'>{goal[6]}</td><td className='center aligned'>{formatMoney(goal_amt)}</td><td className='center aligned'>{goal[3]}</td><td className='center aligned'>{goal[4]}</td><td className='center aligned'>{goal[8].toUpperCase()}</td>
           </tr>
         )
         }
       }
       else if(this.props.selected_month != 'all' && this.props.selected_year == 'all'){
-        var selected_month = Number(this.props.selected_month)
-        var start_month = Number(goal[3].split('-')[1])
-        var end_month = Number(goal[4].split('-')[1])
+
         if(selected_month>= start_month && selected_month <= end_month){
           return(
           <tr>
-            <td className='center aligned'>{goal[6]}</td><td className='center aligned'>{goal[5]}</td><td className='center aligned'>{goal[3]}</td><td className='center aligned'>{goal[4]}</td><td className='center aligned'>{goal[8].toUpperCase()}</td>
+            <td className='center aligned'>{goal[6]}</td><td className='center aligned'>{formatMoney(goal_amt)}</td><td className='center aligned'>{goal[3]}</td><td className='center aligned'>{goal[4]}</td><td className='center aligned'>{goal[8].toUpperCase()}</td>
           </tr>
         )
         }
       }
 
       else if(this.props.selected_month == 'all' && this.props.selected_year == 'all'){
+
         return(
         <tr>
-          <td className='center aligned'>{goal[6]}</td><td className='center aligned'>{goal[5]}</td><td className='center aligned'>{goal[3]}</td><td className='center aligned'>{goal[4]}</td><td className='center aligned'>{goal[8].toUpperCase()}</td>
+          <td className='center aligned'>{goal[6]}</td><td className='center aligned'>{formatMoney(goal_amt)}</td><td className='center aligned'>{goal[3]}</td><td className='center aligned'>{goal[4]}</td><td className='center aligned'>{goal[8].toUpperCase()}</td>
         </tr>
       )
       }
@@ -361,6 +396,17 @@ class PayoutShow extends React.Component {
       var multiplier = 1
       var payout_date = new Date(payout[17])
       var payout_attain = Number(payout[6])
+      var payout_mo_num = Number(payout[13])
+
+
+      if(this.props.selected_month == 'all'){
+        var sel_mo_num = Number(12)
+      }
+
+      else{
+        var sel_mo_num = Number(this.props.selected_month)
+      }
+
 
       if(pay_type.toLowerCase().includes('ote')){
         multiplier = goal_amt
@@ -370,21 +416,26 @@ class PayoutShow extends React.Component {
 
         if(rule==goal_rule){
 
-          if(payout_date >= goal_start && payout_date <= goal_end){
-            console.log(payout)
+          if(payout_date >= goal_start && payout_mo_num <= sel_mo_num && payout_date <= goal_end){
+
+
+
             prod_total+=payout_attain*multiplier
-            console.log(prod_total)
+
           }
         }
       }
     })
+    var goal_remain= Math.max(0,(goal_amt-prod_total))
+    var progressvar = prod_total/goal_amt
     return(
       <React.Fragment>
 
 
           <div className='eight wide column'>
-            <BarChart
-            title={goal_rule}
+            <DoughnutChart
+            progress={Math.round( ( (progressvar + Number.EPSILON) * 100) ).toString()+'%'}
+            title={[goal_rule,goal[4],goal[8].toUpperCase() ]}
             feed={{
               labels: ['Production','Remaining to Goal'],
               datasets: [
@@ -400,9 +451,11 @@ class PayoutShow extends React.Component {
                   '#4B5000',
                   '#501800'
                   ],
-                  data: [prod_total,goal_amt-prod_total]
+                  data: [prod_total,goal_remain]
                 }
-              ]
+              ],
+
+
             }}
             />
             </div>
@@ -471,9 +524,72 @@ class PayoutShow extends React.Component {
 
   }
 
+  createNoGoalChart(){
+    var checker = false
+    var no_goal_prod_total = {}
+    this.props.payouts.map((payout) => {
+
+      if(payout[2] == this.props.account['user_id'] && (Number(payout[17].slice(5,7)) <= Number(this.props.selected_month) || this.props.selected_month.toLowerCase() == 'all') && (payout[17].slice(0,4) == this.props.selected_year.toString() || this.props.selected_year.toLowerCase() == 'all'  )  ) {
+
+        if(typeof(no_goal_prod_total[monthmap[payout[13]]]) != 'undefined'){
+
+          no_goal_prod_total[monthmap[payout[13]]]+=Number(payout[6])
+        }
+        else{
+          no_goal_prod_total[monthmap[payout[13]]]=Number(payout[6])
+        }
+        checker = true
+      }
+    })
+
+    var montharr = []
+    var prodarr = []
+    for (const [key, value] of Object.entries(no_goal_prod_total)) {
+      montharr.push(key)
+      prodarr.push(no_goal_prod_total[key])
+
+
+    }
+
+    if(checker){
+
+      return(
+        <BarChart feed={{
+          labels: montharr,
+          datasets: [
+            {
+              label: 'Production',
+              backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850",'#bada55','#ff7373','#fff68f','#b6fcd5','#8b0000','#ccff00','#daa520'],
+              hoverBackgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850",'#bada55','#ff7373','#fff68f','#b6fcd5','#8b0000','#ccff00','#daa520'],
+              data: prodarr
+            }
+          ]
+
+
+        }}
+
+        title='YTD Production'
+
+
+        />
+      )
+    }
+
+}
 
 
   generateCharts(){
+    var checker = true
+    this.props.goals.map((goal) => {
+      if(goal[1] == this.props.account['user_id']){
+        checker = false
+      }
+    })
+    if(checker){
+      return(
+        this.createNoGoalChart()
+      )
+    }
 
     return(this.props.goals.map((goal)=> {
       return(this.createChartItem(goal))
@@ -482,15 +598,39 @@ class PayoutShow extends React.Component {
   }
 
   renderGoals(){
+
     return this.props.goals.map((goal) => {
       return this.createGoalItem(goal)
     })
   }
 
+  renderGoalHead(){
+    var checker = false
+    this.props.goals.map((goal)=> {
+      if(goal[1] == this.props.account['user_id']){
+        checker = true
+      }
+    })
+
+    if(checker){
+      return(
+        <thead>
+          <tr><th className='center aligned'>Rule</th><th className='center aligned'>Goal</th><th className='center aligned'>Start Date</th><th className='center aligned'>End Date</th><th className='center aligned'>Timeframe</th>
+          </tr>
+      </thead>
+      )
+    }
+    else{
+      return("No goals for this user")
+    }
+  }
+
   renderList(){
 
     statement_details.push([])
-    statement_details.push(['payout_id','trans_id','seller_id','Payee','revenue','gp','attainment','payout','split_percent','transaction_location','payout_multiplier','order_num','custom_field','month_id','rule_name','payee_id','type'])
+    statement_details.push([])
+    statement_details.push([])
+    statement_details.push(['Payout ID','Transaction ID','Seller ID','Payee','Revenue','Gross Profit','Attainment','Payout','Split percent','Transaction Location','Payout Multiplier','Order Number','custom_field','Month','Attainment_Rule_Name','Payee ID','Type','Date'])
     return this.props.payouts.map((payout) => {
 
       return (this.createItem(payout))
@@ -499,7 +639,15 @@ class PayoutShow extends React.Component {
   }
 
   createSummaryLine(line){
-    statement_details.push(line)
+    var statement_line = []
+    var i;
+    for (i = 0; i < line.length; i++) {
+      statement_line.push(line[i])
+    }
+
+    statement_line.splice(1, 0, '');
+
+    statement_details.push(statement_line)
     if(Number(line[1]) < 1){
       return(
         (
@@ -525,7 +673,7 @@ class PayoutShow extends React.Component {
 
   renderSummary(){
     var summaryArray = this.createSummaryItem()
-    statement_details = [[`${monthmap[this.props.selected_month]} Commission statement for ${this.props.account['username']}`],[],['Summary Performance'],[],['Rule','Attainment','Payout']]
+    statement_details = [[`${monthmap[this.props.selected_month]} Commission statement for ${this.props.account['username']}`],[],['Summary Performance'],[],['Attainment Rule','','Attainment','Payout']]
     return (summaryArray.map((line)=> {
       return this.createSummaryLine(line)
     }))
@@ -559,13 +707,16 @@ class PayoutShow extends React.Component {
     })
 
 
-    return <h2 className="marginleft ui dropdown">{monthmap[this.props.selected_month]} Payout: ${total_payout} </h2>
+    return <h2 className="marginleft ui dropdown">{monthmap[this.props.selected_month]} Payout: ${formatMoney(total_payout)} </h2>
   }
 
 
   renderContent(){
+    if(typeof(history.location.state.detail) == 'undefined'){
+      return(<Login/>)
+    }
 
-    if(this.props.account['role'] == 'admin'){
+    else if(this.props.account['role'] == 'admin'){
       return (<div className='ui grid '>
 
 
@@ -585,7 +736,7 @@ class PayoutShow extends React.Component {
       <div class="sixteen wide column">
       <div className='ui center aligned grid'>
       <div class="sixteen wide column">
-      <h1 className='pagetitle center aligned'>Commission Statement </h1>
+      <h1 style={{fontSize:'3rem'}} className='ui huge header'>Commission Statement </h1>
       </div>
 
       </div>
@@ -683,11 +834,8 @@ class PayoutShow extends React.Component {
             <div className="fifteen wide column">
 
             <table className='ui celled center aligned table'>
+            {this.renderGoalHead()}
 
-              <thead>
-                <tr><th className='center aligned'>Rule</th><th className='center aligned'>Goal</th><th className='center aligned'>Start Date</th><th className='center aligned'>End Date</th><th className='center aligned'>Timeframe</th>
-                </tr>
-            </thead>
             {this.renderGoals()}
             </table>
 
@@ -844,6 +992,9 @@ class PayoutShow extends React.Component {
           {this.renderList()}
           </tbody>
         </table>
+        <div class="sixteen wide column">
+
+        </div>
         </div>
 
 
@@ -933,7 +1084,7 @@ class PayoutShow extends React.Component {
       <div class="sixteen wide column">
       <div className='ui center aligned grid'>
       <div class="sixteen wide column">
-      <h1 className='pagetitle center aligned'>Commission Statement </h1>
+      <div style={{fontSize:'3rem'}} className='ui huge header'>Commission Statement </div>
       </div>
 
       </div>
@@ -1032,10 +1183,8 @@ class PayoutShow extends React.Component {
 
             <table className='ui celled center aligned table'>
 
-              <thead>
-                <tr><th className='center aligned'>Rule</th><th className='center aligned'>Goal</th><th className='center aligned'>Start Date</th><th className='center aligned'>End Date</th><th className='center aligned'>Timeframe</th>
-                </tr>
-            </thead>
+            {this.renderGoalHead()}
+
             {this.renderGoals()}
             </table>
 
@@ -1192,6 +1341,9 @@ class PayoutShow extends React.Component {
           {this.renderList()}
           </tbody>
         </table>
+        <div class="sixteen wide column">
+
+        </div>
         </div>
 
 

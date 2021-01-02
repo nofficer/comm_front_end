@@ -7,14 +7,14 @@ import history from '../history'
 import Login from './Accounts/Login'
 
 
-class ImportError extends React.Component {
+class PasswordError extends React.Component {
 
   renderActions(){
 
     return (
       <React.Fragment>
                 <button className='ui button'
-                onClick={() => history.push('/import')}
+                onClick={() => history.push('/')}
                 >OK
                 </button>
 
@@ -26,12 +26,12 @@ class ImportError extends React.Component {
 
   render(){
 
-    if(this.props.account['role'] == 'admin'){
+    if(typeof(this.props.account['user_id']) != 'undefined' &&typeof(history.location.state) != 'undefined' ){
       return  (<Modal
-          title="Import Error"
+          title="Password Status"
           content={history.location.state.detail}
           actions={this.renderActions()}
-          onDismiss={() => history.push('/import')}
+          onDismiss={() => history.push('/')}
         />)
     }
       else if(typeof(this.props.account['user_id']) != "undefined"){
@@ -55,4 +55,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, {})(ImportError)
+export default connect(mapStateToProps, {})(PasswordError)

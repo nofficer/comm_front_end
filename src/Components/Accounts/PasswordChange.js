@@ -11,7 +11,14 @@ import UserForm from '../UserForm'
 
 class PasswordChange extends React.Component {
   componentDidMount(){
-    this.props.getUser({"user_id": history.location.state.detail})
+    try{
+      this.props.getUser({"user_id": history.location.state.detail})
+    }
+    catch{
+
+      console.log('unauthorized attempt to change password')
+    }
+
     this.props.getPlans()
     this.props.getTime()
 
@@ -20,8 +27,17 @@ class PasswordChange extends React.Component {
 
   onSubmit = (formValues) => {
     formValues['user_id'] = history.location.state.detail
+    formValues['new_password'] = formValues['password']
+    formValues['perms'] = 'seller'
     this.props.updateAccount(formValues)
   }
+  onSubmitAdmin = (formValues) => {
+    formValues['user_id'] = history.location.state.detail
+    formValues['new_password'] = formValues['password']
+    formValues['perms'] = 'admin'
+    this.props.updateAccount(formValues)
+  }
+
 
   populateDropdown(){
     return this.props.plans
@@ -30,11 +46,14 @@ class PasswordChange extends React.Component {
 
 // {'trans_gp':this.props.trans['trans_gp'], 'trans_rev':this.props.trans['trans_rev'], 'trans_seller_id':this.props.trans['trans_seller_id'],'trans_type':this.props.trans['trans_type']} initialValues={this.props.trans}
   render(){
+    if(typeof(history.location.state)=='undefined'){
+      return(<Login/>)
+    }
     if(this.props.account['role'] == 'admin'){
-      return <div> <UserForm title='Enter New Password' onSubmit={this.onSubmit} editing="password" populateDropdown={this.populateDropdown()} /></div>
+      return <div> <UserForm title={`Change Password - ${history.location.state.detail}`} perms='admin'  onSubmit={this.onSubmitAdmin} editing="password" populateDropdown={this.populateDropdown()} /></div>
     }
     else if (this.props.account['user_id'] == history.location.state.detail){
-      return <div> <UserForm title='Enter New Password'  onSubmit={this.onSubmit} editing="password" populateDropdown={this.populateDropdown()} /></div>
+      return <div> <UserForm title='Change Password' perms='seller' errors={history.location.state.errors}  onSubmit={this.onSubmit} editing="password" populateDropdown={this.populateDropdown()} /></div>
     }
     else{
       return(<Login/>)

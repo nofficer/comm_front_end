@@ -24,6 +24,7 @@ import PlanDelete from './PlanDelete'
 import AttainRuleDelete from './AttainRuleDelete'
 import TransDelete from './TransDelete'
 import ImportError from './ImportError'
+import ImportSuccess from './ImportSuccess'
 import UserDelete from './UserDelete'
 import RateTableShow from './Rate_Tables/RateTableShow'
 import RateTableCreate from './Rate_Tables/RateTableCreate'
@@ -44,7 +45,7 @@ import GoalDelete from './Goals/GoalDelete'
 import Login from './Accounts/Login'
 
 import PasswordChange from './Accounts/PasswordChange'
-
+import PasswordError from './PasswordError'
 
 import LiabilityShow from './Liability/LiabilityShow'
 import LiabilityEdit from './Liability/LiabilityEdit'
@@ -70,6 +71,7 @@ const App = () => {
             <Route path ='/rateTableShow/edit/:rate_id' exact component={RateTableEdit}/>
             <Route path ='/rateTableShow/delete/:rate_id' exact component={RateTableDelete}/>
             <Route path ='/importError' exact component={ImportError}/>
+            <Route path ='/importSuccess' exact component={ImportSuccess}/>
             <Route path ='/import' exact component={Import}/>
             <Route path ='/attainRuleCreate' exact component={AttainRuleCreate}/>
             <Route path='/planCreate' exact component={PlanCreate}/>
@@ -95,6 +97,7 @@ const App = () => {
             <Route path ='/login' exact component={Login}/>
             <Route path ='/report' exact component={Report}/>
             <Route path ='/passwordchange' exact component={PasswordChange}/>
+            <Route path ='/passwordError' exact component={PasswordError}/>
             <Route path ='/goalShow' exact component={GoalShow}/>
             <Route path ='/goalCreate' exact component={GoalCreate}/>
             <Route path ='/goalShow/edit/:goal_id' exact component={GoalEdit}/>
