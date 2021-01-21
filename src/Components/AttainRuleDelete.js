@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getAttainmentRule ,deleteAttainmentRule,getAttainmentRules,checkRuleUse,getTime} from '../actions'
+import { getAttainmentRule ,deleteAttainmentRule,getAttainmentRules,checkRuleUse,getTime,checkCalcStatus } from '../actions'
 import { Link } from 'react-router-dom'
 import Modal from '../Modal'
 import history from '../history'
@@ -8,7 +8,7 @@ import history from '../history'
 import Login from './Accounts/Login'
 
 
-
+import Loader from '../Loader'
 
 
 
@@ -18,6 +18,7 @@ class AttainRuleDelete extends React.Component {
     this.props.getAttainmentRule({"rule_id": this.props.match.params.rule_id})
     this.props.checkRuleUse({"rule_id": this.props.match.params.rule_id})
     this.props.getTime()
+    this.props.checkCalcStatus()
   }
 
   renderContent(){
@@ -62,12 +63,22 @@ class AttainRuleDelete extends React.Component {
 
   render(){
     if(this.props.account['role'] == 'admin'){
-      return(<Modal
-        title="Delete AttainRule"
-        content={this.renderContent()}
-        actions={this.renderActions()}
-        onDismiss={() => history.push('/attainRuleShow')}
-      />)
+      if(this.props.calc == 'Running'){
+        return(
+          <Loader filler="Calculations Running - Please check back later..."/>
+        )
+      }
+
+      else {
+        return(<Modal
+          title="Delete AttainRule"
+          content={this.renderContent()}
+          actions={this.renderActions()}
+          onDismiss={() => history.push('/attainRuleShow')}
+        />)
+      }
+
+
     }
 
     else if(typeof(this.props.account['user_id']) == "number"){
@@ -88,8 +99,9 @@ const mapStateToProps = (state) => {
     rule: state.attainmentRules.rule,
     attainmentRules: state.attainmentRules.attainmentRules,
     check: state.check.check,
+    calc: state.calc.calc,
     account: state.account.account
   }
 }
 
-export default connect(mapStateToProps, { getAttainmentRule,deleteAttainmentRule,getAttainmentRules,checkRuleUse,getTime })(AttainRuleDelete)
+export default connect(mapStateToProps, { getAttainmentRule,deleteAttainmentRule,getAttainmentRules,checkRuleUse,getTime,checkCalcStatus  })(AttainRuleDelete)

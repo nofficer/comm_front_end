@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getTime,updateTime,revertTime,getPayroll,selectMonth,getUsers,castUser} from '../../actions'
+import { getTime,updateTime,revertTime,getPayroll,selectMonth,getUsers,castUser,checkCalcStatus } from '../../actions'
 import history from '../../history'
 import Modal from '../../Modal'
 import Login from '../Accounts/Login'
@@ -27,7 +27,7 @@ class Time extends React.Component {
   componentDidMount(){
     this.props.getTime()
     this.props.getUsers()
-
+    this.props.checkCalcStatus()
   }
 
 
@@ -95,7 +95,12 @@ class Time extends React.Component {
     }
     else{
     if(this.props.account['role'] == 'admin'){
-      if(this.props.month['current.month_id'] == 1){
+      if(this.props.calc == 'Running'){
+        return(
+          <Loader filler='You may not access the admin panel calculations are currently running...'/>
+        )
+      }
+      else if(this.props.month['current.month_id'] == 1){
         return (
           <div className='ui grid'>
 
@@ -365,8 +370,9 @@ const mapStateToProps = (state) => {
     account:state.account.account,
     payroll: state.payouts.payroll,
     selected_month: state.account.selected_month,
+    calc: state.calc.calc,
     users: state.users.users
   }
 }
 
-export default connect(mapStateToProps, {getTime,updateTime,revertTime,getPayroll,selectMonth,getUsers,castUser})(Time)
+export default connect(mapStateToProps, {getTime,updateTime,revertTime,getPayroll,selectMonth,getUsers,castUser,checkCalcStatus })(Time)

@@ -1,16 +1,18 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getLiability,deleteLiability,getLiabilities,getTime} from '../../actions'
+import { getLiability,deleteLiability,getLiabilities,getTime,checkCalcStatus } from '../../actions'
 import { Link } from 'react-router-dom'
 import Modal from '../../Modal'
 import history from '../../history'
 import Login from '../Accounts/Login'
+import Loader from '../../Loader'
 
 class LiabilityDelete extends React.Component {
 
   componentDidMount(){
     this.props.getTime()
     this.props.getLiability({"liability_id": this.props.match.params.liability_id})
+    this.props.checkCalcStatus()
   }
 
   renderContent(){
@@ -40,12 +42,21 @@ class LiabilityDelete extends React.Component {
   render(){
 
     if(this.props.account['role'] == 'admin'){
-      return(<Modal
-        title="Delete Liability"
-        content={this.renderContent()}
-        actions={this.renderActions()}
-        onDismiss={() => history.push('/LiabilityShow')}
-      />)
+      if(this.props.calc == 'Running'){
+        return(
+          <Loader filler="Calculations Running - Please check back later..."/>
+        )
+      }
+
+      else {
+        return(<Modal
+          title="Delete Liability"
+          content={this.renderContent()}
+          actions={this.renderActions()}
+          onDismiss={() => history.push('/LiabilityShow')}
+        />)
+      }
+
     }
 
     else if(typeof(this.props.account['user_id']) == "number"){
@@ -65,8 +76,9 @@ const mapStateToProps = (state) => {
   return {
     account: state.account.account,
     liability: state.payouts.liability,
+    calc: state.calc.calc,
     liabilities:state.payouts.liabilities
   }
 }
 
-export default connect(mapStateToProps, { getLiability,deleteLiability,getLiabilities,getTime})(LiabilityDelete)
+export default connect(mapStateToProps, { getLiability,deleteLiability,getLiabilities,getTime,checkCalcStatus })(LiabilityDelete)

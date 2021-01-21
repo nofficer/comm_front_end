@@ -1,9 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getTran ,deleteTrans,getTime} from '../actions'
+import { getTran ,deleteTrans,getTime,checkCalcStatus } from '../actions'
 import { Link } from 'react-router-dom'
 import Modal from '../Modal'
 import history from '../history'
+import Loader from '../Loader'
 
 import Login from './Accounts/Login'
 
@@ -12,6 +13,7 @@ class TransDelete extends React.Component {
   componentDidMount(){
     this.props.getTran({'trans_id':this.props.match.params.trans_id})
     this.props.getTime()
+    this.props.checkCalcStatus()
   }
 
   renderContent(){
@@ -42,12 +44,21 @@ class TransDelete extends React.Component {
 
   render(){
     if(this.props.account['role'] == 'admin'){
-      return(<Modal
-        title="Delete Plan"
-        content={this.renderContent()}
-        actions={this.renderActions()}
-        onDismiss={() => history.push('/TransShow')}
-      />)
+      if(this.props.calc == 'Running'){
+        return(
+          <Loader filler="Calculations Running - Please check back later..."/>
+        )
+      }
+
+      else {
+        return(<Modal
+          title="Delete Plan"
+          content={this.renderContent()}
+          actions={this.renderActions()}
+          onDismiss={() => history.push('/TransShow')}
+        />)
+      }
+
     }
 
     else if(typeof(this.props.account['user_id']) == "number"){
@@ -67,8 +78,9 @@ class TransDelete extends React.Component {
 const mapStateToProps = (state) => {
   return {
     tran: state.trans.tran,
+    calc: state.calc.calc,
     account: state.account.account
   }
 }
 
-export default connect(mapStateToProps, { getTran,deleteTrans,getTime })(TransDelete)
+export default connect(mapStateToProps, { getTran,deleteTrans,getTime ,checkCalcStatus })(TransDelete)

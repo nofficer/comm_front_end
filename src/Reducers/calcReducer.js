@@ -1,11 +1,11 @@
 
 
 import {
-  CREATE_CALC, CHANGE_DONE,CALC_PLANS
+  CREATE_CALC, CHANGE_DONE,CALC_PLANS,CALC_STATUS,LOAD
 } from '../actions/types'
 
 const INITIAL_STATE = {
-  calc : "Not_Done"
+  calc : "Done"
 }
 
 export default (state=INITIAL_STATE, action) => {
@@ -14,6 +14,12 @@ export default (state=INITIAL_STATE, action) => {
       return {...state, calc: action.payload};
     case CHANGE_DONE:
       return{...state, calc: action.payload};
+    case CALC_STATUS:
+      return{...state, calc:action.payload}
+    case CALC_PLANS:
+      return{...state, calc:'Done'}
+    case LOAD:
+      return {...state, calc:'Running'}
 
 
     default:

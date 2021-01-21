@@ -18,11 +18,15 @@ class Login extends React.Component {
   save = 'no'
 
   onSubmit = (formValues) => {
-    var dateData = this.props.month
-    this.props.selectMonth(dateData['current.month_id'].toString())
-    this.props.selectYear(dateData['cal_year'].toString())
-    this.props.login(formValues,this.save)
-    history.push({pathname:'/report',state:{detail:this.props.month}})
+
+      var dateData = this.props.month
+      this.props.selectMonth(dateData['current.month_id'].toString())
+      this.props.selectYear(dateData['cal_year'].toString())
+      this.props.login(formValues,this.save)
+      history.push({pathname:'/report',state:{detail:this.props.month}})
+    
+
+
   }
 
   onClick = () => {
@@ -43,6 +47,7 @@ class Login extends React.Component {
 
       return <LoginModal onDismiss={(e) => e.stopPropagation(history.push('/'))} title="Log in to EasyComp" onSubmit={this.onSubmit} issue='Username not found'/>
     }
+
       return (<div>
         <LoginModal onDismiss={(e) => e.stopPropagation(history.push('/'))} title="Log in to EasyComp" onSubmit={this.onSubmit}/>
 

@@ -1,16 +1,18 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getGoal ,deleteGoal,getGoals,getTime} from '../../actions'
+import { getGoal ,deleteGoal,getGoals,getTime,checkCalcStatus} from '../../actions'
 import { Link } from 'react-router-dom'
 import Modal from '../../Modal'
 import history from '../../history'
 import Login from '../Accounts/Login'
+import Loader from '../../Loader'
 
 class GoalDelete extends React.Component {
 
   componentDidMount(){
     this.props.getTime()
     this.props.getGoal({"goal_id": this.props.match.params.goal_id})
+    this.props.checkCalcStatus()
   }
 
   renderContent(){
@@ -40,12 +42,20 @@ class GoalDelete extends React.Component {
   render(){
 
     if(this.props.account['role'] == 'admin'){
-      return(<Modal
-        title="Delete Goal"
-        content={this.renderContent()}
-        actions={this.renderActions()}
-        onDismiss={() => history.push('/GoalShow')}
-      />)
+      if(this.props.calc == 'Running'){
+        return(
+          <Loader filler="Calculations Running - Please check back later..."/>
+        )
+      }
+      else {
+        return(<Modal
+          title="Delete Goal"
+          content={this.renderContent()}
+          actions={this.renderActions()}
+          onDismiss={() => history.push('/GoalShow')}
+        />)
+      }
+
     }
 
     else if(typeof(this.props.account['user_id']) == "number"){
@@ -67,8 +77,9 @@ const mapStateToProps = (state) => {
     rateTable: state.rateTables.rateTable,
     account: state.account.account,
     goals: state.goals.goals,
+    calc: state.calc.calc,
     goal: state.goals.goal
   }
 }
 
-export default connect(mapStateToProps, { getGoal,deleteGoal,getGoals,getTime})(GoalDelete)
+export default connect(mapStateToProps, { getGoal,deleteGoal,getGoals,getTime,checkCalcStatus})(GoalDelete)

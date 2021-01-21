@@ -98,12 +98,14 @@ componentDidMount() {
   render() {
     var feed = this.props.feed
     return (
-      <div>
+      <div style={{minHeight:'15em',minWidth:'15em'}} >
 
 
         <Doughnut
           data={feed}
           options={{
+            responsive:true,
+            maintainAspectRatio: false,
             title:{
               display:true,
               text:this.props.title,
@@ -122,8 +124,8 @@ componentDidMount() {
       text: this.props.progress,
       color: '#000000', // Default is #000000
       fontStyle: 'Roboto', // Default is Arial
-      sidePadding: 60, // Default is 20 (as a percentage)
-      minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
+      sidePadding: 20, // Default is 20 (as a percentage)
+      minFontSize: 10, // Default is 20 (in px), set to false and text will not wrap.
       lineHeight: 10 // Default is 25 (in px), used for when text wraps
     }
   }

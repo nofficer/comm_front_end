@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getPayouts,calcPlans,loadCalcs,clearError,setFilter,getFilter,clearFilter } from '../../actions'
+import { getPayouts,calcPlans,loadCalcs,clearError,setFilter,getFilter,clearFilter,checkCalcStatus } from '../../actions'
 import { Link } from 'react-router-dom'
 import Loader from '../../Loader'
 import Login from '../Accounts/Login'
@@ -38,7 +38,7 @@ class PayoutShow extends React.Component {
     this.props.clearFilter()
     this.props.getPayouts()
     this.props.getFilter()
-
+    this.props.checkCalcStatus()
   }
 
   filterMap = {
@@ -246,10 +246,12 @@ class PayoutShow extends React.Component {
 
   render(){
 
+
     if(this.props.account['role'] == 'admin'){
-      if(this.props.calcs == 'Running'){
+
+      if(this.props.calc == 'Running'){
         return (
-          <Loader filler="Calculations Running - Please do not exit or refresh this page"/>
+          <Loader filler="Calculations Running - Please check back later..."/>
         )
     }
     else if(this.props.errors == "goal") {
@@ -281,11 +283,11 @@ class PayoutShow extends React.Component {
 const mapStateToProps = (state) => {
   return {
     payouts: Object.values(state.payouts.payouts),
-    calcs: state.payouts.calcs,
+    calc: state.calc.calc,
     account: state.account.account,
     errors: state.errors.errors,
     filter: state.filter.filter
   }
 }
 
-export default connect(mapStateToProps, { getPayouts,calcPlans,loadCalcs,clearError,setFilter,getFilter,clearFilter })(PayoutShow)
+export default connect(mapStateToProps, { getPayouts,calcPlans,loadCalcs,clearError,setFilter,getFilter,clearFilter,checkCalcStatus })(PayoutShow)

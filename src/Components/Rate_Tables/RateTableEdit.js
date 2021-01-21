@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getPlans, getRateTable,editRateTable,getTime,getAttainmentRules } from '../../actions'
+import { getPlans, getRateTable,editRateTable,getTime,getAttainmentRules,checkCalcStatus  } from '../../actions'
 import Login from '../Accounts/Login'
 
-
+import Loader from '../../Loader'
 
 
 
@@ -17,6 +17,7 @@ class RateTableEdit extends React.Component {
     this.props.getPlans()
     this.props.getTime()
     this.props.getAttainmentRules()
+    this.props.checkCalcStatus()
   }
 
   onSubmit = (formValues) => {
@@ -33,9 +34,18 @@ class RateTableEdit extends React.Component {
   render(){
 
     if(this.props.account['role'] == 'admin'){
-      return (
-        <div className='ui container containermargin'><RateTableForm title='Editing Rate' onSubmit={this.onSubmit} editing="yes" initialValues={this.props.rateTable} populateDropdown={this.populateDropdown()} /></div>
-      )
+      if(this.props.calc == 'Running'){
+        return(
+          <Loader filler="Calculations Running - Please check back later..."/>
+        )
+      }
+
+      else {
+        return (
+          <div className='ui container containermargin'><RateTableForm title='Editing Rate' onSubmit={this.onSubmit} editing="yes" initialValues={this.props.rateTable} populateDropdown={this.populateDropdown()} /></div>
+        )
+      }
+
     }
 
     else if(typeof(this.props.account['user_id']) == "number"){
@@ -55,8 +65,9 @@ const mapStateToProps = (state) => {
     rateTable: state.rateTables.rateTable,
     plans: Object.values(state.plans.plans),
     account: state.account.account,
+    calc: state.calc.calc,
     attainmentRules: state.attainmentRules.attainmentRules
   }
 }
 
-export default connect(mapStateToProps, { editRateTable, getRateTable, getPlans,getTime,getAttainmentRules})(RateTableEdit)
+export default connect(mapStateToProps, { editRateTable, getRateTable, getPlans,getTime,getAttainmentRules,checkCalcStatus })(RateTableEdit)

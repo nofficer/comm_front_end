@@ -146,10 +146,12 @@ class AttainRuleForm extends React.Component {
                     <option value="Overlay">Overlay</option>
                     <option value="Location">Location</option>
                     <option value="Location_Overlay">Location_Overlay</option>
+                    <option value="Custom">Custom</option>
                     <option value="Ote_Direct">OTE_Direct</option>
                     <option value="Ote_Overlay">OTE_Overlay</option>
                     <option value="Ote_Location">OTE_Location</option>
                     <option value="Ote_Location_Overlay">OTE_Location_Overlay</option>
+                    <option value="Ote_Custom">OTE_Custom</option>
                   </Field>
           </div>
         </div>

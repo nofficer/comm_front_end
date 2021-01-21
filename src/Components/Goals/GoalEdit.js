@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getPlans, getGoal,editGoal,getTime,getAttainmentRules,getUsers } from '../../actions'
+import { getPlans, getGoal,editGoal,getTime,getAttainmentRules,getUsers,checkCalcStatus  } from '../../actions'
 import Login from '../Accounts/Login'
 
-
+import Loader from '../../Loader'
 
 
 
@@ -18,6 +18,7 @@ class GoalEdit extends React.Component {
     this.props.getTime()
     this.props.getAttainmentRules()
     this.props.getUsers()
+    this.props.checkCalcStatus()
   }
 
   onSubmit = (formValues) => {
@@ -36,9 +37,19 @@ class GoalEdit extends React.Component {
   render(){
 
     if(this.props.account['role'] == 'admin'){
-      return (
-        <div className='ui container containermargin'><GoalForm title='Editing Goal' onSubmit={this.onSubmit} editing="yes" initialValues={this.props.goal} populateDropdown={this.populateDropdown()} populateDropdownUser={this.populateDropdownUser()}  /></div>
-      )
+      if(this.props.calc == 'Running'){
+        return(
+          <Loader filler="Calculations Running - Please check back later..."/>
+        )
+      }
+
+      else {
+        return (
+          <div className='ui container containermargin'><GoalForm title='Editing Goal' onSubmit={this.onSubmit} editing="yes" initialValues={this.props.goal} populateDropdown={this.populateDropdown()} populateDropdownUser={this.populateDropdownUser()}  /></div>
+        )
+      }
+
+
     }
 
     else if(typeof(this.props.account['user_id']) == "number"){
@@ -58,10 +69,11 @@ const mapStateToProps = (state) => {
     rateTable: state.rateTables.rateTable,
     plans: Object.values(state.plans.plans),
     account: state.account.account,
+    calc: state.calc.calc,
     attainmentRules: state.attainmentRules.attainmentRules,
     users: state.users.users,
     goal: state.goals.goal
   }
 }
 
-export default connect(mapStateToProps, { editGoal, getGoal, getPlans,getTime,getAttainmentRules,getUsers})(GoalEdit)
+export default connect(mapStateToProps, { editGoal, getGoal, getPlans,getTime,getAttainmentRules,getUsers,checkCalcStatus })(GoalEdit)

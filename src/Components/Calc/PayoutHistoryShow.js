@@ -146,7 +146,7 @@ class PayoutShow extends React.Component {
   }
   renderContent(){
       statement_details = []
-      statement_details.push(["Payout_ID", "Transaction_ID","Seller_ID","Payee","Revenue","GP","Attainment","Payout","Split_Percent","Location","Payout_Multiplier","Order_Number","Custom_Field","Period_ID","Rule","Type"])
+      statement_details.push(["Payout_ID", "Transaction_ID","Seller_ID","Payee","Revenue","GP","Attainment","Payout","Split_Percent","Location","Payout_Multiplier","Order_Number","Custom_Field","Period_ID","Rule","Payee ID","Type","Date"])
 
     return (
 

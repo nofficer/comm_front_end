@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getPlans, createAttainRule, getAttainmentRules,getTime } from '../actions'
+import { getPlans, createAttainRule, getAttainmentRules,getTime,checkCalcStatus  } from '../actions'
 import Login from './Accounts/Login'
-
+import Loader from '../Loader'
 
 
 
@@ -16,6 +16,7 @@ class AttainRuleCreate extends React.Component {
     this.props.getAttainmentRules()
     this.props.getTime()
     this.props.getPlans()
+    this.props.checkCalcStatus()
   }
 
   onSubmit = (formValues) => {
@@ -31,9 +32,18 @@ class AttainRuleCreate extends React.Component {
 
   render(){
     if(this.props.account['role'] == 'admin'){
-      return (
-        <div className='ui container containermargin'><AttainRuleForm title="Creating Attainment Rule" onSubmit={this.onSubmit} populateDropdown={this.populateDropdown()} /></div>
-      )
+      if(this.props.calc == 'Running'){
+        return(
+          <Loader filler="Calculations Running - Please check back later..."/>
+        )
+      }
+
+      else {
+        return (
+          <div className='ui container containermargin'><AttainRuleForm title="Creating Attainment Rule" onSubmit={this.onSubmit} populateDropdown={this.populateDropdown()} /></div>
+        )
+      }
+
     }
 
     else if(typeof(this.props.account['user_id']) == "number"){
@@ -50,8 +60,9 @@ const mapStateToProps = (state) => {
   return {
     attainmentRules: Object.values(state.attainmentRules.attainmentRules),
     account: state.account.account,
+    calc: state.calc.calc,
     plans: state.plans.plans
   }
 }
 
-export default connect(mapStateToProps, { createAttainRule, getAttainmentRules,getTime,getPlans })(AttainRuleCreate)
+export default connect(mapStateToProps, { createAttainRule, getAttainmentRules,getTime,getPlans,checkCalcStatus  })(AttainRuleCreate)

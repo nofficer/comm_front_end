@@ -21,10 +21,9 @@ export default (state=INITIAL_STATE, action) => {
       return {...state, payouts: action.payload}
     case GET_PAYOUT:
       return {...state, payout: action.payload}
-    case LOAD:
-      return {...state, calcs:'Running'}
+
     case CALC_PLANS:
-      return{...state, payouts: action.payload,calcs: 'Done'}
+      return{...state, payouts: action.payload}
     case GET_PAYOUTS_USER:
       return{...state,summary: action.payload}
     case GET_PAYROLL:

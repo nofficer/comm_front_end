@@ -193,7 +193,7 @@ class TransShow extends React.Component {
     if(this.props.error == 'id'){
       return <Modal onDismiss={this.props.clearTransError} title='Error in Transaction Creation' content='A transaction with that ID already exists' actions='Ok'/>
     }
-    else if(typeof(this.props.trans[0]) == 'undefined' ){
+    else if(typeof(this.props.trans[0]) == 'undefined' && this.props.account['role'] == 'admin'){
       return<div><Loader filler='Loading Transactions...'/></div>
     }
 

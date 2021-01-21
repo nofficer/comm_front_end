@@ -1,10 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getUser ,deleteUser,checkUserUse,getTime} from '../actions'
+import { getUser ,deleteUser,checkUserUse,getTime,checkCalcStatus } from '../actions'
 import { Link } from 'react-router-dom'
 import Modal from '../Modal'
 import history from '../history'
 import Login from './Accounts/Login'
+
+import Loader from '../Loader'
 
 class UserDelete extends React.Component {
 
@@ -12,6 +14,7 @@ class UserDelete extends React.Component {
     this.props.getUser({"user_id": this.props.match.params.user_id})
     this.props.checkUserUse({"user_id": this.props.match.params.user_id})
     this.props.getTime()
+    this.props.checkCalcStatus()
   }
 
   renderContent(){
@@ -55,12 +58,21 @@ class UserDelete extends React.Component {
 
   render(){
     if(this.props.account['role'] == 'admin'){
-      return(<Modal
-        title="Delete User"
-        content={this.renderContent()}
-        actions={this.renderActions()}
-        onDismiss={() => history.push('/userShow')}
-      />)
+      if(this.props.calc == 'Running'){
+        return(
+          <Loader filler="Calculations Running - Please check back later..."/>
+        )
+      }
+
+      else {
+        return(<Modal
+          title="Delete User"
+          content={this.renderContent()}
+          actions={this.renderActions()}
+          onDismiss={() => history.push('/userShow')}
+        />)
+      }
+
     }
 
     else if(typeof(this.props.account['user_id']) == "number"){
@@ -81,9 +93,10 @@ const mapStateToProps = (state) => {
   return {
     user: state.users.user,
     users: state.users.users,
+    calc: state.calc.calc,
     check: state.check.check,
     account: state.account.account
   }
 }
 
-export default connect(mapStateToProps, { getUser,deleteUser,checkUserUse,getTime })(UserDelete)
+export default connect(mapStateToProps, { getUser,deleteUser,checkUserUse,getTime,checkCalcStatus  })(UserDelete)

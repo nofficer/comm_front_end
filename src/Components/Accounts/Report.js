@@ -166,6 +166,15 @@ class PayoutShow extends React.Component {
     ){
 
 
+    var pay_rate = (Number(payout[7])/Number(payout[6]))*100
+    if(isNaN(pay_rate) || payout[16].toUpperCase().includes('OTE')){
+      pay_rate = 'OTE'
+    }
+    else{
+      pay_rate = pay_rate.toFixed(2) + '%'
+    }
+
+
     var payout_year = payout[17].split('-')[0]
     if(payout[15] == this.props.account['user_id'] && this.props.selected_month == "all" && this.props.selected_year == "all"){
       payout[4] = Number(payout[4])
@@ -176,7 +185,7 @@ class PayoutShow extends React.Component {
 
       return (
         <tr>
-          <td className='center aligned'>{payout[0]}</td><td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {formatMoney(payout[4])}</td><td className='center aligned'>$ {formatMoney(formatMoney(payout[5]))}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>${formatMoney(payout[7])}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[12]}</td><td className='center aligned'>{payout[13]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[17]}</td>
+          <td className='center aligned'>{payout[0]}</td><td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {formatMoney(payout[4])}</td><td className='center aligned'>$ {formatMoney(payout[5])}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>{pay_rate}</td><td className='center aligned'>${formatMoney(payout[7])}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[12]}</td><td className='center aligned'>{payout[13]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[17]}</td>
         </tr>
 
       )
@@ -191,7 +200,7 @@ class PayoutShow extends React.Component {
 
       return (
         <tr>
-          <td className='center aligned'>{payout[0]}</td><td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {formatMoney(payout[4])}</td><td className='center aligned'>$ {formatMoney(payout[5])}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>$ {formatMoney(payout[7])}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[12]}</td><td className='center aligned'>{payout[13]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[17]}</td>
+          <td className='center aligned'>{payout[0]}</td><td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {formatMoney(payout[4])}</td><td className='center aligned'>$ {formatMoney(payout[5])}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>{pay_rate}</td><td className='center aligned'>${formatMoney(payout[7])}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[12]}</td><td className='center aligned'>{payout[13]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[17]}</td>
         </tr>
 
       )
@@ -205,7 +214,7 @@ class PayoutShow extends React.Component {
 
       return (
         <tr>
-          <td className='center aligned'>{payout[0]}</td><td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {formatMoney(payout[4])}</td><td className='center aligned'>$ {formatMoney(payout[5])}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>$ {formatMoney(payout[7])}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[12]}</td><td className='center aligned'>{payout[13]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[17]}</td>
+          <td className='center aligned'>{payout[0]}</td><td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {formatMoney(payout[4])}</td><td className='center aligned'>$ {formatMoney(payout[5])}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>{pay_rate}</td><td className='center aligned'>${formatMoney(payout[7])}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[12]}</td><td className='center aligned'>{payout[13]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[17]}</td>
         </tr>
 
       )
@@ -219,7 +228,7 @@ class PayoutShow extends React.Component {
 
       return (
         <tr>
-          <td className='center aligned'>{payout[0]}</td><td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {formatMoney(payout[4])}</td><td className='center aligned'>$ {formatMoney(payout[5])}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>$ {formatMoney(payout[7])}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[12]}</td><td className='center aligned'>{payout[13]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[17]}</td>
+          <td className='center aligned'>{payout[0]}</td><td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {formatMoney(payout[4])}</td><td className='center aligned'>$ {formatMoney(payout[5])}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>{pay_rate}</td><td className='center aligned'>${formatMoney(payout[7])}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[12]}</td><td className='center aligned'>{payout[13]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[17]}</td>
         </tr>
 
       )
@@ -736,7 +745,7 @@ class PayoutShow extends React.Component {
       <div class="sixteen wide column">
       <div className='ui center aligned grid'>
       <div class="sixteen wide column">
-      <h1 style={{fontSize:'3rem'}} className='ui huge header'>Commission Statement </h1>
+      <h1 style={{fontSize:'3rem'}} className='ui huge header'>Dashboard </h1>
       </div>
 
       </div>
@@ -877,8 +886,8 @@ class PayoutShow extends React.Component {
         </div>
         </div>
         <div class="sixteen wide column"></div>
-        <div className='ui container containermargin'>
-        <table className='ui celled unstackable table'>
+        <div style={{overflow:'auto', whitespace:'nowrap'}} className='ui container containermargin'>
+        <table  className='ui celled unstackable single line table'>
 
           <thead>
             <tr>
@@ -916,6 +925,9 @@ class PayoutShow extends React.Component {
                 <div class="ui input">
                   <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('attainment',e.target.value))} placeholder="Search..."/>
                 </div>
+              </td>
+              <td className='center aligned'>
+
               </td>
               <td className='center aligned'>
                 <div class="ui input">
@@ -969,13 +981,15 @@ class PayoutShow extends React.Component {
               </td>
             </tr>
             <tr>
-              <th className='center aligned'><strong>Payout ID</strong></th>
+
+              <th  className='center aligned'><strong>Payout ID</strong></th>
               <th className='center aligned'><strong>Transaction ID</strong></th>
               <th className='center aligned'><strong>Seller ID</strong></th>
               <th className='center aligned'><strong>Payee</strong></th>
               <th className='center aligned'><strong>Revenue</strong></th>
               <th className='center aligned'><strong>GP</strong></th>
               <th className='center aligned'><strong>Attainment</strong></th>
+              <th className='center aligned'><strong>Rate</strong></th>
               <th className='center aligned'><strong>Payout</strong></th>
               <th className='center aligned'><strong>Split Percent</strong></th>
               <th className='center aligned'><strong>Location</strong></th>
@@ -992,6 +1006,9 @@ class PayoutShow extends React.Component {
           {this.renderList()}
           </tbody>
         </table>
+        <div class="sixteen wide column">
+
+        </div>
         <div class="sixteen wide column">
 
         </div>
@@ -1084,7 +1101,7 @@ class PayoutShow extends React.Component {
       <div class="sixteen wide column">
       <div className='ui center aligned grid'>
       <div class="sixteen wide column">
-      <div style={{fontSize:'3rem'}} className='ui huge header'>Commission Statement </div>
+      <div style={{fontSize:'3rem'}} className='ui huge header'>Dashboard </div>
       </div>
 
       </div>
@@ -1226,8 +1243,8 @@ class PayoutShow extends React.Component {
         </div>
         </div>
         <div class="sixteen wide column"></div>
-        <div className='ui container containermargin'>
-        <table className='ui celled unstackable table'>
+        <div style={{overflow:'auto', whitespace:'nowrap'}} className='ui container containermargin'>
+        <table  className='ui celled unstackable single line table'>
 
           <thead>
             <tr>
@@ -1265,6 +1282,9 @@ class PayoutShow extends React.Component {
                 <div class="ui input">
                   <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('attainment',e.target.value))} placeholder="Search..."/>
                 </div>
+              </td>
+              <td className='center aligned'>
+
               </td>
               <td className='center aligned'>
                 <div class="ui input">
@@ -1325,6 +1345,7 @@ class PayoutShow extends React.Component {
               <th className='center aligned'><strong>Revenue</strong></th>
               <th className='center aligned'><strong>GP</strong></th>
               <th className='center aligned'><strong>Attainment</strong></th>
+              <th className='center aligned'><strong>Rate</strong></th>
               <th className='center aligned'><strong>Payout</strong></th>
               <th className='center aligned'><strong>Split Percent</strong></th>
               <th className='center aligned'><strong>Location</strong></th>
@@ -1341,6 +1362,9 @@ class PayoutShow extends React.Component {
           {this.renderList()}
           </tbody>
         </table>
+        <div class="sixteen wide column">
+
+        </div>
         <div class="sixteen wide column">
 
         </div>

@@ -1,10 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { createTrans, getTrans,getUsers ,getTime} from '../actions'
+import { createTrans, getTrans,getUsers ,getTime,checkCalcStatus } from '../actions'
 import moment from 'moment'
 import Login from './Accounts/Login'
 import { Field, reduxForm } from 'redux-form'
-
+import Loader from '../Loader'
 import TransForm from './TransForm'
 
 class TransCreate extends React.Component {
@@ -12,6 +12,7 @@ class TransCreate extends React.Component {
     this.props.getTrans()
     this.props.getUsers()
     this.props.getTime()
+    this.props.checkCalcStatus()
   }
 
   onSubmit = (formValues) => {
@@ -25,9 +26,18 @@ class TransCreate extends React.Component {
 
   render(){
     if(this.props.account['role'] == 'admin'){
-      return (
-        <div className='ui container containermargin'><TransForm title='Creating Transaction' onSubmit={this.onSubmit} month={this.props.month}  populateDropdown={this.populateDropdown()} date={moment().format('YYYY-MM-DD')}  /></div>
-      )
+      if(this.props.calc == 'Running'){
+        return(
+          <Loader filler="Calculations Running - Please check back later..."/>
+        )
+      }
+
+      else {
+        return (
+          <div className='ui container containermargin'><TransForm title='Creating Transaction' onSubmit={this.onSubmit} month={this.props.month}  populateDropdown={this.populateDropdown()} date={moment().format('YYYY-MM-DD')}  /></div>
+        )
+      }
+
     }
 
     else if(typeof(this.props.account['user_id']) == "number"){
@@ -46,9 +56,10 @@ const mapStateToProps = (state) => {
     trans: Object.values(state.trans.trans),
     users: Object.values(state.users.users),
     month: state.month.month,
+    calc: state.calc.calc,
     account: state.account.account
 
   }
 }
 
-export default connect(mapStateToProps, { getTrans, createTrans, getUsers,getTime })(TransCreate)
+export default connect(mapStateToProps, { getTrans, createTrans, getUsers,getTime,checkCalcStatus  })(TransCreate)

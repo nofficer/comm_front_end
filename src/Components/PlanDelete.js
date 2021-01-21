@@ -1,10 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getPlan ,deletePlan,getAttainmentRules,checkPlanUse,getTime} from '../actions'
+import { getPlan ,deletePlan,getAttainmentRules,checkPlanUse,getTime,checkCalcStatus } from '../actions'
 import { Link } from 'react-router-dom'
 import Modal from '../Modal'
 import history from '../history'
 import Login from './Accounts/Login'
+import Loader from '../Loader'
 
 class PlanDelete extends React.Component {
 
@@ -12,6 +13,7 @@ class PlanDelete extends React.Component {
     this.props.getPlan({"plan_id": this.props.match.params.plan_id})
     this.props.checkPlanUse({"plan_id": this.props.match.params.plan_id})
     this.props.getTime()
+    this.props.checkCalcStatus()
   }
 
   renderContent(){
@@ -55,12 +57,21 @@ class PlanDelete extends React.Component {
 
   render(){
     if(this.props.account['role'] == 'admin'){
-      return(<Modal
-        title="Delete Plan"
-        content={this.renderContent()}
-        actions={this.renderActions()}
-        onDismiss={() => history.push('/planShow')}
-      />)
+      if(this.props.calc == 'Running'){
+        return(
+          <Loader filler="Calculations Running - Please check back later..."/>
+        )
+      }
+
+      else {
+        return(<Modal
+          title="Delete Plan"
+          content={this.renderContent()}
+          actions={this.renderActions()}
+          onDismiss={() => history.push('/planShow')}
+        />)
+      }
+
     }
 
     else if(typeof(this.props.account['user_id']) == "number"){
@@ -82,8 +93,9 @@ const mapStateToProps = (state) => {
     plan: state.plans.plan,
     plans: state.plans.plans,
     check: state.check.check,
+    calc: state.calc.calc,
     account: state.account.account
   }
 }
 
-export default connect(mapStateToProps, { getPlan,deletePlan,getAttainmentRules,checkPlanUse ,getTime})(PlanDelete)
+export default connect(mapStateToProps, { getPlan,deletePlan,getAttainmentRules,checkPlanUse ,getTime,checkCalcStatus })(PlanDelete)

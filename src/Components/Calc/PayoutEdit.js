@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getPayout,getUsers,updatePayout} from '../../actions'
+import { getPayout,getUsers,updatePayout,checkCalcStatus} from '../../actions'
+import Loader from '../../Loader'
 
 import Login from '../Accounts/Login'
 
@@ -16,6 +17,7 @@ class PayoutEdit extends React.Component {
   componentDidMount(){
     this.props.getPayout({payout_id:this.props.match.params.payout_id})
     this.props.getUsers()
+    this.props.checkCalcStatus()
   }
 
   onSubmit = (formValues) => {
@@ -34,9 +36,17 @@ class PayoutEdit extends React.Component {
 
   render(){
     if(this.props.account['role'] == 'admin'){
-      return (
-        <div><PayoutForm onSubmit={this.onSubmit} initialValues={this.props.payout} populateDropdown={this.populateDropdown()} /></div>
-      )
+      if(this.props.calc == 'Running'){
+        return(
+          <Loader filler="Calculations Running - Please check back later..."/>
+        )
+      }
+      else {
+        return (
+          <div><PayoutForm onSubmit={this.onSubmit} initialValues={this.props.payout} populateDropdown={this.populateDropdown()} /></div>
+        )
+      }
+
     }
 
     else if(typeof(this.props.account['user_id']) == "number"){
@@ -55,8 +65,9 @@ const mapStateToProps = (state) => {
   return {
     payout:state.payouts.payout,
     users:state.users.users,
+    calc: state.calc.calc,
     account:state.account.account
   }
 }
 
-export default connect(mapStateToProps, {getPayout,getUsers,updatePayout})(PayoutEdit)
+export default connect(mapStateToProps, {getPayout,getUsers,updatePayout,checkCalcStatus})(PayoutEdit)
