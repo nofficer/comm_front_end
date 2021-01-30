@@ -17,7 +17,7 @@ import PlanEdit from './PlanEdit'
 import TransCreate from './TransCreate'
 import UserEdit from './UserEdit'
 import Header from './Header'
-import AECalc from './AECalc'
+
 import history from '../history'
 import Example from './myhook'
 import PlanDelete from './PlanDelete'

@@ -24,7 +24,7 @@ export const updateFYE = () => {
 }
 
 export const castUser = (user_id) => {
-  return({type:CAST_USER, payload: {user_id:parseInt(user_id),role:'admin',username:'admin'}})
+  return({type:CAST_USER, payload: {user_id:user_id.toLowerCase(),role:'admin',username:'admin'}})
 }
 
 export const getLiability = (liability_id) => {

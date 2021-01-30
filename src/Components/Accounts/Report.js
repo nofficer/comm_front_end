@@ -24,6 +24,7 @@ function s2ab(s){
   }
 
 var statement_details = []
+var goal_details = []
 
 
 function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
@@ -60,11 +61,16 @@ class PayoutShow extends React.Component {
       CreatedDate: new Date(2020,1,1)
     }
     wb.SheetNames.push('Statement')
+
+
+
+    statement_details.splice(1,0,...goal_details)
+
     var ws_data = statement_details
 
     var ws = XLSX.utils.aoa_to_sheet(ws_data)
 
-    ws['!merges'] = [ {s: {c: 0, r:0,font: {sz: 14, bold: true, color: '#FF00FF' } }, e: {c:3, r:0}},{s: {c: 0, r:4 }, e: {c:1, r:4}},{s: {c: 0, r:5 }, e: {c:1, r:5}},{s: {c: 0, r:6 }, e: {c:1, r:6}} ]
+    // ws['!merges'] = [ {s: {c: 0, r:0,font: {sz: 14, bold: true, color: '#FF00FF' } }, e: {c:3, r:0}},{s: {c: 0, r:3 }, e: {c:1, r:3}},{s: {c: 0, r:4 }, e: {c:1, r:4}},{s: {c: 0, r:5 }, e: {c:1, r:5}} ]
     var wscols = [
                     {wch:15},
                     {wch:12},
@@ -89,7 +95,7 @@ class PayoutShow extends React.Component {
 
 
     wb.Sheets['Statement'] = ws
-
+    goal_details = []
 
 
     var wbout = XLSX.write(wb,{bookType:'xlsx', type: 'binary'});
@@ -343,6 +349,8 @@ class PayoutShow extends React.Component {
 
           if(selected_year >= start_year && selected_year <= end_year ){
             if(selected_month>= start_month && selected_month <= end_month){
+
+              goal_details.push([goal[6],formatMoney(goal_amt),goal[3],goal[4],goal[8].toUpperCase()])
               return(
               <tr>
                 <td className='center aligned'>{goal[6]}</td><td className='center aligned'>{formatMoney(goal_amt)}</td><td className='center aligned'>{goal[3]}</td><td className='center aligned'>{goal[4]}</td><td className='center aligned'>{goal[8].toUpperCase()}</td>
@@ -356,6 +364,8 @@ class PayoutShow extends React.Component {
       else if(this.props.selected_month == 'all' && this.props.selected_year != 'all'){
 
         if(selected_year >= start_year && selected_year <= end_year ){
+
+          goal_details.push([goal[6],formatMoney(goal_amt),goal[3],goal[4],goal[8].toUpperCase()])
           return(
           <tr>
             <td className='center aligned'>{goal[6]}</td><td className='center aligned'>{formatMoney(goal_amt)}</td><td className='center aligned'>{goal[3]}</td><td className='center aligned'>{goal[4]}</td><td className='center aligned'>{goal[8].toUpperCase()}</td>
@@ -366,6 +376,8 @@ class PayoutShow extends React.Component {
       else if(this.props.selected_month != 'all' && this.props.selected_year == 'all'){
 
         if(selected_month>= start_month && selected_month <= end_month){
+
+          goal_details.push([goal[6],formatMoney(goal_amt),goal[3],goal[4],goal[8].toUpperCase()])
           return(
           <tr>
             <td className='center aligned'>{goal[6]}</td><td className='center aligned'>{formatMoney(goal_amt)}</td><td className='center aligned'>{goal[3]}</td><td className='center aligned'>{goal[4]}</td><td className='center aligned'>{goal[8].toUpperCase()}</td>
@@ -375,6 +387,8 @@ class PayoutShow extends React.Component {
       }
 
       else if(this.props.selected_month == 'all' && this.props.selected_year == 'all'){
+
+        goal_details.push([goal[6],formatMoney(goal_amt),goal[3],goal[4],goal[8].toUpperCase()])
 
         return(
         <tr>
@@ -399,8 +413,9 @@ class PayoutShow extends React.Component {
 
 
     this.props.payouts.map((payout)=>{
+
       var pay_type = payout[16]
-      var id = payout[2]
+      var id = payout[15]
       var rule = payout[14]
       var multiplier = 1
       var payout_date = new Date(payout[17])
@@ -421,6 +436,8 @@ class PayoutShow extends React.Component {
         multiplier = goal_amt
       }
 
+
+
       if(id==this.props.account['user_id']){
 
         if(rule==goal_rule){
@@ -436,7 +453,9 @@ class PayoutShow extends React.Component {
       }
     })
     var goal_remain= Math.max(0,(goal_amt-prod_total))
+
     var progressvar = prod_total/goal_amt
+
     return(
       <React.Fragment>
 
@@ -536,6 +555,7 @@ class PayoutShow extends React.Component {
   createNoGoalChart(){
     var checker = false
     var no_goal_prod_total = {}
+
     this.props.payouts.map((payout) => {
 
       if(payout[2] == this.props.account['user_id'] && (Number(payout[17].slice(5,7)) <= Number(this.props.selected_month) || this.props.selected_month.toLowerCase() == 'all') && (payout[17].slice(0,4) == this.props.selected_year.toString() || this.props.selected_year.toLowerCase() == 'all'  )  ) {
@@ -595,6 +615,7 @@ class PayoutShow extends React.Component {
       }
     })
     if(checker){
+
       return(
         this.createNoGoalChart()
       )
@@ -607,6 +628,8 @@ class PayoutShow extends React.Component {
   }
 
   renderGoals(){
+    goal_details = [[''],['Goals'],['Rule','Goal','Start Date','End Date', 'Timeframe']]
+
 
     return this.props.goals.map((goal) => {
       return this.createGoalItem(goal)
@@ -654,7 +677,7 @@ class PayoutShow extends React.Component {
       statement_line.push(line[i])
     }
 
-    statement_line.splice(1, 0, '');
+    // statement_line.splice(1, 0, '');
 
     statement_details.push(statement_line)
     if(Number(line[1]) < 1){
@@ -682,7 +705,7 @@ class PayoutShow extends React.Component {
 
   renderSummary(){
     var summaryArray = this.createSummaryItem()
-    statement_details = [[`${monthmap[this.props.selected_month]} Commission statement for ${this.props.account['username']}`],[],['Summary Performance'],[],['Attainment Rule','','Attainment','Payout']]
+    statement_details = [[`${monthmap[this.props.selected_month]} Commission statement for ${this.props.account['username']}`],[],['Summary Performance'],['Attainment Rule','Attainment','Payout']]
     return (summaryArray.map((line)=> {
       return this.createSummaryLine(line)
     }))
@@ -780,9 +803,12 @@ class PayoutShow extends React.Component {
                 <select className='ui dropdown' onChange={this.handleYearChange}>
                   <option value={this.props.selected_year}>{this.props.selected_year}</option>
                   <option value="all">All</option>
-                  <option value="2020">2020</option>
+
                   <option value="2021">2021</option>
                   <option value="2022">2022</option>
+                  <option value="2022">2023</option>
+                  <option value="2022">2024</option>
+                  <option value="2022">2025</option>
 
 
                 </select>
@@ -1039,9 +1065,11 @@ class PayoutShow extends React.Component {
                  <select className='ui dropdown' onChange={this.handleYearChange}>
                    <option value={this.props.selected_year}>{this.props.selected_year}</option>
                    <option value="all">All</option>
-                   <option value="2020">2020</option>
                    <option value="2021">2021</option>
                    <option value="2022">2022</option>
+                   <option value="2022">2023</option>
+                   <option value="2022">2024</option>
+                   <option value="2022">2025</option>
 
 
                  </select>

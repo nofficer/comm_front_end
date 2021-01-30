@@ -7,7 +7,7 @@ import Login from './Accounts/Login'
 import Modal from '../Modal'
 import XLSX from 'xlsx';
 import { saveAs } from 'file-saver'
-import Loader from '../Loader'
+import LoaderNoButton from '../LoaderNoButton'
 
 function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
   try {
@@ -194,7 +194,7 @@ class TransShow extends React.Component {
       return <Modal onDismiss={this.props.clearTransError} title='Error in Transaction Creation' content='A transaction with that ID already exists' actions='Ok'/>
     }
     else if(typeof(this.props.trans[0]) == 'undefined' && this.props.account['role'] == 'admin'){
-      return<div><Loader filler='Loading Transactions...'/></div>
+      return<div><LoaderNoButton filler='Loading Transactions...'/></div>
     }
 
     else{

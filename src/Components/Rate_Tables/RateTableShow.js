@@ -77,7 +77,7 @@ class RateTableShow extends React.Component {
 
           return (
             <tr>
-              <td className='center aligned'>{rateTable[0]}</td><td className='center aligned'>{rateTable[10]}</td><td className='center aligned'>{rateTable[2]}</td><td className='center aligned'>{rateTable[3]}</td><td className='center aligned'>{rateTable[4]}</td><td className='center aligned'>{formatMoney(rateTable[5])}</td><td className='center aligned'>{formatMoney(rateTable[6])}</td><td className='center aligned'>{rateTable[7]}</td><td className='center aligned'>{rateTable[8]}</td>
+              <td className='center aligned'>{rateTable[0]}</td><td className='center aligned'>{rateTable[10]}</td><td className='center aligned'>{rateTable[2]}</td><td className='center aligned'>{rateTable[3]}</td><td className='center aligned'>{rateTable[4]}</td><td className='center aligned'>{formatMoney(rateTable[5])}</td><td className='center aligned'>{formatMoney(rateTable[6])}</td><td className='center aligned'>{rateTable[7]}</td><td className='center aligned'>{rateTable[8].substring(0, rateTable[8].length - 3)}</td>
               <td className='center aligned'>
               <Link onClick={(e) => e.stopPropagation()} to={`/rateTableShow/edit/${rateTable[0]}`} className='ui small button primary'>
                 Edit

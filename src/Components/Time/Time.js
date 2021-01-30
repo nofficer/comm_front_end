@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getTime,updateTime,revertTime,getPayroll,selectMonth,getUsers,castUser,checkCalcStatus } from '../../actions'
+import { getTime,updateTime,revertTime,getPayroll,selectMonth,getUsers,castUser,checkCalcStatus,calcPlans,loadCalcs } from '../../actions'
 import history from '../../history'
 import Modal from '../../Modal'
 import Login from '../Accounts/Login'
@@ -28,6 +28,10 @@ class Time extends React.Component {
     this.props.getTime()
     this.props.getUsers()
     this.props.checkCalcStatus()
+  }
+  runCalc = () => {
+    this.props.loadCalcs()
+    this.props.calcPlans()
   }
 
 
@@ -83,6 +87,20 @@ class Time extends React.Component {
     history.push({pathname:'/areyousure',state:{change:'FYE'}})
   }
 
+
+  renderCalcButton(){
+
+      return(
+        <React.Fragment>
+        <div className='six wide column'></div>
+          <div className='four wide column'>
+            <div onClick={this.runCalc} className='ui fluid button positive'>Run Calculations <i class="calculator icon   "></i></div>
+          </div>
+        <div className='six wide column'></div>
+        </React.Fragment>
+      )
+
+  }
 
 
 
@@ -140,6 +158,7 @@ class Time extends React.Component {
             </div>
             </div>
             <div className='sixteen wide column bottom'></div>
+            {this.renderCalcButton()}
 
 
             <div className='six wide column'></div>
@@ -225,6 +244,7 @@ class Time extends React.Component {
             </div>
             </div>
             <div className='sixteen wide column bottom'></div>
+            {this.renderCalcButton()}
 
             <div className='six wide column'></div>
               <div className='four wide column'>
@@ -257,7 +277,7 @@ class Time extends React.Component {
             <div className='six wide column'></div>
             <div className='six wide column'></div>
               <div className='four wide column'>
-                <div onClick={this.exportPayroll} className='ui fluid button positive'>Export Payroll File for {months[this.props.selected_month]}</div>
+                <div onClick={this.exportPayroll} className='ui fluid button teal'>Export Payroll File for {months[this.props.selected_month]}</div>
               </div>
             <div className='six wide column'></div>
 
@@ -311,6 +331,7 @@ class Time extends React.Component {
             </div>
             </div>
             <div className='sixteen wide column bottom'></div>
+            {this.renderCalcButton()}
 
             <div className='six wide column'></div>
               <div className='four wide column'>
@@ -343,7 +364,7 @@ class Time extends React.Component {
             <div className='six wide column'></div>
             <div className='six wide column'></div>
               <div className='four wide column'>
-                <div onClick={this.exportPayroll} className='ui fluid button positive'>Export Payroll File for {months[this.props.selected_month]}</div>
+                <div onClick={this.exportPayroll} className='ui fluid button teal'>Export Payroll File for {months[this.props.selected_month]}</div>
               </div>
             <div className='six wide column'></div>
 
@@ -375,4 +396,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, {getTime,updateTime,revertTime,getPayroll,selectMonth,getUsers,castUser,checkCalcStatus })(Time)
+export default connect(mapStateToProps, {getTime,updateTime,revertTime,getPayroll,selectMonth,getUsers,castUser,checkCalcStatus,calcPlans,loadCalcs })(Time)

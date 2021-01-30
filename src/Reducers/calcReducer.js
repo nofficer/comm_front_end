@@ -5,7 +5,7 @@ import {
 } from '../actions/types'
 
 const INITIAL_STATE = {
-  calc : "Done"
+  calc : "Done",
 }
 
 export default (state=INITIAL_STATE, action) => {
