@@ -558,9 +558,11 @@ class PayoutShow extends React.Component {
 
     this.props.payouts.map((payout) => {
 
-      if(payout[2] == this.props.account['user_id'] && (Number(payout[17].slice(5,7)) <= Number(this.props.selected_month) || this.props.selected_month.toLowerCase() == 'all') && (payout[17].slice(0,4) == this.props.selected_year.toString() || this.props.selected_year.toLowerCase() == 'all'  )  ) {
+
+      if(payout[15] == this.props.account['user_id'] && (Number(payout[17].slice(5,7)) <= Number(this.props.selected_month) || this.props.selected_month.toLowerCase() == 'all') && (payout[17].slice(0,4) == this.props.selected_year.toString() || this.props.selected_year.toLowerCase() == 'all'  )  ) {
 
         if(typeof(no_goal_prod_total[monthmap[payout[13]]]) != 'undefined'){
+          console.log(payout)
 
           no_goal_prod_total[monthmap[payout[13]]]+=Number(payout[6])
         }
@@ -1164,9 +1166,11 @@ class PayoutShow extends React.Component {
                 <select className='ui dropdown' onChange={this.handleYearChange}>
                   <option value={this.props.selected_year}>{this.props.selected_year}</option>
                   <option value="all">All</option>
-                  <option value="2020">2020</option>
                   <option value="2021">2021</option>
                   <option value="2022">2022</option>
+                  <option value="2022">2023</option>
+                  <option value="2022">2024</option>
+                  <option value="2022">2025</option>
 
 
                 </select>

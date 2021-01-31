@@ -358,10 +358,10 @@ export const getPayout = (payout_id) => {
 }
 
 
-export const calcPlans = () => {
+export const calcPlans = (planList) => {
 
   return async (dispatch) => {
-    const response = await db.get('/calc_plans')
+    const response = await db.post('/calc_plans',planList)
     dispatch({type:CALC_PLANS, payload: response.data})
   }
 }

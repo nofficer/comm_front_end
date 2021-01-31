@@ -114,7 +114,8 @@ class PayoutShow extends React.Component {
     this.props.calcPlans()
   }
   renderContent(){
-
+    // RUN CALCS BUTTON
+      // <div className='ui fluid button positive icon' onClick={this.runCalc}> Run Calcs  <i class="calculator icon   "></i></div>
 
 
     return (
@@ -135,7 +136,7 @@ class PayoutShow extends React.Component {
     <div className='sixteen wide column'></div>
     <div className='six wide column'></div>
     <div className='four wide column'>
-      <div className='ui fluid button positive icon' onClick={this.runCalc}> Run Calcs  <i class="calculator icon   "></i></div>
+
     </div>
     <div className='six wide column'></div>
 

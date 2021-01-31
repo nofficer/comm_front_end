@@ -94,7 +94,7 @@ class Time extends React.Component {
         <React.Fragment>
         <div className='six wide column'></div>
           <div className='four wide column'>
-            <div onClick={this.runCalc} className='ui fluid button positive'>Run Calculations <i class="calculator icon   "></i></div>
+            <div onClick={(e) => e.stopPropagation(history.push('/runCalcs'))}s className='ui fluid button positive'>Run Calculations <i class="calculator icon   "></i></div>
           </div>
         <div className='six wide column'></div>
         </React.Fragment>

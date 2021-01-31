@@ -35,6 +35,7 @@ import PayoutShow from './Calc/PayoutShow'
 import PayoutEdit from './Calc/PayoutEdit'
 import Time from './Time/Time'
 import PayoutHistoryShow from './Calc/PayoutHistoryShow'
+import RunCalcs from './Calc/RunCalcs'
 import AreYouSure from './Time/AreYouSure'
 
 import GoalShow from './Goals/GoalShow'
@@ -90,6 +91,7 @@ const App = () => {
             <Route path='/planShow/delete/:plan_id' exact component ={PlanDelete}/>
             <Route path='/attainRuleShow/delete/:rule_id' exact component ={AttainRuleDelete}/>
             <Route path='/transShow/delete/:trans_id' exact component = {TransDelete}/>
+            <Route path='/runCalcs' exact component = {RunCalcs}/>
             <Route path='/payoutShow' exact component = {PayoutShow}/>
             <Route path='/payoutShow/edit/:payout_id' exact component = {PayoutEdit}/>
             <Route path='/payoutHistoryShow' exact component = {PayoutHistoryShow}/>
