@@ -22,7 +22,7 @@ class Header extends React.Component {
       if(this.props.account['role'] == "admin"){return (
 
 
-      <div className='ui eight item menu'>
+      <div className='ui nine item menu'>
       <div onClick={(e) => e.stopPropagation(history.push({pathname:'/',state:{detail:this.props.month}}))} class="ui simple dropdown item">
 
 
@@ -62,10 +62,10 @@ class Header extends React.Component {
       </div>
 
     </div>
-    <div onClick={(e) => e.stopPropagation(history.push('/payoutShow'))} class="ui simple dropdown item">
+    <div onClick={(e) => e.stopPropagation(history.push('/runCalcs'))} class="ui simple dropdown item">
 
 
-    <Link to='/payoutShow'>
+    <Link to='/runCalcs'>
         Calcs
     </Link>
 
@@ -98,6 +98,46 @@ class Header extends React.Component {
     </div>
 
   </div>
+  <div onClick={(e) => e.stopPropagation(history.push({pathname:'/roleHierarchyShow',state:{detail:this.props.month}}))} class="ui simple dropdown item">
+
+
+  <Link to='/'>
+      Role Hierarchy
+  </Link>
+
+
+
+    <div class=" ui vertical menu ">
+    <div onClick={(e) => e.stopPropagation(history.push('/import'))} className=''>
+      <a className="blue active item"><Link to='/import'>
+          Import Role Hierarchy
+      </Link></a>
+
+    </div>
+
+
+        <div onClick={(e) => e.stopPropagation(history.push('/roleHierarchyShow'))} className=''>
+          <a className="blue active item"><Link to='/roleHierarchyShow'>
+              Role Hierarchy
+          </Link></a>
+
+        </div>
+        <div onClick={(e) => e.stopPropagation(history.push({pathname:'/roleHierarchyCreate',state:{detail:this.props.month}}))} className=''>
+          <a className="blue active item"><Link to='/roleHierarchyCreate'>
+              Create Role Hierarchy
+          </Link></a>
+
+        </div>
+
+
+
+
+
+
+  </div>
+
+</div>
+
           <div onClick={(e) => e.stopPropagation(history.push('/rateTableShow'))} class="ui simple dropdown item">
 
 

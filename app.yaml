@@ -1,10 +1,16 @@
 env: standard
 runtime: nodejs10
-service: default
+service: fe
+
+vpc_access_connector:
+  name: projects/easycomp-298200/locations/us-central1/connectors/feconn
+
+
 
 handlers:
   - url: /static
     static_dir: build/static
+
 
   - url: /(.*\.(json|ico|js))$
     static_files: build/\1
@@ -19,3 +25,4 @@ handlers:
   - url: /static/css/(.*)
     static_files: build/static/css/\1
     upload: build/static/css/(.*)
+

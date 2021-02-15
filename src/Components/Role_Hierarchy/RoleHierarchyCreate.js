@@ -1,26 +1,23 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { createRateTable,getTime,getAttainmentRules,checkCalcStatus  } from '../../actions'
+import { createRoleHierarchy,getTime,checkCalcStatus  } from '../../actions'
 import Login from '../Accounts/Login'
 import { Field, reduxForm } from 'redux-form'
 
 import Loader from '../../Loader'
-import RateTableForm from './RateTableForm'
+import RoleForm from './RoleForm'
 
-class RateTableCreate extends React.Component {
+class RoleHierarchyCreate extends React.Component {
   componentDidMount(){
-    this.props.getAttainmentRules()
     this.props.getTime()
     this.props.checkCalcStatus()
   }
 
   onSubmit = (formValues) => {
-    this.props.createRateTable(formValues)
+    this.props.createRoleHierarchy(formValues)
   }
 
-  populateDropdown(){
-    return this.props.attainmentRules
-  }
+
 
 
 
@@ -35,7 +32,7 @@ class RateTableCreate extends React.Component {
 
       else {
         return (
-          <div className='ui container containermargin'><RateTableForm title='Creating Rate' onSubmit={this.onSubmit} populateDropdown={this.populateDropdown()} /></div>
+          <div className='ui container containermargin'><RoleForm title='Creating Role Hierarchy Item' onSubmit={this.onSubmit} /></div>
         )
       }
 
@@ -54,12 +51,11 @@ class RateTableCreate extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    plans: Object.values(state.plans.plans),
-    rateTables: Object.values(state.rateTables.rateTables),
+    roles: Object.values(state.roles.roles),
     account: state.account.account,
-    calc: state.calc.calc,
-    attainmentRules: state.attainmentRules.attainmentRules
+    calc: state.calc.calc
+
   }
 }
 
-export default connect(mapStateToProps, { createRateTable,getTime,getAttainmentRules,checkCalcStatus  })(RateTableCreate)
+export default connect(mapStateToProps, { createRoleHierarchy,getTime,checkCalcStatus  })(RoleHierarchyCreate)

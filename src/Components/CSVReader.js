@@ -26,7 +26,7 @@ class CSVReaderV extends Component {
 
   handleOnFileLoad = (data) => {
     console.log('---------------------------')
-    console.log(data)
+
     console.log('---------------------------')
   }
 
@@ -36,7 +36,7 @@ class CSVReaderV extends Component {
 
   handleOnRemoveFile = (data) => {
     console.log('---------------------------')
-    console.log(data)
+
     console.log('---------------------------')
 
   }
@@ -57,6 +57,7 @@ class CSVReaderV extends Component {
 
                   }
                   else{
+                    console.log(i + ' is not numeric')
                     numchecker = false
                     wrongnumindex.push(i)
                   }
@@ -72,7 +73,7 @@ class CSVReaderV extends Component {
                   }
 
                   else{
-
+                    console.log(p + ' is not date')
                     datechecker=false
                     wrongdateindex.push(p)
                   }
@@ -210,7 +211,7 @@ class CSVReaderV extends Component {
 
       var i;
       for (i=0;i < this.my_data.length; i++){
-        if(this.isNumeric(this.my_data[i]["user_id"]) && this.isNumeric(this.my_data[i]["goal"]) && this.isNumeric(this.my_data[i]["attainment_rule_id"])){
+        if(this.isNumeric(this.my_data[i]["goal"]) && this.isNumeric(this.my_data[i]["attainment_rule_id"])){
 
         }
         else{
@@ -242,8 +243,40 @@ class CSVReaderV extends Component {
     else if(importType =='Accounts'){
       this.my_data.push({dupType:dupType})
       this.my_data.push({table: "accounts"})
-      this.props.uploadFile(this.my_data,'user')
+      this.props.uploadFile(this.my_data,'user') //Second paramter tells action where to navigate to after import
       this.props.loading()
+    }
+
+    else if(importType =='Role_Hierarchies'){
+
+      var numchecker = true
+
+      var wrongnumindex = []
+
+
+      var i;
+      for (i=0;i < this.my_data.length; i++){
+        if(this.isNumeric(this.my_data[i]["level"]) ){
+
+        }
+        else{
+          numchecker = false
+          wrongnumindex.push(i)
+        }
+
+      }
+      if(numchecker){
+        this.my_data.push({dupType:dupType})
+        this.my_data.push({table: "role_hierarchy"})
+        this.props.uploadFile(this.my_data,'roleHierarchy')
+        this.props.loading()
+      }
+
+      else {
+        history.push({pathname:'/ImportError',state:{detail:`Wrong number format  ${wrongnumindex}`}})
+      }
+
+
     }
 
 
@@ -295,8 +328,10 @@ isWithinPeriod(dateString)
     }
 
     // Check the range of the day
-
-    return (parseInt(month) >= parseInt(this.props.month['current.month_id']));
+    if(year>this.props.month['cal_year']){
+      return true
+    }
+    return (parseInt(month) >= parseInt(this.props.month['current.month_id']) );
 };
 
 
@@ -461,6 +496,7 @@ isValidDate(dateString)
             <option value="Users">Users</option>
             <option value="Goals">Goals</option>
             <option value="Accounts">Accounts</option>
+            <option value="Role_Hierarchies">Role Hierarchy</option>
           </select>
           <select class="ui dropdown" onChange={this.handleDuplicate}>
             <option value="ignore">On duplicate...</option>

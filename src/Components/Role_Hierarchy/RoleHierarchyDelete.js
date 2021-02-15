@@ -1,36 +1,36 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getRateTable ,deleteRateTable,getRateTables,getTime,checkCalcStatus } from '../../actions'
+import { getRoleHierarchy ,deleteRoleHierarchy,getTime,checkCalcStatus } from '../../actions'
 import { Link } from 'react-router-dom'
 import Modal from '../../Modal'
 import history from '../../history'
 import Login from '../Accounts/Login'
 import Loader from '../../Loader'
 
-class RateTableDelete extends React.Component {
+class RoleHierarchyDelete extends React.Component {
 
   componentDidMount(){
     this.props.getTime()
-    this.props.getRateTable({"rate_id": this.props.match.params.rate_id})
+    this.props.getRoleHierarchy({"user_id": this.props.match.params.user_id})
     this.props.checkCalcStatus()
   }
 
   renderContent(){
 
-      return 'Are you sure you wish to delete this rate?'
+      return 'Are you sure you wish to delete this role hierarchy?'
 
   }
 
   renderActions(){
-    console.log(this.props.rateTable)
+
       return (
 
         <React.Fragment>
                   <button
-                  onClick={() => this.props.deleteRateTable({"rate_id": this.props.rateTable.rate_id})}
+                  onClick={() => this.props.deleteRoleHierarchy({"user_id": this.props.role.user_id})}
                   className='ui button negative'>Delete
                   </button>
-                  <Link className='ui button' to='/RateTableShow'>Cancel</Link>
+                  <Link className='ui button' to='/roleHierarchyShow'>Cancel</Link>
         </React.Fragment>
       )
 
@@ -50,10 +50,10 @@ class RateTableDelete extends React.Component {
 
       else {
         return(<Modal
-          title="Delete RateTable"
+          title="Delete Role Hierarchy Item"
           content={this.renderContent()}
           actions={this.renderActions()}
-          onDismiss={() => history.push('/RateTableShow')}
+          onDismiss={() => history.push('/roleHierarchyShow')}
         />)
       }
 
@@ -74,11 +74,11 @@ class RateTableDelete extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    rateTables: state.rateTables.rateTables,
-    rateTable: state.rateTables.rateTable,
+    roles: state.roles.roles,
+    role: state.roles.role,
     calc: state.calc.calc,
     account: state.account.account
   }
 }
 
-export default connect(mapStateToProps, { getRateTable,deleteRateTable,getRateTables,getTime,checkCalcStatus })(RateTableDelete)
+export default connect(mapStateToProps, { getRoleHierarchy,deleteRoleHierarchy,getTime,checkCalcStatus })(RoleHierarchyDelete)

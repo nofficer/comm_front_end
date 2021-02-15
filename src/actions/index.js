@@ -1,9 +1,108 @@
 import { GET_PLANS, GET_USERS,  GET_USER, CREATE_USER, EDIT_USER, CREATE_CALC, CHANGE_DONE, GO_PUSH, CREATE_PLAN, EDIT_PLAN, GET_ATTAINMENT_RULES, CREATE_ATTAINMENT_RULE, EDIT_ATTAINMENT_RULE, GET_TRANS, CREATE_TRANS, EDIT_TRANS, GET_TRAN, DELETE_TRANS, DELETE_ATTAINMENT_RULE,DELETE_PLAN,DELETE_USER,GET_ATTAINMENT_RULE,GET_PLAN,UPLOAD_FILE,ONCHANGE_FILE,CHECK_RULE_USE,CHECK_PLAN_USE,CHECK_USER_USE,GET_RATE_TABLE,GET_RATE_TABLES,CREATE_RATE_TABLE,EDIT_RATE_TABLE,DELETE_RATE_TABLE,ERROR_HANDLE,CALC_PLANS,GET_PAYOUTS,EDIT_PAYOUT,GET_PAYOUT,DELETE_PAYOUT,LOAD,GET_TIME,UPDATE_TIME,REVERT_TIME,LOGIN,SET_ACCOUNT,LOGOUT,GET_PAYOUTS_USER,GET_GOAL,GET_GOALS,CREATE_GOAL,EDIT_GOAL,DELETE_GOAL,CLEAR,SELECT_MONTH,UPDATE_ACCOUNT,GET_PAYROLL,SET_FILTER,GET_FILTER,CLEAR_FILTER,LOADING,
-GET_ROLE_HIERARCHY,CREATE_ROLE_HIERARCHY,EDIT_ROLE_HIERARCHY,DELETE_ROLE_HIERARCHY,GET_ROLE_HIERARCHIES,
-GET_LIABILITY,GET_LIABILITIES,EDIT_LIABILITY,DELETE_LIABILITY,CAST_USER,UPDATE_FYE,SELECT_YEAR,CLEAR_TRANS,CALC_STATUS,
+
+GET_LIABILITY,GET_LIABILITIES,EDIT_LIABILITY,DELETE_LIABILITY,CAST_USER,UPDATE_FYE,SELECT_YEAR,CLEAR_TRANS,CALC_STATUS,GET_YEARS,GET_SUMMARY_DATA,GET_PLAN_SUMMARY,GET_TOP_EARNERS,GET_ROLE_HIERARCHY,CREATE_ROLE_HIERARCHY,EDIT_ROLE_HIERARCHY,DELETE_ROLE_HIERARCHY,GET_ROLE_HIERARCHIES,GET_USERS_JOINED,GET_AUTO_TRANS,
 CHECK_USER } from './types'
 import db from '../apis/db'
 import history from '../history'
+
+
+export const getAutoTrans = () => {
+  return async (dispatch) => {
+    const response = await db.get('/QB_Oauth')
+    dispatch({type:GET_AUTO_TRANS, payload: response.data})
+    window.open(response.data)
+  }
+}
+
+export const getUsersJoined = () => {
+  return async (dispatch) => {
+    const response = await db.get('/getUsersJoined')
+    dispatch({type:GET_USERS_JOINED, payload: response.data})
+  }
+}
+
+
+
+export const deleteRoleHierarchy = (user_id) => {
+
+  return async (dispatch) => {
+    const response = await db.post('/deleteRoleHierarchy', user_id)
+    dispatch({type:DELETE_ROLE_HIERARCHY, payload: response.data})
+    history.push('/RoleHierarchyShow')
+  }
+}
+
+export const editRoleHierarchy = (formValues,user_id) => {
+  return async (dispatch) => {
+    const response = await db.post('/updateRoleHierarchy' , formValues,user_id)
+    dispatch({type:EDIT_ROLE_HIERARCHY, payload: response.data})
+    history.push('/RoleHierarchyShow')
+  }
+}
+export const createRoleHierarchy = (formValues) => {
+  return async (dispatch) => {
+
+    const response = await db.post('/insertRoleHierarchy' , formValues)
+    dispatch({type:CREATE_ROLE_HIERARCHY, payload: response.data})
+    history.push('/RoleHierarchyShow')
+  }
+}
+export const getRoleHierarchy = (user_id) => {
+  return async (dispatch) => {
+    const response = await db.post('/getRoleHierarchy' , user_id)
+    dispatch({type:GET_ROLE_HIERARCHY, payload: response.data})
+  }
+}
+
+export const getRoleHierarchies = () => {
+  return async (dispatch) => {
+    const response = await db.get('/getRoleHierarchies')
+    dispatch({type:GET_ROLE_HIERARCHIES, payload: response.data})
+  }
+}
+
+
+
+
+
+
+export const getTopEarners = (requested_year) => {
+
+  return async (dispatch) => {
+    const response = await db.post('/getTopEarners',requested_year)
+    dispatch({type:GET_TOP_EARNERS, payload: response.data})
+
+  }
+}
+
+
+
+export const getPlanSummary = (requested_year) => {
+
+  return async (dispatch) => {
+    const response = await db.post('/getPlanSummary',requested_year)
+    dispatch({type:GET_PLAN_SUMMARY, payload: response.data})
+
+  }
+}
+
+
+export const getSummaryData = (requested_year) => {
+
+  return async (dispatch) => {
+    const response = await db.post('/getSummaryData',requested_year)
+    dispatch({type:GET_SUMMARY_DATA, payload: response.data})
+
+  }
+}
+
+export const getYears = () => {
+  return async (dispatch) => {
+    const response = await db.get('/getYears')
+    dispatch({type:GET_YEARS, payload: response.data})
+
+  }
+}
 
 
 export const checkCalcStatus = () => {
@@ -23,8 +122,9 @@ export const updateFYE = () => {
 }
 }
 
-export const castUser = (user_id) => {
-  return({type:CAST_USER, payload: {user_id:user_id.toLowerCase(),role:'admin',username:'admin'}})
+export const castUser = (user_id,role,username,casted_user_id) => {
+  console.log(username)
+  return({type:CAST_USER, payload: {user_id:user_id.toLowerCase(),role:role,username:username,casted_user_id:casted_user_id}})
 }
 
 export const getLiability = (liability_id) => {
@@ -58,45 +158,6 @@ export const deleteLiability = (liability_id) => {
   }
 }
 
-export const getRoleHierarchy = (user_id) => {
-  return async (dispatch) => {
-    const response = await db.post('/getRoleHierarchy', user_id)
-    dispatch({type:GET_ROLE_HIERARCHY, payload: response.data})
-
-  }
-}
-
-export const getRoleHierarchies = () => {
-  return async (dispatch) => {
-    const response = await db.get('/getRoleHierarchies')
-    dispatch({type:GET_ROLE_HIERARCHIES, payload: response.data})
-
-  }
-}
-
-export const deleteRoleHierarchy = (user_id) => {
-  return async (dispatch) => {
-    const response = await db.post('/deleteRoleHierarchy', user_id)
-    dispatch({type:DELETE_ROLE_HIERARCHY, payload: response.data})
-
-  }
-}
-
-export const editRoleHierarchy = (formValues) => {
-  return async (dispatch) => {
-    const response = await db.post('/editRoleHierarchy', formValues)
-    dispatch({type:EDIT_ROLE_HIERARCHY, payload: response.data})
-
-  }
-}
-
-export const insertRoleHierarchy = (formValues) => {
-  return async (dispatch) => {
-    const response = await db.post('/insertRoleHierarchy', formValues)
-    dispatch({type:CREATE_ROLE_HIERARCHY, payload: response.data})
-
-  }
-}
 
 
 export const clearFilter = () => {
@@ -295,12 +356,12 @@ export const getTime = () => {
   }
 }
 
-export const getPayoutsHistory = () => {
+export const getPayoutsHistory = (selection) => {
 
   return async (dispatch) => {
-    const response = await db.get('/getPayoutsHistory')
+    const response = await db.post('/getPayoutsHistory',selection)
     dispatch({type:GET_PAYOUTS, payload: response.data})
-
+    console.log('history has ran')
   }
 }
 
@@ -322,7 +383,7 @@ export const getPayouts = () => {
   return async (dispatch) => {
     const response = await db.get('/getPayouts')
     dispatch({type:GET_PAYOUTS, payload: response.data})
-
+    console.log('action has ran')
   }
 }
 
@@ -334,6 +395,8 @@ export const getPayouts_user = (userMonth) => {
 
   }
 }
+
+
 
 export const updatePayout = (formValues) => {
   return async (dispatch) => {
@@ -367,7 +430,7 @@ export const calcPlans = (planList) => {
 }
 
 export const deleteRateTable = (rate_id) => {
-  console.log(rate_id)
+
   return async (dispatch) => {
     const response = await db.post('/deleteRateTable', rate_id)
     dispatch({type:DELETE_RATE_TABLE, payload: response.data})
@@ -384,7 +447,7 @@ export const editRateTable = (formValues,rate_id) => {
 }
 export const createRateTable = (formValues) => {
   return async (dispatch) => {
-    console.log(formValues)
+
     const response = await db.post('/insertRateTable' , formValues)
     dispatch({type:CREATE_RATE_TABLE, payload: response.data})
     history.push('/RateTableShow')

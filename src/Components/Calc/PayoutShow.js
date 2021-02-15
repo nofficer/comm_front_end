@@ -26,13 +26,7 @@ function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
 class PayoutShow extends React.Component {
 
 
-  componentWillReceiveProps(nextProps) {
-  const newValue =  nextProps.calculatedValue;
 
-  if (newValue !== this.props.calculatedValue && newValue  === 'something') {
-    this.props.actionB();
-  }
-}
 
   componentDidMount(){
     this.props.clearFilter()
@@ -98,7 +92,19 @@ class PayoutShow extends React.Component {
     )}
   }
 
+  renderCalcButton(){
 
+      return(
+        <React.Fragment>
+        <div className='six wide column'></div>
+          <div className='four wide column'>
+            <div onClick={(e) => e.stopPropagation(history.push('/runCalcs'))}s className='ui fluid button positive'>Run Calculations <i class="calculator icon   "></i></div>
+          </div>
+        <div className='six wide column'></div>
+        </React.Fragment>
+      )
+
+  }
 
 
 
@@ -109,10 +115,7 @@ class PayoutShow extends React.Component {
     })
 
   }
-  runCalc = () => {
-    this.props.loadCalcs()
-    this.props.calcPlans()
-  }
+
   renderContent(){
     // RUN CALCS BUTTON
       // <div className='ui fluid button positive icon' onClick={this.runCalc}> Run Calcs  <i class="calculator icon   "></i></div>
@@ -133,7 +136,9 @@ class PayoutShow extends React.Component {
       </div>
       </div>
     <div className='one wide column'></div>
+
     <div className='sixteen wide column'></div>
+    {this.renderCalcButton()}
     <div className='six wide column'></div>
     <div className='four wide column'>
 
@@ -237,7 +242,9 @@ class PayoutShow extends React.Component {
             <th className='center aligned'><strong>Options</strong></th>
           </tr>
         </thead>
+        <tbody>
         {this.renderList()}
+        </tbody>
       </table>
       </div>
 
@@ -255,11 +262,7 @@ class PayoutShow extends React.Component {
           <Loader filler="Calculations Running - Please check back later..."/>
         )
     }
-    else if(this.props.errors == "goal") {
-      console.log("happening")
-      return<Modal  onDismiss={() => this.props.clearError()} title="Calculation Error" content="Please ensure all users on a plan with goal_use set to 'Yes' have a goal for the corresponding attainment rule and period"/>
 
-    }
     else {
       return (<div>
         {this.renderContent()}

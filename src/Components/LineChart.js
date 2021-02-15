@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {Bar,Pie,Doughnut,Chart,HorizontalBar} from 'react-chartjs-2';
+import {Line,Chart} from 'react-chartjs-2';
 
 
 Chart.scaleService.updateScaleDefaults('linear', {
@@ -10,7 +10,7 @@ Chart.scaleService.updateScaleDefaults('linear', {
 });
 
 
-class BarChart extends React.Component {
+class LineChart extends React.Component {
 
 componentDidMount() {
 
@@ -22,25 +22,48 @@ componentDidMount() {
       <div>
 
 
-        <Bar
-          data={feed}
+        <Line
+          data={{
+    labels: this.props.labels,
+    datasets: [
+      {
+        label: 'Gross Profit',
+        fill:true,
 
-          height={350}
+
+        borderColor:'#00FF00',
+        backgroundColor: 'rgb(0, 255, 0,0.1)',
+
+
+
+        data: this.props.profits
+      },
+      {
+        label: 'Payout',
+        fill:true,
+        backgroundColor: 'rgb(255, 0, 0,0.1)',
+
+
+
+        borderColor:'#FF0000',
+        data: this.props.payouts
+      }
+    ]
+  }}
+  height={'150vh'}
+
           options={{
-            hover: {
-              mode: 'new mode'
-            },
             title:{
               display:true,
-              text:this.props.title,
+              text:this.props.title[0],
               fontSize:20,
               fontColor: '#000000', // Default is #000000
               fontStyle: 'bold',
               fontFamily: 'Roboto',
-              position:'bottom'
+              position:'top'
             },
             legend:{
-              display:false,
+              display:true,
               position:'bottom'
             },
             elements: {
@@ -64,9 +87,12 @@ componentDidMount() {
 
           }}
         />
+
+
+
       </div>
     );
   }
 }
 
-export default BarChart
+export default LineChart

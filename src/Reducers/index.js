@@ -14,6 +14,8 @@ import accountReducer from './accountReducer'
 import goalReducer from './goalReducer'
 import errorReducer from './errorReducer'
 import filterReducer from './filterReducer'
+import roleReducer from './roleReducer'
+
 
 export default combineReducers ({
   form: formReducer,
@@ -30,5 +32,6 @@ export default combineReducers ({
   account: accountReducer,
   goals: goalReducer,
   errors: errorReducer,
-  filter:filterReducer
+  filter:filterReducer,
+  roles: roleReducer
 })

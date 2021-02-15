@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getPayoutsHistory,calcPlans,loadCalcs,setFilter,clearFilter } from '../../actions'
+import { getPayoutsHistory,calcPlans,loadCalcs,setFilter,clearFilter,getYears } from '../../actions'
 import { Link } from 'react-router-dom'
 import Loader from '../../Loader'
 import Login from '../Accounts/Login'
@@ -59,18 +59,30 @@ class PayoutShow extends React.Component {
   }
 
 
-  componentWillReceiveProps(nextProps) {
-  const newValue =  nextProps.calculatedValue;
 
-  if (newValue !== this.props.calculatedValue && newValue  === 'something') {
-    this.props.actionB();
-  }
-}
 
   componentDidMount(){
     this.props.clearFilter()
-    this.props.getPayoutsHistory()
+    this.props.getYears()
+    this.props.getPayoutsHistory({'selected_year':this.props.month['cal_year']})
 
+  }
+
+
+  handleYearChange(){
+
+  }
+
+  createYearOption(year){
+    return (
+      <option value={year}>{year}</option>
+    )
+  }
+
+  renderYearOptions(){
+    return this.props.years.map((year) => {
+      return this.createYearOption(year)
+    })
   }
 
   filterMap = {
@@ -151,15 +163,31 @@ class PayoutShow extends React.Component {
     return (
 
       <div className='ui  grid'>
-    <div className='sixteen wide column'></div>
+    <div className='sixteen wide column'>
+       <select style={{'marginLeft':'2em'}} className='ui dropdown' onChange={(e) => e.stopPropagation(this.props.getPayoutsHistory({'selected_year':e.target.value}))}>
+        <option value={this.props.month['cal_year']}>{this.props.month['cal_year']}</option>
+        <option value="all">All</option>
+
+        {this.renderYearOptions()}
+
+
+      </select>
+    </div>
     <div className='one wide column'></div>
     <div className='fourteen wide column'>
       <div className='ui center aligned grid'>
-        <h1 className=''>Payouts</h1>
+        <h1 className=''>All Payouts</h1>
+
         </div>
       </div>
     <div className='one wide column'></div>
-    <div className='sixteen wide column'></div>
+    <div className='sixteen wide column'>
+
+
+
+
+
+    </div>
         <div className='six wide column'></div>
         <div class="four wide column"><button className='rightitem fluid ui button positive' onClick={this.generateStatement}>Export Payouts </button></div>
         <div className='six wide column'></div>
@@ -276,9 +304,11 @@ class PayoutShow extends React.Component {
         )
     }
 
-    else if(typeof(this.props.payouts[0]) == 'undefined' ){
-      return<div><Loader filler='Loading Payouts...'/></div>
-    }
+
+
+    // else if(typeof(this.props.payouts[0]) == 'undefined' ){
+    //   return<div><Loader filler='Loading Payouts...'/></div>
+    // }
     else {
       return (<div>
         {this.renderContent()}
@@ -301,8 +331,10 @@ const mapStateToProps = (state) => {
     payouts: Object.values(state.payouts.payouts),
     calcs: state.payouts.calcs,
     account: state.account.account,
-    filter: state.filter.filter
+    filter: state.filter.filter,
+    month:state.month.month,
+    years:state.month.years
   }
 }
 
-export default connect(mapStateToProps, { getPayoutsHistory,calcPlans,loadCalcs,setFilter,clearFilter })(PayoutShow)
+export default connect(mapStateToProps, { getPayoutsHistory,calcPlans,loadCalcs,setFilter,clearFilter,getYears })(PayoutShow)

@@ -1,21 +1,27 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { createRateTable,getTime,getAttainmentRules,checkCalcStatus  } from '../../actions'
+import {  getRoleHierarchy,editRoleHierarchy,getTime,checkCalcStatus  } from '../../actions'
 import Login from '../Accounts/Login'
-import { Field, reduxForm } from 'redux-form'
 
 import Loader from '../../Loader'
-import RateTableForm from './RateTableForm'
 
-class RateTableCreate extends React.Component {
+
+
+import { Field, reduxForm } from 'redux-form'
+
+import RoleForm from './RoleForm'
+
+class RoleHierarchyEdit extends React.Component {
   componentDidMount(){
-    this.props.getAttainmentRules()
+    this.props.getRoleHierarchy({"user_id": this.props.match.params.user_id})
+
     this.props.getTime()
+
     this.props.checkCalcStatus()
   }
 
   onSubmit = (formValues) => {
-    this.props.createRateTable(formValues)
+    this.props.editRoleHierarchy(formValues,{"user_id": this.props.match.params.user_id})
   }
 
   populateDropdown(){
@@ -26,6 +32,7 @@ class RateTableCreate extends React.Component {
 
 
   render(){
+
     if(this.props.account['role'] == 'admin'){
       if(this.props.calc == 'Running'){
         return(
@@ -35,10 +42,9 @@ class RateTableCreate extends React.Component {
 
       else {
         return (
-          <div className='ui container containermargin'><RateTableForm title='Creating Rate' onSubmit={this.onSubmit} populateDropdown={this.populateDropdown()} /></div>
+          <div className='ui container containermargin'><RoleForm title= {`Editing User: ${this.props.match.params.user_id}`} onSubmit={this.onSubmit} editing="yes" initialValues={this.props.role} populateDropdown={this.populateDropdown()} /></div>
         )
       }
-
 
     }
 
@@ -49,17 +55,17 @@ class RateTableCreate extends React.Component {
       return <Login/>
     }
 
+
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    plans: Object.values(state.plans.plans),
-    rateTables: Object.values(state.rateTables.rateTables),
+    roles: state.roles.roles,
+    role: state.roles.role,
     account: state.account.account,
-    calc: state.calc.calc,
-    attainmentRules: state.attainmentRules.attainmentRules
+    calc: state.calc.calc
   }
 }
 
-export default connect(mapStateToProps, { createRateTable,getTime,getAttainmentRules,checkCalcStatus  })(RateTableCreate)
+export default connect(mapStateToProps, { editRoleHierarchy, getRoleHierarchy,getTime,checkCalcStatus})(RoleHierarchyEdit)

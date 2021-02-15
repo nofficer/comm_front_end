@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getTime,updateTime,revertTime,getPayroll,selectMonth,getUsers,castUser,checkCalcStatus,calcPlans,loadCalcs,getPlans } from '../../actions'
+import { getTime,updateTime,revertTime,getPayroll,selectMonth,getUsers,castUser,checkCalcStatus,calcPlans,loadCalcs,getPlans,clearError } from '../../actions'
 import history from '../../history'
 import Modal from '../../Modal'
 import Login from '../Accounts/Login'
@@ -30,17 +30,25 @@ class RunCalcs extends React.Component {
     this.planList = []
   }
 
-
+  runAllCalc = () => {
+    var plan_list_nums = this.props.plans.map(x => Number(x[0]))
+    console.log(plan_list_nums)
+    this.props.loadCalcs()
+    this.props.calcPlans(plan_list_nums)
+    this.planList = []
+  }
 
 
 
   renderCalcButton(){
 
       return(
-
+          <React.Fragment>
           <div className='sixteen wide column'>
             <div onClick={this.runCalc} className='ui fluid button positive'>Run Calculations <i class="calculator icon   "></i></div>
           </div>
+
+          </React.Fragment>
 
       )
 
@@ -106,7 +114,7 @@ class RunCalcs extends React.Component {
         return (
           <Loader filler="Calculations Running - Please check back later..."/>)
         }
-      else if(this.props.account['role'] == 'admin'){
+      else if(this.props.account['role'] == 'admin' && this.props.errors !='goal'){
         return(
         <div className='ui container '>
           <div className='ui grid'>
@@ -114,19 +122,32 @@ class RunCalcs extends React.Component {
             <div class='sixteen wide column'></div>
           <div class='sixteen wide column'>
             <div className='ui center aligned grid'>
-              <h1 className=''>Run Calculations</h1>
+              <h1 className=''>
+              Run Calculations
+
+              </h1>
             </div>
           </div>
           <div class='sixteen wide column'></div>
+          <div class='five wide column'></div>
+          <div class='six wide column'>
+
+              <div onClick={this.runAllCalc} className='ui fluid button blue'>Run All Plans </div>
+
+          </div>
+
+          <div class='five wide column'></div>
             <div class='sixteen wide column'><div class="ui horizontal divider">
             *
             </div></div>
             <div class='sixteen wide column'></div>
             <div className='five wide column'></div>
             <div className='six wide column ui placeholder segment'>
+
             <h4>
               Select which plans to run calculations on:
               </h4>
+
               <div className='ui grid'>
 
               {this.renderPlanList()}
@@ -139,6 +160,11 @@ class RunCalcs extends React.Component {
           </div>
         </div>
       )
+
+      }
+      else if(this.props.errors == "goal") {
+
+        return<Modal  onDismiss={() => this.props.clearError()} title="Calculation Error" content="Please ensure all users on a plan with goal_use set to 'Yes' have a goal for the corresponding attainment rule and period"/>
 
       }
 
@@ -162,8 +188,9 @@ const mapStateToProps = (state) => {
     selected_month: state.account.selected_month,
     calc: state.calc.calc,
     users: state.users.users,
-    plans:state.plans.plans
+    plans:state.plans.plans,
+    errors: state.errors.errors
   }
 }
 
-export default connect(mapStateToProps, {getTime,updateTime,revertTime,getPayroll,selectMonth,getUsers,castUser,checkCalcStatus,calcPlans,loadCalcs,getPlans })(RunCalcs)
+export default connect(mapStateToProps, {getTime,updateTime,revertTime,getPayroll,selectMonth,getUsers,castUser,checkCalcStatus,calcPlans,loadCalcs,getPlans,clearError })(RunCalcs)

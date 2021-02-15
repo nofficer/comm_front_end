@@ -189,7 +189,7 @@ class RateTableShow extends React.Component {
       )
     }
 
-    else if(typeof(this.props.account['user_id']) == "number"){
+    else if(typeof(this.props.account['user_id']) != "undefined"){
       return "You do not have sufficient permissions to access this page"
     }
     else{

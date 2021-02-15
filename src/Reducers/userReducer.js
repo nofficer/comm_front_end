@@ -1,16 +1,19 @@
 import {
-  GET_USERS,CREATE_USER,DELETE_USER,EDIT_USER,GET_USER,GET_ROLE_HIERARCHY,CREATE_ROLE_HIERARCHY,EDIT_ROLE_HIERARCHY,DELETE_ROLE_HIERARCHY,GET_ROLE_HIERARCHIES
+  GET_USERS,CREATE_USER,DELETE_USER,EDIT_USER,GET_USER,GET_ROLE_HIERARCHY,CREATE_ROLE_HIERARCHY,EDIT_ROLE_HIERARCHY,DELETE_ROLE_HIERARCHY,GET_ROLE_HIERARCHIES,GET_USERS_JOINED
 } from '../actions/types'
 
 const INITIAL_STATE = {
   users: [],
   user:{},
   role_hierarchy: {},
-  role_hierarchies: []
+  role_hierarchies: [],
+  users_joined:[]
 }
 
 export default (state=INITIAL_STATE, action) => {
   switch(action.type) {
+    case GET_USERS_JOINED:
+      return {...state,users_joined:action.payload}
     case GET_USERS:
       return {...state, users: action.payload};
     case CREATE_USER:

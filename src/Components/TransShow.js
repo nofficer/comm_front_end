@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getTrans, deleteTrans,getTime,setFilter,clearFilter,clearTransError,clearTrans} from '../actions'
+import { getTrans, deleteTrans,getTime,setFilter,clearFilter,clearTransError,clearTrans,getAutoTrans} from '../actions'
 import history from '../history'
 import { Link } from 'react-router-dom'
 import Login from './Accounts/Login'
@@ -58,8 +58,10 @@ class TransShow extends React.Component {
     saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'EasyComp Transactions Report.xlsx' )
   }
 
+
+
   componentDidMount(){
-    this.props.getTrans({filter:'cy'})
+    this.props.getTrans({filter:'cm'})
     this.props.getTime()
     this.props.clearFilter()
   }
@@ -71,6 +73,9 @@ class TransShow extends React.Component {
     }
     else if (filter=='cy'){
       this.title = 'Current Year'
+    }
+    else if (filter=='cm'){
+      this.title = 'Current Month'
     }
     this.props.clearTrans()
     this.props.getTrans({filter:filter})
@@ -93,7 +98,7 @@ class TransShow extends React.Component {
     'period':11
   }
 
-  title = 'Current Year'
+  title = 'Current Month'
 
   createItem(trans){
     var filters = Object.keys(this.props.filter)
@@ -193,9 +198,9 @@ class TransShow extends React.Component {
     if(this.props.error == 'id'){
       return <Modal onDismiss={this.props.clearTransError} title='Error in Transaction Creation' content='A transaction with that ID already exists' actions='Ok'/>
     }
-    else if(typeof(this.props.trans[0]) == 'undefined' && this.props.account['role'] == 'admin'){
-      return<div><LoaderNoButton filler='Loading Transactions...'/></div>
-    }
+    // else if(typeof(this.props.trans[0]) == 'undefined' && this.props.account['role'] == 'admin'){
+    //   return<div><LoaderNoButton filler='Loading Transactions...'/></div>
+    // }
 
     else{
     if(this.props.account['role'] == 'admin'){
@@ -211,13 +216,19 @@ class TransShow extends React.Component {
         </div>
         <div class='two wide column'><select className='ui dropdown' onChange={this.handleChange}>
 
-          <option value="cy">Select a time period...</option>
+          <option value="cm">Select a time period...</option>
+          <option value="cm">Current Month</option>
           <option value="cy">Current Year</option>
           <option value="all">All Time</option>
 
 
         </select></div>
-        <div class='fourteen wide column'></div>
+        <div class='twelve wide column'></div>
+        <div class='two wide column'>
+          <div className='ui centre aligned grid'>
+              <button className='rightitem fluid ui button positive' onClick={(e) => e.stopPropagation(this.props.getAutoTrans())}>Import Transactions from Source</button>
+          </div>
+        </div>
         <div className='six wide column'></div>
         <div class="four wide column"><button className='rightitem fluid ui button positive' onClick={this.generateStatement}>Export Transactions </button></div>
         <div className='six wide column'></div>
@@ -338,4 +349,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { getTrans,deleteTrans,getTime,setFilter,clearFilter,clearTransError,clearTrans })(TransShow)
+export default connect(mapStateToProps, { getTrans,deleteTrans,getTime,setFilter,clearFilter,clearTransError,clearTrans,getAutoTrans })(TransShow)

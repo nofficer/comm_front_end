@@ -27,6 +27,8 @@ class AttainRuleForm extends React.Component {
     )
   }
 
+
+
   onSubmit = (formValues) => {
     this.props.onSubmit(formValues)
   }
@@ -204,28 +206,35 @@ class AttainRuleForm extends React.Component {
 
 const validate = (formValues) => {
 	const errors = {};
-  console.log(formValues)
+
 	if(!formValues.rule_name) {
 		//only ran if the user did not enter a title
 		errors.rule_name = 'You must enter a name'
 	}
   if(!formValues.goal_use) {
 		//only ran if the user did not enter a title
-		errors.metric = 'You must choose whether attainment is goal dependent'
+		errors.rule_name = 'You must choose whether attainment is goal dependent'
 	}
-  if(formValues.source == "nothin") {
+  if(!formValues.rule_source) {
 		//only ran if the user did not enter a title
-		console.log('nothin')
+		errors.rule_name = 'You must select a calculation type'
 	}
-  if(!formValues.filter) {
+  if(!formValues.rule_metric) {
 		//only ran if the user did not enter a title
-		errors.filter = 'You must enter a filter'
+		errors.rule_name = 'You must select a metric'
 	}
-  if(!formValues.metric) {
+  if(!formValues.rule_timeframe) {
 		//only ran if the user did not enter a title
-		errors.metric = 'You must enter a metric'
+		errors.rule_name = 'Dont forget to select a timeframe --->'
 	}
+  if(!formValues.rule_filter) {
+    console.log('hello')
+    errors.rule_filter = 'You must enter a filter'
+  }
+  if(!formValues.plan_id) {
 
+    errors.rule_name = 'Dont forget to select a plan VVV'
+  }
 
   return errors
 }

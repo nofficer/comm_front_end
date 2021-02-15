@@ -52,6 +52,14 @@ import LiabilityShow from './Liability/LiabilityShow'
 import LiabilityEdit from './Liability/LiabilityEdit'
 import LiabilityDelete from './Liability/LiabilityDelete'
 
+
+
+
+import RoleHierarchyShow from './Role_Hierarchy/RoleHierarchyShow'
+import RoleHierarchyCreate from './Role_Hierarchy/RoleHierarchyCreate'
+import RoleHierarchyEdit from './Role_Hierarchy/RoleHierarchyEdit'
+import RoleHierarchyDelete from './Role_Hierarchy/RoleHierarchyDelete'
+
 const App = () => {
 
   return (
@@ -71,6 +79,13 @@ const App = () => {
             <Route path ='/rateTableCreate' exact component={RateTableCreate}/>
             <Route path ='/rateTableShow/edit/:rate_id' exact component={RateTableEdit}/>
             <Route path ='/rateTableShow/delete/:rate_id' exact component={RateTableDelete}/>
+
+            <Route path ='/RoleHierarchyShow' exact component={RoleHierarchyShow}/>
+            <Route path ='/RoleHierarchyCreate' exact component={RoleHierarchyCreate}/>
+            <Route path ='/RoleHierarchyShow/edit/:user_id' exact component={RoleHierarchyEdit}/>
+            <Route path ='/RoleHierarchyShow/delete/:user_id' exact component={RoleHierarchyDelete}/>
+
+
             <Route path ='/importError' exact component={ImportError}/>
             <Route path ='/importSuccess' exact component={ImportSuccess}/>
             <Route path ='/import' exact component={Import}/>

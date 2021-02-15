@@ -100,6 +100,9 @@ class UserShow extends React.Component {
     else if(this.props.error == 'username'){
       return <Modal onDismiss={this.props.clearUserError} title='Error in User Creation' content='That username is already taken' actions='Ok'/>
     }
+    else if(this.props.error == 'limit'){
+      return <Modal onDismiss={this.props.clearUserError} title='Error in User Creation' content='You are at the maximum number of users allowed for your license. Please upgrade or delete users.' actions='Ok'/>
+    }
     else if(this.props.error == 'import'){
       return <Modal onDismiss={this.props.clearUserError} title='Error in User Creation' content={this.props.error} actions='Ok'/>
     }

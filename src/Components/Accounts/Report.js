@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getPayoutsHistory,calcPlans,loadCalcs, selectMonth,getTime,getPayouts_user,clearFilter,setFilter,getUsers,castUser,selectYear,getGoals } from '../../actions'
+import { getPayoutsHistory,calcPlans,loadCalcs, selectMonth,getTime,getPayouts_user,clearFilter,setFilter,getUsers,castUser,selectYear,getGoals,getYears,getUsersJoined } from '../../actions'
 import { Link } from 'react-router-dom'
 import Loader from '../../Loader'
 import Login from '../Accounts/Login'
@@ -39,7 +39,7 @@ function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
 
     return negativeSign + (j ? i.substr(0, j) + thousands : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousands) + (decimalCount ? decimal + Math.abs(amount - i).toFixed(decimalCount).slice(2) : "");
   } catch (e) {
-    console.log(e)
+
   }
 };
 
@@ -103,14 +103,18 @@ class PayoutShow extends React.Component {
     saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'EasyComp Commission Statement.xlsx' )
   }
   castUser(e){
-    this.props.getPayouts_user({user_id:e.target.value, month_id:this.props.selected_month})
-    this.props.castUser(e.target.value)
+    // this.props.getPayouts_user({user_id:e.target.value, month_id:this.props.selected_month})
+
+    this.props.castUser(this.props.account['user_id'],this.props.account['role'],this.props.account['username'],e.target.value)
   }
 
   componentDidMount(){
-
+    this.props.getPayoutsHistory({'selected_year':'all'})
+    this.props.clearFilter()
+    this.props.getYears()
     this.props.getTime()
-    this.props.getPayouts_user({user_id:this.props.account['user_id'], month_id:this.props.month['current.month_id']})
+
+    // this.props.getPayouts_user({user_id:this.props.account['user_id'], month_id:this.props.month['current.month_id']})
     try{
       var dateData = history.location.state.detail
       this.props.selectMonth(dateData['current.month_id'].toString())
@@ -121,11 +125,24 @@ class PayoutShow extends React.Component {
     }
 
 
-    this.props.getPayoutsHistory()
-    this.props.getUsers()
+
+    this.props.getUsersJoined()
     this.props.getGoals()
 
 
+  }
+
+  createYearOption(year){
+    return (
+      <option value={year}>{year}</option>
+    )
+  }
+
+
+  renderYearOptions(){
+    return this.props.years.map((year) => {
+      return this.createYearOption(year)
+    })
   }
 
   filterMap = {
@@ -182,7 +199,7 @@ class PayoutShow extends React.Component {
 
 
     var payout_year = payout[17].split('-')[0]
-    if(payout[15] == this.props.account['user_id'] && this.props.selected_month == "all" && this.props.selected_year == "all"){
+    if(payout[15] == this.props.account['casted_user_id'].toLowerCase() && this.props.selected_month == "all" && this.props.selected_year == "all"){
       payout[4] = Number(payout[4])
       payout[5] = Number(payout[5])
       payout[6] = Number(payout[6])
@@ -191,12 +208,12 @@ class PayoutShow extends React.Component {
 
       return (
         <tr>
-          <td className='center aligned'>{payout[0]}</td><td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {formatMoney(payout[4])}</td><td className='center aligned'>$ {formatMoney(payout[5])}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>{pay_rate}</td><td className='center aligned'>${formatMoney(payout[7])}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[12]}</td><td className='center aligned'>{payout[13]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[17]}</td>
+          <td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {formatMoney(payout[4])}</td><td className='center aligned'>$ {formatMoney(payout[5])}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>{pay_rate}</td><td className='center aligned'>${formatMoney(payout[7])}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[17]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[12]}</td>
         </tr>
 
       )
     }
-    else if(payout[15] == this.props.account['user_id'] && payout[13] == this.props.selected_month && this.props.selected_year == payout_year ){
+    else if(payout[15] == this.props.account['casted_user_id'].toLowerCase() && payout[13] == this.props.selected_month && this.props.selected_year == payout_year ){
       payout[4] = Number(payout[4])
       payout[5] = Number(payout[5])
       payout[6] = Number(payout[6])
@@ -206,12 +223,12 @@ class PayoutShow extends React.Component {
 
       return (
         <tr>
-          <td className='center aligned'>{payout[0]}</td><td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {formatMoney(payout[4])}</td><td className='center aligned'>$ {formatMoney(payout[5])}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>{pay_rate}</td><td className='center aligned'>${formatMoney(payout[7])}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[12]}</td><td className='center aligned'>{payout[13]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[17]}</td>
+          <td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {formatMoney(payout[4])}</td><td className='center aligned'>$ {formatMoney(payout[5])}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>{pay_rate}</td><td className='center aligned'>${formatMoney(payout[7])}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[17]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[12]}</td>
         </tr>
 
       )
     }
-    else if(payout[15] == this.props.account['user_id'] && payout[13] == this.props.selected_month && this.props.selected_year == "all" ){
+    else if(payout[15] == this.props.account['casted_user_id'].toLowerCase() && payout[13] == this.props.selected_month && this.props.selected_year == "all" ){
       payout[4] = Number(payout[4])
       payout[5] = Number(payout[5])
       payout[6] = Number(payout[6])
@@ -220,12 +237,12 @@ class PayoutShow extends React.Component {
 
       return (
         <tr>
-          <td className='center aligned'>{payout[0]}</td><td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {formatMoney(payout[4])}</td><td className='center aligned'>$ {formatMoney(payout[5])}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>{pay_rate}</td><td className='center aligned'>${formatMoney(payout[7])}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[12]}</td><td className='center aligned'>{payout[13]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[17]}</td>
+          <td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {formatMoney(payout[4])}</td><td className='center aligned'>$ {formatMoney(payout[5])}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>{pay_rate}</td><td className='center aligned'>${formatMoney(payout[7])}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[17]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[12]}</td>
         </tr>
 
       )
     }
-    else if(payout[15] == this.props.account['user_id'] && this.props.selected_month == "all" && this.props.selected_year == payout_year ){
+    else if(payout[15] == this.props.account['casted_user_id'].toLowerCase() && this.props.selected_month == "all" && this.props.selected_year == payout_year ){
       payout[4] = Number(payout[4])
       payout[5] = Number(payout[5])
       payout[6] = Number(payout[6])
@@ -234,7 +251,7 @@ class PayoutShow extends React.Component {
 
       return (
         <tr>
-          <td className='center aligned'>{payout[0]}</td><td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {formatMoney(payout[4])}</td><td className='center aligned'>$ {formatMoney(payout[5])}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>{pay_rate}</td><td className='center aligned'>${formatMoney(payout[7])}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[12]}</td><td className='center aligned'>{payout[13]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[17]}</td>
+          <td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {formatMoney(payout[4])}</td><td className='center aligned'>$ {formatMoney(payout[5])}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>{pay_rate}</td><td className='center aligned'>${formatMoney(payout[7])}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[17]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[12]}</td>
         </tr>
 
       )
@@ -254,7 +271,7 @@ class PayoutShow extends React.Component {
       var pay = Number(payout[7])
       var attain = Number(payout[6])
       var payout_year = payout[17].split('-')[0]
-      if(payout[15] == this.props.account['user_id'] && this.props.selected_month == "all" && this.props.selected_year == "all"){
+      if(payout[15] == this.props.account['casted_user_id'].toLowerCase() && this.props.selected_month == "all" && this.props.selected_year == "all"){
         //////////////////////////WRAP
         if(payout[14] in paySummary){
           paySummary[payout[14]]+=pay
@@ -266,7 +283,7 @@ class PayoutShow extends React.Component {
         }
         //////////////////////////WRAP
       }
-      else if(payout[15] == this.props.account['user_id'] && payout[13] == this.props.selected_month && this.props.selected_year == payout_year ){
+      else if(payout[15] == this.props.account['casted_user_id'].toLowerCase() && payout[13] == this.props.selected_month && this.props.selected_year == payout_year ){
         //////////////////////////WRAP
         if(payout[14] in paySummary){
           paySummary[payout[14]]+=pay
@@ -278,7 +295,7 @@ class PayoutShow extends React.Component {
         }
         //////////////////////////WRAP
       }
-      else if(payout[15] == this.props.account['user_id'] && payout[13] == this.props.selected_month && this.props.selected_year == "all" ){
+      else if(payout[15] == this.props.account['casted_user_id'].toLowerCase() && payout[13] == this.props.selected_month && this.props.selected_year == "all" ){
         //////////////////////////WRAP
         if(payout[14] in paySummary){
           paySummary[payout[14]]+=pay
@@ -290,7 +307,7 @@ class PayoutShow extends React.Component {
         }
         //////////////////////////WRAP
       }
-      else if(payout[15] == this.props.account['user_id'] && this.props.selected_month == "all" && this.props.selected_year == payout_year ){
+      else if(payout[15] == this.props.account['casted_user_id'].toLowerCase() && this.props.selected_month == "all" && this.props.selected_year == payout_year ){
         //////////////////////////WRAP
         if(payout[14] in paySummary){
           paySummary[payout[14]]+=pay
@@ -317,6 +334,7 @@ class PayoutShow extends React.Component {
       summaryHolder.push([key,value,pay])
 }
 
+
     return summaryHolder
 
 
@@ -325,7 +343,7 @@ class PayoutShow extends React.Component {
   handleChange = (e) => {
     var month = e.target.value
     this.props.selectMonth(month)
-    this.props.getPayouts_user({user_id:this.props.account['user_id'], month_id:month})
+    // this.props.getPayouts_user({user_id:this.props.account['casted_user_id'], month_id:month})
   }
 
   handleYearChange = (e) => {
@@ -335,6 +353,7 @@ class PayoutShow extends React.Component {
   }
 
   createGoalItem(goal){
+
     var goal_amt = goal[5]
     var start_year = Number(goal[3].split('-')[0])
     var end_year = Number(goal[4].split('-')[0])
@@ -342,13 +361,14 @@ class PayoutShow extends React.Component {
     var end_month = Number(goal[4].split('-')[1])
     var selected_year = Number(this.props.selected_year)
     var selected_month = Number(this.props.selected_month)
-    if(this.props.account['user_id'] == goal[1]){
+    if(this.props.account['casted_user_id'].toLowerCase() == goal[1].toLowerCase()){
       if(this.props.selected_month != 'all' && this.props.selected_year != 'all'){
 
 
 
           if(selected_year >= start_year && selected_year <= end_year ){
             if(selected_month>= start_month && selected_month <= end_month){
+
 
               goal_details.push([goal[6],formatMoney(goal_amt),goal[3],goal[4],goal[8].toUpperCase()])
               return(
@@ -438,7 +458,7 @@ class PayoutShow extends React.Component {
 
 
 
-      if(id==this.props.account['user_id']){
+      if(id==this.props.account['casted_user_id'].toLowerCase()){
 
         if(rule==goal_rule){
 
@@ -479,7 +499,7 @@ class PayoutShow extends React.Component {
                   '#4B5000',
                   '#501800'
                   ],
-                  data: [prod_total,goal_remain]
+                  data: [Math.round((prod_total + Number.EPSILON) * 100) / 100,Math.round((goal_remain + Number.EPSILON) * 100) / 100]
                 }
               ],
 
@@ -493,7 +513,7 @@ class PayoutShow extends React.Component {
 
 
   createChartItem(goal){
-    if(this.props.account['user_id'] == goal[1]){
+    if(this.props.account['casted_user_id'].toLowerCase() == goal[1].toLowerCase()){
       if(this.props.selected_month != 'all' && this.props.selected_year != 'all'){
         var start_year = Number(goal[3].split('-')[0])
         var end_year = Number(goal[4].split('-')[0])
@@ -552,25 +572,36 @@ class PayoutShow extends React.Component {
 
   }
 
+
+
   createNoGoalChart(){
     var checker = false
     var no_goal_prod_total = {}
+    var trans_id_tracker = []
 
     this.props.payouts.map((payout) => {
 
+      if(trans_id_tracker.includes(payout[1]) == false){
 
-      if(payout[15] == this.props.account['user_id'] && (Number(payout[17].slice(5,7)) <= Number(this.props.selected_month) || this.props.selected_month.toLowerCase() == 'all') && (payout[17].slice(0,4) == this.props.selected_year.toString() || this.props.selected_year.toLowerCase() == 'all'  )  ) {
+        if(payout[15] == this.props.account['casted_user_id'].toLowerCase() && (Number(payout[17].slice(5,7)) <= Number(this.props.selected_month) || this.props.selected_month.toLowerCase() == 'all') && (payout[17].slice(0,4) == this.props.selected_year.toString() || this.props.selected_year.toLowerCase() == 'all'  )  ) {
+          trans_id_tracker.push(payout[1])
+          //This thing above me is what enables only unique additions to the graph
+          if(typeof(no_goal_prod_total[monthmap[payout[13]]]) != 'undefined'){
 
-        if(typeof(no_goal_prod_total[monthmap[payout[13]]]) != 'undefined'){
-          console.log(payout)
 
-          no_goal_prod_total[monthmap[payout[13]]]+=Number(payout[6])
+            no_goal_prod_total[monthmap[payout[13]]]+=Number(payout[6])
+          }
+          else{
+            no_goal_prod_total[monthmap[payout[13]]]=Number(payout[6])
+          }
+          checker = true
         }
-        else{
-          no_goal_prod_total[monthmap[payout[13]]]=Number(payout[6])
-        }
-        checker = true
       }
+
+
+
+
+
     })
 
     var montharr = []
@@ -612,7 +643,7 @@ class PayoutShow extends React.Component {
   generateCharts(){
     var checker = true
     this.props.goals.map((goal) => {
-      if(goal[1] == this.props.account['user_id']){
+      if(goal[1].toLowerCase() == this.props.account['casted_user_id'].toLowerCase()){
         checker = false
       }
     })
@@ -641,7 +672,7 @@ class PayoutShow extends React.Component {
   renderGoalHead(){
     var checker = false
     this.props.goals.map((goal)=> {
-      if(goal[1] == this.props.account['user_id']){
+      if(goal[1].toLowerCase() == this.props.account['casted_user_id'].toLowerCase()){
         checker = true
       }
     })
@@ -664,7 +695,7 @@ class PayoutShow extends React.Component {
     statement_details.push([])
     statement_details.push([])
     statement_details.push([])
-    statement_details.push(['Payout ID','Transaction ID','Seller ID','Payee','Revenue','Gross Profit','Attainment','Payout','Split percent','Transaction Location','Payout Multiplier','Order Number','custom_field','Month','Attainment_Rule_Name','Payee ID','Type','Date'])
+    statement_details.push(['Payout ID','Transaction ID','Seller ID','Payee','Revenue','Gross Profit','Attainment','Payout','Split percent','Transaction Location','Payout Multiplier','Order Number','Customer','Month','Attainment_Rule_Name','Payee ID','Type','Date'])
     return this.props.payouts.map((payout) => {
 
       return (this.createItem(payout))
@@ -673,7 +704,7 @@ class PayoutShow extends React.Component {
   }
 
   createSummaryLine(line){
-    var statement_line = []
+    var statement_line = [monthmap[this.props.selected_month]]
     var i;
     for (i = 0; i < line.length; i++) {
       statement_line.push(line[i])
@@ -686,7 +717,7 @@ class PayoutShow extends React.Component {
       return(
         (
           <tr>
-
+          <td className='center aligned'>{monthmap[this.props.selected_month]}</td>
           <td className='center aligned'>{line[0]}</td>
           <td className='center aligned'>{formatMoney(line[1],5)}</td>
           <td className='center aligned'>$ {formatMoney(line[2])}</td>
@@ -696,7 +727,7 @@ class PayoutShow extends React.Component {
     }
     return (
       <tr>
-
+      <td className='center aligned'>{monthmap[this.props.selected_month]}</td>
       <td className='center aligned'>{line[0]}</td>
       <td className='center aligned'>{formatMoney(line[1])}</td>
       <td className='center aligned'>$ {formatMoney(line[2])}</td>
@@ -707,7 +738,7 @@ class PayoutShow extends React.Component {
 
   renderSummary(){
     var summaryArray = this.createSummaryItem()
-    statement_details = [[`${monthmap[this.props.selected_month]} Commission statement for ${this.props.account['username']}`],[],['Summary Performance'],['Attainment Rule','Attainment','Payout']]
+    statement_details = [[`${monthmap[this.props.selected_month]} Commission statement for ${this.props.account['username']}`],[],['Summary Performance'],['Month','Attainment Rule','Attainment','Payout']]
     return (summaryArray.map((line)=> {
       return this.createSummaryLine(line)
     }))
@@ -725,16 +756,16 @@ class PayoutShow extends React.Component {
       var linePay = Number(payout[7])
 
 
-      if(payout[15] == this.props.account['user_id'] && this.props.selected_month == "all" && this.props.selected_year == "all"){
+      if(payout[15] == this.props.account['casted_user_id'].toLowerCase() && this.props.selected_month == "all" && this.props.selected_year == "all"){
         total_payout+=linePay
       }
-      else if(payout[15] == this.props.account['user_id'] && payout[13] == this.props.selected_month && this.props.selected_year == payout_year ){
+      else if(payout[15] == this.props.account['casted_user_id'].toLowerCase() && payout[13] == this.props.selected_month && this.props.selected_year == payout_year ){
         total_payout+=linePay
       }
-      else if(payout[15] == this.props.account['user_id'] && payout[13] == this.props.selected_month && this.props.selected_year == "all" ){
+      else if(payout[15] == this.props.account['casted_user_id'].toLowerCase() && payout[13] == this.props.selected_month && this.props.selected_year == "all" ){
         total_payout+=linePay
       }
-      else if(payout[15] == this.props.account['user_id'] && this.props.selected_month == "all" && this.props.selected_year == payout_year ){
+      else if(payout[15] == this.props.account['casted_user_id'].toLowerCase() && this.props.selected_month == "all" && this.props.selected_year == payout_year ){
         total_payout+=linePay
       }
 
@@ -744,13 +775,54 @@ class PayoutShow extends React.Component {
     return <h2 className="marginleft ui dropdown">{monthmap[this.props.selected_month]} Payout: ${formatMoney(total_payout)} </h2>
   }
 
+  renderUserItem(user,dept,lvl,uid){
+
+    uid = uid.toLowerCase()
+
+    if((user[9] == dept && user[8] < lvl) || user[0].toLowerCase() == uid || this.props.account['role'] == 'admin' ||(user[10] != null && user[10].toLowerCase() == uid)){ // IF THE SIGNED IN USER DEPARTMENT IS THE SAME AS THIS ROWS USER AND THE LEVEL IS LESS, OR IF THE USER IS EQUAL TO THE SIGNED IN USER, OR IF THE SIGNED IN USER IS AN ADMIN
+      if((user[9] != null && user[8] != null) || user[0].toLowerCase() == uid || this.props.account['role'] == 'admin' ||(user[10] != null && user[10].toLowerCase() == uid)){ // IF THE USER HAS A ROW IN THE ROLE HIERARCHY DISPLAY IT, OR IF THE USER IS EQUAL TO THE SIGNED IN USER, OR IF THE SIGNED IN USER IS AN ADMIN, OR IF THE USERS MGR ID IS THE CURRENT USER ID
+        // console.log('start')
+        // console.log(`${user[9]} => ${dept}`)
+        // console.log(`${user[8]} => ${lvl}`)
+        // console.log(`${user[0]} => ${uid}`)
+        return (
+          <option value={user[0]} key={user[1]}> {user[1]} </option>
+        )
+      }
+    }
+
+  }
+
+  renderUsersDropdown(){
+    var uid = this.props.account['user_id'].toLowerCase()
+    var dept = ''
+    var lvl = ''
+
+    this.props.users.map((user) => {
+
+      if(user[0].toLowerCase() == uid){
+        dept = user[9]
+        lvl = user[8]
+
+      }
+    })
+
+
+
+
+    return this.props.users.map((user) => {
+      return this.renderUserItem(user,dept,lvl,uid)
+    })
+
+  }
 
   renderContent(){
     if(typeof(history.location.state.detail) == 'undefined'){
       return(<Login/>)
     }
 
-    else if(this.props.account['role'] == 'admin'){
+    else if(true){
+
       return (<div className='ui grid '>
 
 
@@ -761,9 +833,8 @@ class PayoutShow extends React.Component {
       <div className='ui center aligned grid'>
       <div class="sixteen wide column"></div>
       <select className='ui dropdown'  name="cast_user" onChange={(e) => e.stopPropagation(this.castUser(e))}>
-                    <option value="">Login as user...</option>
-                    {this.props.users.map(user =>
-                    <option value={user[0]} key={user[1]}>{user[1]}</option>)}
+                    <option value={this.props.account['user_id']}>Login as user...</option>
+                    {this.renderUsersDropdown()}
                   </select>
                   </div>
                   </div>
@@ -806,11 +877,7 @@ class PayoutShow extends React.Component {
                   <option value={this.props.selected_year}>{this.props.selected_year}</option>
                   <option value="all">All</option>
 
-                  <option value="2021">2021</option>
-                  <option value="2022">2022</option>
-                  <option value="2022">2023</option>
-                  <option value="2022">2024</option>
-                  <option value="2022">2025</option>
+                  {this.renderYearOptions()}
 
 
                 </select>
@@ -897,6 +964,7 @@ class PayoutShow extends React.Component {
         <table className='ui celled center aligned table'>
         <thead>
           <tr>
+            <th className='center aligned'><strong>Month</strong></th>
             <th className='center aligned'><strong>Attainment Rule</strong></th>
             <th className='center aligned'><strong>Attainment</strong></th>
             <th className='center aligned'><strong>Payout</strong></th>
@@ -915,15 +983,11 @@ class PayoutShow extends React.Component {
         </div>
         <div class="sixteen wide column"></div>
         <div style={{overflow:'auto', whitespace:'nowrap'}} className='ui container containermargin'>
-        <table  className='ui celled unstackable single line table'>
+        <table  className='ui celled small compact unstackable table'>
 
           <thead>
             <tr>
-              <td className='center aligned'>
-                <div class="ui input">
-                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('payout_id',e.target.value))} placeholder="Search..."/>
-                </div>
-              </td>
+
               <td className='center aligned'>
                 <div class="ui input">
                   <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('trans_id',e.target.value))} placeholder="Search..."/>
@@ -983,15 +1047,12 @@ class PayoutShow extends React.Component {
                 </div>
               </td>
               <td className='center aligned'>
-                <div class="ui input">
-                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('custom_field',e.target.value))} placeholder="Search..."/>
-                </div>
+              <div class="ui input">
+                <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('date',e.target.value))} placeholder="Search..."/>
+              </div>
+
               </td>
-              <td className='center aligned'>
-                <div class="ui input">
-                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('period_id',e.target.value))} placeholder="Search..."/>
-                </div>
-              </td>
+
               <td className='center aligned'>
                 <div class="ui input">
                   <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('attainment_rule',e.target.value))} placeholder="Search..."/>
@@ -1003,31 +1064,32 @@ class PayoutShow extends React.Component {
               </div>
               </td>
               <td className='center aligned'>
-                <div class="ui input">
-                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('date',e.target.value))} placeholder="Search..."/>
-                </div>
+              <div class="ui input">
+
+                <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('custom_field',e.target.value))} placeholder="Search..."/>
+              </div>
               </td>
             </tr>
             <tr>
 
-              <th  className='center aligned'><strong>Payout ID</strong></th>
-              <th className='center aligned'><strong>Transaction ID</strong></th>
-              <th className='center aligned'><strong>Seller ID</strong></th>
-              <th className='center aligned'><strong>Payee</strong></th>
-              <th className='center aligned'><strong>Revenue</strong></th>
-              <th className='center aligned'><strong>GP</strong></th>
-              <th className='center aligned'><strong>Attainment</strong></th>
-              <th className='center aligned'><strong>Rate</strong></th>
-              <th className='center aligned'><strong>Payout</strong></th>
-              <th className='center aligned'><strong>Split Percent</strong></th>
-              <th className='center aligned'><strong>Location</strong></th>
-              <th className='center aligned'><strong>Payout Multiplier</strong></th>
-              <th className='center aligned'><strong>order_num</strong></th>
-              <th className='center aligned'><strong>custom_field</strong></th>
-              <th className='center aligned'><strong>period_id</strong></th>
-              <th className='center aligned'><strong>Attainment Rule</strong></th>
-              <th className='center aligned'><strong>Type</strong></th>
-              <th className='center aligned'><strong>Date</strong></th>
+
+            <th className='center aligned'><strong>Transaction ID</strong></th>
+            <th className='center aligned'><strong>Seller ID</strong></th>
+            <th className='center aligned'><strong>Payee</strong></th>
+            <th className='center aligned'><strong>Revenue</strong></th>
+            <th className='center aligned'><strong>GP</strong></th>
+            <th className='center aligned'><strong>Attainment</strong></th>
+            <th className='center aligned'><strong>Rate</strong></th>
+            <th className='center aligned'><strong>Payout</strong></th>
+            <th className='center aligned'><strong>Split</strong></th>
+            <th className='center aligned'><strong>Location</strong></th>
+            <th className='center aligned'><strong>Multiplier</strong></th>
+            <th className='center aligned'><strong>Order Num</strong></th>
+
+            <th className='center aligned'><strong>Date</strong></th>
+            <th className='center aligned'><strong>Rule</strong></th>
+            <th className='center aligned'><strong>Type</strong></th>
+            <th className='center aligned'><strong>Customer</strong></th>
             </tr>
           </thead>
           <tbody>
@@ -1048,363 +1110,7 @@ class PayoutShow extends React.Component {
 //BELOW IS THE SELLER VIEW
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
-    else{
 
-      if (isMobile) {
-       return (
-         <div className=''>
-
-
-
-
-           <table className='ui celled center aligned table'>
-             <thead><tr>
-               <th className='center aligned'>Select Statement</th>
-
-               </tr></thead>
-               <tr>
-                 <td className='center aligned' className='three wide'>
-                 <select className='ui dropdown' onChange={this.handleYearChange}>
-                   <option value={this.props.selected_year}>{this.props.selected_year}</option>
-                   <option value="all">All</option>
-                   <option value="2021">2021</option>
-                   <option value="2022">2022</option>
-                   <option value="2022">2023</option>
-                   <option value="2022">2024</option>
-                   <option value="2022">2025</option>
-
-
-                 </select>
-
-
-
-
-                 <select className='ui dropdown' onChange={this.handleChange}>
-                   <option value={monthmap[this.props.selected_month]}>{monthmap[this.props.selected_month]}</option>
-                   <option value="all">Year To Date</option>
-                   <option value="1">January</option>
-                   <option value="2">February</option>
-                   <option value="3">March</option>
-                   <option value="4">April</option>
-                   <option value="5">May</option>
-                   <option value="6">June</option>
-                   <option value="7">July</option>
-                   <option value="8">August</option>
-                   <option value="9">September</option>
-                   <option value="10">October</option>
-                   <option value="11">November</option>
-                   <option value="12">December</option>
-
-                 </select>
-                 <h1 >{this.renderTotal()}</h1>
-                 </td>
-
-               </tr>
-
-
-             <tr>
-
-             <td className='center aligned'>
-               <button className=' ui button positive' onClick={this.generateStatement}>Download statement for {monthmap[this.props.selected_month]} </button>
-             </td>
-
-             </tr>
-
-           </table>
-
-
-
-     </div>)
-   }
-      return (<div className='ui grid '>
-
-
-      <div class='thirteen wide column'>
-
-      </div>
-      <div className='three wide column'>
-      <div className='ui center aligned grid'>
-      <div class="sixteen wide column">{this.props.account['user_id']}</div>
-
-                  </div>
-                  </div>
-      <div class="sixteen wide column">
-      <div className='ui center aligned grid'>
-      <div class="sixteen wide column">
-      <div style={{fontSize:'3rem'}} className='ui huge header'>Dashboard </div>
-      </div>
-
-      </div>
-      </div>
-
-
-
-      <div class="sixteen wide column">
-
-      </div>
-
-      <div class="five wide column">
-        <div className='ui grid'>
-          <div className='sixteen wide column'>
-            <div className='ui center aligned grid'>
-            <h2 className=''>Options</h2>
-            </div>
-          </div>
-
-
-          <div class="one wide column">
-          </div>
-
-          <div className="fifteen wide column">
-          <table className='ui celled center aligned table'>
-            <thead><tr>
-              <th className='center aligned'>Select Statement</th>
-              <th className='center aligned'>Payout</th>
-              </tr></thead>
-              <tr>
-                <td className='center aligned' className='three wide'>
-                <select className='ui dropdown' onChange={this.handleYearChange}>
-                  <option value={this.props.selected_year}>{this.props.selected_year}</option>
-                  <option value="all">All</option>
-                  <option value="2021">2021</option>
-                  <option value="2022">2022</option>
-                  <option value="2022">2023</option>
-                  <option value="2022">2024</option>
-                  <option value="2022">2025</option>
-
-
-                </select>
-                </td>
-                <td className='center aligned'>
-                  <h1 >{this.renderTotal()}</h1>
-                </td>
-              </tr>
-
-
-            <tr>
-            <td className='center aligned'>
-            <select className='ui dropdown' onChange={this.handleChange}>
-              <option value={monthmap[this.props.selected_month]}>{monthmap[this.props.selected_month]}</option>
-              <option value="all">Year To Date</option>
-              <option value="1">January</option>
-              <option value="2">February</option>
-              <option value="3">March</option>
-              <option value="4">April</option>
-              <option value="5">May</option>
-              <option value="6">June</option>
-              <option value="7">July</option>
-              <option value="8">August</option>
-              <option value="9">September</option>
-              <option value="10">October</option>
-              <option value="11">November</option>
-              <option value="12">December</option>
-
-            </select>
-            </td>
-            <td className='center aligned'>
-              <button className=' ui button positive' onClick={this.generateStatement}>Download statement for {monthmap[this.props.selected_month]} </button>
-            </td>
-            </tr>
-
-          </table>
-        </div>
-      </div>
-    </div>
-
-      <div class="six wide column">
-        <div className='ui center aligned grid'>
-
-          {this.generateCharts()}
-
-        </div>
-      </div>
-        <div class="five wide column">
-
-        <div className='ui grid'>
-          <div className='fifteen wide column'>
-            <div className='ui center aligned grid'>
-              <h2 className=''>Goals</h2>
-
-            </div>
-          </div>
-
-            <div className="fifteen wide column">
-
-            <table className='ui celled center aligned table'>
-
-            {this.renderGoalHead()}
-
-            {this.renderGoals()}
-            </table>
-
-            </div>
-
-          </div>
-          <div className='one wide column'></div>
-        </div>
-
-
-      <div class="sixteen wide column"></div>
-
-      <div class="sixteen wide column">
-
-      <div className='ui center aligned grid'>
-      <h2 className=''>Summary Performance</h2>
-      </div>
-      </div>
-      <div class="sixteen wide column"></div>
-
-      <div className='ui container containermargin'>
-        <table className='ui celled center aligned table'>
-        <thead>
-          <tr>
-            <th className='center aligned'><strong>Attainment Rule</strong></th>
-            <th className='center aligned'><strong>Attainment</strong></th>
-            <th className='center aligned'><strong>Payout</strong></th>
-
-          </tr>
-          </thead>
-          {this.renderSummary()}
-        </table>
-        </div>
-        <div class="sixteen wide column"></div>
-        <div class="sixteen wide column"></div>
-        <div class="sixteen wide column">
-        <div className='ui center aligned grid'>
-        <h2 className=''>Detailed Transaction Listing</h2>
-        </div>
-        </div>
-        <div class="sixteen wide column"></div>
-        <div style={{overflow:'auto', whitespace:'nowrap'}} className='ui container containermargin'>
-        <table  className='ui celled unstackable single line table'>
-
-          <thead>
-            <tr>
-              <td className='center aligned'>
-                <div class="ui input">
-                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('payout_id',e.target.value))} placeholder="Search..."/>
-                </div>
-              </td>
-              <td className='center aligned'>
-                <div class="ui input">
-                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('trans_id',e.target.value))} placeholder="Search..."/>
-                </div>
-              </td>
-              <td className='center aligned'>
-                <div class="ui input">
-                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('seller_id',e.target.value))} placeholder="Search..."/>
-                </div>
-              </td>
-              <td className='center aligned'>
-                <div class="ui input">
-                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('payee',e.target.value))} placeholder="Search..."/>
-                </div>
-              </td>
-              <td className='center aligned'>
-                <div class="ui input">
-                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('revenue',e.target.value))} placeholder="Search..."/>
-                </div>
-              </td>
-              <td className='center aligned'>
-                <div class="ui input">
-                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('gp',e.target.value))} placeholder="Search..."/>
-                </div>
-              </td>
-              <td className='center aligned'>
-                <div class="ui input">
-                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('attainment',e.target.value))} placeholder="Search..."/>
-                </div>
-              </td>
-              <td className='center aligned'>
-
-              </td>
-              <td className='center aligned'>
-                <div class="ui input">
-                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('payout',e.target.value))} placeholder="Search..."/>
-                </div>
-              </td>
-              <td className='center aligned'>
-                <div class="ui input">
-                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('split_percent',e.target.value))} placeholder="Search..."/>
-                </div>
-              </td>
-              <td className='center aligned'>
-                <div class="ui input">
-                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('location',e.target.value))} placeholder="Search..."/>
-                </div>
-              </td>
-              <td className='center aligned'>
-                <div class="ui input">
-                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('payout_multiplier',e.target.value))} placeholder="Search..."/>
-                </div>
-              </td>
-              <td className='center aligned'>
-                <div class="ui input">
-                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('order_num',e.target.value))} placeholder="Search..."/>
-                </div>
-              </td>
-              <td className='center aligned'>
-                <div class="ui input">
-                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('custom_field',e.target.value))} placeholder="Search..."/>
-                </div>
-              </td>
-              <td className='center aligned'>
-                <div class="ui input">
-                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('period_id',e.target.value))} placeholder="Search..."/>
-                </div>
-              </td>
-              <td className='center aligned'>
-                <div class="ui input">
-                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('attainment_rule',e.target.value))} placeholder="Search..."/>
-                </div>
-              </td>
-              <td className='center aligned'>
-              <div class="ui input">
-                <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('type',e.target.value))} placeholder="Search..."/>
-              </div>
-              </td>
-              <td className='center aligned'>
-                <div class="ui input">
-                  <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('date',e.target.value))} placeholder="Search..."/>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <th className='center aligned'><strong>Payout ID</strong></th>
-              <th className='center aligned'><strong>Transaction ID</strong></th>
-              <th className='center aligned'><strong>Seller ID</strong></th>
-              <th className='center aligned'><strong>Payee</strong></th>
-              <th className='center aligned'><strong>Revenue</strong></th>
-              <th className='center aligned'><strong>GP</strong></th>
-              <th className='center aligned'><strong>Attainment</strong></th>
-              <th className='center aligned'><strong>Rate</strong></th>
-              <th className='center aligned'><strong>Payout</strong></th>
-              <th className='center aligned'><strong>Split Percent</strong></th>
-              <th className='center aligned'><strong>Location</strong></th>
-              <th className='center aligned'><strong>Payout Multiplier</strong></th>
-              <th className='center aligned'><strong>order_num</strong></th>
-              <th className='center aligned'><strong>custom_field</strong></th>
-              <th className='center aligned'><strong>period_id</strong></th>
-              <th className='center aligned'><strong>Attainment Rule</strong></th>
-              <th className='center aligned'><strong>Type</strong></th>
-              <th className='center aligned'><strong>Date</strong></th>
-            </tr>
-          </thead>
-          <tbody>
-          {this.renderList()}
-          </tbody>
-        </table>
-        <div class="sixteen wide column">
-
-        </div>
-        <div class="sixteen wide column">
-
-        </div>
-        </div>
-
-
-        </div>)
-    }
 
 
 
@@ -1413,7 +1119,7 @@ class PayoutShow extends React.Component {
   render(){
 
 
-    if(typeof(this.props.account['user_id']) != "undefined"){
+    if(typeof(this.props.account['user_id']) != "undefined" && typeof(this.props.account['casted_user_id']) != 'undefined'){
 
           return(<div>
 
@@ -1445,10 +1151,11 @@ const mapStateToProps = (state) => {
     month: state.month.month,
     selected_month: state.account.selected_month,
     filter:state.filter.filter,
-    users:state.users.users,
+    users:state.users.users_joined,
     selected_year: state.account.selected_year,
-    goals: state.goals.goals
+    goals: state.goals.goals,
+    years:state.month.years
   }
 }
 
-export default connect(mapStateToProps, { getUsers,getPayoutsHistory,calcPlans,loadCalcs,selectMonth,getTime,getPayouts_user,clearFilter,setFilter,castUser,selectYear,getGoals })(PayoutShow)
+export default connect(mapStateToProps, { getUsers,getPayoutsHistory,calcPlans,loadCalcs,selectMonth,getTime,getPayouts_user,clearFilter,setFilter,castUser,selectYear,getGoals,getYears,getUsersJoined })(PayoutShow)

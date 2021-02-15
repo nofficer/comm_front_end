@@ -50,7 +50,7 @@ class GoalShow extends React.Component {
       check
     ){
     return (
-      <tr>
+      <tr className='' style={{'fontSize':'1.1rem'}}>
         <td className='center aligned'>{goal[0]}</td><td className='center aligned'>{goal[7]}</td><td className='center aligned'>{goal[6]}</td><td className='center aligned'>{goal[3]}</td><td className='center aligned'>{goal[4]}</td><td className='center aligned'>{goal[5]}</td><td className='center aligned'>{goal[8].toUpperCase()}</td>
         <td className='center aligned'>
         <Link onClick={(e) => e.stopPropagation()} to={`/goalShow/edit/${goal[0]}`} className='ui small button primary'>
@@ -150,6 +150,7 @@ class GoalShow extends React.Component {
 
             </tr>
           </thead>
+          
           {this.renderList()}
         </table>
 

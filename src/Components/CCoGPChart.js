@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {Bar,Pie,Doughnut,Chart,HorizontalBar} from 'react-chartjs-2';
+import {Line,Chart} from 'react-chartjs-2';
 
 
 Chart.scaleService.updateScaleDefaults('linear', {
@@ -10,7 +10,7 @@ Chart.scaleService.updateScaleDefaults('linear', {
 });
 
 
-class BarChart extends React.Component {
+class CCoGPChart extends React.Component {
 
 componentDidMount() {
 
@@ -19,17 +19,28 @@ componentDidMount() {
   render() {
     var feed = this.props.feed
     return (
-      <div>
+      <div  >
 
 
-        <Bar
-          data={feed}
+        <Line
+          data={{
+        labels: this.props.labels,
+        datasets: [
+        {
+        label: this.props.label,
+        fill:true,
+        backgroundColor: this.props.colors[0],
 
-          height={350}
+
+
+        borderColor:this.props.colors[0],
+        data: this.props.ccogp
+        }
+        ]
+        }}
+        height={'120vh'}
+
           options={{
-            hover: {
-              mode: 'new mode'
-            },
             title:{
               display:true,
               text:this.props.title,
@@ -37,22 +48,22 @@ componentDidMount() {
               fontColor: '#000000', // Default is #000000
               fontStyle: 'bold',
               fontFamily: 'Roboto',
-              position:'bottom'
+              position:'top'
             },
             legend:{
-              display:false,
+              display:true,
               position:'bottom'
             },
             elements: {
 
-  },
-  scales: {
+        },
+        scales: {
            y: {
                ticks: {
 
                    // Include a dollar sign in the ticks
                    callback: function(value, index, values) {
-                       return '$' + value;
+                       return '%' + value;
                    }
                    }
 
@@ -64,9 +75,10 @@ componentDidMount() {
 
           }}
         />
+
       </div>
     );
   }
 }
 
-export default BarChart
+export default CCoGPChart
