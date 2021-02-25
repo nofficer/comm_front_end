@@ -7,7 +7,7 @@ const INITIAL_STATE = {
   rule:{}
 }
 
-export default (state=INITIAL_STATE, action) => {
+const fn = (state=INITIAL_STATE, action) => {
   switch(action.type) {
     case GET_ATTAINMENT_RULES:
       return {...state, attainmentRules: action.payload};
@@ -23,3 +23,5 @@ export default (state=INITIAL_STATE, action) => {
       return state
   }
 }
+
+export default fn;

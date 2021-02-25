@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import history from './history'
 
 const LoaderNoButton = props => {
 
@@ -9,7 +8,7 @@ const LoaderNoButton = props => {
 
         <div class="ui active dimmer">
           <div class="ui text loader">{props.filler}</div>
-          
+
 
       <p></p>
       </div>

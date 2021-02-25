@@ -38,41 +38,41 @@ class RateTableForm extends React.Component {
 
 
   render(){
-    if(this.props.editing != "yes"){
+    if(this.props.editing !== "yes"){
       return  (
         <div>
         <div className='ui grid'>
 
-        <div class='sixteen wide column'>
+        <div className='sixteen wide column'>
 
         </div>
 
-        <div class='six wide column'>
+        <div className='six wide column'>
 
         </div>
-          <div class='four wide column'>
+          <div className='four wide column'>
           <div className='ui center aligned grid'>
             <h1 className='pagetitle'>{this.props.title}</h1>
             </div>
           </div>
-          <div class='six wide column'>
+          <div className='six wide column'>
 
           </div>
         </div>
         <div className='ui grid'>
-          <div class='sixteen wide column'>
-            <h1 className='pagetitle center aligned'></h1>
+          <div className='sixteen wide column'>
+
           </div>
         </div>
         <div className='ui grid'>
-          <div class='sixteen wide column'>
-            <h1 className='pagetitle center aligned'></h1>
+          <div className='sixteen wide column'>
+
           </div>
         </div>
 
         <div className='ui grid'>
-          <div class='sixteen wide column'>
-              <div class="ui horizontal divider">
+          <div className='sixteen wide column'>
+              <div className="ui horizontal divider">
                 *
               </div>
           </div>
@@ -80,8 +80,8 @@ class RateTableForm extends React.Component {
 
 
         <div className='ui grid'>
-          <div class='sixteen wide column'>
-            <h1 className='pagetitle center aligned'></h1>
+          <div className='sixteen wide column'>
+
           </div>
         </div>
       <form className='ui form error' onSubmit={this.props.handleSubmit(this.onSubmit)}>
@@ -113,36 +113,36 @@ class RateTableForm extends React.Component {
         <div>
         <div className='ui grid'>
 
-        <div class='sixteen wide column'>
+        <div className='sixteen wide column'>
 
         </div>
 
-        <div class='six wide column'>
+        <div className='six wide column'>
 
         </div>
-          <div class='four wide column'>
+          <div className='four wide column'>
           <div className='ui center aligned grid'>
             <h1 className='pagetitle'>{this.props.title}</h1>
             </div>
           </div>
-          <div class='six wide column'>
+          <div className='six wide column'>
 
           </div>
         </div>
         <div className='ui grid'>
-          <div class='sixteen wide column'>
-            <h1 className='pagetitle center aligned'></h1>
+          <div className='sixteen wide column'>
+
           </div>
         </div>
         <div className='ui grid'>
-          <div class='sixteen wide column'>
-            <h1 className='pagetitle center aligned'></h1>
+          <div className='sixteen wide column'>
+
           </div>
         </div>
 
         <div className='ui grid'>
-          <div class='sixteen wide column'>
-              <div class="ui horizontal divider">
+          <div className='sixteen wide column'>
+              <div className="ui horizontal divider">
                 *
               </div>
           </div>
@@ -150,8 +150,8 @@ class RateTableForm extends React.Component {
 
 
         <div className='ui grid'>
-          <div class='sixteen wide column'>
-            <h1 className='pagetitle center aligned'></h1>
+          <div className='sixteen wide column'>
+
           </div>
         </div>
       <form className='ui form error' onSubmit={this.props.handleSubmit(this.onSubmit)}>

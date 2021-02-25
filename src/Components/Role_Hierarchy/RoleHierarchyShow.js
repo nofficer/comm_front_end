@@ -31,7 +31,7 @@ class RoleHierarchyShow extends React.Component {
     var check = true
     filters.map((filter) => {
 
-      if(role[this.filterMap[filter]] == null){
+      if(role[this.filterMap[filter]] === null){
         check = false
       }
       else if(role[this.filterMap[filter]] != null){
@@ -40,7 +40,7 @@ class RoleHierarchyShow extends React.Component {
           }
       }
 
-
+      return true
         }
     )
 
@@ -49,7 +49,7 @@ class RoleHierarchyShow extends React.Component {
     ){
 
           return (
-            <tr>
+            <tr key={role['user_id']}>
               <td className='center aligned'>{role['user_id']}</td><td className='center aligned'>{role['mgr_id']}</td><td className='center aligned'>{role['level']}</td><td className='center aligned'>{role['dept']}</td>
               <td className='center aligned'>
               <Link onClick={(e) => e.stopPropagation()} to={`/RoleHierarchyShow/edit/${role['user_id']}`} className='ui small button primary'>
@@ -76,18 +76,18 @@ class RoleHierarchyShow extends React.Component {
 
 
   render(){
-    if(this.props.account['role'] == 'admin'){
+    if(this.props.account['role'] === 'admin'){
       return (<div className='ui container containermargin'>
         <div className='ui grid'>
-        <div class='sixteen wide column'></div>
+        <div className='sixteen wide column'></div>
 
-        <div class='sixteen wide column'>
+        <div className='sixteen wide column'>
         <div className='ui center aligned grid'>
           <h1 className=''>Role Hierarchy</h1>
           </div>
         </div>
-        <div class='sixteen wide column'></div>
-        <div class='sixteen wide column'></div>
+        <div className='sixteen wide column'></div>
+        <div className='sixteen wide column'></div>
 
         </div>
 
@@ -96,22 +96,22 @@ class RoleHierarchyShow extends React.Component {
           <thead>
           <tr>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('user_id',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('mgr_id',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('level',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('dept',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
@@ -126,14 +126,16 @@ class RoleHierarchyShow extends React.Component {
 
             </tr>
           </thead>
+          <tbody>
           {this.renderList()}
+          </tbody>
         </table>
 
         </div>
       )
     }
 
-    else if(typeof(this.props.account['user_id']) != "undefined"){
+    else if(typeof(this.props.account['user_id']) !== "undefined"){
       return "You do not have sufficient permissions to access this page"
     }
     else{

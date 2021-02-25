@@ -10,7 +10,7 @@ const INITIAL_STATE = {
   users_joined:[]
 }
 
-export default (state=INITIAL_STATE, action) => {
+const fn = (state=INITIAL_STATE, action) => {
   switch(action.type) {
     case GET_USERS_JOINED:
       return {...state,users_joined:action.payload}
@@ -38,3 +38,5 @@ export default (state=INITIAL_STATE, action) => {
       return state
   }
 }
+
+export default fn;

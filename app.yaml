@@ -2,8 +2,6 @@ env: standard
 runtime: nodejs10
 service: fe
 
-vpc_access_connector:
-  name: projects/easycomp-298200/locations/us-central1/connectors/feconn
 
 
 

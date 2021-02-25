@@ -23,14 +23,14 @@ class Login extends React.Component {
       this.props.selectMonth(dateData['current.month_id'].toString())
       this.props.selectYear(dateData['cal_year'].toString())
       this.props.login(formValues,this.save)
-      history.push({pathname:'/report',state:{detail:this.props.month}})
+      history.push({pathname:'/',state:{detail:this.props.month}})
 
 
 
   }
 
   onClick = () => {
-    if(this.save=='no'){
+    if(this.save==='no'){
       this.save='yes'
     }
     else {
@@ -39,11 +39,11 @@ class Login extends React.Component {
   }
 
   render(){
-    if(this.props.account == "wrong_password"){
+    if(this.props.account === "wrong_password"){
 
       return <LoginModal onDismiss={(e) => e.stopPropagation(history.push('/'))} title="Log in to EasyComp" onSubmit={this.onSubmit} issue='Incorrect Password'/>
     }
-    else if(this.props.account == "wrong_username"){
+    else if(this.props.account === "wrong_username"){
 
       return <LoginModal onDismiss={(e) => e.stopPropagation(history.push('/'))} title="Log in to EasyComp" onSubmit={this.onSubmit} issue='Username not found'/>
     }

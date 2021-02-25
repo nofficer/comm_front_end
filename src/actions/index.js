@@ -1,10 +1,42 @@
-import { GET_PLANS, GET_USERS,  GET_USER, CREATE_USER, EDIT_USER, CREATE_CALC, CHANGE_DONE, GO_PUSH, CREATE_PLAN, EDIT_PLAN, GET_ATTAINMENT_RULES, CREATE_ATTAINMENT_RULE, EDIT_ATTAINMENT_RULE, GET_TRANS, CREATE_TRANS, EDIT_TRANS, GET_TRAN, DELETE_TRANS, DELETE_ATTAINMENT_RULE,DELETE_PLAN,DELETE_USER,GET_ATTAINMENT_RULE,GET_PLAN,UPLOAD_FILE,ONCHANGE_FILE,CHECK_RULE_USE,CHECK_PLAN_USE,CHECK_USER_USE,GET_RATE_TABLE,GET_RATE_TABLES,CREATE_RATE_TABLE,EDIT_RATE_TABLE,DELETE_RATE_TABLE,ERROR_HANDLE,CALC_PLANS,GET_PAYOUTS,EDIT_PAYOUT,GET_PAYOUT,DELETE_PAYOUT,LOAD,GET_TIME,UPDATE_TIME,REVERT_TIME,LOGIN,SET_ACCOUNT,LOGOUT,GET_PAYOUTS_USER,GET_GOAL,GET_GOALS,CREATE_GOAL,EDIT_GOAL,DELETE_GOAL,CLEAR,SELECT_MONTH,UPDATE_ACCOUNT,GET_PAYROLL,SET_FILTER,GET_FILTER,CLEAR_FILTER,LOADING,
+import { GET_PLANS, GET_USERS,  GET_USER, CREATE_USER, EDIT_USER, CREATE_CALC, CHANGE_DONE, CREATE_PLAN, EDIT_PLAN, GET_ATTAINMENT_RULES, CREATE_ATTAINMENT_RULE, EDIT_ATTAINMENT_RULE, GET_TRANS, CREATE_TRANS, EDIT_TRANS, GET_TRAN, DELETE_TRANS, DELETE_ATTAINMENT_RULE,DELETE_PLAN,DELETE_USER,GET_ATTAINMENT_RULE,GET_PLAN,UPLOAD_FILE,CHECK_RULE_USE,CHECK_PLAN_USE,CHECK_USER_USE,GET_RATE_TABLE,GET_RATE_TABLES,CREATE_RATE_TABLE,EDIT_RATE_TABLE,DELETE_RATE_TABLE,CALC_PLANS,GET_PAYOUTS,EDIT_PAYOUT,GET_PAYOUT,DELETE_PAYOUT,LOAD,GET_TIME,UPDATE_TIME,REVERT_TIME,LOGIN,LOGOUT,GET_PAYOUTS_USER,GET_GOAL,GET_GOALS,CREATE_GOAL,EDIT_GOAL,DELETE_GOAL,CLEAR,SELECT_MONTH,UPDATE_ACCOUNT,GET_PAYROLL,SET_FILTER,GET_FILTER,CLEAR_FILTER,LOADING,
 
-GET_LIABILITY,GET_LIABILITIES,EDIT_LIABILITY,DELETE_LIABILITY,CAST_USER,UPDATE_FYE,SELECT_YEAR,CLEAR_TRANS,CALC_STATUS,GET_YEARS,GET_SUMMARY_DATA,GET_PLAN_SUMMARY,GET_TOP_EARNERS,GET_ROLE_HIERARCHY,CREATE_ROLE_HIERARCHY,EDIT_ROLE_HIERARCHY,DELETE_ROLE_HIERARCHY,GET_ROLE_HIERARCHIES,GET_USERS_JOINED,GET_AUTO_TRANS,
+GET_LIABILITY,GET_LIABILITIES,EDIT_LIABILITY,DELETE_LIABILITY,CAST_USER,UPDATE_FYE,SELECT_YEAR,CLEAR_TRANS,CALC_STATUS,GET_YEARS,GET_SUMMARY_DATA,GET_PLAN_SUMMARY,GET_TOP_EARNERS,GET_ROLE_HIERARCHY,CREATE_ROLE_HIERARCHY,EDIT_ROLE_HIERARCHY,DELETE_ROLE_HIERARCHY,GET_ROLE_HIERARCHIES,GET_USERS_JOINED,GET_AUTO_TRANS,QBO_CALLBACK,GET_PAYOUTS_SHOW,GET_PAYOUTS_HISTORY_SHOW,
 CHECK_USER } from './types'
 import db from '../apis/db'
 import history from '../history'
+import axios from 'axios'
 
+const {GoogleAuth} = require('google-auth-library');
+const auth = new GoogleAuth();
+
+const serviceUrl = 'https://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/identity?audience=https://bend-dzte5e25qq-uc.a.run.app'
+const proxycheck = axios.create({
+  baseURL: 'https://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/identity?audience=https://bend-dzte5e25qq-uc.a.run.app',
+  headers: {
+        'Metadata-Flavor': 'Google'
+    }
+})
+
+
+export const getProxy = () => {
+  return async (dispatch) => {
+    const response = await proxycheck.get()
+    console.log(response)
+  }
+}
+
+
+
+export const callback_action_qbo = (URL) => {
+  return async (dispatch) => {
+    console.log('/callback' + URL)
+    const response = await db.get('/callback' + URL)
+
+    dispatch({type:QBO_CALLBACK, payload: response.data})
+    history.push('/transShow')
+    //REDIRECT ELSEWHERE
+  }
+}
 
 export const getAutoTrans = () => {
   return async (dispatch) => {
@@ -187,7 +219,7 @@ export const updateAccount = (formValues) => {
   return async (dispatch) => {
     const response = await db.post('/updateAccount', formValues)
     dispatch({type:UPDATE_ACCOUNT})
-    if(response.data == 'wrong_password'){
+    if(response.data === 'wrong_password'){
       history.push({pathname:'/passwordError',state:{detail:'Incorrect Password - Password not changed, please try again'}})
     }
     else{
@@ -310,6 +342,7 @@ export const login = (formValues,save)=>{
 
     }
 
+
   }
 }
 
@@ -361,7 +394,16 @@ export const getPayoutsHistory = (selection) => {
   return async (dispatch) => {
     const response = await db.post('/getPayoutsHistory',selection)
     dispatch({type:GET_PAYOUTS, payload: response.data})
-    console.log('history has ran')
+
+  }
+}
+
+export const getPayoutsHistory_show = (selection) => {
+
+  return async (dispatch) => {
+    const response = await db.post('/getPayoutsHistory',selection)
+    dispatch({type:GET_PAYOUTS_HISTORY_SHOW, payload: response.data})
+
   }
 }
 
@@ -383,7 +425,16 @@ export const getPayouts = () => {
   return async (dispatch) => {
     const response = await db.get('/getPayouts')
     dispatch({type:GET_PAYOUTS, payload: response.data})
-    console.log('action has ran')
+
+  }
+}
+
+export const getPayouts_show = () => {
+
+  return async (dispatch) => {
+    const response = await db.get('/getPayouts')
+    dispatch({type:GET_PAYOUTS_SHOW, payload: response.data})
+
   }
 }
 
@@ -496,7 +547,7 @@ export const uploadFile = (data,type) => {
     var ignored = response.data.slice(4,).split('-')[0]
     var updated = response.data.slice(4,).split('-')[1]
 
-    if(response.data.slice(0,4) == "Done"){
+    if(response.data.slice(0,4) === "Done"){
       history.push({pathname:'/ImportSuccess',state:{detail:response.data,ignored:ignored,updated:updated,url:url}})
     }
     else{

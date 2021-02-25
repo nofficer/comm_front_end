@@ -1,6 +1,6 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import {Bar,Pie,Doughnut,Chart,HorizontalBar} from 'react-chartjs-2';
+
+import {Bar,Chart} from 'react-chartjs-2';
 
 
 Chart.scaleService.updateScaleDefaults('linear', {

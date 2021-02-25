@@ -1,15 +1,27 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { uploadFile,onChangeFile,getPayouts_cy,getSummaryData,getYears,getPlanSummary,getTopEarners } from '../actions'
-import UploadForm from './UploadForm'
-import Example from './myhook'
-import { Header } from 'semantic-ui-react'
+import { uploadFile,onChangeFile,getPayouts_cy,getSummaryData,getYears,getPlanSummary,getTopEarners,getProxy } from '../actions'
+
+
 import LineChart from './LineChart'
 import PieChart from './PieChart'
 import history from '../history'
 import monthmap from './monthmap'
+import axios from 'axios'
+
+
 
 import CCoGPChart from './CCoGPChart'
+
+
+import FireAuth from './Accounts/FireAuth'
+
+
+
+
+
+
+
 
 function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
   try {
@@ -30,6 +42,7 @@ function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
 
 class Landing extends React.Component {
   componentDidMount(){
+    this.props.getProxy()
     this.props.getYears()
     this.props.getSummaryData({'requested_year':this.props.month['cal_year']})
     this.props.getPlanSummary({'requested_year':this.props.month['cal_year']})
@@ -44,7 +57,7 @@ class Landing extends React.Component {
 
   createYearOption(year){
     return (
-      <option value={year}>{year}</option>
+      <option  key={year} value={year}>{year}</option>
     )
   }
 
@@ -60,7 +73,7 @@ class Landing extends React.Component {
 
   renderEarnItem(earner){
     return (
-      <tr>
+      <tr key={earner[0]}>
       <td>{earner[0]}</td><td>${formatMoney(earner[1])}</td>
       </tr>
     )
@@ -89,10 +102,12 @@ class Landing extends React.Component {
     if(typeof(transactions) != 'undefined' && typeof(payouts) != 'undefined'){
       transactions.map((tx) => {
         trans_results[tx.month-1]+=tx.gp
+        return true
       })
 
       payouts.map((pay) => {
         pay_results[pay.month-1]+=pay.payout
+        return true
       })
     }
 
@@ -127,7 +142,7 @@ class Landing extends React.Component {
     this.props.getPlanSummary({'requested_year':e.target.value})
     this.props.getTopEarners({'requested_year':e.target.value})
     var title = e.target.value
-    if(e.target.value=='all'){
+    if(e.target.value==='all'){
       title = 'All Time'
     }
 
@@ -141,13 +156,13 @@ class Landing extends React.Component {
 
   render(){
     var sum_data = this.sortSummaryData()
-    var plan_sum = this.props.plan_summary
 
-    if(this.props.account['role'] == 'seller'){
+    if(this.props.account['role'] ==='seller'){
+
 
       return (<div className='ui grid'>
       <div className='sixteen wide column'></div>
-
+      <div className='sixteen wide column'></div>
 
       <div className='sixteen wide column'>
       <div className='ui center aligned grid'>
@@ -181,8 +196,7 @@ class Landing extends React.Component {
 
             </div>
             <div className='six wide column'>
-
-
+              <div onClick={(e) => e.stopPropagation(history.push({pathname:'/report',state:{detail:this.props.month}}))} className="ui fluid primary button">Commissions Report</div>
             </div>
             <div className='five wide column'>
 
@@ -204,7 +218,7 @@ class Landing extends React.Component {
         </div>
       )
     }
-    else if(this.props.account['role'] == 'admin'){
+    else if(this.props.account['role'] ==='admin'){
 
       sum_data['ccogp'] = sum_data['ccogp'].map((x) => {
         return(Math.round((x + Number.EPSILON) ))
@@ -236,8 +250,8 @@ class Landing extends React.Component {
       </div>
 
 
-        <div class='sixteen wide column'>
-          <div class="ui horizontal divider">
+        <div className='sixteen wide column'>
+          <div className="ui horizontal divider">
           *
           </div>
         </div>
@@ -280,11 +294,11 @@ class Landing extends React.Component {
                       <div className='sixteen wide column ui placeholder segment'>
 
 
-                        <LineChart title={["Gross Profit Vs. Total Payout"]} height='30em' payouts={sum_data['payouts']} profits={sum_data['transactions']} labels={sum_data['labels']} />
+                        <LineChart title={["Gross Profit Vs. Total Payout"]}  payouts={sum_data['payouts']} profits={sum_data['transactions']} labels={sum_data['labels']} />
                       </div>
 
                       <div className='sixteen wide column ui placeholder segment'>
-                        <CCoGPChart title={"Comp Cost of GP"} height='20em' label='CCOGP (Pay as a % of Gross Profit)' labels={sum_data['labels']}  colors={['rgb(0, 0, 255,0.1)','rgb(0, 0, 255)']} ccogp={sum_data['ccogp']}/>
+                        <CCoGPChart title={"Comp Cost of GP"} label='CCOGP (Pay as a % of Gross Profit)' labels={sum_data['labels']}  colors={['rgb(0, 0, 255,0.1)','rgb(0, 0, 255)']} ccogp={sum_data['ccogp']}/>
                       </div>
                   </div>
                 </div>
@@ -324,7 +338,9 @@ class Landing extends React.Component {
                                 <th>Earnings</th>
                               </tr>
                           </thead>
+                          <tbody>
                           {this.renderTopEarners()}
+                          </tbody>
                         </table>
                       </div>
                     </div>
@@ -371,7 +387,7 @@ class Landing extends React.Component {
         </div>
       )
     }
-    if(typeof(this.props.account['role']) == 'undefined'){
+    if(typeof(this.props.account['role']) ==='undefined'){
       return(<div className='ui grid'>
       <div className='sixteen wide column'></div>
       <div className='sixteen wide column'></div>
@@ -383,8 +399,15 @@ class Landing extends React.Component {
         <div  className='ui header bigfont'>EasyComp</div>
         </div></div>
 
-        <div className='sixteen wide column'></div>
-        <div className='sixteen wide column'></div>
+        <div className='sixteen wide column'>
+
+
+
+        </div>
+        <div className='sixteen wide column'>
+          <FireAuth/>
+
+        </div>
         <div className='sixteen wide column'></div>
         <div className='sixteen wide column'></div>
 
@@ -442,4 +465,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, {uploadFile,onChangeFile,getPayouts_cy,getSummaryData,getYears,getPlanSummary,getTopEarners})(Landing)
+export default connect(mapStateToProps, {uploadFile,onChangeFile,getPayouts_cy,getSummaryData,getYears,getPlanSummary,getTopEarners,getProxy})(Landing)

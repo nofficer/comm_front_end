@@ -1,14 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { getTime,updateTime,revertTime,getPayroll,selectMonth,getUsers,castUser,checkCalcStatus,calcPlans,loadCalcs,getPlans,clearError } from '../../actions'
-import history from '../../history'
+
 import Modal from '../../Modal'
 import Login from '../Accounts/Login'
 import Loader from '../../Loader'
 
 
-import XLSX from 'xlsx';
-import monthmap from '../monthmap'
 
 
 
@@ -44,9 +42,9 @@ class RunCalcs extends React.Component {
 
       return(
           <React.Fragment>
-          <div className='sixteen wide column'>
-            <div onClick={this.runCalc} className='ui fluid button positive'>Run Calculations <i class="calculator icon   "></i></div>
-          </div>
+            <div className='sixteen wide column'>
+              <div onClick={this.runCalc} className='ui fluid button positive'>Run Calculations <i className="calculator icon   "></i></div>
+            </div>
 
           </React.Fragment>
 
@@ -86,11 +84,11 @@ class RunCalcs extends React.Component {
   renderPlanItem(plan){
 
     return(
-      <React.Fragment>
+      <React.Fragment key={plan[0]}>
       <div className='three wide column'></div>
       <div className='ten wide column'>
         <div className="ui toggle checkbox">
-          <input value={plan[0]} onClick={(e) => e.stopPropagation(this.addPlan(e))} type="checkbox" name={plan[0]}/>
+          <input  value={plan[0]} onClick={(e) => e.stopPropagation(this.addPlan(e))} type="checkbox" name={plan[0]}/>
           <label>{plan[1]}</label>
         </div>
       </div>
@@ -110,17 +108,17 @@ class RunCalcs extends React.Component {
     }
     else{
 
-      if(this.props.calc == 'Running'){
+      if(this.props.calc === 'Running'){
         return (
           <Loader filler="Calculations Running - Please check back later..."/>)
         }
-      else if(this.props.account['role'] == 'admin' && this.props.errors !='goal'){
+      else if(this.props.account['role'] === 'admin' && this.props.errors !=='goal'){
         return(
         <div className='ui container '>
           <div className='ui grid'>
-            <div class='sixteen wide column'></div>
-            <div class='sixteen wide column'></div>
-          <div class='sixteen wide column'>
+            <div className='sixteen wide column'></div>
+            <div className='sixteen wide column'></div>
+          <div className='sixteen wide column'>
             <div className='ui center aligned grid'>
               <h1 className=''>
               Run Calculations
@@ -128,19 +126,19 @@ class RunCalcs extends React.Component {
               </h1>
             </div>
           </div>
-          <div class='sixteen wide column'></div>
-          <div class='five wide column'></div>
-          <div class='six wide column'>
+          <div className='sixteen wide column'></div>
+          <div className='five wide column'></div>
+          <div className='six wide column'>
 
               <div onClick={this.runAllCalc} className='ui fluid button blue'>Run All Plans </div>
 
           </div>
 
-          <div class='five wide column'></div>
-            <div class='sixteen wide column'><div class="ui horizontal divider">
+          <div className='five wide column'></div>
+            <div className='sixteen wide column'><div className="ui horizontal divider">
             *
             </div></div>
-            <div class='sixteen wide column'></div>
+            <div className='sixteen wide column'></div>
             <div className='five wide column'></div>
             <div className='six wide column ui placeholder segment'>
 
@@ -162,13 +160,13 @@ class RunCalcs extends React.Component {
       )
 
       }
-      else if(this.props.errors == "goal") {
+      else if(this.props.errors === "goal") {
 
         return<Modal  onDismiss={() => this.props.clearError()} title="Calculation Error" content="Please ensure all users on a plan with goal_use set to 'Yes' have a goal for the corresponding attainment rule and period"/>
 
       }
 
-      else if(typeof(this.props.account['role']) != "undefined"){
+      else if(typeof(this.props.account['role']) !== "undefined"){
         return "You do not have sufficient permissions to access this page"
       }
       else{

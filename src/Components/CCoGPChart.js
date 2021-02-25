@@ -1,5 +1,5 @@
 import React from 'react'
-import { connect } from 'react-redux'
+
 import {Line,Chart} from 'react-chartjs-2';
 
 
@@ -17,7 +17,7 @@ componentDidMount() {
 }
 
   render() {
-    var feed = this.props.feed
+
     return (
       <div  >
 
@@ -38,7 +38,6 @@ componentDidMount() {
         }
         ]
         }}
-        height={'120vh'}
 
           options={{
             title:{

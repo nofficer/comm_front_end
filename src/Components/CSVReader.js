@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { uploadFile,onChangeFile,getTime,loading} from '../actions'
-import Modal from '../Modal'
+import { uploadFile,getTime,loading} from '../actions'
+
 import { CSVReader } from 'react-papaparse'
 import history from '../history'
-import { Radio } from 'semantic-ui-react'
+
 
 const buttonRef = React.createRef()
 var importType = ''
@@ -14,7 +14,7 @@ var dupType = 'ignore'
 class CSVReaderV extends Component {
   componentDidMount(){
     this.props.getTime()
-    const my_data = []
+
   }
 
   handleOpenDialog = (e) => {
@@ -42,16 +42,21 @@ class CSVReaderV extends Component {
   }
 
   handleSubmit = () => {
-
+    var numchecker = true
+    var datechecker = true
+    var wrongnumindex = []
+    var wrongdateindex = []
+    var i;
+    var p;
 
     //DEALS UPLOAD WITH VALIDATION
-    if(importType == 'Deals'){
+    if(importType === 'Deals'){
       //TYPE CHECKING BELOW
-                var numchecker = true
-                var datechecker = true
-                var wrongnumindex = []
-                var wrongdateindex = []
-                var i;
+              numchecker = true
+              datechecker = true
+              wrongnumindex = []
+              wrongdateindex = []
+                i = 0
                 for (i=0;i < this.my_data.length; i++){
                   if(this.isNumeric(this.my_data[i]["revenue"]) && this.isNumeric(this.my_data[i]["gp"])){
 
@@ -64,7 +69,7 @@ class CSVReaderV extends Component {
 
                 }
 
-                var p;
+                p = 0
                 for (p=0;p < this.my_data.length; p++){
 
 
@@ -86,10 +91,10 @@ class CSVReaderV extends Component {
                   this.props.uploadFile(this.my_data,'trans')
                   this.props.loading()
                 }
-                else if(numchecker==false&&datechecker==true){
+                else if(numchecker===false&&datechecker===true){
                   history.push({pathname:'/ImportError',state:{detail:`Wrong number format at line(s)${wrongnumindex}`}})
                 }
-                else if (datechecker==false&&numchecker==true){
+                else if (datechecker===false&&numchecker===true){
 
                   history.push({pathname:'/ImportError',state:{detail:`Wrong date format at line(s) OR invalid date outside current period at line(s) ${wrongdateindex}`}})
                 }
@@ -100,13 +105,13 @@ class CSVReaderV extends Component {
               }
 
   //RATES UPLOAD VALIDATION AND EXEUCTION
-    else if(importType == 'Rates'){
+    else if(importType === 'Rates'){
       //TYPE CHECKING BELOW
-      var numchecker = true
-      var datechecker = true
-      var wrongnumindex = []
-      var wrongdateindex = []
-      var i;
+      numchecker = true
+      datechecker = true
+      wrongnumindex = []
+      wrongdateindex = []
+      i = 0
       for (i=0;i < this.my_data.length; i++){
         if(this.isNumeric(this.my_data[i]["attainment_rule_id"]) && this.isNumeric(this.my_data[i]["attain_start"]) && this.isNumeric(this.my_data[i]["attain_end"]) && this.isNumeric(this.my_data[i]["tier"]) && this.isNumeric(this.my_data[i]["rate"])){
 
@@ -118,7 +123,7 @@ class CSVReaderV extends Component {
 
       }
 
-      var p;
+      p = 0
       for (p=0;p < this.my_data.length; p++){
 
         if(this.isValidDate(this.my_data[p]["start"]) && this.isValidDate(this.my_data[p]["end"]) ){
@@ -137,10 +142,10 @@ class CSVReaderV extends Component {
         this.props.uploadFile(this.my_data,'rateTable')
         this.props.loading()
         }
-      else if(numchecker==false&&datechecker==true){
+      else if(numchecker ===  false&&datechecker ===  true){
           history.push({pathname:'/ImportError',state:{detail:`Wrong number format  ${wrongnumindex}`}})
         }
-      else if (datechecker==false&&numchecker==true){
+      else if (datechecker ===  false&&numchecker ===  true){
 
         history.push({pathname:'/ImportError',state:{detail:`Wrong date format  ${wrongdateindex}`}})
       }
@@ -150,12 +155,12 @@ class CSVReaderV extends Component {
     }
 
 //USERS UPLOAD EXECUTION WITH NO VALIDATION
-    else if(importType =='Users'){
-      var numchecker = true
-      var datechecker = true
-      var wrongnumindex = []
-      var wrongdateindex = []
-      var i;
+    else if(importType  ===  'Users'){
+      numchecker = true
+      datechecker = true
+      wrongnumindex = []
+      wrongdateindex = []
+      i = 0
       for (i=0;i < this.my_data.length; i++){
         if(this.isNumeric(this.my_data[i]["plan_id"])) {
 
@@ -173,10 +178,10 @@ class CSVReaderV extends Component {
         this.props.uploadFile(this.my_data,'user')
         this.props.loading()
         }
-      else if(numchecker==false&&datechecker==true){
+      else if(numchecker ===  false&&datechecker ===  true){
           history.push({pathname:'/ImportError',state:{detail:`Wrong number format  ${wrongnumindex}`}})
         }
-      else if (datechecker==false&&numchecker==true){
+      else if (datechecker ===  false&&numchecker ===  true){
 
         history.push({pathname:'/ImportError',state:{detail:`Wrong date format  ${wrongdateindex}`}})
       }
@@ -189,12 +194,12 @@ class CSVReaderV extends Component {
 
     }
 
-    else if(importType=='Goals'){
-      var numchecker = true
-      var datechecker = true
-      var wrongnumindex = []
-      var wrongdateindex = []
-      var p;
+    else if(importType ===  'Goals'){
+      numchecker = true
+      datechecker = true
+      wrongnumindex = []
+      wrongdateindex = []
+      p = 0
       for (p=0;p < this.my_data.length; p++){
 
         if(this.isValidDate(this.my_data[p]['start']) && this.isValidDate(this.my_data[p]['end']) ){
@@ -209,7 +214,7 @@ class CSVReaderV extends Component {
         }
       }
 
-      var i;
+      i = 0
       for (i=0;i < this.my_data.length; i++){
         if(this.isNumeric(this.my_data[i]["goal"]) && this.isNumeric(this.my_data[i]["attainment_rule_id"])){
 
@@ -227,10 +232,10 @@ class CSVReaderV extends Component {
         this.props.uploadFile(this.my_data,'goal')
         this.props.loading()
         }
-      else if(numchecker==false&&datechecker==true){
+      else if(numchecker ===  false&&datechecker ===  true){
           history.push({pathname:'/ImportError',state:{detail:`Wrong number format  ${wrongnumindex}`}})
         }
-      else if (datechecker==false&&numchecker==true){
+      else if (datechecker ===  false&&numchecker ===  true){
 
         history.push({pathname:'/ImportError',state:{detail:`Wrong date format  ${wrongdateindex}`}})
       }
@@ -240,21 +245,21 @@ class CSVReaderV extends Component {
 
 
     }
-    else if(importType =='Accounts'){
+    else if(importType  ===  'Accounts'){
       this.my_data.push({dupType:dupType})
       this.my_data.push({table: "accounts"})
       this.props.uploadFile(this.my_data,'user') //Second paramter tells action where to navigate to after import
       this.props.loading()
     }
 
-    else if(importType =='Role_Hierarchies'){
+    else if(importType  ===  'Role_Hierarchies'){
 
-      var numchecker = true
+      numchecker = true
 
-      var wrongnumindex = []
+      wrongnumindex = []
 
 
-      var i;
+      i = 0
       for (i=0;i < this.my_data.length; i++){
         if(this.isNumeric(this.my_data[i]["level"]) ){
 
@@ -302,7 +307,7 @@ isWithinPeriod(dateString)
 
 
     // First check for the pattern
-    if(!/^\d{4}\-\d{1,2}\-\d{1,2}$/.test(dateString))
+    if(!/^\d{4}-\d{1,2}-\d{1,2}$/.test(dateString))
         return false;
 
     // Parse the date parts to integers
@@ -310,16 +315,16 @@ isWithinPeriod(dateString)
 
     var year = parseInt(parts[0], 10);
     var month = parseInt(parts[1], 10);
-    var day = parseInt(parts[2], 10);
+
 
     // Check the ranges of month and year
-    if(year < 1000 || year > 3000 || month == 0 || month > 12)
+    if(year < 1000 || year > 3000 || month === 0 || month > 12)
         return false;
 
     var monthLength = [ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
 
     // Adjust for leap years
-    if(year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
+    if(year % 400 === 0 || (year % 100 !== 0 && year % 4 === 0))
         monthLength[1] = 29;
 
     if(year<this.props.month['cal_year']){
@@ -340,7 +345,7 @@ isValidDate(dateString)
 
 
     // First check for the pattern
-    if(!/^\d{4}\-\d{1,2}\-\d{1,2}$/.test(dateString))
+    if(!/^\d{4}-\d{1,2}-\d{1,2}$/.test(dateString))
         return false;
 
     // Parse the date parts to integers
@@ -351,13 +356,13 @@ isValidDate(dateString)
     var day = parseInt(parts[2], 10);
 
     // Check the ranges of month and year
-    if(year < 1000 || year > 3000 || month == 0 || month > 12)
+    if(year < 1000 || year > 3000 || month === 0 || month > 12)
         return false;
 
     var monthLength = [ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
 
     // Adjust for leap years
-    if(year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
+    if(year % 400 === 0 || (year % 100 !== 0 && year % 4 === 0))
         monthLength[1] = 29;
 
 
@@ -489,7 +494,7 @@ isValidDate(dateString)
             </button>
 
           </aside>
-          <select class="ui dropdown" onChange={this.handleChange}>
+          <select className="ui dropdown" onChange={this.handleChange}>
             <option value="error">Select an import type</option>
             <option value="Deals">Transactions</option>
             <option value="Rates">Rates</option>
@@ -498,7 +503,7 @@ isValidDate(dateString)
             <option value="Accounts">Accounts</option>
             <option value="Role_Hierarchies">Role Hierarchy</option>
           </select>
-          <select class="ui dropdown" onChange={this.handleDuplicate}>
+          <select className="ui dropdown" onChange={this.handleDuplicate}>
             <option value="ignore">On duplicate...</option>
             <option value="update">Update</option>
             <option value="ignore">Ignore</option>

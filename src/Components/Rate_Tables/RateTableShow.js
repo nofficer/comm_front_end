@@ -58,7 +58,7 @@ class RateTableShow extends React.Component {
     var check = true
     filters.map((filter) => {
 
-      if(rateTable[this.filterMap[filter]] == null){
+      if(rateTable[this.filterMap[filter]] === null){
         check = false
       }
       else if(rateTable[this.filterMap[filter]] != null){
@@ -67,7 +67,7 @@ class RateTableShow extends React.Component {
           }
       }
 
-
+      return true
         }
     )
 
@@ -76,7 +76,7 @@ class RateTableShow extends React.Component {
     ){
 
           return (
-            <tr>
+            <tr key={rateTable[0]}>
               <td className='center aligned'>{rateTable[0]}</td><td className='center aligned'>{rateTable[10]}</td><td className='center aligned'>{rateTable[2]}</td><td className='center aligned'>{rateTable[3]}</td><td className='center aligned'>{rateTable[4]}</td><td className='center aligned'>{formatMoney(rateTable[5])}</td><td className='center aligned'>{formatMoney(rateTable[6])}</td><td className='center aligned'>{rateTable[7]}</td><td className='center aligned'>{rateTable[8].substring(0, rateTable[8].length - 3)}</td>
               <td className='center aligned'>
               <Link onClick={(e) => e.stopPropagation()} to={`/rateTableShow/edit/${rateTable[0]}`} className='ui small button primary'>
@@ -103,18 +103,18 @@ class RateTableShow extends React.Component {
 
 
   render(){
-    if(this.props.account['role'] == 'admin'){
+    if(this.props.account['role'] === 'admin'){
       return (<div className='ui container containermargin'>
         <div className='ui grid'>
-        <div class='sixteen wide column'></div>
+        <div className='sixteen wide column'></div>
 
-        <div class='sixteen wide column'>
+        <div className='sixteen wide column'>
         <div className='ui center aligned grid'>
           <h1 className=''>Rates</h1>
           </div>
         </div>
-        <div class='sixteen wide column'></div>
-        <div class='sixteen wide column'></div>
+        <div className='sixteen wide column'></div>
+        <div className='sixteen wide column'></div>
         </div>
 
         <table className='ui celled table'>
@@ -122,47 +122,47 @@ class RateTableShow extends React.Component {
           <thead>
           <tr>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('rate_id',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('rule_name',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('rate_type',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('start',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('end',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('attain_start',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('attain_end',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('tier',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('rate',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
@@ -182,7 +182,9 @@ class RateTableShow extends React.Component {
 
             </tr>
           </thead>
+          <tbody>
           {this.renderList()}
+          </tbody>
         </table>
 
         </div>

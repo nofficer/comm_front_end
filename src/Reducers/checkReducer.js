@@ -6,7 +6,7 @@ const INITIAL_STATE = {
   check: "Clear"
 }
 
-export default (state=INITIAL_STATE, action) => {
+const fn = (state=INITIAL_STATE, action) => {
   switch(action.type) {
     case CHECK_PLAN_USE:
       return {...state, check: action.payload};
@@ -18,3 +18,5 @@ export default (state=INITIAL_STATE, action) => {
       return state
   }
 }
+
+export default fn;

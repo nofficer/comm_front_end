@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { createGoal,getTime,getAttainmentRules,getUsers,checkCalcStatus } from '../../actions'
 import Login from '../Accounts/Login'
-import { Field, reduxForm } from 'redux-form'
+
 import Loader from '../../Loader'
 
 import GoalForm from './GoalForm'
@@ -30,8 +30,8 @@ class GoalCreate extends React.Component {
 
 
   render(){
-    if(this.props.account['role'] == 'admin'){
-      if(this.props.calc == 'Running'){
+    if(this.props.account['role'] === 'admin'){
+      if(this.props.calc === 'Running'){
         return(
           <Loader filler="Calculations Running - Please check back later..."/>
         )
@@ -44,7 +44,7 @@ class GoalCreate extends React.Component {
 
     }
 
-    else if(typeof(this.props.account['user_id']) == "number"){
+    else if(typeof(this.props.account['user_id']) !== "undefined"){
       return "You do not have sufficient permissions to access this page"
     }
     else{

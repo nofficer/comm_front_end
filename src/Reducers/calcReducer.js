@@ -8,7 +8,7 @@ const INITIAL_STATE = {
   calc : "Done",
 }
 
-export default (state=INITIAL_STATE, action) => {
+const fn = (state=INITIAL_STATE, action) => {
   switch(action.type) {
     case CREATE_CALC:
       return {...state, calc: action.payload};
@@ -26,3 +26,5 @@ export default (state=INITIAL_STATE, action) => {
       return state
   }
 }
+
+export default fn;

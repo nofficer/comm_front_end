@@ -41,8 +41,8 @@ class RateTableDelete extends React.Component {
 
   render(){
 
-    if(this.props.account['role'] == 'admin'){
-      if(this.props.calc == 'Running'){
+    if(this.props.account['role'] === 'admin'){
+      if(this.props.calc === 'Running'){
         return(
           <Loader filler="Calculations Running - Please check back later..."/>
         )

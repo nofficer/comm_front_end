@@ -10,7 +10,7 @@ const INITIAL_STATE = {
   top_earners:[]
 }
 
-export default (state=INITIAL_STATE, action) => {
+const fn = (state=INITIAL_STATE, action) => {
   switch(action.type) {
     case GET_TOP_EARNERS:
       return{...state,top_earners:action.payload}
@@ -32,3 +32,5 @@ export default (state=INITIAL_STATE, action) => {
       return state
   }
 }
+
+export default fn;

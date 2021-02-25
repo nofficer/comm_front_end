@@ -6,7 +6,7 @@ const INITIAL_STATE = {
   errors: 'None'
 }
 
-export default (state=INITIAL_STATE, action) => {
+const fn = (state=INITIAL_STATE, action) => {
   switch(action.type) {
     case CLEAR:
       return{...state,errors:"None",payouts:[]}
@@ -26,3 +26,5 @@ export default (state=INITIAL_STATE, action) => {
       return state
   }
 }
+
+export default fn;

@@ -1,6 +1,6 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import {Bar,Pie,Doughnut,Chart} from 'react-chartjs-2';
+
+import {Chart,Doughnut} from 'react-chartjs-2';
 
 
 
@@ -78,8 +78,8 @@ Chart.pluginService.register({
       // Move the center up depending on line height and number of lines
       centerY -= (lines.length / 2) * lineHeight;
 
-      for (var n = 0; n < lines.length; n++) {
-        ctx.fillText(lines[n], centerX, centerY);
+      for (var nn = 0; nn < lines.length; nn++) {
+        ctx.fillText(lines[nn], centerX, centerY);
         centerY += lineHeight;
       }
       //Draw text in center

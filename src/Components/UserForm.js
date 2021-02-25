@@ -36,40 +36,40 @@ class UserForm extends React.Component {
 
 
   render(){
-    if(this.props.editing == "yes") {
+    if(this.props.editing === "yes") {
       return (
         <div className='ui container containermargin'>
         <div className='ui grid'>
 
-        <div class='sixteen wide column'></div>
-        <div class='six wide column'>
+        <div className='sixteen wide column'></div>
+        <div className='six wide column'>
 
         </div>
-          <div class='four wide column'>
+          <div className='four wide column'>
           <div className='ui center aligned grid'>
             <div className='sixteen wide column'>
               <h1 className='pagetitle'>Editing User - {this.props.title}</h1>
               </div>
             </div>
           </div>
-          <div class='six wide column'>
+          <div className='six wide column'>
 
           </div>
         </div>
         <div className='ui grid'>
-          <div class='sixteen wide column'>
-            <h1 className='pagetitle center aligned'></h1>
+          <div className='sixteen wide column'>
+
           </div>
         </div>
         <div className='ui grid'>
-          <div class='sixteen wide column'>
-            <h1 className='pagetitle center aligned'></h1>
+          <div className='sixteen wide column'>
+
           </div>
         </div>
 
         <div className='ui grid'>
-          <div class='sixteen wide column'>
-              <div class="ui horizontal divider">
+          <div className='sixteen wide column'>
+              <div className="ui horizontal divider">
                 *
               </div>
           </div>
@@ -77,8 +77,8 @@ class UserForm extends React.Component {
 
 
         <div className='ui grid'>
-          <div class='sixteen wide column'>
-            <h1 className='pagetitle center aligned'></h1>
+          <div className='sixteen wide column'>
+
           </div>
         </div>
 
@@ -86,25 +86,25 @@ class UserForm extends React.Component {
         <form className='ui form error' onSubmit={this.props.handleSubmit(this.onSubmit)}>
         <div className='ui grid'>
 
-                <div class='six wide column'>
+                <div className='six wide column'>
 
                 </div>
-                <div class='four wide column'>
+                <div className='four wide column'>
                   <p>Enter Annual Target Incentive</p>
                   <Field name='annual_ti' component={this.renderInput} label='Enter Annual_Ti' />
                 </div>
 
-                <div class='six wide column'>
+                <div className='six wide column'>
 
                 </div>
 
-        <div class='four wide column'>
+        <div className='four wide column'>
 
         </div>
 
 
 
-        <div class='four wide column'>
+        <div className='four wide column'>
         <p>Enter Name</p>
         <Field name='name' component={this.renderInput} label='Enter Name' />
         <p>Select Plan</p>
@@ -115,7 +115,7 @@ class UserForm extends React.Component {
                 </Field>
         </div>
 
-        <div class='four wide column'>
+        <div className='four wide column'>
         <p>Enter Location</p>
         <Field name='user_location' component={this.renderInput} label='Enter Location' />
         <p>Select Role</p>
@@ -128,7 +128,7 @@ class UserForm extends React.Component {
 
         </div>
 
-        <div class='four wide column'>
+        <div className='four wide column'>
 
         </div>
 
@@ -137,26 +137,26 @@ class UserForm extends React.Component {
 
 
         <div className='ui grid'>
-          <div class='sixteen wide column'>
-            <h1 className='pagetitle center aligned'></h1>
+          <div className='sixteen wide column'>
+
           </div>
         </div>
         <div className='ui grid'>
-          <div class='sixteen wide column'>
-            <h1 className='pagetitle center aligned'></h1>
+          <div className='sixteen wide column'>
+
           </div>
         </div>
-        <div class="ui horizontal divider">
+        <div className="ui horizontal divider">
         *
         </div>
         <div className='ui grid'>
-        <div class='six wide column'>
+        <div className='six wide column'>
 
         </div>
-          <div class='four wide column'>
+          <div className='four wide column'>
             <button className='fluid ui button primary'>Submit</button>
           </div>
-          <div class='six wide column'>
+          <div className='six wide column'>
 
           </div>
         </div>
@@ -164,38 +164,38 @@ class UserForm extends React.Component {
         </div>
       )
     }
-    if(this.props.editing == "password"){
-      if(this.props.perms =='seller'){
+    if(this.props.editing === "password"){
+      if(this.props.perms === 'seller'){
         return(
           <div className='ui container containermargin'>
           <div className='ui grid'>
-          <div class='sixteen wide column'>
+          <div className='sixteen wide column'>
           </div>
-          <div class='sixteen wide column'>
+          <div className='sixteen wide column'>
           </div>
-          <div class='sixteen wide column'>
+          <div className='sixteen wide column'>
           </div>
-          <div class='sixteen wide column'>
+          <div className='sixteen wide column'>
           </div>
-          <div class='sixteen wide column'>
+          <div className='sixteen wide column'>
           </div>
-          <div class='sixteen wide column'>
+          <div className='sixteen wide column'>
           </div>
-          <div class='sixteen wide column'>
+          <div className='sixteen wide column'>
           </div>
-          <div class='sixteen wide column'>
+          <div className='sixteen wide column'>
           </div>
             <div className='six wide column'></div>
-            <div class='four wide column'>
+            <div className='four wide column'>
             <div className='ui center aligned grid'>
               <h1 className='pagetitle'>{this.props.title}</h1>
               </div>
             </div>
-            <div class='six wide column'></div>
+            <div className='six wide column'></div>
 
-            <div class='sixteen wide column'>
+            <div className='sixteen wide column'>
             </div>
-              <div class='sixteen wide column'>
+              <div className='sixteen wide column'>
               </div>
 
           </div>
@@ -261,33 +261,33 @@ class UserForm extends React.Component {
         return(
           <div className='ui container containermargin'>
           <div className='ui grid'>
-          <div class='sixteen wide column'>
+          <div className='sixteen wide column'>
           </div>
-          <div class='sixteen wide column'>
+          <div className='sixteen wide column'>
           </div>
-          <div class='sixteen wide column'>
+          <div className='sixteen wide column'>
           </div>
-          <div class='sixteen wide column'>
+          <div className='sixteen wide column'>
           </div>
-          <div class='sixteen wide column'>
+          <div className='sixteen wide column'>
           </div>
-          <div class='sixteen wide column'>
+          <div className='sixteen wide column'>
           </div>
-          <div class='sixteen wide column'>
+          <div className='sixteen wide column'>
           </div>
-          <div class='sixteen wide column'>
+          <div className='sixteen wide column'>
           </div>
             <div className='six wide column'></div>
-            <div class='four wide column'>
+            <div className='four wide column'>
             <div className='ui center aligned grid'>
               <h1 className='pagetitle'>{this.props.title}</h1>
               </div>
             </div>
-            <div class='six wide column'></div>
+            <div className='six wide column'></div>
 
-            <div class='sixteen wide column'>
+            <div className='sixteen wide column'>
             </div>
-              <div class='sixteen wide column'>
+              <div className='sixteen wide column'>
               </div>
 
           </div>
@@ -341,32 +341,32 @@ class UserForm extends React.Component {
         <div className='ui container containermargin'>
         <div className='ui grid'>
 
-        <div class='sixteen wide column'></div>
-        <div class='sixteen wide column'>
+        <div className='sixteen wide column'></div>
+        <div className='sixteen wide column'>
         <div className='ui center aligned grid'>
           <h1 className='pagetitle center aligned'>{this.props.title}</h1>
           </div>
         </div>
         <div className='ui grid'>
-          <div class='sixteen wide column'>
-            <h1 className='pagetitle center aligned'></h1>
+          <div className='sixteen wide column'>
+
           </div>
         </div>
         <div className='ui grid'>
-          <div class='sixteen wide column'>
-            <h1 className='pagetitle center aligned'></h1>
+          <div className='sixteen wide column'>
+
           </div>
         </div>
 
-        <div class='sixteen wide column'>
-          <div class="ui horizontal divider">
+        <div className='sixteen wide column'>
+          <div className="ui horizontal divider">
             *
           </div>
         </div>
         </div>
         <div className='ui grid'>
-          <div class='sixteen wide column'>
-            <h1 className='pagetitle center aligned'></h1>
+          <div className='sixteen wide column'>
+
           </div>
         </div>
 
@@ -423,26 +423,26 @@ class UserForm extends React.Component {
 
           </div>
           <div className='ui grid'>
-            <div class='sixteen wide column'>
-              <h1 className='pagetitle center aligned'></h1>
+            <div className='sixteen wide column'>
+
             </div>
           </div>
           <div className='ui grid'>
-            <div class='sixteen wide column'>
-              <h1 className='pagetitle center aligned'></h1>
+            <div className='sixteen wide column'>
+
             </div>
           </div>
-          <div class="ui horizontal divider">
+          <div className="ui horizontal divider">
           *
           </div>
           <div className='ui grid'>
-          <div class='six wide column'>
+          <div className='six wide column'>
 
           </div>
-            <div class='four wide column'>
+            <div className='four wide column'>
               <button className='fluid ui button primary'>Submit</button>
             </div>
-            <div class='six wide column'>
+            <div className='six wide column'>
 
             </div>
           </div>
@@ -456,13 +456,7 @@ class UserForm extends React.Component {
   }
 }
 
-function isNumeric(str) {
 
-if (typeof str != "string") return false // we only process strings!
- // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...))
-return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
-       !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
-}
 
 
 

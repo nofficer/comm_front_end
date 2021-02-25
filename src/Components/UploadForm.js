@@ -1,7 +1,7 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { Field, reduxForm } from 'redux-form'
-import FieldFileInput from './FileUploader'
+
+import { reduxForm } from 'redux-form'
+
 import CSVReaderV from './CSVReader'
 
 

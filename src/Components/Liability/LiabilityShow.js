@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { getLiabilities,getTime,clearFilter,setFilter } from '../../actions'
 import { Link } from 'react-router-dom'
-import Modal from '../../Modal'
+
 import Login from '../Accounts/Login'
 import monthmap from '../monthmap'
 
@@ -34,7 +34,7 @@ class LiabilityShow extends React.Component {
           }
       }
 
-
+      return true
         }
     )
 
@@ -69,18 +69,18 @@ class LiabilityShow extends React.Component {
   render(){
 
 
-    if(this.props.account['role'] == 'admin'){
+    if(this.props.account['role'] === 'admin'){
       return (<div className='ui container containermargin'>
         <div className='ui grid'>
-        <div class='sixteen wide column'></div>
+        <div className='sixteen wide column'></div>
 
-        <div class='sixteen wide column'>
+        <div className='sixteen wide column'>
         <div className='ui center aligned grid'>
           <h1 className=''>Liability Balances</h1>
           </div>
         </div>
-        <div class='sixteen wide column'></div>
-        <div class='sixteen wide column'></div>
+        <div className='sixteen wide column'></div>
+        <div className='sixteen wide column'></div>
         </div>
 
         <table className='ui celled table'>
@@ -88,17 +88,17 @@ class LiabilityShow extends React.Component {
           <thead>
           <tr>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('liability_id',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('user_id',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('liability_amount',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
@@ -106,12 +106,12 @@ class LiabilityShow extends React.Component {
 
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('month_id',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('year_id',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
@@ -144,7 +144,7 @@ class LiabilityShow extends React.Component {
       )
     }
 
-    else if(typeof(this.props.account['user_id']) == "number"){
+    else if(typeof(this.props.account['user_id']) !== "undefined"){
       return "You do not have sufficient permissions to access this page"
     }
     else{

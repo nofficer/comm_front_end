@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { getTime,updateTime,revertTime,getPayroll,selectMonth,getUsers,castUser,checkCalcStatus,calcPlans,loadCalcs } from '../../actions'
 import history from '../../history'
-import Modal from '../../Modal'
+
 import Login from '../Accounts/Login'
 import Loader from '../../Loader'
 
@@ -94,7 +94,7 @@ class Time extends React.Component {
         <React.Fragment>
         <div className='six wide column'></div>
           <div className='four wide column'>
-            <div onClick={(e) => e.stopPropagation(history.push('/runCalcs'))}s className='ui fluid button positive'>Run Calculations <i class="calculator icon   "></i></div>
+            <div onClick={(e) => e.stopPropagation(history.push('/runCalcs'))}s className='ui fluid button positive'>Run Calculations <i className="calculator icon   "></i></div>
           </div>
         <div className='six wide column'></div>
         </React.Fragment>
@@ -112,44 +112,44 @@ class Time extends React.Component {
       )
     }
     else{
-    if(this.props.account['role'] == 'admin'){
-      if(this.props.calc == 'Running'){
+    if(this.props.account['role'] === 'admin'){
+      if(this.props.calc === 'Running'){
         return(
           <Loader filler='You may not access the admin panel calculations are currently running...'/>
         )
       }
-      else if(this.props.month['current.month_id'] == 1){
+      else if(this.props.month['current.month_id'] === 1){
         return (
           <div className='ui grid'>
 
-          <div class='sixteen wide column'></div>
-          <div class='sixteen wide column'></div>
-          <div class='sixteen wide column'>
+          <div className='sixteen wide column'></div>
+          <div className='sixteen wide column'></div>
+          <div className='sixteen wide column'>
           <div className='ui center aligned grid'>
             <h1 className='ui header bigfont'>{months[this.props.month['current.month_id']]}</h1>
             </div>
           </div>
-          <div class='sixteen wide column'>
+          <div className='sixteen wide column'>
           <div className='ui center aligned grid'>
             <h1 className='ui header bigfont'>{this.props.month['cal_year']}</h1>
             </div>
           </div>
-          <div class='sixteen wide column'></div>
-          <div class='sixteen wide column'></div>
+          <div className='sixteen wide column'></div>
+          <div className='sixteen wide column'></div>
 
 
             <div className='sixteen wide column'>
-                      <div class="ui placeholder segment">
-              <div class="ui two column stackable center aligned grid">
+                      <div className="ui placeholder segment">
+              <div className="ui two column stackable center aligned grid">
 
-                <div class="middle aligned row">
+                <div className="middle aligned row">
 
-                  <div class="column">
-                    <div class="ui icon header">
-                      <i class="arrow right icon"></i>
+                  <div className="column">
+                    <div className="ui icon header">
+                      <i className="arrow right icon"></i>
                       Next period
                     </div>
-                    <div onClick={this.handleClick} class="ui primary button">
+                    <div onClick={this.handleClick} className="ui primary button">
                       Next
                     </div>
                   </div>
@@ -171,7 +171,7 @@ class Time extends React.Component {
             <div className='four wide column'>
 
 
-            <select onChange={(e) => e.stopPropagation(this.handlePayroll(e))} name="months" multiple="" class="ui fluid dropdown">
+            <select onChange={(e) => e.stopPropagation(this.handlePayroll(e))} name="months" multiple="" className="ui fluid dropdown">
             <option value="">Select a month to export...</option>
           <option value="1">January</option>
           <option value="2">February</option>
@@ -197,45 +197,45 @@ class Time extends React.Component {
           </div>
         )
       }
-      else if(this.props.month['current.month_id'] == 12){
+      else if(this.props.month['current.month_id'] === 12){
         return (
           <div className='ui grid'>
-          <div class='sixteen wide column'></div>
-          <div class='sixteen wide column'></div>
-          <div class='sixteen wide column'>
+          <div className='sixteen wide column'></div>
+          <div className='sixteen wide column'></div>
+          <div className='sixteen wide column'>
           <div className='ui center aligned grid'>
             <h1 className='ui header bigfont'>{months[this.props.month['current.month_id']]}</h1>
             </div>
           </div>
-          <div class='sixteen wide column'></div>
-          <div class='sixteen wide column'>
+          <div className='sixteen wide column'></div>
+          <div className='sixteen wide column'>
           <div className='ui center aligned grid'>
             <h1 className='ui header bigfont'>{this.props.month['cal_year']}</h1>
             </div>
           </div>
-          <div class='sixteen wide column'></div>
-          <div class='sixteen wide column'></div>
+          <div className='sixteen wide column'></div>
+          <div className='sixteen wide column'></div>
 
             <div className='sixteen wide column bottom'>
-                      <div class="ui placeholder segment">
-              <div class="ui two column stackable center aligned grid">
-                <div class="ui vertical divider">Or</div>
-                <div class="middle aligned row">
-                <div class="column">
-                  <div class="ui icon header">
-                    <i class="arrow left icon"></i>
+                      <div className="ui placeholder segment">
+              <div className="ui two column stackable center aligned grid">
+                <div className="ui vertical divider">Or</div>
+                <div className="middle aligned row">
+                <div className="column">
+                  <div className="ui icon header">
+                    <i className="arrow left icon"></i>
                     Previous period
                   </div>
-                  <div onClick={this.handleClickRevert} class="ui negative button">
+                  <div onClick={this.handleClickRevert} className="ui negative button">
                     Revert
                   </div>
                 </div>
-                  <div class="column">
-                    <div class="ui icon header">
-                      <i class="arrow right icon"></i>
+                  <div className="column">
+                    <div className="ui icon header">
+                      <i className="arrow right icon"></i>
                       Next Fiscal Year
                     </div>
-                    <div onClick={this.handleClickFYE} class="ui primary button">
+                    <div onClick={this.handleClickFYE} className="ui primary button">
                       Next
                     </div>
                   </div>
@@ -256,7 +256,7 @@ class Time extends React.Component {
             <div className='four wide column'>
 
 
-            <select onChange={(e) => e.stopPropagation(this.handlePayroll(e))} name="months" multiple="" class="ui fluid dropdown">
+            <select onChange={(e) => e.stopPropagation(this.handlePayroll(e))} name="months" multiple="" className="ui fluid dropdown">
             <option value="">Select a month to export...</option>
           <option value="1">January</option>
           <option value="2">February</option>
@@ -287,42 +287,42 @@ class Time extends React.Component {
       else {
         return (
           <div className='ui grid'>
-          <div class='sixteen wide column'></div>
-          <div class='sixteen wide column'></div>
-          <div class='sixteen wide column'>
+          <div className='sixteen wide column'></div>
+          <div className='sixteen wide column'></div>
+          <div className='sixteen wide column'>
           <div className='ui center aligned grid'>
             <h1 className='ui header bigfont'>{months[this.props.month['current.month_id']]}</h1>
             </div>
           </div>
-          <div class='sixteen wide column'></div>
-          <div class='sixteen wide column'>
+          <div className='sixteen wide column'></div>
+          <div className='sixteen wide column'>
           <div className='ui center aligned grid'>
             <h1 className='ui header bigfont'>{this.props.month['cal_year']}</h1>
             </div>
           </div>
-          <div class='sixteen wide column'></div>
-          <div class='sixteen wide column'></div>
+          <div className='sixteen wide column'></div>
+          <div className='sixteen wide column'></div>
 
             <div className='sixteen wide column bottom'>
-                      <div class="ui placeholder segment">
-              <div class="ui two column stackable center aligned grid">
-                <div class="ui vertical divider">Or</div>
-                <div class="middle aligned row">
-                <div class="column">
-                  <div class="ui icon header">
-                    <i class="arrow left icon"></i>
+                      <div className="ui placeholder segment">
+              <div className="ui two column stackable center aligned grid">
+                <div className="ui vertical divider">Or</div>
+                <div className="middle aligned row">
+                <div className="column">
+                  <div className="ui icon header">
+                    <i className="arrow left icon"></i>
                     Previous period
                   </div>
-                  <div onClick={this.handleClickRevert} class="ui negative button">
+                  <div onClick={this.handleClickRevert} className="ui negative button">
                     Revert
                   </div>
                 </div>
-                  <div class="column">
-                    <div class="ui icon header">
-                      <i class="arrow right icon"></i>
+                  <div className="column">
+                    <div className="ui icon header">
+                      <i className="arrow right icon"></i>
                       Next period
                     </div>
-                    <div onClick={this.handleClick} class="ui primary button">
+                    <div onClick={this.handleClick} className="ui primary button">
                       Next
                     </div>
                   </div>
@@ -343,7 +343,7 @@ class Time extends React.Component {
             <div className='four wide column'>
 
 
-            <select onChange={(e) => e.stopPropagation(this.handlePayroll(e))} name="months" multiple="" class="ui fluid dropdown">
+            <select onChange={(e) => e.stopPropagation(this.handlePayroll(e))} name="months" multiple="" className="ui fluid dropdown">
             <option value="">Select a month to export...</option>
           <option value="1">January</option>
           <option value="2">February</option>
@@ -373,7 +373,7 @@ class Time extends React.Component {
       }
 
     }
-    else if(typeof(this.props.account['user_id']) == "number"){
+    else if(typeof(this.props.account['user_id']) !== "undefined"){
       return "You do not have sufficient permissions to access this page"
     }
     else{

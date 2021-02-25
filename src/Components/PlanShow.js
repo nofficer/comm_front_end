@@ -23,7 +23,7 @@ class PlanShow extends React.Component {
     var check = true
     filters.map((filter) => {
 
-      if(plan[this.filterMap[filter]] == null){
+      if(plan[this.filterMap[filter]] === null){
         check = false
       }
       else if(plan[this.filterMap[filter]] != null){
@@ -32,7 +32,7 @@ class PlanShow extends React.Component {
           }
       }
 
-
+      return true
         }
     )
 
@@ -41,7 +41,7 @@ class PlanShow extends React.Component {
     ){
     return (
 
-      <tr>
+      <tr key={plan[0]}>
         <td className='center aligned'>{plan[0]}</td><td className='center aligned'>{plan[1]}</td>
         <td className='center aligned'>
         <Link onClick={(e) => e.stopPropagation()} to={`/planShow/edit/${plan[0]}`} className='ui small button primary'>
@@ -66,29 +66,30 @@ class PlanShow extends React.Component {
 
   render(){
 
-    if(this.props.account['role'] == 'admin'){
+    if(this.props.account['role'] === 'admin'){
       return (<div className='ui container containermargin'>
         <div className='ui grid'>
-        <div class='sixteen wide column'></div>
+        <div className='sixteen wide column'></div>
 
-        <div class='sixteen wide column'>
+        <div className='sixteen wide column'>
         <div className='ui center aligned grid'>
           <h1 className=''>Plans</h1>
           </div>
         </div>
-        <div class='sixteen wide column'></div>
-        <div class='sixteen wide column'></div>
+        <div className='sixteen wide column'></div>
+        <div className='sixteen wide column'></div>
         </div>
         <table className='ui celled table'>
         <thead>
+
         <tr>
           <td className='center aligned'>
-            <div class="ui input">
+            <div className="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('plan_id',e.target.value))} placeholder="Search..."/>
             </div>
           </td>
           <td className='center aligned'>
-            <div class="ui input">
+            <div className="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('plan_name',e.target.value))} placeholder="Search..."/>
             </div>
           </td>
@@ -99,14 +100,16 @@ class PlanShow extends React.Component {
             <th className='center aligned'><strong>Options</strong></th>
           </tr>
         </thead>
+        <tbody>
         {this.renderList()}
+        </tbody>
         </table>
         </div>
 
       )
     }
 
-    else if(typeof(this.props.account['user_id']) == "number"){
+    else if(typeof(this.props.account['user_id']) !== "undefined"){
       return "You do not have sufficient permissions to access this page"
     }
     else{

@@ -7,7 +7,6 @@ import Loader from '../Loader'
 
 
 
-import { Field, reduxForm } from 'redux-form'
 
 import AttainRuleForm from './AttainRuleForm'
 
@@ -31,8 +30,8 @@ class AttainRuleCreate extends React.Component {
 
 
   render(){
-    if(this.props.account['role'] == 'admin'){
-      if(this.props.calc == 'Running'){
+    if(this.props.account['role'] === 'admin'){
+      if(this.props.calc === 'Running'){
         return(
           <Loader filler="Calculations Running - Please check back later..."/>
         )
@@ -46,7 +45,7 @@ class AttainRuleCreate extends React.Component {
 
     }
 
-    else if(typeof(this.props.account['user_id']) == "number"){
+    else if(typeof(this.props.account['user_id']) !== "undefined"){
       return "You do not have sufficient permissions to access this page"
     }
     else{

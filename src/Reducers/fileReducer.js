@@ -7,7 +7,7 @@ const INITIAL_STATE = {
   loading: "Done"
 }
 
-export default (state=INITIAL_STATE, action) => {
+const fn = (state=INITIAL_STATE, action) => {
   switch(action.type) {
     case UPLOAD_FILE:
       return {...state, file: action.payload,loading:'Done'};
@@ -18,3 +18,5 @@ export default (state=INITIAL_STATE, action) => {
       return state
   }
 }
+
+export default fn;

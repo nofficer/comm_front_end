@@ -10,7 +10,7 @@ const INITIAL_STATE = {
   selected_year: ''
 }
 
-export default (state=INITIAL_STATE, action) => {
+const fn = (state=INITIAL_STATE, action) => {
   switch(action.type) {
     case LOGIN:
       return {...state, account: action.payload};
@@ -33,3 +33,5 @@ export default (state=INITIAL_STATE, action) => {
   }
 }
 //user_id:1,username:"Nathan.officer@cdw.ca",role:"admin"
+
+export default fn;

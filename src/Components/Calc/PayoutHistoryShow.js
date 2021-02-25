@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getPayoutsHistory,calcPlans,loadCalcs,setFilter,clearFilter,getYears } from '../../actions'
-import { Link } from 'react-router-dom'
+import { getPayoutsHistory_show,calcPlans,loadCalcs,setFilter,clearFilter,getYears } from '../../actions'
+
 import Loader from '../../Loader'
 import Login from '../Accounts/Login'
 import XLSX from 'xlsx';
-import monthmap from '../monthmap'
+
 
 
 import { saveAs } from 'file-saver'
@@ -64,7 +64,7 @@ class PayoutShow extends React.Component {
   componentDidMount(){
     this.props.clearFilter()
     this.props.getYears()
-    this.props.getPayoutsHistory({'selected_year':this.props.month['cal_year']})
+    this.props.getPayoutsHistory_show({'selected_year':this.props.month['cal_year']})
 
   }
 
@@ -75,7 +75,7 @@ class PayoutShow extends React.Component {
 
   createYearOption(year){
     return (
-      <option value={year}>{year}</option>
+      <option key={year} value={year}>{year}</option>
     )
   }
 
@@ -120,7 +120,7 @@ class PayoutShow extends React.Component {
           }
       }
 
-
+      return true
         }
     )
 
@@ -135,7 +135,7 @@ class PayoutShow extends React.Component {
 
 
     return (
-      <tr>
+      <tr key={payout[0]}>
         <td className='center aligned'>{payout[0]}</td><td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {formatMoney(payout[4])}</td><td className='center aligned'>$ {formatMoney(payout[5])}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>$ {formatMoney(payout[7])}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[12]}</td><td className='center aligned'>{payout[13]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[17]}</td>
 
 
@@ -164,7 +164,7 @@ class PayoutShow extends React.Component {
 
       <div className='ui  grid'>
     <div className='sixteen wide column'>
-       <select style={{'marginLeft':'2em'}} className='ui dropdown' onChange={(e) => e.stopPropagation(this.props.getPayoutsHistory({'selected_year':e.target.value}))}>
+       <select style={{'marginLeft':'2em'}} className='ui dropdown' onChange={(e) => e.stopPropagation(this.props.getPayoutsHistory_show({'selected_year':e.target.value}))}>
         <option value={this.props.month['cal_year']}>{this.props.month['cal_year']}</option>
         <option value="all">All</option>
 
@@ -189,7 +189,7 @@ class PayoutShow extends React.Component {
 
     </div>
         <div className='six wide column'></div>
-        <div class="four wide column"><button className='rightitem fluid ui button positive' onClick={this.generateStatement}>Export Payouts </button></div>
+        <div className="four wide column"><button className='rightitem fluid ui button positive' onClick={this.generateStatement}>Export Payouts </button></div>
         <div className='six wide column'></div>
 
     <div className='ui container containermargin'>
@@ -198,74 +198,74 @@ class PayoutShow extends React.Component {
         <thead>
         <tr>
           <td className='center aligned'>
-            <div class="ui input">
+            <div className="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('payout_id',e.target.value))} placeholder="Search..."/>
             </div>
           </td>
           <td className='center aligned'>
-            <div class="ui input">
+            <div className="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('transaction_id',e.target.value))} placeholder="Search..."/>
             </div>
           </td><td className='center aligned'>
-            <div class="ui input">
+            <div className="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('seller_id',e.target.value))} placeholder="Search..."/>
             </div>
           </td><td className='center aligned'>
-            <div class="ui input">
+            <div className="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('payee',e.target.value))} placeholder="Search..."/>
             </div>
           </td><td className='center aligned'>
-            <div class="ui input">
+            <div className="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('revenue',e.target.value))} placeholder="Search..."/>
             </div>
           </td><td className='center aligned'>
-            <div class="ui input">
+            <div className="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('gp',e.target.value))} placeholder="Search..."/>
             </div>
           </td><td className='center aligned'>
-            <div class="ui input">
+            <div className="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('attainment',e.target.value))} placeholder="Search..."/>
             </div>
           </td><td className='center aligned'>
-            <div class="ui input">
+            <div className="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('payout',e.target.value))} placeholder="Search..."/>
             </div>
           </td><td className='center aligned'>
-            <div class="ui input">
+            <div className="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('split_percent',e.target.value))} placeholder="Search..."/>
             </div>
           </td><td className='center aligned'>
-            <div class="ui input">
+            <div className="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('location',e.target.value))} placeholder="Search..."/>
             </div>
           </td><td className='center aligned'>
-            <div class="ui input">
+            <div className="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('payout_multiplier',e.target.value))} placeholder="Search..."/>
             </div>
           </td><td className='center aligned'>
-            <div class="ui input">
+            <div className="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('order_num',e.target.value))} placeholder="Search..."/>
             </div>
           </td><td className='center aligned'>
-            <div class="ui input">
+            <div className="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('custom_field',e.target.value))} placeholder="Search..."/>
             </div>
           </td><td className='center aligned'>
-            <div class="ui input">
+            <div className="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('period_id',e.target.value))} placeholder="Search..."/>
             </div>
           </td><td className='center aligned'>
-            <div class="ui input">
+            <div className="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('rule',e.target.value))} placeholder="Search..."/>
             </div>
           </td>
           <td className='center aligned'>
-            <div class="ui input">
+            <div className="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('type',e.target.value))} placeholder="Search..."/>
             </div>
           </td>
           <td className='center aligned'>
-            <div class="ui input">
+            <div className="ui input">
               <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('date',e.target.value))} placeholder="Search..."/>
             </div>
           </td>
@@ -290,15 +290,17 @@ class PayoutShow extends React.Component {
           <th className='center aligned'><strong>Date</strong></th>
           </tr>
         </thead>
+        <tbody>
         {this.renderList()}
+        </tbody>
       </table>
       </div>
       </div>)
   }
 
   render(){
-    if(this.props.account['role'] == 'admin'){
-      if(this.props.calcs == 'Running'){
+    if(this.props.account['role'] === 'admin'){
+      if(this.props.calcs === 'Running'){
         return (
           <Loader filler="Calculations Running..."/>
         )
@@ -306,7 +308,7 @@ class PayoutShow extends React.Component {
 
 
 
-    // else if(typeof(this.props.payouts[0]) == 'undefined' ){
+    // else if(typeof(this.props.payouts[0]) === 'undefined' ){
     //   return<div><Loader filler='Loading Payouts...'/></div>
     // }
     else {
@@ -317,7 +319,7 @@ class PayoutShow extends React.Component {
     }
   }
 
-    else if(typeof(this.props.account['user_id']) == "number"){
+    else if(typeof(this.props.account['user_id']) !== "undefined"){
       return "You do not have sufficient permissions to access this page"
     }
     else{
@@ -328,7 +330,7 @@ class PayoutShow extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    payouts: Object.values(state.payouts.payouts),
+    payouts: Object.values(state.payouts.payouts_history_show),
     calcs: state.payouts.calcs,
     account: state.account.account,
     filter: state.filter.filter,
@@ -337,4 +339,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { getPayoutsHistory,calcPlans,loadCalcs,setFilter,clearFilter,getYears })(PayoutShow)
+export default connect(mapStateToProps, { getPayoutsHistory_show,calcPlans,loadCalcs,setFilter,clearFilter,getYears })(PayoutShow)

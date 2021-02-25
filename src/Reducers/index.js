@@ -33,5 +33,6 @@ export default combineReducers ({
   goals: goalReducer,
   errors: errorReducer,
   filter:filterReducer,
-  roles: roleReducer
+  roles: roleReducer,
+
 })

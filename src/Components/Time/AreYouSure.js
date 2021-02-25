@@ -6,7 +6,7 @@ import Modal from '../../Modal'
 import { Link } from 'react-router-dom'
 
 
-var months = {1:"January",2:"February",3:"March",4:"April",5:"May",6:"June",7:"July",8:"August",9:"September",10:"October",11:"November",12:"December"}
+
 
 
 class Time extends React.Component {
@@ -16,18 +16,15 @@ class Time extends React.Component {
   }
 
   renderContent(){
-    if(typeof(history.location.state) != "undefined"){
-    if(history.location.state.change == 'revert'){
-      return(`Are you sure you wish to revert to the previous period? \
-        This will result in all calculations, payouts, and attainments in the current period to be deleted. Historical calculations, payouts and attainments corresponding to the previous period will be deleted and calculations must be ran again?`)
+    if(typeof(history.location.state) !== "undefined"){
+    if(history.location.state.change === 'revert'){
+      return(`Are you sure you wish to revert to the previous period? This will result in all calculations, payouts, and attainments in the current period to be deleted. Historical calculations, payouts and attainments corresponding to the previous period will be deleted and calculations must be ran again?`)
     }
-    else if(history.location.state.change == 'next'){
-      return("Are you sure you wish to move to the next period? \
-      This will result in all calculations, payouts and attainments in the current period to be moved to history and become unchangeable. You will no longer be able to run calculations for this period.")
+    else if(history.location.state.change === 'next'){
+      return("Are you sure you wish to move to the next period? This will result in all calculations, payouts and attainments in the current period to be moved to history and become unchangeable. You will no longer be able to run calculations for this period.")
     }
-    else if(history.location.state.change == 'FYE'){
-      return("Are you sure you wish to move to the next Fiscal Year? \
-      This will result in all calculations, payouts and attainments in the current period to be moved to prior year and become unchangeable. You will no longer be able to run calculations for this period or revert. This change is irreversible.")
+    else if(history.location.state.change === 'FYE'){
+      return("Are you sure you wish to move to the next Fiscal Year? This will result in all calculations, payouts and attainments in the current period to be moved to prior year and become unchangeable. You will no longer be able to run calculations for this period or revert. This change is irreversible.")
     }
   }
   else{
@@ -41,8 +38,8 @@ class Time extends React.Component {
 
   renderActions(){
 
-    if(typeof(history.location.state) != "undefined"){
-      if(history.location.state.change == 'revert'){
+    if(typeof(history.location.state) !== "undefined"){
+      if(history.location.state.change === 'revert'){
         return (
           <React.Fragment>
                     <button
@@ -53,7 +50,7 @@ class Time extends React.Component {
           </React.Fragment>
         )
       }
-      else if(history.location.state.change == 'next'){
+      else if(history.location.state.change === 'next'){
         return (
           <React.Fragment>
                     <button
@@ -64,7 +61,7 @@ class Time extends React.Component {
           </React.Fragment>
         )
       }
-      else if(history.location.state.change == 'FYE'){
+      else if(history.location.state.change === 'FYE'){
         return (
           <React.Fragment>
                     <button

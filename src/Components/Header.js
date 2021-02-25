@@ -11,6 +11,7 @@ class Header extends React.Component {
     this.props.getTime()
     this.props.selectMonth(this.props.month['current.month_id'])
     this.props.checkUser()
+
      // this.props.setAccount()
   }
   renderSignIn(){
@@ -18,12 +19,12 @@ class Header extends React.Component {
   }
 
   render() {
-    if(typeof(this.props.account['user_id']) != "undefined"){
-      if(this.props.account['role'] == "admin"){return (
+    if(typeof(this.props.account['user_id']) !== "undefined"){
+      if(this.props.account['role'] === "admin"){return (
 
 
       <div className='ui nine item menu'>
-      <div onClick={(e) => e.stopPropagation(history.push({pathname:'/',state:{detail:this.props.month}}))} class="ui simple dropdown item">
+      <div onClick={(e) => e.stopPropagation(history.push({pathname:'/',state:{detail:this.props.month}}))} className="ui simple dropdown item">
 
 
       <Link to='/'>
@@ -32,26 +33,26 @@ class Header extends React.Component {
 
 
 
-        <div class=" ui vertical menu ">
+        <div className=" ui vertical menu ">
 
 
 
-            <div onClick={(e) => e.stopPropagation(history.push('/admin'))} className=''>
-              <a className="blue active item"><Link to='/admin'>
+            <div onClick={(e) => e.stopPropagation(history.push('/admin'))} className='  center aligned item'>
+              <Link to='/admin'>
                   Admin
-              </Link></a>
+              </Link>
 
             </div>
-            <div onClick={(e) => e.stopPropagation(history.push({pathname:'/report',state:{detail:this.props.month}}))} className=''>
-              <a className="blue active item"><Link to='/report'>
+            <div onClick={(e) => e.stopPropagation(history.push({pathname:'/report',state:{detail:this.props.month}}))} className='item'>
+            <Link to='/report'>
                   Report
-              </Link></a>
+              </Link>
 
             </div>
-            <div onClick={(e) => e.stopPropagation(this.props.logout())} className=''>
-              <a  className="blue active item"><Link onClick={(e) => e.stopPropagation(this.props.logout())}  to='/'>
+            <div onClick={(e) => e.stopPropagation(this.props.logout())} className='item'>
+            <Link onClick={(e) => e.stopPropagation(this.props.logout())}  to='/'>
                   Log out
-              </Link></a>
+              </Link>
 
             </div>
 
@@ -62,7 +63,7 @@ class Header extends React.Component {
       </div>
 
     </div>
-    <div onClick={(e) => e.stopPropagation(history.push('/runCalcs'))} class="ui simple dropdown item">
+    <div onClick={(e) => e.stopPropagation(history.push('/runCalcs'))} className="ui simple dropdown item">
 
 
     <Link to='/runCalcs'>
@@ -70,25 +71,25 @@ class Header extends React.Component {
     </Link>
 
 
-      <div class=" ui vertical menu ">
-          <div onClick={(e) => e.stopPropagation(history.push('/runCalcs'))} className=''>
-            <a className="blue active item"><Link to='/runCalcs'>
+      <div className=" ui vertical menu ">
+          <div onClick={(e) => e.stopPropagation(history.push('/runCalcs'))} className='item'>
+            <Link to='/runCalcs'>
                 Run Calculations
-            </Link></a>
+            </Link>
 
           </div>
 
 
-          <div onClick={(e) => e.stopPropagation(history.push('/payoutShow'))} className=''>
-            <a className="blue active item"><Link to='/payoutShow'>
+          <div onClick={(e) => e.stopPropagation(history.push('/payoutShow'))} className='item'>
+            <Link to='/payoutShow'>
                 Payouts
-            </Link></a>
+            </Link>
 
           </div>
-          <div onClick={(e) => e.stopPropagation(history.push('/payoutHistoryShow'))} className=''>
-            <a className="blue active item"><Link to='/payoutHistoryShow'>
+          <div onClick={(e) => e.stopPropagation(history.push('/payoutHistoryShow'))} className='item'>
+          <Link to='/payoutHistoryShow'>
                 Historical Payouts
-            </Link></a>
+            </Link>
 
           </div>
 
@@ -98,7 +99,7 @@ class Header extends React.Component {
     </div>
 
   </div>
-  <div onClick={(e) => e.stopPropagation(history.push({pathname:'/roleHierarchyShow',state:{detail:this.props.month}}))} class="ui simple dropdown item">
+  <div onClick={(e) => e.stopPropagation(history.push({pathname:'/roleHierarchyShow',state:{detail:this.props.month}}))} className="ui simple dropdown item">
 
 
   <Link to='/'>
@@ -107,25 +108,25 @@ class Header extends React.Component {
 
 
 
-    <div class=" ui vertical menu ">
-    <div onClick={(e) => e.stopPropagation(history.push('/import'))} className=''>
-      <a className="blue active item"><Link to='/import'>
+    <div className=" ui vertical menu ">
+    <div onClick={(e) => e.stopPropagation(history.push('/import'))} className='item'>
+      <Link to='/import'>
           Import Role Hierarchy
-      </Link></a>
+      </Link>
 
     </div>
 
 
-        <div onClick={(e) => e.stopPropagation(history.push('/roleHierarchyShow'))} className=''>
-          <a className="blue active item"><Link to='/roleHierarchyShow'>
+        <div onClick={(e) => e.stopPropagation(history.push('/roleHierarchyShow'))} className='item'>
+          <Link to='/roleHierarchyShow'>
               Role Hierarchy
-          </Link></a>
+          </Link>
 
         </div>
-        <div onClick={(e) => e.stopPropagation(history.push({pathname:'/roleHierarchyCreate',state:{detail:this.props.month}}))} className=''>
-          <a className="blue active item"><Link to='/roleHierarchyCreate'>
+        <div onClick={(e) => e.stopPropagation(history.push({pathname:'/roleHierarchyCreate',state:{detail:this.props.month}}))} className='item'>
+          <Link to='/roleHierarchyCreate'>
               Create Role Hierarchy
-          </Link></a>
+          </Link>
 
         </div>
 
@@ -138,7 +139,7 @@ class Header extends React.Component {
 
 </div>
 
-          <div onClick={(e) => e.stopPropagation(history.push('/rateTableShow'))} class="ui simple dropdown item">
+          <div onClick={(e) => e.stopPropagation(history.push('/rateTableShow'))} className="ui simple dropdown item">
 
 
           <Link to='/rateTableShow'>
@@ -146,7 +147,7 @@ class Header extends React.Component {
           </Link>
 
 
-            <div class="menu">
+            <div className="menu">
 
                 <div onClick={(e) => e.stopPropagation(history.push('/import'))} className='item'>
                   <Link to='/import'>
@@ -173,7 +174,7 @@ class Header extends React.Component {
           </div>
 
         </div>
-        <div onClick={(e) => e.stopPropagation(history.push('/goalShow'))} class="ui simple dropdown item">
+        <div onClick={(e) => e.stopPropagation(history.push('/goalShow'))} className="ui simple dropdown item">
 
 
         <Link to='/goalShow'>
@@ -181,7 +182,7 @@ class Header extends React.Component {
         </Link>
 
 
-          <div class="menu">
+          <div className="menu">
 
               <div onClick={(e) => e.stopPropagation(history.push('/import'))} className='item'>
                 <Link to='/import'>
@@ -211,7 +212,7 @@ class Header extends React.Component {
 
 
 
-          <div onClick={(e) => e.stopPropagation(history.push('/transShow'))} class="ui simple dropdown item">
+          <div onClick={(e) => e.stopPropagation(history.push('/transShow'))} className="ui simple dropdown item">
 
 
           <Link to='/transShow'>
@@ -219,7 +220,7 @@ class Header extends React.Component {
           </Link>
 
 
-            <div class="menu">
+            <div className="menu">
 
                 <div onClick={(e) => e.stopPropagation(history.push('/import'))} className='item'>
                   <Link to='/import'>
@@ -242,14 +243,14 @@ class Header extends React.Component {
           </div>
 
         </div>
-        <div onClick={(e) => e.stopPropagation(history.push('/planShow'))} class="ui simple dropdown item">
+        <div onClick={(e) => e.stopPropagation(history.push('/planShow'))} className="ui simple dropdown item">
 
 
         <Link to='/planShow'>
           Plans
         </Link>
 
-          <div class="menu">
+          <div className="menu">
             <div onClick={(e) => e.stopPropagation(history.push('/planShow'))} className='item'>
               <Link to='/planShow'>
                 Plans
@@ -262,14 +263,14 @@ class Header extends React.Component {
             </div>
           </div>
         </div>
-        <div onClick={(e) => e.stopPropagation(history.push('/attainRuleShow'))} class="ui simple dropdown item">
+        <div onClick={(e) => e.stopPropagation(history.push('/attainRuleShow'))} className="ui simple dropdown item">
 
 
         <Link to ='/attainRuleShow'>
           Attainment Rules
         </Link>
 
-          <div class="menu">
+          <div className="menu">
 
               <div onClick={(e) => e.stopPropagation(history.push('/attainRuleShow'))} className='item'>
                 <Link to ='/attainRuleShow'>
@@ -283,14 +284,14 @@ class Header extends React.Component {
               </div>
             </div>
           </div>
-          <div onClick={(e) => e.stopPropagation(history.push('/userShow'))} class="ui simple dropdown item">
+          <div onClick={(e) => e.stopPropagation(history.push('/userShow'))} className="ui simple dropdown item">
 
 
           <Link to ='/userShow'>
             Users
           </Link>
 
-            <div class="menu">
+            <div className="menu">
             <div onClick={(e) => e.stopPropagation(history.push('/import'))} className='item'>
               <Link to='/import'>
                   Import Users
@@ -367,7 +368,7 @@ class Header extends React.Component {
 
 
           <div className='ui one item menu'>
-          <div onClick={(e) => e.stopPropagation(history.push('/login'))} class="ui simple dropdown item">
+          <div onClick={(e) => e.stopPropagation(history.push('/login'))} className="ui simple dropdown item">
 
 
           <Link to='/login'>

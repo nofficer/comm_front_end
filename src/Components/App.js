@@ -1,6 +1,6 @@
 import React from 'react';
 import { Router, Route, Switch } from 'react-router-dom'
-import logo from '../logo.svg';
+
 import '../App.css';
 import UserCreate from './UserCreate'
 import PlanShow from './PlanShow'
@@ -19,7 +19,7 @@ import UserEdit from './UserEdit'
 import Header from './Header'
 
 import history from '../history'
-import Example from './myhook'
+
 import PlanDelete from './PlanDelete'
 import AttainRuleDelete from './AttainRuleDelete'
 import TransDelete from './TransDelete'
@@ -52,7 +52,7 @@ import LiabilityShow from './Liability/LiabilityShow'
 import LiabilityEdit from './Liability/LiabilityEdit'
 import LiabilityDelete from './Liability/LiabilityDelete'
 
-
+import QBOcb from './Utils/QBOcb'
 
 
 import RoleHierarchyShow from './Role_Hierarchy/RoleHierarchyShow'
@@ -60,16 +60,44 @@ import RoleHierarchyCreate from './Role_Hierarchy/RoleHierarchyCreate'
 import RoleHierarchyEdit from './Role_Hierarchy/RoleHierarchyEdit'
 import RoleHierarchyDelete from './Role_Hierarchy/RoleHierarchyDelete'
 
+
+import firebase from "firebase/app";
+
+import "firebase/auth";
+import {
+  FirebaseAuthProvider,
+  FirebaseAuthConsumer,
+  IfFirebaseAuthed,
+  IfFirebaseAuthedAnd
+} from "@react-firebase/auth";
+
+
+var firebaseConfig = {
+    apiKey: "AIzaSyDRnUkMDz97EyIo02NWne-9Pm6YrjK0ALk",
+    authDomain: "easycomp-305815.firebaseapp.com",
+    projectId: "easycomp-305815",
+    storageBucket: "easycomp-305815.appspot.com",
+    messagingSenderId: "948165952668",
+    appId: "1:948165952668:web:ad37654be3491b07045959",
+    measurementId: "G-EGBYJ9MG95"
+  };
+
+
 const App = () => {
 
   return (
     <div>
+    <FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
       <Router history={history}>
         <div>
         <Header />
         <div>
           <Switch>
             <Route path ='/' exact component={Landing}/>
+
+
+            <Route path ='/QBOcb' exact component={QBOcb}/>
+
             <Route path ='/admin' exact component={Time}/>
             <Route path ='/liabilityShow' exact component={LiabilityShow}/>
             <Route path ='/liabilityShow/edit/:liability_id' exact component={LiabilityEdit}/>
@@ -123,6 +151,7 @@ const App = () => {
           </div>
         </div>
       </Router>
+      </FirebaseAuthProvider>
     </div>
   );
 }

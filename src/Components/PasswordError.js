@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getTran ,deleteTrans} from '../actions'
-import { Link } from 'react-router-dom'
+
+
 import Modal from '../Modal'
 import history from '../history'
 import Login from './Accounts/Login'

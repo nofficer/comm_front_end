@@ -44,29 +44,29 @@ class AttainRuleForm extends React.Component {
       <div className='ui grid '>
 
       <div className='ui grid'>
-        <div class='sixteen wide column'>
-          <h1 className='center aligned'></h1>
+        <div className='sixteen wide column'>
+
         </div>
       </div>
-        <div class='sixteen wide column'>
+        <div className='sixteen wide column'>
         <div className='ui center aligned grid'>
           <h1 className=''>{this.props.title}</h1>
           </div>
         </div>
         <div className='ui grid'>
-          <div class='sixteen wide column'>
-            <h1 className='center aligned'></h1>
+          <div className='sixteen wide column'>
+
           </div>
         </div><div className='ui grid'>
-          <div class='sixteen wide column'>
-            <h1 className='center aligned'></h1>
+          <div className='sixteen wide column'>
+
           </div>
         </div>
 
 
       </div>
 
-      <div class="ui horizontal divider">
+      <div className="ui horizontal divider">
       *
       </div>
 
@@ -74,24 +74,24 @@ class AttainRuleForm extends React.Component {
 
 
       <div className='ui grid '>
-        <div class='sixteen wide column'>
-          <h1 className='pagetitle center aligned'></h1>
+        <div className='sixteen wide column'>
+
         </div>
       </div>
       <div className='ui grid'>
-        <div class='sixteen wide column'>
-          <h1 className='pagetitle center aligned'></h1>
+        <div className='sixteen wide column'>
+
         </div>
       </div>
 
       <form className='ui form error' onSubmit={this.props.handleSubmit(this.onSubmit)}>
-      <div class="ui grid">
-      <div class="three wide column">
+      <div className="ui grid">
+      <div className="three wide column">
 
       </div>
 
 
-      <div class="ten wide column">
+      <div className="ten wide column">
         <div className='ui grid'>
           <div className="four wide column">
           <p>Enter Rule Name</p>
@@ -171,26 +171,26 @@ class AttainRuleForm extends React.Component {
 
         <br/>
         <div className='ui grid'>
-          <div class='sixteen wide column'>
-            <h1 className='pagetitle center aligned'></h1>
+          <div className='sixteen wide column'>
+
           </div>
         </div>
         <div className='ui grid'>
-          <div class='sixteen wide column'>
-            <h1 className='pagetitle center aligned'></h1>
+          <div className='sixteen wide column'>
+
           </div>
         </div>
-        <div class="ui horizontal divider">
+        <div className="ui horizontal divider">
         *
         </div>
         <div className='ui grid'>
-        <div class='six wide column'>
+        <div className='six wide column'>
 
         </div>
-          <div class='four wide column'>
+          <div className='four wide column'>
             <button className='fluid ui button primary'>Submit</button>
           </div>
-          <div class='six wide column'>
+          <div className='six wide column'>
 
           </div>
         </div>
@@ -213,15 +213,15 @@ const validate = (formValues) => {
 	}
   if(!formValues.goal_use) {
 		//only ran if the user did not enter a title
-		errors.rule_name = 'You must choose whether attainment is goal dependent'
+		errors.rule_name = 'Dont forget to select whether attainment is goal dependent'
 	}
   if(!formValues.rule_source) {
 		//only ran if the user did not enter a title
-		errors.rule_name = 'You must select a calculation type'
+		errors.rule_name = 'Dont forget to select a calculation type'
 	}
   if(!formValues.rule_metric) {
 		//only ran if the user did not enter a title
-		errors.rule_name = 'You must select a metric'
+		errors.rule_name = 'Dont forget to select a metric'
 	}
   if(!formValues.rule_timeframe) {
 		//only ran if the user did not enter a title
@@ -233,7 +233,7 @@ const validate = (formValues) => {
   }
   if(!formValues.plan_id) {
 
-    errors.rule_name = 'Dont forget to select a plan VVV'
+    errors.rule_name = 'Dont forget to select a plan'
   }
 
   return errors

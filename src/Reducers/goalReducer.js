@@ -7,7 +7,7 @@ const INITIAL_STATE = {
   goal: {}
 }
 
-export default (state=INITIAL_STATE, action) => {
+const fn = (state=INITIAL_STATE, action) => {
   switch(action.type) {
     case GET_GOAL:
       return {...state, goal: action.payload}
@@ -23,3 +23,5 @@ export default (state=INITIAL_STATE, action) => {
       return state
   }
 }
+
+export default fn;

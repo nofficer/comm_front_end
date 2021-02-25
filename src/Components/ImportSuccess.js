@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { } from '../actions'
-import { Link } from 'react-router-dom'
+
 import Modal from '../Modal'
 import history from '../history'
 import Login from './Accounts/Login'
@@ -30,7 +30,7 @@ class ImportSuccess extends React.Component {
 
   render(){
 
-    if(this.props.account['role'] == 'admin'){
+    if(this.props.account['role'] === 'admin'){
       const url = history.location.state.url
       return(<Modal
         title="Import Success!"
@@ -39,7 +39,7 @@ class ImportSuccess extends React.Component {
         onDismiss={() => history.push(url)}
       />)
     }
-      else if(typeof(this.props.account['user_id']) != "undefined"){
+      else if(typeof(this.props.account['user_id']) !== "undefined"){
         return "You do not have sufficient permissions to access this page"
       }
       else{

@@ -6,7 +6,7 @@ const INITIAL_STATE = {
   filter:{}
 }
 
-export default (state=INITIAL_STATE, action) => {
+const fn = (state=INITIAL_STATE, action) => {
   switch(action.type) {
     case SET_FILTER:
     console.log(action.payload)
@@ -28,3 +28,5 @@ export default (state=INITIAL_STATE, action) => {
   }
 }
 //user_id:1,username:"Nathan.officer@cdw.ca",role:"admin"
+
+export default fn;

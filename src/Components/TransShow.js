@@ -1,13 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { getTrans, deleteTrans,getTime,setFilter,clearFilter,clearTransError,clearTrans,getAutoTrans} from '../actions'
-import history from '../history'
+
 import { Link } from 'react-router-dom'
 import Login from './Accounts/Login'
 import Modal from '../Modal'
 import XLSX from 'xlsx';
 import { saveAs } from 'file-saver'
-import LoaderNoButton from '../LoaderNoButton'
+
 
 function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
   try {
@@ -68,13 +68,13 @@ class TransShow extends React.Component {
 
   handleChange = (e) => {
     var filter = e.target.value
-    if (filter == 'all'){
+    if (filter === 'all'){
       this.title = 'All'
     }
-    else if (filter=='cy'){
+    else if (filter==='cy'){
       this.title = 'Current Year'
     }
-    else if (filter=='cm'){
+    else if (filter==='cm'){
       this.title = 'Current Month'
     }
     this.props.clearTrans()
@@ -105,7 +105,7 @@ class TransShow extends React.Component {
     var check = true
     filters.map((filter) => {
 
-      if(trans[this.filterMap[filter]] == null){
+      if(trans[this.filterMap[filter]] === null){
         check = false
       }
       else if(trans[this.filterMap[filter]] != null){
@@ -114,7 +114,7 @@ class TransShow extends React.Component {
           }
       }
 
-
+      return true
         }
     )
 
@@ -130,7 +130,7 @@ class TransShow extends React.Component {
         statement_details.push(trans)
 
         return (
-          <tr><td className='center aligned'>{trans[0]}</td><td className='center aligned'>{trans[1]}</td><td className='center aligned'>{trans[2]}</td><td className='center aligned'>{trans[3].split("T")[0]}</td><td className='center aligned'>$ {formatMoney(trans[4])}</td><td className='center aligned'>$ {formatMoney(trans[5])}</td><td className='center aligned'>{trans[6]}</td><td className='center aligned'>{trans[7]}</td><td className='center aligned'>{trans[8]}</td><td className='center aligned'>{trans[9]}</td><td className='center aligned'>{trans[10]}</td><td className='center aligned'>{trans[11]}</td>
+          <tr key={trans[0]}><td className='center aligned'>{trans[0]}</td><td className='center aligned'>{trans[1]}</td><td className='center aligned'>{trans[2]}</td><td className='center aligned'>{trans[3].split("T")[0]}</td><td className='center aligned'>$ {formatMoney(trans[4])}</td><td className='center aligned'>$ {formatMoney(trans[5])}</td><td className='center aligned'>{trans[6]}</td><td className='center aligned'>{trans[7]}</td><td className='center aligned'>{trans[8]}</td><td className='center aligned'>{trans[9]}</td><td className='center aligned'>{trans[10]}</td><td className='center aligned'>{trans[11]}</td>
             <td className='center aligned'>
             <Link onClick={(e) => e.stopPropagation()} to={`/transShow/edit/${trans[0]}`} className='ui small button primary'>
               Edit
@@ -143,11 +143,11 @@ class TransShow extends React.Component {
 
         )
       }
-      else if(cur_year==trans_year && cur_month <= trans_month){
+      else if(cur_year===trans_year && cur_month <= trans_month){
         statement_details.push(trans)
 
         return (
-          <tr><td className='center aligned'>{trans[0]}</td><td className='center aligned'>{trans[1]}</td><td className='center aligned'>{trans[2]}</td><td className='center aligned'>{trans[3].split("T")[0]}</td><td className='center aligned'>$ {formatMoney(trans[4])}</td><td className='center aligned'>$ {formatMoney(trans[5])}</td><td className='center aligned'>{trans[6]}</td><td className='center aligned'>{trans[7]}</td><td className='center aligned'>{trans[8]}</td><td className='center aligned'>{trans[9]}</td><td className='center aligned'>{trans[10]}</td><td className='center aligned'>{trans[11]}</td>
+          <tr key={trans[0]}><td className='center aligned'>{trans[0]}</td><td className='center aligned'>{trans[1]}</td><td className='center aligned'>{trans[2]}</td><td className='center aligned'>{trans[3].split("T")[0]}</td><td className='center aligned'>$ {formatMoney(trans[4])}</td><td className='center aligned'>$ {formatMoney(trans[5])}</td><td className='center aligned'>{trans[6]}</td><td className='center aligned'>{trans[7]}</td><td className='center aligned'>{trans[8]}</td><td className='center aligned'>{trans[9]}</td><td className='center aligned'>{trans[10]}</td><td className='center aligned'>{trans[11]}</td>
             <td className='center aligned'>
             <Link onClick={(e) => e.stopPropagation()} to={`/transShow/edit/${trans[0]}`} className='ui small button primary'>
               Edit
@@ -165,7 +165,7 @@ class TransShow extends React.Component {
       else{
         statement_details.push(trans)
         return (
-          <tr><td className='center aligned'>{trans[0]}</td><td className='center aligned'>{trans[1]}</td><td className='center aligned'>{trans[2]}</td><td className='center aligned'>{trans[3].split("T")[0]}</td><td className='center aligned'>$ {formatMoney(trans[4])}</td><td className='center aligned'>$ {formatMoney(trans[5])}</td><td className='center aligned'>{trans[6]}</td><td className='center aligned'>{trans[7]}</td><td className='center aligned'>{trans[8]}</td><td className='center aligned'>{trans[9]}</td><td className='center aligned'>{trans[10]}</td><td className='center aligned'>{trans[11]}</td>
+          <tr key={trans[0]}><td className='center aligned'>{trans[0]}</td><td className='center aligned'>{trans[1]}</td><td className='center aligned'>{trans[2]}</td><td className='center aligned'>{trans[3].split("T")[0]}</td><td className='center aligned'>$ {formatMoney(trans[4])}</td><td className='center aligned'>$ {formatMoney(trans[5])}</td><td className='center aligned'>{trans[6]}</td><td className='center aligned'>{trans[7]}</td><td className='center aligned'>{trans[8]}</td><td className='center aligned'>{trans[9]}</td><td className='center aligned'>{trans[10]}</td><td className='center aligned'>{trans[11]}</td>
             <td className='center aligned'>
 
               </td>
@@ -195,26 +195,26 @@ class TransShow extends React.Component {
 
 
   render(){
-    if(this.props.error == 'id'){
+    if(this.props.error === 'id'){
       return <Modal onDismiss={this.props.clearTransError} title='Error in Transaction Creation' content='A transaction with that ID already exists' actions='Ok'/>
     }
-    // else if(typeof(this.props.trans[0]) == 'undefined' && this.props.account['role'] == 'admin'){
+    // else if(typeof(this.props.trans[0]) === 'undefined' && this.props.account['role'] === 'admin'){
     //   return<div><LoaderNoButton filler='Loading Transactions...'/></div>
     // }
 
     else{
-    if(this.props.account['role'] == 'admin'){
+    if(this.props.account['role'] === 'admin'){
       return (<div className='ui container containermargin'>
         <div className='ui grid'>
-        <div class='sixteen wide column'></div>
+        <div className='sixteen wide column'></div>
 
 
-        <div class='sixteen wide column'>
+        <div className='sixteen wide column'>
         <div className='ui center aligned grid'>
           <h1 className=''>{this.title} Transactions</h1>
           </div>
         </div>
-        <div class='two wide column'><select className='ui dropdown' onChange={this.handleChange}>
+        <div className='two wide column'><select className='ui dropdown' onChange={this.handleChange}>
 
           <option value="cm">Select a time period...</option>
           <option value="cm">Current Month</option>
@@ -223,77 +223,77 @@ class TransShow extends React.Component {
 
 
         </select></div>
-        <div class='twelve wide column'></div>
-        <div class='two wide column'>
+        <div className='twelve wide column'></div>
+        <div className='two wide column'>
           <div className='ui centre aligned grid'>
               <button className='rightitem fluid ui button positive' onClick={(e) => e.stopPropagation(this.props.getAutoTrans())}>Import Transactions from Source</button>
           </div>
         </div>
         <div className='six wide column'></div>
-        <div class="four wide column"><button className='rightitem fluid ui button positive' onClick={this.generateStatement}>Export Transactions </button></div>
+        <div className="four wide column"><button className='rightitem fluid ui button positive' onClick={this.generateStatement}>Export Transactions </button></div>
         <div className='six wide column'></div>
-        <div class='sixteen wide column'></div>
+        <div className='sixteen wide column'></div>
         </div>
         <table className='ui celled  table'>
           <thead>
           <tr>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('trans_id',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('seller_id',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('type',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('date',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('revenue',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('gp',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('order_num',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('location',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('split_percent',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('custom_field',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('payout_multiplier',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('period',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
@@ -318,7 +318,9 @@ class TransShow extends React.Component {
               <th className='center aligned'><strong>Options</strong></th>
             </tr>
           </thead>
+          <tbody>
           {this.renderList()}
+          </tbody>
         </table>
 
 
@@ -326,7 +328,7 @@ class TransShow extends React.Component {
       )
     }
 
-    else if(typeof(this.props.account['user_id']) == "number"){
+    else if(typeof(this.props.account['user_id']) !== "undefined"){
       return "You do not have sufficient permissions to access this page"
     }
     else{

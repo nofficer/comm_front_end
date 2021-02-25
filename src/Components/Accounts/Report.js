@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { getPayoutsHistory,calcPlans,loadCalcs, selectMonth,getTime,getPayouts_user,clearFilter,setFilter,getUsers,castUser,selectYear,getGoals,getYears,getUsersJoined } from '../../actions'
-import { Link } from 'react-router-dom'
-import Loader from '../../Loader'
+
+
 import Login from '../Accounts/Login'
 import XLSX from 'xlsx';
 import monthmap from '../monthmap'
@@ -11,7 +11,7 @@ import DoughnutChart from '../DoughnutChart'
 import BarChart from '../BarChart'
 import { saveAs } from 'file-saver'
 
-import isMobile from 'react-device-detect';
+
 
 
 
@@ -134,7 +134,7 @@ class PayoutShow extends React.Component {
 
   createYearOption(year){
     return (
-      <option value={year}>{year}</option>
+      <option key={year} value={year}>{year}</option>
     )
   }
 
@@ -171,14 +171,17 @@ class PayoutShow extends React.Component {
     var check = true
     filters.map((filter) => {
 
-      if(payout[this.filterMap[filter]] == null){
+      if(payout[this.filterMap[filter]] === null){
         check = false
+        return false
       }
-      else if(payout[this.filterMap[filter]] != null){
+      else if(payout[this.filterMap[filter]] !== null){
         if(!payout[this.filterMap[filter]].toString().toLowerCase().includes(this.props.filter[filter].toLowerCase())){
             check = false
+            return false
           }
       }
+      return true
 
 
         }
@@ -199,7 +202,7 @@ class PayoutShow extends React.Component {
 
 
     var payout_year = payout[17].split('-')[0]
-    if(payout[15] == this.props.account['casted_user_id'].toLowerCase() && this.props.selected_month == "all" && this.props.selected_year == "all"){
+    if(payout[15] === this.props.account['casted_user_id'].toLowerCase() && this.props.selected_month === "all" && this.props.selected_year === "all"){
       payout[4] = Number(payout[4])
       payout[5] = Number(payout[5])
       payout[6] = Number(payout[6])
@@ -207,13 +210,13 @@ class PayoutShow extends React.Component {
       statement_details.push(payout)
 
       return (
-        <tr>
+        <tr key={payout[1]}>
           <td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {formatMoney(payout[4])}</td><td className='center aligned'>$ {formatMoney(payout[5])}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>{pay_rate}</td><td className='center aligned'>${formatMoney(payout[7])}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[17]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[12]}</td>
         </tr>
 
       )
     }
-    else if(payout[15] == this.props.account['casted_user_id'].toLowerCase() && payout[13] == this.props.selected_month && this.props.selected_year == payout_year ){
+    else if(payout[15] === this.props.account['casted_user_id'].toLowerCase() && payout[13] === this.props.selected_month && this.props.selected_year === payout_year ){
       payout[4] = Number(payout[4])
       payout[5] = Number(payout[5])
       payout[6] = Number(payout[6])
@@ -222,13 +225,13 @@ class PayoutShow extends React.Component {
 
 
       return (
-        <tr>
+        <tr key={payout[1]}>
           <td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {formatMoney(payout[4])}</td><td className='center aligned'>$ {formatMoney(payout[5])}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>{pay_rate}</td><td className='center aligned'>${formatMoney(payout[7])}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[17]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[12]}</td>
         </tr>
 
       )
     }
-    else if(payout[15] == this.props.account['casted_user_id'].toLowerCase() && payout[13] == this.props.selected_month && this.props.selected_year == "all" ){
+    else if(payout[15] === this.props.account['casted_user_id'].toLowerCase() && payout[13] === this.props.selected_month && this.props.selected_year === "all" ){
       payout[4] = Number(payout[4])
       payout[5] = Number(payout[5])
       payout[6] = Number(payout[6])
@@ -236,13 +239,13 @@ class PayoutShow extends React.Component {
       statement_details.push(payout)
 
       return (
-        <tr>
+        <tr key={payout[1]}>
           <td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {formatMoney(payout[4])}</td><td className='center aligned'>$ {formatMoney(payout[5])}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>{pay_rate}</td><td className='center aligned'>${formatMoney(payout[7])}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[17]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[12]}</td>
         </tr>
 
       )
     }
-    else if(payout[15] == this.props.account['casted_user_id'].toLowerCase() && this.props.selected_month == "all" && this.props.selected_year == payout_year ){
+    else if(payout[15] === this.props.account['casted_user_id'].toLowerCase() && this.props.selected_month === "all" && this.props.selected_year === payout_year ){
       payout[4] = Number(payout[4])
       payout[5] = Number(payout[5])
       payout[6] = Number(payout[6])
@@ -250,7 +253,7 @@ class PayoutShow extends React.Component {
       statement_details.push(payout)
 
       return (
-        <tr>
+        <tr key={payout[1]}>
           <td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {formatMoney(payout[4])}</td><td className='center aligned'>$ {formatMoney(payout[5])}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>{pay_rate}</td><td className='center aligned'>${formatMoney(payout[7])}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[17]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[12]}</td>
         </tr>
 
@@ -271,7 +274,7 @@ class PayoutShow extends React.Component {
       var pay = Number(payout[7])
       var attain = Number(payout[6])
       var payout_year = payout[17].split('-')[0]
-      if(payout[15] == this.props.account['casted_user_id'].toLowerCase() && this.props.selected_month == "all" && this.props.selected_year == "all"){
+      if(payout[15] === this.props.account['casted_user_id'].toLowerCase() && this.props.selected_month === "all" && this.props.selected_year === "all"){
         //////////////////////////WRAP
         if(payout[14] in paySummary){
           paySummary[payout[14]]+=pay
@@ -283,7 +286,7 @@ class PayoutShow extends React.Component {
         }
         //////////////////////////WRAP
       }
-      else if(payout[15] == this.props.account['casted_user_id'].toLowerCase() && payout[13] == this.props.selected_month && this.props.selected_year == payout_year ){
+      else if(payout[15] === this.props.account['casted_user_id'].toLowerCase() && payout[13] === this.props.selected_month && this.props.selected_year === payout_year ){
         //////////////////////////WRAP
         if(payout[14] in paySummary){
           paySummary[payout[14]]+=pay
@@ -295,7 +298,7 @@ class PayoutShow extends React.Component {
         }
         //////////////////////////WRAP
       }
-      else if(payout[15] == this.props.account['casted_user_id'].toLowerCase() && payout[13] == this.props.selected_month && this.props.selected_year == "all" ){
+      else if(payout[15] === this.props.account['casted_user_id'].toLowerCase() && payout[13] === this.props.selected_month && this.props.selected_year === "all" ){
         //////////////////////////WRAP
         if(payout[14] in paySummary){
           paySummary[payout[14]]+=pay
@@ -307,7 +310,7 @@ class PayoutShow extends React.Component {
         }
         //////////////////////////WRAP
       }
-      else if(payout[15] == this.props.account['casted_user_id'].toLowerCase() && this.props.selected_month == "all" && this.props.selected_year == payout_year ){
+      else if(payout[15] === this.props.account['casted_user_id'].toLowerCase() && this.props.selected_month === "all" && this.props.selected_year === payout_year ){
         //////////////////////////WRAP
         if(payout[14] in paySummary){
           paySummary[payout[14]]+=pay
@@ -323,7 +326,7 @@ class PayoutShow extends React.Component {
       }
 
 
-
+      return true
     })
 
 
@@ -361,8 +364,8 @@ class PayoutShow extends React.Component {
     var end_month = Number(goal[4].split('-')[1])
     var selected_year = Number(this.props.selected_year)
     var selected_month = Number(this.props.selected_month)
-    if(this.props.account['casted_user_id'].toLowerCase() == goal[1].toLowerCase()){
-      if(this.props.selected_month != 'all' && this.props.selected_year != 'all'){
+    if(this.props.account['casted_user_id'].toLowerCase() === goal[1].toLowerCase()){
+      if(this.props.selected_month !== 'all' && this.props.selected_year !== 'all'){
 
 
 
@@ -381,7 +384,7 @@ class PayoutShow extends React.Component {
 
       }
 
-      else if(this.props.selected_month == 'all' && this.props.selected_year != 'all'){
+      else if(this.props.selected_month === 'all' && this.props.selected_year !== 'all'){
 
         if(selected_year >= start_year && selected_year <= end_year ){
 
@@ -393,7 +396,7 @@ class PayoutShow extends React.Component {
         )
         }
       }
-      else if(this.props.selected_month != 'all' && this.props.selected_year == 'all'){
+      else if(this.props.selected_month !== 'all' && this.props.selected_year === 'all'){
 
         if(selected_month>= start_month && selected_month <= end_month){
 
@@ -406,7 +409,7 @@ class PayoutShow extends React.Component {
         }
       }
 
-      else if(this.props.selected_month == 'all' && this.props.selected_year == 'all'){
+      else if(this.props.selected_month === 'all' && this.props.selected_year === 'all'){
 
         goal_details.push([goal[6],formatMoney(goal_amt),goal[3],goal[4],goal[8].toUpperCase()])
 
@@ -441,14 +444,14 @@ class PayoutShow extends React.Component {
       var payout_date = new Date(payout[17])
       var payout_attain = Number(payout[6])
       var payout_mo_num = Number(payout[13])
+      var sel_mo_num = 0
 
-
-      if(this.props.selected_month == 'all'){
-        var sel_mo_num = Number(12)
+      if(this.props.selected_month === 'all'){
+        sel_mo_num = Number(12)
       }
 
       else{
-        var sel_mo_num = Number(this.props.selected_month)
+        sel_mo_num = Number(this.props.selected_month)
       }
 
 
@@ -458,9 +461,9 @@ class PayoutShow extends React.Component {
 
 
 
-      if(id==this.props.account['casted_user_id'].toLowerCase()){
+      if(id===this.props.account['casted_user_id'].toLowerCase()){
 
-        if(rule==goal_rule){
+        if(rule===goal_rule){
 
           if(payout_date >= goal_start && payout_mo_num <= sel_mo_num && payout_date <= goal_end){
 
@@ -471,6 +474,8 @@ class PayoutShow extends React.Component {
           }
         }
       }
+
+      return true
     })
     var goal_remain= Math.max(0,(goal_amt-prod_total))
 
@@ -513,14 +518,14 @@ class PayoutShow extends React.Component {
 
 
   createChartItem(goal){
-    if(this.props.account['casted_user_id'].toLowerCase() == goal[1].toLowerCase()){
-      if(this.props.selected_month != 'all' && this.props.selected_year != 'all'){
-        var start_year = Number(goal[3].split('-')[0])
-        var end_year = Number(goal[4].split('-')[0])
-        var start_month = Number(goal[3].split('-')[1])
-        var end_month = Number(goal[4].split('-')[1])
-        var selected_year = Number(this.props.selected_year)
-        var selected_month = Number(this.props.selected_month)
+    var selected_year = Number(this.props.selected_year)
+    var start_year = Number(goal[3].split('-')[0])
+    var end_year = Number(goal[4].split('-')[0])
+    var start_month = Number(goal[3].split('-')[1])
+    var end_month = Number(goal[4].split('-')[1])
+    var selected_month = Number(this.props.selected_month)
+    if(this.props.account['casted_user_id'].toLowerCase() === goal[1].toLowerCase()){
+      if(this.props.selected_month !== 'all' && this.props.selected_year !== 'all'){
 
           if(selected_year >= start_year && selected_year <= end_year ){
             if(selected_month>= start_month && selected_month <= end_month){
@@ -534,10 +539,8 @@ class PayoutShow extends React.Component {
 
       }
 
-      else if(this.props.selected_month == 'all' && this.props.selected_year != 'all'){
-        var selected_year = Number(this.props.selected_year)
-        var start_year = Number(goal[3].split('-')[0])
-        var end_year = Number(goal[4].split('-')[0])
+      else if(this.props.selected_month === 'all' && this.props.selected_year !== 'all'){
+
         if(selected_year >= start_year && selected_year <= end_year ){
           return(
 
@@ -546,10 +549,8 @@ class PayoutShow extends React.Component {
         )
         }
       }
-      else if(this.props.selected_month != 'all' && this.props.selected_year == 'all'){
-        var selected_month = Number(this.props.selected_month)
-        var start_month = Number(goal[3].split('-')[1])
-        var end_month = Number(goal[4].split('-')[1])
+      else if(this.props.selected_month !== 'all' && this.props.selected_year === 'all'){
+
         if(selected_month>= start_month && selected_month <= end_month){
           return(
 
@@ -559,7 +560,7 @@ class PayoutShow extends React.Component {
         }
       }
 
-      else if(this.props.selected_month == 'all' && this.props.selected_year == 'all'){
+      else if(this.props.selected_month === 'all' && this.props.selected_year === 'all'){
         return(
 
           this.makeChartItem(goal)
@@ -581,12 +582,12 @@ class PayoutShow extends React.Component {
 
     this.props.payouts.map((payout) => {
 
-      if(trans_id_tracker.includes(payout[1]) == false){
+      if(trans_id_tracker.includes(payout[1]) === false){
 
-        if(payout[15] == this.props.account['casted_user_id'].toLowerCase() && (Number(payout[17].slice(5,7)) <= Number(this.props.selected_month) || this.props.selected_month.toLowerCase() == 'all') && (payout[17].slice(0,4) == this.props.selected_year.toString() || this.props.selected_year.toLowerCase() == 'all'  )  ) {
+        if(payout[15] === this.props.account['casted_user_id'].toLowerCase() && (Number(payout[17].slice(5,7)) <= Number(this.props.selected_month) || this.props.selected_month.toLowerCase() === 'all') && (payout[17].slice(0,4) === this.props.selected_year.toString() || this.props.selected_year.toLowerCase() === 'all'  )  ) {
           trans_id_tracker.push(payout[1])
           //This thing above me is what enables only unique additions to the graph
-          if(typeof(no_goal_prod_total[monthmap[payout[13]]]) != 'undefined'){
+          if(typeof(no_goal_prod_total[monthmap[payout[13]]]) !== 'undefined'){
 
 
             no_goal_prod_total[monthmap[payout[13]]]+=Number(payout[6])
@@ -601,14 +602,15 @@ class PayoutShow extends React.Component {
 
 
 
-
+      return true
     })
 
     var montharr = []
     var prodarr = []
     for (const [key, value] of Object.entries(no_goal_prod_total)) {
       montharr.push(key)
-      prodarr.push(no_goal_prod_total[key])
+
+      prodarr.push(value)
 
 
     }
@@ -643,9 +645,11 @@ class PayoutShow extends React.Component {
   generateCharts(){
     var checker = true
     this.props.goals.map((goal) => {
-      if(goal[1].toLowerCase() == this.props.account['casted_user_id'].toLowerCase()){
+      if(goal[1].toLowerCase() === this.props.account['casted_user_id'].toLowerCase()){
         checker = false
+        return false
       }
+      return true
     })
     if(checker){
 
@@ -672,9 +676,11 @@ class PayoutShow extends React.Component {
   renderGoalHead(){
     var checker = false
     this.props.goals.map((goal)=> {
-      if(goal[1].toLowerCase() == this.props.account['casted_user_id'].toLowerCase()){
+      if(goal[1].toLowerCase() === this.props.account['casted_user_id'].toLowerCase()){
         checker = true
+        return true
       }
+      return true
     })
 
     if(checker){
@@ -686,7 +692,7 @@ class PayoutShow extends React.Component {
       )
     }
     else{
-      return("No goals for this user")
+      return(<tbody><tr><td>No goals for this user</td></tr></tbody>)
     }
   }
 
@@ -716,7 +722,7 @@ class PayoutShow extends React.Component {
     if(Number(line[1]) < 1){
       return(
         (
-          <tr>
+          <tr key={line[0]}>
           <td className='center aligned'>{monthmap[this.props.selected_month]}</td>
           <td className='center aligned'>{line[0]}</td>
           <td className='center aligned'>{formatMoney(line[1],5)}</td>
@@ -726,7 +732,7 @@ class PayoutShow extends React.Component {
       )
     }
     return (
-      <tr>
+      <tr key={line[0]}>
       <td className='center aligned'>{monthmap[this.props.selected_month]}</td>
       <td className='center aligned'>{line[0]}</td>
       <td className='center aligned'>{formatMoney(line[1])}</td>
@@ -756,19 +762,19 @@ class PayoutShow extends React.Component {
       var linePay = Number(payout[7])
 
 
-      if(payout[15] == this.props.account['casted_user_id'].toLowerCase() && this.props.selected_month == "all" && this.props.selected_year == "all"){
+      if(payout[15] === this.props.account['casted_user_id'].toLowerCase() && this.props.selected_month === "all" && this.props.selected_year === "all"){
         total_payout+=linePay
       }
-      else if(payout[15] == this.props.account['casted_user_id'].toLowerCase() && payout[13] == this.props.selected_month && this.props.selected_year == payout_year ){
+      else if(payout[15] === this.props.account['casted_user_id'].toLowerCase() && payout[13] === this.props.selected_month && this.props.selected_year === payout_year ){
         total_payout+=linePay
       }
-      else if(payout[15] == this.props.account['casted_user_id'].toLowerCase() && payout[13] == this.props.selected_month && this.props.selected_year == "all" ){
+      else if(payout[15] === this.props.account['casted_user_id'].toLowerCase() && payout[13] === this.props.selected_month && this.props.selected_year === "all" ){
         total_payout+=linePay
       }
-      else if(payout[15] == this.props.account['casted_user_id'].toLowerCase() && this.props.selected_month == "all" && this.props.selected_year == payout_year ){
+      else if(payout[15] === this.props.account['casted_user_id'].toLowerCase() && this.props.selected_month === "all" && this.props.selected_year === payout_year ){
         total_payout+=linePay
       }
-
+      return true
     })
 
 
@@ -779,8 +785,8 @@ class PayoutShow extends React.Component {
 
     uid = uid.toLowerCase()
 
-    if((user[9] == dept && user[8] < lvl) || user[0].toLowerCase() == uid || this.props.account['role'] == 'admin' ||(user[10] != null && user[10].toLowerCase() == uid)){ // IF THE SIGNED IN USER DEPARTMENT IS THE SAME AS THIS ROWS USER AND THE LEVEL IS LESS, OR IF THE USER IS EQUAL TO THE SIGNED IN USER, OR IF THE SIGNED IN USER IS AN ADMIN
-      if((user[9] != null && user[8] != null) || user[0].toLowerCase() == uid || this.props.account['role'] == 'admin' ||(user[10] != null && user[10].toLowerCase() == uid)){ // IF THE USER HAS A ROW IN THE ROLE HIERARCHY DISPLAY IT, OR IF THE USER IS EQUAL TO THE SIGNED IN USER, OR IF THE SIGNED IN USER IS AN ADMIN, OR IF THE USERS MGR ID IS THE CURRENT USER ID
+    if((user[9] === dept && user[8] < lvl) || user[0].toLowerCase() === uid || this.props.account['role'] === 'admin' ||(user[10] !== null && user[10].toLowerCase() === uid)){ // IF THE SIGNED IN USER DEPARTMENT IS THE SAME AS THIS ROWS USER AND THE LEVEL IS LESS, OR IF THE USER IS EQUAL TO THE SIGNED IN USER, OR IF THE SIGNED IN USER IS AN ADMIN
+      if((user[9] !== null && user[8] !== null) || user[0].toLowerCase() === uid || this.props.account['role'] === 'admin' ||(user[10] !== null && user[10].toLowerCase() === uid)){ // IF THE USER HAS A ROW IN THE ROLE HIERARCHY DISPLAY IT, OR IF THE USER IS EQUAL TO THE SIGNED IN USER, OR IF THE SIGNED IN USER IS AN ADMIN, OR IF THE USERS MGR ID IS THE CURRENT USER ID
         // console.log('start')
         // console.log(`${user[9]} => ${dept}`)
         // console.log(`${user[8]} => ${lvl}`)
@@ -800,11 +806,12 @@ class PayoutShow extends React.Component {
 
     this.props.users.map((user) => {
 
-      if(user[0].toLowerCase() == uid){
+      if(user[0].toLowerCase() === uid){
         dept = user[9]
         lvl = user[8]
 
       }
+      return true
     })
 
 
@@ -817,7 +824,7 @@ class PayoutShow extends React.Component {
   }
 
   renderContent(){
-    if(typeof(history.location.state.detail) == 'undefined'){
+    if(typeof(history.location.state.detail) === 'undefined'){
       return(<Login/>)
     }
 
@@ -826,21 +833,21 @@ class PayoutShow extends React.Component {
       return (<div className='ui grid '>
 
 
-      <div class='thirteen wide column'>
+      <div className='thirteen wide column'>
 
       </div>
       <div className='three wide column'>
       <div className='ui center aligned grid'>
-      <div class="sixteen wide column"></div>
+      <div className="sixteen wide column"></div>
       <select className='ui dropdown'  name="cast_user" onChange={(e) => e.stopPropagation(this.castUser(e))}>
                     <option value={this.props.account['user_id']}>Login as user...</option>
                     {this.renderUsersDropdown()}
                   </select>
                   </div>
                   </div>
-      <div class="sixteen wide column">
+      <div className="sixteen wide column">
       <div className='ui center aligned grid'>
-      <div class="sixteen wide column">
+      <div className="sixteen wide column">
       <h1 style={{fontSize:'3rem'}} className='ui huge header'>Dashboard </h1>
       </div>
 
@@ -849,11 +856,11 @@ class PayoutShow extends React.Component {
 
 
 
-      <div class="sixteen wide column">
+      <div className="sixteen wide column">
 
       </div>
 
-      <div class="five wide column">
+      <div className="five wide column">
         <div className='ui grid'>
           <div className='sixteen wide column'>
             <div className='ui center aligned grid'>
@@ -862,7 +869,7 @@ class PayoutShow extends React.Component {
           </div>
 
 
-          <div class="one wide column">
+          <div className="one wide column">
           </div>
 
           <div className="fifteen wide column">
@@ -871,8 +878,9 @@ class PayoutShow extends React.Component {
               <th className='center aligned'>Select Statement</th>
               <th className='center aligned'>Payout</th>
               </tr></thead>
+              <tbody>
               <tr>
-                <td className='center aligned' className='three wide'>
+                <td className='center aligned three wide' >
                 <select className='ui dropdown' onChange={this.handleYearChange}>
                   <option value={this.props.selected_year}>{this.props.selected_year}</option>
                   <option value="all">All</option>
@@ -883,7 +891,7 @@ class PayoutShow extends React.Component {
                 </select>
                 </td>
                 <td className='center aligned'>
-                  <h1 >{this.renderTotal()}</h1>
+                  <div >{this.renderTotal()}</div>
                 </td>
               </tr>
 
@@ -912,20 +920,20 @@ class PayoutShow extends React.Component {
               <button className=' ui button positive' onClick={this.generateStatement}>Download statement for {monthmap[this.props.selected_month]} </button>
             </td>
             </tr>
-
+            </tbody>
           </table>
         </div>
       </div>
     </div>
 
-      <div class="six wide column">
+      <div className="six wide column">
         <div className='ui center aligned grid'>
 
           {this.generateCharts()}
 
         </div>
       </div>
-        <div class="five wide column">
+        <div className="five wide column">
 
         <div className='ui grid'>
           <div className='fifteen wide column'>
@@ -950,15 +958,15 @@ class PayoutShow extends React.Component {
         </div>
 
 
-      <div class="sixteen wide column"></div>
+      <div className="sixteen wide column"></div>
 
-      <div class="sixteen wide column">
+      <div className="sixteen wide column">
 
       <div className='ui center aligned grid'>
       <h2 className=''>Summary Performance</h2>
       </div>
       </div>
-      <div class="sixteen wide column"></div>
+      <div className="sixteen wide column"></div>
 
       <div className='ui container containermargin'>
         <table className='ui celled center aligned table'>
@@ -971,17 +979,19 @@ class PayoutShow extends React.Component {
 
           </tr>
           </thead>
+          <tbody>
           {this.renderSummary()}
+          </tbody>
         </table>
         </div>
-        <div class="sixteen wide column"></div>
-        <div class="sixteen wide column"></div>
-        <div class="sixteen wide column">
+        <div className="sixteen wide column"></div>
+        <div className="sixteen wide column"></div>
+        <div className="sixteen wide column">
         <div className='ui center aligned grid'>
         <h2 className=''>Detailed Transaction Listing</h2>
         </div>
         </div>
-        <div class="sixteen wide column"></div>
+        <div className="sixteen wide column"></div>
         <div style={{overflow:'auto', whitespace:'nowrap'}} className='ui container containermargin'>
         <table  className='ui celled small compact unstackable table'>
 
@@ -989,32 +999,32 @@ class PayoutShow extends React.Component {
             <tr>
 
               <td className='center aligned'>
-                <div class="ui input">
+                <div className="ui input">
                   <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('trans_id',e.target.value))} placeholder="Search..."/>
                 </div>
               </td>
               <td className='center aligned'>
-                <div class="ui input">
+                <div className="ui input">
                   <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('seller_id',e.target.value))} placeholder="Search..."/>
                 </div>
               </td>
               <td className='center aligned'>
-                <div class="ui input">
+                <div className="ui input">
                   <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('payee',e.target.value))} placeholder="Search..."/>
                 </div>
               </td>
               <td className='center aligned'>
-                <div class="ui input">
+                <div className="ui input">
                   <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('revenue',e.target.value))} placeholder="Search..."/>
                 </div>
               </td>
               <td className='center aligned'>
-                <div class="ui input">
+                <div className="ui input">
                   <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('gp',e.target.value))} placeholder="Search..."/>
                 </div>
               </td>
               <td className='center aligned'>
-                <div class="ui input">
+                <div className="ui input">
                   <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('attainment',e.target.value))} placeholder="Search..."/>
                 </div>
               </td>
@@ -1022,49 +1032,49 @@ class PayoutShow extends React.Component {
 
               </td>
               <td className='center aligned'>
-                <div class="ui input">
+                <div className="ui input">
                   <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('payout',e.target.value))} placeholder="Search..."/>
                 </div>
               </td>
               <td className='center aligned'>
-                <div class="ui input">
+                <div className="ui input">
                   <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('split_percent',e.target.value))} placeholder="Search..."/>
                 </div>
               </td>
               <td className='center aligned'>
-                <div class="ui input">
+                <div className="ui input">
                   <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('location',e.target.value))} placeholder="Search..."/>
                 </div>
               </td>
               <td className='center aligned'>
-                <div class="ui input">
+                <div className="ui input">
                   <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('payout_multiplier',e.target.value))} placeholder="Search..."/>
                 </div>
               </td>
               <td className='center aligned'>
-                <div class="ui input">
+                <div className="ui input">
                   <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('order_num',e.target.value))} placeholder="Search..."/>
                 </div>
               </td>
               <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('date',e.target.value))} placeholder="Search..."/>
               </div>
 
               </td>
 
               <td className='center aligned'>
-                <div class="ui input">
+                <div className="ui input">
                   <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('attainment_rule',e.target.value))} placeholder="Search..."/>
                 </div>
               </td>
               <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('type',e.target.value))} placeholder="Search..."/>
               </div>
               </td>
               <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
 
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('custom_field',e.target.value))} placeholder="Search..."/>
               </div>
@@ -1096,10 +1106,10 @@ class PayoutShow extends React.Component {
           {this.renderList()}
           </tbody>
         </table>
-        <div class="sixteen wide column">
+        <div className="sixteen wide column">
 
         </div>
-        <div class="sixteen wide column">
+        <div className="sixteen wide column">
 
         </div>
         </div>
@@ -1119,7 +1129,7 @@ class PayoutShow extends React.Component {
   render(){
 
 
-    if(typeof(this.props.account['user_id']) != "undefined" && typeof(this.props.account['casted_user_id']) != 'undefined'){
+    if(typeof(this.props.account['user_id']) !== "undefined" && typeof(this.props.account['casted_user_id']) !== 'undefined'){
 
           return(<div>
 

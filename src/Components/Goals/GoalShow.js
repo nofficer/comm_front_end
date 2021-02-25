@@ -33,16 +33,16 @@ class GoalShow extends React.Component {
     var check = true
     filters.map((filter) => {
 
-      if(goal[this.filterMap[filter]] == null){
+      if(goal[this.filterMap[filter]] === null){
         check = false
       }
-      else if(goal[this.filterMap[filter]] != null){
+      else if(goal[this.filterMap[filter]] !== null){
         if(!goal[this.filterMap[filter]].toString().toLowerCase().includes(this.props.filter[filter].toLowerCase())){
             check = false
           }
       }
 
-
+      return true
         }
     )
 
@@ -50,7 +50,7 @@ class GoalShow extends React.Component {
       check
     ){
     return (
-      <tr className='' style={{'fontSize':'1.1rem'}}>
+      <tr key={goal[0]} className='' style={{'fontSize':'1.1rem'}}>
         <td className='center aligned'>{goal[0]}</td><td className='center aligned'>{goal[7]}</td><td className='center aligned'>{goal[6]}</td><td className='center aligned'>{goal[3]}</td><td className='center aligned'>{goal[4]}</td><td className='center aligned'>{goal[5]}</td><td className='center aligned'>{goal[8].toUpperCase()}</td>
         <td className='center aligned'>
         <Link onClick={(e) => e.stopPropagation()} to={`/goalShow/edit/${goal[0]}`} className='ui small button primary'>
@@ -75,23 +75,23 @@ class GoalShow extends React.Component {
 
 
   render(){
-    if(this.props.error == 'id'){
+    if(this.props.error === 'id'){
       return <Modal onDismiss={this.props.clearGoalError} title='Error in Goal Creation' content='A goal with that ID already exists' actions='Ok'/>
     }
 
     else{
-    if(this.props.account['role'] == 'admin'){
+    if(this.props.account['role'] === 'admin'){
       return (<div className='ui container containermargin'>
         <div className='ui grid'>
-        <div class='sixteen wide column'></div>
+        <div className='sixteen wide column'></div>
 
-        <div class='sixteen wide column'>
+        <div className='sixteen wide column'>
         <div className='ui center aligned grid'>
           <h1 className=''>Goals</h1>
           </div>
         </div>
-        <div class='sixteen wide column'></div>
-        <div class='sixteen wide column'></div>
+        <div className='sixteen wide column'></div>
+        <div className='sixteen wide column'></div>
         </div>
 
         <table className='ui celled table'>
@@ -99,37 +99,37 @@ class GoalShow extends React.Component {
           <thead>
           <tr>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('goal_id',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('user_name',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('rule_name',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('start',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('end',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('goal',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('timeframe',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
@@ -150,15 +150,16 @@ class GoalShow extends React.Component {
 
             </tr>
           </thead>
-          
+          <tbody>
           {this.renderList()}
+          </tbody>
         </table>
 
         </div>
       )
     }
 
-    else if(typeof(this.props.account['user_id']) == "number"){
+    else if(typeof(this.props.account['user_id']) !== "undefined"){
       return "You do not have sufficient permissions to access this page"
     }
     else{

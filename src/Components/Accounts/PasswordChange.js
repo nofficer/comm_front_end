@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import {  getPlans ,getUser,editUser,getTime,updateAccount } from '../../actions'
-import moment from 'moment'
-import _ from 'lodash'
-import { Field, reduxForm } from 'redux-form'
+
+
+
 import history from '../../history'
 import Login from './Login'
 
@@ -22,7 +22,7 @@ class PasswordChange extends React.Component {
     this.props.getPlans()
     this.props.getTime()
 
-    const user_id = this.props.match.params.user_id
+
   }
 
   onSubmit = (formValues) => {
@@ -49,10 +49,10 @@ class PasswordChange extends React.Component {
     if(typeof(history.location.state)=='undefined'){
       return(<Login/>)
     }
-    if(this.props.account['role'] == 'admin'){
+    if(this.props.account['role'] === 'admin'){
       return <div> <UserForm title={`Change Password - ${history.location.state.detail}`} perms='admin'  onSubmit={this.onSubmitAdmin} editing="password" populateDropdown={this.populateDropdown()} /></div>
     }
-    else if (this.props.account['user_id'] == history.location.state.detail){
+    else if (this.props.account['user_id'] === history.location.state.detail){
       return <div> <UserForm title='Change Password' perms='seller' errors={history.location.state.errors}  onSubmit={this.onSubmit} editing="password" populateDropdown={this.populateDropdown()} /></div>
     }
     else{

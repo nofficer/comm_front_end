@@ -21,7 +21,7 @@ class UserDelete extends React.Component {
     if(!this.props.user){
       return 'Are you sure you wish to delete this plan?'
     }
-    else if(this.props.check != "In Use"){
+    else if(this.props.check !== "In Use"){
       return `Are you sure you wish to delete ${this.props.user.name}`
     }
     else {
@@ -33,8 +33,8 @@ class UserDelete extends React.Component {
 
 
   renderActions(){
-    const id = this.props.match.params.user_id
-    if(this.props.check != "In Use"){
+
+    if(this.props.check !== "In Use"){
     return (
       <React.Fragment>
                 <button
@@ -57,8 +57,8 @@ class UserDelete extends React.Component {
 
 
   render(){
-    if(this.props.account['role'] == 'admin'){
-      if(this.props.calc == 'Running'){
+    if(this.props.account['role'] === 'admin'){
+      if(this.props.calc === 'Running'){
         return(
           <Loader filler="Calculations Running - Please check back later..."/>
         )
@@ -75,7 +75,7 @@ class UserDelete extends React.Component {
 
     }
 
-    else if(typeof(this.props.account['user_id']) == "number"){
+    else if(typeof(this.props.account['user_id']) !== "undefined"){
       return "You do not have sufficient permissions to access this page"
     }
     else{

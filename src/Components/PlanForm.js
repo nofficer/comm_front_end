@@ -43,22 +43,22 @@ class PlanForm extends React.Component {
     <div className='ui grid'>
 
     <div className='ui grid'>
-      <div class='sixteen wide column'>
-        <h1 className='center aligned'></h1>
+      <div className='sixteen wide column'>
+
       </div>
     </div>
-      <div class='sixteen wide column'>
+      <div className='sixteen wide column'>
       <div className='ui center aligned grid'>
         <h1 className=''>{this.props.title}</h1>
         </div>
       </div>
       <div className='ui grid'>
-        <div class='sixteen wide column'>
-          <h1 className='center aligned'></h1>
+        <div className='sixteen wide column'>
+
         </div>
       </div><div className='ui grid'>
-        <div class='sixteen wide column'>
-          <h1 className='center aligned'></h1>
+        <div className='sixteen wide column'>
+
         </div>
       </div>
 
@@ -67,8 +67,8 @@ class PlanForm extends React.Component {
     </div>
 
     <div className='ui grid'>
-      <div class='sixteen wide column'>
-          <div class="ui horizontal divider">
+      <div className='sixteen wide column'>
+          <div className="ui horizontal divider">
             *
           </div>
       </div>
@@ -76,22 +76,22 @@ class PlanForm extends React.Component {
 
 
     <div className='ui grid'>
-      <div class='sixteen wide column'>
-        <h1 className='pagetitle center aligned'></h1>
+      <div className='sixteen wide column'>
+
       </div>
     </div>
     <div className='ui grid'>
-    <div class='six wide column'></div>
+    <div className='six wide column'></div>
 
 
-    <div class='four wide column'>
+    <div className='four wide column'>
     <form className='ui form error' onSubmit={this.props.handleSubmit(this.onSubmit)}>
       <Field name='plan_name' component={this.renderInput} label='Enter Plan Name' />
       <br/>
       <button className='ui fluid button primary'>Submit</button>
     </form>
     </div>
-    <div class='six wide column'></div>
+    <div className='six wide column'></div>
 
     </div>
     </div>

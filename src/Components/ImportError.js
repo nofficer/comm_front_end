@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getTran ,deleteTrans} from '../actions'
-import { Link } from 'react-router-dom'
+
+
 import Modal from '../Modal'
 import history from '../history'
 import Login from './Accounts/Login'
@@ -26,7 +26,7 @@ class ImportError extends React.Component {
 
   render(){
 
-    if(this.props.account['role'] == 'admin'){
+    if(this.props.account['role'] ==='admin'){
       return  (<Modal
           title="Import Error"
           content={history.location.state.detail}
@@ -34,7 +34,7 @@ class ImportError extends React.Component {
           onDismiss={() => history.push('/import')}
         />)
     }
-      else if(typeof(this.props.account['user_id']) != "undefined"){
+      else if(typeof(this.props.account['user_id']) !== "undefined"){
         return "You do not have sufficient permissions to access this page"
       }
       else{

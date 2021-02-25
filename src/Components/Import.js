@@ -18,26 +18,26 @@ class Import extends React.Component {
   }
 
   render(){
-    if(this.props.account['role'] == 'admin'){
-        if(this.props.loading == 'loading'){
+    if(this.props.account['role'] === 'admin'){
+        if(this.props.loading === 'loading'){
           return (<Loader filler='Importing File...'/>)
         }
 
-        else if(this.props.calc == 'Running'){
+        else if(this.props.calc === 'Running'){
           return (<Loader filler='Calculations are currently running you may not import at this time.'/>)
         }
         else {
           return (
             <div className='ui text container containermargin' >
             <div className='ui grid'>
-            <div class='sixteen wide column'></div>
-            <div class='sixteen wide column'></div>
-            <div class='sixteen wide column'></div>
-            <div class='sixteen wide column'></div>
-            <div class='sixteen wide column'></div>
-            <div class='sixteen wide column'></div>
-            <div class='sixteen wide column'></div>
-            <div class='sixteen wide column'></div>
+            <div className='sixteen wide column'></div>
+            <div className='sixteen wide column'></div>
+            <div className='sixteen wide column'></div>
+            <div className='sixteen wide column'></div>
+            <div className='sixteen wide column'></div>
+            <div className='sixteen wide column'></div>
+            <div className='sixteen wide column'></div>
+            <div className='sixteen wide column'></div>
             </div>
               <UploadForm onSubmit={this.onSubmit}/>
             </div>
@@ -46,7 +46,7 @@ class Import extends React.Component {
 
     }
 
-    else if(typeof(this.props.account['user_id']) == "number"){
+    else if(typeof(this.props.account['user_id']) !== "undefined"){
       return "You do not have sufficient permissions to access this page"
     }
     else{

@@ -39,7 +39,7 @@ class AttainRuleShow extends React.Component {
           }
       }
 
-
+      return true
         }
     )
 
@@ -47,7 +47,7 @@ class AttainRuleShow extends React.Component {
       check
     ){
     return (
-      <tr>
+      <tr key={attainRule[0]}>
         <td className='center aligned'>{attainRule[0]}</td><td className='center aligned'>{attainRule[1]}</td><td className='center aligned'>{attainRule[2]}</td><td className='center aligned'>{attainRule[3]}</td><td className='center aligned'>{attainRule[4].toUpperCase()}</td><td className='center aligned'>{attainRule[5].toUpperCase()}</td><td className='center aligned'>{attainRule[6]}</td><td className='center aligned'>{attainRule[8].toUpperCase()}</td>
         <td className='center aligned'>
         <Link onClick={(e) => e.stopPropagation()} to={`/attainRuleShow/edit/${attainRule[0]}`} className='ui small button primary'>
@@ -72,18 +72,18 @@ class AttainRuleShow extends React.Component {
 
 
   render(){
-    if(this.props.account['role'] == 'admin'){
+    if(this.props.account['role'] === 'admin'){
       return (<div className='ui container containermargin'>
       <div className='ui grid marginbox'>
-      <div class='sixteen wide column'></div>
+      <div className='sixteen wide column'></div>
 
-      <div class='sixteen wide column'>
+      <div className='sixteen wide column'>
       <div className='ui center aligned grid'>
         <h1 className=''>Attainment Rules</h1>
         </div>
       </div>
-      <div class='sixteen wide column'></div>
-      <div class='sixteen wide column'></div>
+      <div className='sixteen wide column'></div>
+      <div className='sixteen wide column'></div>
       </div>
 
         <table className='ui celled table'>
@@ -91,37 +91,37 @@ class AttainRuleShow extends React.Component {
           <thead>
           <tr>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('rule_id',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('rule_name',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('calc_type',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('filter',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('metric',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('timeframe',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>
-              <div class="ui input">
+              <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('goal_use',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
@@ -141,14 +141,16 @@ class AttainRuleShow extends React.Component {
               <th className='center aligned'><strong>Options</strong></th>
             </tr>
           </thead>
+          <tbody>
           {this.renderList()}
+          </tbody>
         </table>
 
         </div>
       )
     }
 
-    else if(typeof(this.props.account['user_id']) == "number"){
+    else if(typeof(this.props.account['user_id']) !== "undefined"){
       return "You do not have sufficient permissions to access this page"
     }
     else{

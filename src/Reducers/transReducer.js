@@ -6,7 +6,7 @@ const INITIAL_STATE = {
   trans : []
 }
 
-export default (state=INITIAL_STATE, action) => {
+const fn = (state=INITIAL_STATE, action) => {
   switch(action.type) {
     case GET_AUTO_TRANS:
       return{...state,redirect_link:action.payload};
@@ -26,3 +26,5 @@ export default (state=INITIAL_STATE, action) => {
       return state
   }
 }
+
+export default fn;

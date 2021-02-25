@@ -25,7 +25,7 @@ class AttainRuleDelete extends React.Component {
     if(!this.props.rule){
       return 'Are you sure you wish to delete this rule?'
     }
-    else if(this.props.check != "In Use") {
+    else if(this.props.check !== "In Use") {
       return `Are you sure you wish to delete ${this.props.rule.rule_name}`
     }
     else{
@@ -35,8 +35,8 @@ class AttainRuleDelete extends React.Component {
   }
 
   renderActions(){
-    const id = this.props.match.params.rule_id
-    if(this.props.check != "In Use"){
+
+    if(this.props.check !== "In Use"){
       return (
 
         <React.Fragment>
@@ -62,8 +62,8 @@ class AttainRuleDelete extends React.Component {
 
 
   render(){
-    if(this.props.account['role'] == 'admin'){
-      if(this.props.calc == 'Running'){
+    if(this.props.account['role'] === 'admin'){
+      if(this.props.calc === 'Running'){
         return(
           <Loader filler="Calculations Running - Please check back later..."/>
         )
@@ -81,7 +81,7 @@ class AttainRuleDelete extends React.Component {
 
     }
 
-    else if(typeof(this.props.account['user_id']) == "number"){
+    else if(typeof(this.props.account['user_id']) !== "undefined"){
       return "You do not have sufficient permissions to access this page"
     }
     else{
