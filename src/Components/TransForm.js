@@ -5,8 +5,25 @@ import { connect } from 'react-redux'
 import { getTime } from '../actions'
 
 
+import globals from './globals'
+
 var monthVar = ''
 var yearVar = ''
+
+var customfieldlabel = 'Enter ' + globals.custom_field
+var ordernumlabel = 'Enter ' + globals.order_num
+
+const splitlabel = 'Enter ' + globals.split
+const multiplierlabel = 'Enter Payout ' + globals.multiplier
+const locationlabel = 'Enter Transaction ' + globals.location
+
+const datelabel = 'Select Transaction ' + globals.date + ' (YYYY-MM-DD)'
+const revenuelabel = 'Enter Transaction ' + globals.revenue
+const gplabel = 'Enter Transaction ' + globals.gp
+
+const typelabel = 'Enter Transaction ' + globals.type
+const trans_idlabel = 'Enter ' + globals.trans_id
+const sellerlabel = 'Select ' + globals.seller + ''
 
 class TransForm extends React.Component {
 
@@ -101,7 +118,7 @@ class TransForm extends React.Component {
 
 
         <div className='six wide column'></div>
-        <div className='four wide column'><Field name="seller_id" component="select" label='Select Seller'>
+        <div className='four wide column'><Field name="seller_id" component="select" label={sellerlabel}>
                   <option value="">Select seller...</option>
                   {this.props.populateDropdown.map(transaction =>
                     <option value={transaction[0]} key={transaction[0]}>{transaction[1]}</option>)}
@@ -116,19 +133,19 @@ class TransForm extends React.Component {
 
                     <option value={this.props.populateDropdownID} key={this.props.populateDropdownID}>{this.props.populateDropdownID}</option>
                 </Field>
-          <Field name='type' component={this.renderInput} label='Enter Transaction Type' />
-          <Field name='date' component={this.renderInput} label='Select Transaction Date (YYYY-MM-DD)'/>
+          <Field name='type' component={this.renderInput} label={typelabel} />
+          <Field name='date' component={this.renderInput} label={datelabel}/>
 
-          <Field name='revenue' component={this.renderInput} label='Enter Transaction Revenue' />
-          <Field name='gp'  component={this.renderInput} label='Enter Transaction GP' />
+          <Field name='revenue' component={this.renderInput} label={revenuelabel} />
+          <Field name='gp'  component={this.renderInput} label={gplabel} />
           </div>
           <div className='four wide column'>
 
-          <Field name='order_num'  component={this.renderInput} label='Enter Order Number' />
-          <Field name='transaction_location'  component={this.renderInput} label='Enter Transaction Location' />
-          <Field name='split_percent'  component={this.renderInput} label='Enter Split Percent' />
-          <Field name='custom_field'  component={this.renderInput} label='Enter Custom Field' />
-          <Field name='payout_multiplier'  component={this.renderInput} label='Enter Payout Multiplier'   />
+          <Field name='order_num'  component={this.renderInput} label={ordernumlabel} />
+          <Field name='transaction_location'  component={this.renderInput} label={locationlabel} />
+          <Field name='split_percent'  component={this.renderInput} label={splitlabel} />
+          <Field name='custom_field'  component={this.renderInput} label={customfieldlabel}/>
+          <Field name='payout_multiplier'  component={this.renderInput} label={multiplierlabel}   />
 
 
 
@@ -206,21 +223,21 @@ class TransForm extends React.Component {
 
         <div className='four wide column'></div>
         <div className='four wide column'>
-        <Field name='trans_id' component={this.renderInput} label='Enter Transaction ID' />
+        <Field name='trans_id' component={this.renderInput} label={trans_idlabel} />
 
-          <Field name='type' component={this.renderInput} label='Enter Transaction Type' />
-          <Field name='date' component={this.renderInput} label='Select Transaction Date (YYYY-MM-DD)'/>
+          <Field name='type' component={this.renderInput} label={typelabel} />
+          <Field name='date' component={this.renderInput} label={datelabel}/>
 
-          <Field name='revenue' component={this.renderInput} label='Enter Transaction Revenue' />
-          <Field name='gp'  component={this.renderInput} label='Enter Transaction GP' />
+          <Field name='revenue' component={this.renderInput} label={revenuelabel} />
+          <Field name='gp'  component={this.renderInput} label={gplabel} />
           </div>
           <div className='four wide column'>
 
-          <Field name='order_num'  component={this.renderInput} label='Enter Order Number' />
-          <Field name='transaction_location'  component={this.renderInput} label='Enter Transaction Location' />
-          <Field name='split_percent'  component={this.renderInput} label='Enter Split Percent' />
-          <Field name='custom_field'  component={this.renderInput} label='Enter Custom Field' />
-          <Field name='payout_multiplier'  component={this.renderInput} label='Enter Payout Multiplier'   />
+          <Field name='order_num'  component={this.renderInput} label={ordernumlabel} />
+          <Field name='transaction_location'  component={this.renderInput} label={locationlabel} />
+          <Field name='split_percent'  component={this.renderInput} label={splitlabel} />
+          <Field name='custom_field'  component={this.renderInput} label={customfieldlabel} />
+          <Field name='payout_multiplier'  component={this.renderInput} label={multiplierlabel}   />
 
 
 

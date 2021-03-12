@@ -6,28 +6,30 @@ import db from '../apis/db'
 import history from '../history'
 import axios from 'axios'
 
+const {GoogleAuth} = require('google-auth-library');
+const auth_key = 'allowme'
+
+const proxycheck = axios.create({
+  baseURL: 'http://127.0.0.1:5000',
+  headers: {
+      auth_key:auth_key
+    }
+})
 
 
-// const proxycheck = axios.create({
-//   baseURL: 'http://127.0.0.1:5000',
-//   headers: {
-//
-//     }
-// })
-//
-//
-// export const getProxy = () => {
-//   return async (dispatch) => {
-//     const response = await proxycheck.post('',{'req_type':'get','auth_key':'allowme', 'url':'/getUsers','values':{1:2,3:4}})
-//     console.log(response)
-//   }
-// }
+
+export const getProxy = () => {
+  return async (dispatch) => {
+    const response = await proxycheck.post('',{'req_type':'get','auth_key':'allowme', 'url':'/helper','items':{1:2,3:4}})
+    console.log(response)
+  }
+}
 
 
 
 export const callback_action_qbo = (URL) => {
   return async (dispatch) => {
-    console.log('callback action')
+
     const response = await db.get('/callback' + URL)
 
     dispatch({type:QBO_CALLBACK, payload: response.data})
@@ -153,7 +155,7 @@ export const updateFYE = () => {
 }
 
 export const castUser = (user_id,role,username,casted_user_id) => {
-
+  console.log(username)
   return({type:CAST_USER, payload: {user_id:user_id.toLowerCase(),role:role,username:username,casted_user_id:casted_user_id}})
 }
 
@@ -195,7 +197,7 @@ export const clearFilter = () => {
 }
 
 export const setFilter = (key,val) => {
-
+  console.log(val)
   return({type:SET_FILTER,payload:[key,val]})
 }
 
@@ -245,19 +247,19 @@ export const clearError = () => {
 }
 
 export const clearUserError = () => {
-
+  console.log("This is running")
   history.push('/userCreate')
   return({type:CLEAR})
 }
 
 export const clearTransError = () => {
-
+  console.log("This is running")
   // history.push('/userShow')
   return({type:CLEAR})
 }
 
 export const clearGoalError = () => {
-
+  console.log("This is running")
   // history.push('/userShow')
   return({type:CLEAR})
 }
@@ -280,7 +282,7 @@ export const editGoal = (formValues,goal_id) => {
 }
 export const createGoal = (formValues) => {
   return async (dispatch) => {
-
+    console.log(formValues)
     const response = await db.post('/insertGoal' , formValues)
     dispatch({type:CREATE_GOAL, payload: response.data})
     history.push('/GoalShow')
@@ -652,7 +654,7 @@ export const editAttainmentRule = (formValues,rule_id) => {
 
 export const createPlan = (formValues) => {
   return async (dispatch) => {
-    const response = await db.post('/insertPlan',formValues)
+    const response = await proxycheck.post('',{'req_type':'post', 'url':'/insertPlan','items':formValues})
     dispatch({type:CREATE_PLAN, payload: response.data})
     history.push('/planShow')
   }
@@ -669,7 +671,7 @@ export const deletePlan = (plan_id) => {
 export const getPlans = () => {
 
   return async (dispatch) => {
-    const response = await db.get('/getPlans')
+    const response = await proxycheck.post('',{'req_type':'get', 'url':'/getPlans','items':{}})
     dispatch({type:GET_PLANS, payload: response.data})
   }
 }
@@ -681,10 +683,9 @@ export const getPlan = (plan_id) => {
   }
 }
 
-export const editPlan = (formValues) => {
-
+export const editPlan = (formValues,plan_id) => {
   return async (dispatch) => {
-    const response = await db.post('/updatePlan',formValues)
+    const response = await db.post('/updatePlan', formValues,plan_id)
     dispatch({type:EDIT_PLAN, payload: response.data})
     history.push('/planShow')
   }

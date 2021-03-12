@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { uploadFile,onChangeFile,getPayouts_cy,getSummaryData,getYears,getPlanSummary,getTopEarners,getProxy } from '../actions'
+import { uploadFile,onChangeFile,getPayouts_cy,getSummaryData,getYears,getPlanSummary,getTopEarners} from '../actions'
 
 
 import LineChart from './LineChart'
@@ -9,12 +9,12 @@ import history from '../history'
 import monthmap from './monthmap'
 import axios from 'axios'
 
-
+import LoaderNoButton from '../LoaderNoButton'
 
 import CCoGPChart from './CCoGPChart'
 
+import Login from './Accounts/Login'
 
-import FireAuth from './Accounts/FireAuth'
 
 
 
@@ -42,7 +42,7 @@ function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
 
 class Landing extends React.Component {
   componentDidMount(){
-    this.props.getProxy()
+
     this.props.getYears()
     this.props.getSummaryData({'requested_year':this.props.month['cal_year']})
     this.props.getPlanSummary({'requested_year':this.props.month['cal_year']})
@@ -218,7 +218,7 @@ class Landing extends React.Component {
         </div>
       )
     }
-    else if(this.props.account['role'] ==='admin'){
+    else if(this.props.account['role'] ==='admin' && typeof(this.props.month['cal_year']) != 'undefined' ){
 
       sum_data['ccogp'] = sum_data['ccogp'].map((x) => {
         return(Math.round((x + Number.EPSILON) ))
@@ -226,7 +226,7 @@ class Landing extends React.Component {
 
       var payouts_vals = Object.values(this.props.plan_summary)
       var total_payout = '$' + formatMoney(payouts_vals.reduce((a,b) => a + b, 0))
-      return (<div className='ui grid'>
+      return ( <div className='ui grid'>
       <div className='sixteen wide column'></div>
 
       <div className='two wide column'></div>
@@ -388,7 +388,14 @@ class Landing extends React.Component {
       )
     }
     if(typeof(this.props.account['role']) ==='undefined'){
-      return(<div className='ui grid'>
+      if(typeof(this.props.years[0]) != 'string' ){
+        return(
+          <LoaderNoButton filler='loading...'/>
+        )
+      }
+      return(
+        <div className='ui grid'>
+        <Login/>
       <div className='sixteen wide column'></div>
       <div className='sixteen wide column'></div>
       <div className='sixteen wide column'></div>
@@ -405,7 +412,7 @@ class Landing extends React.Component {
 
         </div>
         <div className='sixteen wide column'>
-          <FireAuth/>
+
 
         </div>
         <div className='sixteen wide column'></div>
@@ -449,7 +456,9 @@ class Landing extends React.Component {
         </div>
       )
     }
-
+    else{
+      return <div> Loading...</div>
+    }
   }
 }
 
@@ -465,4 +474,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, {uploadFile,onChangeFile,getPayouts_cy,getSummaryData,getYears,getPlanSummary,getTopEarners,getProxy})(Landing)
+export default connect(mapStateToProps, {uploadFile,onChangeFile,getPayouts_cy,getSummaryData,getYears,getPlanSummary,getTopEarners})(Landing)

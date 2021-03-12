@@ -5,10 +5,13 @@ import { uploadFile,getTime,loading} from '../actions'
 import { CSVReader } from 'react-papaparse'
 import history from '../history'
 
+import globals from './globals'
 
 const buttonRef = React.createRef()
 var importType = ''
 var dupType = 'ignore'
+
+
 
 
 class CSVReaderV extends Component {
@@ -48,6 +51,31 @@ class CSVReaderV extends Component {
     var wrongdateindex = []
     var i;
     var p;
+    var fields = []
+
+    if(importType == 'Deals'){
+      fields = globals.trans_import_fields
+    }
+    else if(importType == 'Rates'){
+      fields = globals.rates_import_fields
+    }
+    else if(importType == 'Users'){
+      fields = globals.users_import_fields
+    }
+    else if(importType == 'Goals'){
+      fields = globals.goals_import_fields
+    }
+    else if(importType == 'Accounts'){
+      fields = globals.accounts_import_fields
+    }
+    else if(importType == 'Role_Hierarchies'){
+      fields = globals.role_import_fields
+    }
+    else{
+      fields = []
+    }
+
+    this.my_data = this.arrayToObj(this.my_data,fields)
 
     //DEALS UPLOAD WITH VALIDATION
     if(importType === 'Deals'){
@@ -229,6 +257,7 @@ class CSVReaderV extends Component {
       if(numchecker && datechecker){
         this.my_data.push({dupType:dupType})
         this.my_data.push({table: "goals"})
+
         this.props.uploadFile(this.my_data,'goal')
         this.props.loading()
         }
@@ -373,10 +402,37 @@ isValidDate(dateString)
     return (day > 0 && day <= monthLength[month - 1]);
 };
 
+arrayToObj(arr,keys){
+  var new_arr = []
+
+  arr.shift()
+  arr.map((x) => {
+    var new_obj = {}
+    var i;
+    for (i = 0; i < x.length; i++){
+      new_obj[keys[i]] = x[i]
+    }
+    new_arr.push(new_obj)
+
+  })
+
+  return new_arr
+}
+
+
+
+
+
   updateData = (results,file) => {
 
-    this.my_data = results.data
 
+
+
+
+    // console.log(this.my_data)
+    this.my_data = results.data
+    // this.arrayToObj(results.data,fields)
+    // console.log(this.my_data)
 
   }
 
@@ -406,7 +462,7 @@ isValidDate(dateString)
         noClick
         noDrag
         config={{complete: this.updateData,
-        header:true,
+        header:false,
         skipEmptyLines: true}}
         onRemoveFile={this.handleOnRemoveFile}
         accept='.csv'

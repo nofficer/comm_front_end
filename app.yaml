@@ -3,6 +3,8 @@ runtime: nodejs10
 service: fe
 
 
+instance_class: F1
+
 
 
 handlers:
@@ -23,4 +25,10 @@ handlers:
   - url: /static/css/(.*)
     static_files: build/static/css/\1
     upload: build/static/css/(.*)
+
+automatic_scaling:
+  min_idle_instances: automatic
+  max_idle_instances: automatic
+  min_pending_latency: automatic
+  max_pending_latency: automatic
 

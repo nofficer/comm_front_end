@@ -94,7 +94,7 @@ class Time extends React.Component {
         <React.Fragment>
         <div className='six wide column'></div>
           <div className='four wide column'>
-            <div onClick={(e) => e.stopPropagation(history.push('/runCalcs'))}s className='ui fluid button positive'>Run Calculations <i className="calculator icon   "></i></div>
+            <div onClick={(e) => e.stopPropagation(history.push('/runCalcs'))} className='ui fluid button positive'>Run Calculations <i className="calculator icon   "></i></div>
           </div>
         <div className='six wide column'></div>
         </React.Fragment>
@@ -118,7 +118,7 @@ class Time extends React.Component {
           <Loader filler='You may not access the admin panel calculations are currently running...'/>
         )
       }
-      else if(this.props.month['current.month_id'] === 1){
+      else if(Number(this.props.month['current.month_id']) === 1){
         return (
           <div className='ui grid'>
 
@@ -197,7 +197,7 @@ class Time extends React.Component {
           </div>
         )
       }
-      else if(this.props.month['current.month_id'] === 12){
+      else if(Number(this.props.month['current.month_id']) === 12){
         return (
           <div className='ui grid'>
           <div className='sixteen wide column'></div>

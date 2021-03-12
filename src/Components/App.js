@@ -60,40 +60,21 @@ import RoleHierarchyCreate from './Role_Hierarchy/RoleHierarchyCreate'
 import RoleHierarchyEdit from './Role_Hierarchy/RoleHierarchyEdit'
 import RoleHierarchyDelete from './Role_Hierarchy/RoleHierarchyDelete'
 
-
-import firebase from "firebase/app";
-
-import "firebase/auth";
-import {
-  FirebaseAuthProvider,
-  FirebaseAuthConsumer,
-  IfFirebaseAuthed,
-  IfFirebaseAuthedAnd
-} from "@react-firebase/auth";
-
-
-var firebaseConfig = {
-    apiKey: "AIzaSyDRnUkMDz97EyIo02NWne-9Pm6YrjK0ALk",
-    authDomain: "easycomp-305815.firebaseapp.com",
-    projectId: "easycomp-305815",
-    storageBucket: "easycomp-305815.appspot.com",
-    messagingSenderId: "948165952668",
-    appId: "1:948165952668:web:ad37654be3491b07045959",
-    measurementId: "G-EGBYJ9MG95"
-  };
+import Savings from './demo_tools/Savings'
 
 
 const App = () => {
 
   return (
     <div>
-    <FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
+
       <Router history={history}>
         <div>
         <Header />
         <div>
           <Switch>
             <Route path ='/' exact component={Landing}/>
+            <Route path='/Savings' exact component={Savings}/>
 
 
             <Route path ='/QBOcb' exact component={QBOcb}/>
@@ -151,7 +132,7 @@ const App = () => {
           </div>
         </div>
       </Router>
-      </FirebaseAuthProvider>
+
     </div>
   );
 }

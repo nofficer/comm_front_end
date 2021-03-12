@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom'
 import Loader from '../../Loader'
 import Login from '../Accounts/Login'
 
+import globals from '../globals'
+
 import history from '../../history'
 
 function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
@@ -223,22 +225,22 @@ class PayoutShow extends React.Component {
         </tr>
 
           <tr>
-            <th className='center aligned'><strong>Payout ID</strong></th>
-            <th className='center aligned'><strong>Transaction ID</strong></th>
-            <th className='center aligned'><strong>Seller ID</strong></th>
-            <th className='center aligned'><strong>Payee</strong></th>
-            <th className='center aligned'><strong>Revenue</strong></th>
-            <th className='center aligned'><strong>GP</strong></th>
-            <th className='center aligned'><strong>Attainment</strong></th>
-            <th className='center aligned'><strong>Payout</strong></th>
-            <th className='center aligned'><strong>Split Percent</strong></th>
-            <th className='center aligned'><strong>Location</strong></th>
-            <th className='center aligned'><strong>Payout Multiplier</strong></th>
-            <th className='center aligned'><strong>order_num</strong></th>
-            <th className='center aligned'><strong>custom_field</strong></th>
-            <th className='center aligned'><strong>period_id</strong></th>
-            <th className='center aligned'><strong>Rule</strong></th>
-            <th className='center aligned'><strong>Type</strong></th>
+            <th className='center aligned'><strong>{globals.payout_id}</strong></th>
+            <th className='center aligned'><strong>{globals.trans_id}</strong></th>
+            <th className='center aligned'><strong>{globals.seller_id}</strong></th>
+            <th className='center aligned'><strong>{globals.payee}</strong></th>
+            <th className='center aligned'><strong>{globals.revenue}</strong></th>
+            <th className='center aligned'><strong>{globals.gp}</strong></th>
+            <th className='center aligned'><strong>{globals.attainment}</strong></th>
+            <th className='center aligned'><strong>{globals.payout}</strong></th>
+            <th className='center aligned'><strong>{globals.split}</strong></th>
+            <th className='center aligned'><strong>{globals.location}</strong></th>
+            <th className='center aligned'><strong>{globals.multiplier}</strong></th>
+            <th className='center aligned'><strong>{globals.order_num}</strong></th>
+            <th className='center aligned'><strong>{globals.custom_field}</strong></th>
+            <th className='center aligned'><strong>{globals.period_id}</strong></th>
+            <th className='center aligned'><strong>{globals.rule}</strong></th>
+            <th className='center aligned'><strong>{globals.type}</strong></th>
             <th className='center aligned'><strong>Options</strong></th>
           </tr>
         </thead>

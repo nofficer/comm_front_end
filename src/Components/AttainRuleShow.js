@@ -3,6 +3,11 @@ import { connect } from 'react-redux'
 import { getAttainmentRules,deleteAttainmentRule,getTime,clearFilter,setFilter } from '../actions'
 import { Link } from 'react-router-dom'
 import Login from './Accounts/Login'
+import globals from './globals'
+
+
+const custom_field = globals.custom_field
+
 
 
 
@@ -12,6 +17,18 @@ class AttainRuleShow extends React.Component {
     this.props.clearFilter()
     this.props.getAttainmentRules()
     this.props.getTime()
+  }
+
+  fixField(item){
+    if(item == 'Ote_Custom'){
+      return ('Ote_' + custom_field)
+    }
+    else if(item == 'Custom'){
+      return(custom_field)
+    }
+    else {
+      return item
+    }
   }
 
   filterMap = {
@@ -48,7 +65,7 @@ class AttainRuleShow extends React.Component {
     ){
     return (
       <tr key={attainRule[0]}>
-        <td className='center aligned'>{attainRule[0]}</td><td className='center aligned'>{attainRule[1]}</td><td className='center aligned'>{attainRule[2]}</td><td className='center aligned'>{attainRule[3]}</td><td className='center aligned'>{attainRule[4].toUpperCase()}</td><td className='center aligned'>{attainRule[5].toUpperCase()}</td><td className='center aligned'>{attainRule[6]}</td><td className='center aligned'>{attainRule[8].toUpperCase()}</td>
+        <td className='center aligned'>{attainRule[0]}</td><td className='center aligned'>{attainRule[1]}</td><td className='center aligned'>{this.fixField(attainRule[2])}</td><td className='center aligned'>{attainRule[3]}</td><td className='center aligned'>{attainRule[4].toUpperCase()}</td><td className='center aligned'>{attainRule[5].toUpperCase()}</td><td className='center aligned'>{attainRule[6]}</td><td className='center aligned'>{attainRule[8].toUpperCase()}</td>
         <td className='center aligned'>
         <Link onClick={(e) => e.stopPropagation()} to={`/attainRuleShow/edit/${attainRule[0]}`} className='ui small button primary'>
           Edit
@@ -118,6 +135,11 @@ class AttainRuleShow extends React.Component {
             <td className='center aligned'>
               <div className="ui input">
                 <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('timeframe',e.target.value))} placeholder="Search..."/>
+              </div>
+            </td>
+            <td className='center aligned'>
+              <div className="ui input">
+                <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('plan_name',e.target.value))} placeholder="Search..."/>
               </div>
             </td>
             <td className='center aligned'>

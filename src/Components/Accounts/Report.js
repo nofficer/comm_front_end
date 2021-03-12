@@ -11,9 +11,16 @@ import DoughnutChart from '../DoughnutChart'
 import BarChart from '../BarChart'
 import { saveAs } from 'file-saver'
 
+import globals from '../globals'
 
 
 
+
+function getQuarter(d) {
+  d = d || new Date(); // If no date supplied, use today
+  var q = [1,2,3,4];
+  return q[Math.floor(d.getMonth() / 3)];
+}
 
 
 function s2ab(s){
@@ -109,6 +116,7 @@ class PayoutShow extends React.Component {
   }
 
   componentDidMount(){
+
     this.props.getPayoutsHistory({'selected_year':'all'})
     this.props.clearFilter()
     this.props.getYears()
@@ -169,6 +177,7 @@ class PayoutShow extends React.Component {
 
     var filters = Object.keys(this.props.filter)
     var check = true
+
     filters.map((filter) => {
 
       if(payout[this.filterMap[filter]] === null){
@@ -177,6 +186,7 @@ class PayoutShow extends React.Component {
       }
       else if(payout[this.filterMap[filter]] !== null){
         if(!payout[this.filterMap[filter]].toString().toLowerCase().includes(this.props.filter[filter].toLowerCase())){
+
             check = false
             return false
           }
@@ -188,8 +198,10 @@ class PayoutShow extends React.Component {
     )
 
     if(
-      check
+
+      check != false
     ){
+
 
 
     var pay_rate = (Number(payout[7])/Number(payout[6]))*100
@@ -200,65 +212,69 @@ class PayoutShow extends React.Component {
       pay_rate = pay_rate.toFixed(2) + '%'
     }
 
+    if(payout[11] != 'OTE_Attainment' ){
+      var payout_year = payout[17].split('-')[0]
+      if(payout[15] === this.props.account['casted_user_id'].toLowerCase() && this.props.selected_month === "all" && this.props.selected_year === "all"){
+        payout[4] = Number(payout[4])
+        payout[5] = Number(payout[5])
+        payout[6] = Number(payout[6])
+        payout[7] = Number(payout[7])
+        statement_details.push(payout)
 
-    var payout_year = payout[17].split('-')[0]
-    if(payout[15] === this.props.account['casted_user_id'].toLowerCase() && this.props.selected_month === "all" && this.props.selected_year === "all"){
-      payout[4] = Number(payout[4])
-      payout[5] = Number(payout[5])
-      payout[6] = Number(payout[6])
-      payout[7] = Number(payout[7])
-      statement_details.push(payout)
+        return (
+          <tr key={payout[0]}>
+            <td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {formatMoney(payout[4])}</td><td className='center aligned'>$ {formatMoney(payout[5])}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>{pay_rate}</td><td className='center aligned'>${formatMoney(payout[7])}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[17]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[12]}</td>
+          </tr>
 
-      return (
-        <tr key={payout[1]}>
-          <td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {formatMoney(payout[4])}</td><td className='center aligned'>$ {formatMoney(payout[5])}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>{pay_rate}</td><td className='center aligned'>${formatMoney(payout[7])}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[17]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[12]}</td>
-        </tr>
+        )
+      }
+      else if(payout[15] === this.props.account['casted_user_id'].toLowerCase() && payout[13] === this.props.selected_month && this.props.selected_year === payout_year ){
+        payout[4] = Number(payout[4])
+        payout[5] = Number(payout[5])
+        payout[6] = Number(payout[6])
+        payout[7] = Number(payout[7])
+        statement_details.push(payout)
 
-      )
+
+        return (
+          <tr key={payout[0]}>
+            <td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {formatMoney(payout[4])}</td><td className='center aligned'>$ {formatMoney(payout[5])}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>{pay_rate}</td><td className='center aligned'>${formatMoney(payout[7])}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[17]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[12]}</td>
+          </tr>
+
+        )
+      }
+      else if(payout[15] === this.props.account['casted_user_id'].toLowerCase() && payout[13] === this.props.selected_month && this.props.selected_year === "all" ){
+        payout[4] = Number(payout[4])
+        payout[5] = Number(payout[5])
+        payout[6] = Number(payout[6])
+        payout[7] = Number(payout[7])
+        statement_details.push(payout)
+
+        return (
+          <tr key={payout[0]}>
+            <td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {formatMoney(payout[4])}</td><td className='center aligned'>$ {formatMoney(payout[5])}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>{pay_rate}</td><td className='center aligned'>${formatMoney(payout[7])}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[17]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[12]}</td>
+          </tr>
+
+        )
+      }
+      else if(payout[15] === this.props.account['casted_user_id'].toLowerCase() && this.props.selected_month === "all" && this.props.selected_year === payout_year ){
+        payout[4] = Number(payout[4])
+        payout[5] = Number(payout[5])
+        payout[6] = Number(payout[6])
+        payout[7] = Number(payout[7])
+        statement_details.push(payout)
+
+        return (
+          <tr key={payout[0]}>
+            <td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {formatMoney(payout[4])}</td><td className='center aligned'>$ {formatMoney(payout[5])}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>{pay_rate}</td><td className='center aligned'>${formatMoney(payout[7])}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[17]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[12]}</td>
+          </tr>
+
+        )
+      }
     }
-    else if(payout[15] === this.props.account['casted_user_id'].toLowerCase() && payout[13] === this.props.selected_month && this.props.selected_year === payout_year ){
-      payout[4] = Number(payout[4])
-      payout[5] = Number(payout[5])
-      payout[6] = Number(payout[6])
-      payout[7] = Number(payout[7])
-      statement_details.push(payout)
 
 
-      return (
-        <tr key={payout[1]}>
-          <td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {formatMoney(payout[4])}</td><td className='center aligned'>$ {formatMoney(payout[5])}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>{pay_rate}</td><td className='center aligned'>${formatMoney(payout[7])}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[17]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[12]}</td>
-        </tr>
 
-      )
-    }
-    else if(payout[15] === this.props.account['casted_user_id'].toLowerCase() && payout[13] === this.props.selected_month && this.props.selected_year === "all" ){
-      payout[4] = Number(payout[4])
-      payout[5] = Number(payout[5])
-      payout[6] = Number(payout[6])
-      payout[7] = Number(payout[7])
-      statement_details.push(payout)
-
-      return (
-        <tr key={payout[1]}>
-          <td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {formatMoney(payout[4])}</td><td className='center aligned'>$ {formatMoney(payout[5])}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>{pay_rate}</td><td className='center aligned'>${formatMoney(payout[7])}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[17]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[12]}</td>
-        </tr>
-
-      )
-    }
-    else if(payout[15] === this.props.account['casted_user_id'].toLowerCase() && this.props.selected_month === "all" && this.props.selected_year === payout_year ){
-      payout[4] = Number(payout[4])
-      payout[5] = Number(payout[5])
-      payout[6] = Number(payout[6])
-      payout[7] = Number(payout[7])
-      statement_details.push(payout)
-
-      return (
-        <tr key={payout[1]}>
-          <td className='center aligned'>{payout[1]}</td><td className='center aligned'>{payout[2]}</td><td className='center aligned'>{payout[3]}</td><td className='center aligned'>$ {formatMoney(payout[4])}</td><td className='center aligned'>$ {formatMoney(payout[5])}</td><td className='center aligned'>{payout[6]}</td><td className='center aligned'>{pay_rate}</td><td className='center aligned'>${formatMoney(payout[7])}</td><td className='center aligned'>{payout[8]}</td><td className='center aligned'>{payout[9]}</td><td className='center aligned'>{payout[10]}</td><td className='center aligned'>{payout[11]}</td><td className='center aligned'>{payout[17]}</td><td className='center aligned'>{payout[14]}</td><td className='center aligned'>{payout[16]}</td><td className='center aligned'>{payout[12]}</td>
-        </tr>
-
-      )
-    }
   }
 
   }
@@ -375,7 +391,7 @@ class PayoutShow extends React.Component {
 
               goal_details.push([goal[6],formatMoney(goal_amt),goal[3],goal[4],goal[8].toUpperCase()])
               return(
-              <tr>
+              <tr key={goal[0]+goal[4]}>
                 <td className='center aligned'>{goal[6]}</td><td className='center aligned'>{formatMoney(goal_amt)}</td><td className='center aligned'>{goal[3]}</td><td className='center aligned'>{goal[4]}</td><td className='center aligned'>{goal[8].toUpperCase()}</td>
               </tr>
             )
@@ -390,7 +406,7 @@ class PayoutShow extends React.Component {
 
           goal_details.push([goal[6],formatMoney(goal_amt),goal[3],goal[4],goal[8].toUpperCase()])
           return(
-          <tr>
+          <tr key={goal[0]+goal[4]}>
             <td className='center aligned'>{goal[6]}</td><td className='center aligned'>{formatMoney(goal_amt)}</td><td className='center aligned'>{goal[3]}</td><td className='center aligned'>{goal[4]}</td><td className='center aligned'>{goal[8].toUpperCase()}</td>
           </tr>
         )
@@ -402,7 +418,7 @@ class PayoutShow extends React.Component {
 
           goal_details.push([goal[6],formatMoney(goal_amt),goal[3],goal[4],goal[8].toUpperCase()])
           return(
-          <tr>
+          <tr key={goal[0]+goal[4]}>
             <td className='center aligned'>{goal[6]}</td><td className='center aligned'>{formatMoney(goal_amt)}</td><td className='center aligned'>{goal[3]}</td><td className='center aligned'>{goal[4]}</td><td className='center aligned'>{goal[8].toUpperCase()}</td>
           </tr>
         )
@@ -414,7 +430,7 @@ class PayoutShow extends React.Component {
         goal_details.push([goal[6],formatMoney(goal_amt),goal[3],goal[4],goal[8].toUpperCase()])
 
         return(
-        <tr>
+        <tr key={goal[0]+goal[4]}>
           <td className='center aligned'>{goal[6]}</td><td className='center aligned'>{formatMoney(goal_amt)}</td><td className='center aligned'>{goal[3]}</td><td className='center aligned'>{goal[4]}</td><td className='center aligned'>{goal[8].toUpperCase()}</td>
         </tr>
       )
@@ -427,8 +443,8 @@ class PayoutShow extends React.Component {
   }
 
   makeChartItem(goal){
-    var goal_start = new Date(goal[3])
-    var goal_end = new Date(goal[4])
+    var goal_start = new Date(goal[3].replace(/-/g, '\/'))
+    var goal_end = new Date(goal[4].replace(/-/g, '\/'))
     var goal_rule = goal[6]
     var goal_amt = Number(goal[5])
     var prod_total = 0
@@ -436,15 +452,19 @@ class PayoutShow extends React.Component {
 
 
     this.props.payouts.map((payout)=>{
+      // if(payout[3] == "Alex"){
+      //   console.log(payout)
+      // }
 
       var pay_type = payout[16]
       var id = payout[15]
       var rule = payout[14]
       var multiplier = 1
-      var payout_date = new Date(payout[17])
+      var payout_date = new Date(payout[17].replace(/-/g, '\/'))
       var payout_attain = Number(payout[6])
       var payout_mo_num = Number(payout[13])
       var sel_mo_num = 0
+
 
       if(this.props.selected_month === 'all'){
         sel_mo_num = Number(12)
@@ -459,19 +479,48 @@ class PayoutShow extends React.Component {
         multiplier = goal_amt
       }
 
+      var sel_mo_date = this.props.selected_year + '/' + this.props.selected_month + '/' + '15'
 
+      var sel_mo_date_typed = new Date(sel_mo_date)
 
       if(id===this.props.account['casted_user_id'].toLowerCase()){
 
+
         if(rule===goal_rule){
+          //TODO ADD QUALIFIER WHICH CHECKS IF THE GOAL IS MTD OR QTD OR YTD AND FILTER THE GOAL SUMMING BASED ON THAT
+          if(goal[8].toLowerCase()==='mtd'){
+            if(payout_date >= goal_start && payout_mo_num === sel_mo_num && payout_date <= goal_end){
 
-          if(payout_date >= goal_start && payout_mo_num <= sel_mo_num && payout_date <= goal_end){
+
+
+              prod_total+=payout_attain*multiplier
+
+            }
+          }
+          else if(goal[8].toLowerCase()==='qtd'){
+
+
+            if(payout_date >= goal_start && payout_mo_num <= sel_mo_num && payout_date <= goal_end && getQuarter(payout_date) === getQuarter(sel_mo_date_typed)){
 
 
 
-            prod_total+=payout_attain*multiplier
+              prod_total+=payout_attain*multiplier
+
+            }
 
           }
+          else if(goal[8].toLowerCase()==='ytd'){
+            if(payout_date >= goal_start && payout_mo_num <= sel_mo_num && payout_date <= goal_end){
+
+
+
+              prod_total+=payout_attain*multiplier
+
+            }
+          }
+
+
+
         }
       }
 
@@ -482,7 +531,7 @@ class PayoutShow extends React.Component {
     var progressvar = prod_total/goal_amt
 
     return(
-      <React.Fragment>
+      <React.Fragment key={goal[0] + goal[4]}>
 
 
           <div className='eight wide column'>
@@ -701,7 +750,7 @@ class PayoutShow extends React.Component {
     statement_details.push([])
     statement_details.push([])
     statement_details.push([])
-    statement_details.push(['Payout ID','Transaction ID','Seller ID','Payee','Revenue','Gross Profit','Attainment','Payout','Split percent','Transaction Location','Payout Multiplier','Order Number','Customer','Month','Attainment_Rule_Name','Payee ID','Type','Date'])
+    statement_details.push([globals.payout_id,globals.trans_id,globals.seller_id,globals.payee,globals.revenue,globals.gp,globals.attainment,globals.payout,globals.split,globals.location,globals.multiplier,globals.order_num,globals.custom_field,globals.month,globals.rule,globals.payee_id,globals.type,globals.date])
     return this.props.payouts.map((payout) => {
 
       return (this.createItem(payout))
@@ -948,7 +997,9 @@ class PayoutShow extends React.Component {
             <table className='ui celled center aligned table'>
             {this.renderGoalHead()}
 
+            <tbody>
             {this.renderGoals()}
+            </tbody>
             </table>
 
             </div>
@@ -972,10 +1023,10 @@ class PayoutShow extends React.Component {
         <table className='ui celled center aligned table'>
         <thead>
           <tr>
-            <th className='center aligned'><strong>Month</strong></th>
-            <th className='center aligned'><strong>Attainment Rule</strong></th>
-            <th className='center aligned'><strong>Attainment</strong></th>
-            <th className='center aligned'><strong>Payout</strong></th>
+            <th className='center aligned'><strong>{globals.month}</strong></th>
+            <th className='center aligned'><strong>{globals.rule}</strong></th>
+            <th className='center aligned'><strong>{globals.attainment}</strong></th>
+            <th className='center aligned'><strong>{globals.payout}</strong></th>
 
           </tr>
           </thead>
@@ -1083,23 +1134,23 @@ class PayoutShow extends React.Component {
             <tr>
 
 
-            <th className='center aligned'><strong>Transaction ID</strong></th>
-            <th className='center aligned'><strong>Seller ID</strong></th>
-            <th className='center aligned'><strong>Payee</strong></th>
-            <th className='center aligned'><strong>Revenue</strong></th>
-            <th className='center aligned'><strong>GP</strong></th>
-            <th className='center aligned'><strong>Attainment</strong></th>
-            <th className='center aligned'><strong>Rate</strong></th>
-            <th className='center aligned'><strong>Payout</strong></th>
-            <th className='center aligned'><strong>Split</strong></th>
-            <th className='center aligned'><strong>Location</strong></th>
-            <th className='center aligned'><strong>Multiplier</strong></th>
-            <th className='center aligned'><strong>Order Num</strong></th>
+            <th className='center aligned'><strong>{globals.trans_id}</strong></th>
+            <th className='center aligned'><strong>{globals.seller_id}</strong></th>
+            <th className='center aligned'><strong>{globals.payee}</strong></th>
+            <th className='center aligned'><strong>{globals.revenue}</strong></th>
+            <th className='center aligned'><strong>{globals.gp}</strong></th>
+            <th className='center aligned'><strong>{globals.attainment}</strong></th>
+            <th className='center aligned'><strong>{globals.rate}</strong></th>
+            <th className='center aligned'><strong>{globals.payout}</strong></th>
+            <th className='center aligned'><strong>{globals.split}</strong></th>
+            <th className='center aligned'><strong>{globals.location}</strong></th>
+            <th className='center aligned'><strong>{globals.multiplier}</strong></th>
+            <th className='center aligned'><strong>{globals.order_num}</strong></th>
 
-            <th className='center aligned'><strong>Date</strong></th>
-            <th className='center aligned'><strong>Rule</strong></th>
-            <th className='center aligned'><strong>Type</strong></th>
-            <th className='center aligned'><strong>Customer</strong></th>
+            <th className='center aligned'><strong>{globals.date}</strong></th>
+            <th className='center aligned'><strong>{globals.rule}</strong></th>
+            <th className='center aligned'><strong>{globals.type}</strong></th>
+            <th className='center aligned'><strong>{globals.custom_field}</strong></th>
             </tr>
           </thead>
           <tbody>

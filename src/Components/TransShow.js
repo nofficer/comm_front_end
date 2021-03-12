@@ -8,6 +8,8 @@ import Modal from '../Modal'
 import XLSX from 'xlsx';
 import { saveAs } from 'file-saver'
 
+import globals from './globals'
+
 
 function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
   try {
@@ -119,12 +121,14 @@ class TransShow extends React.Component {
     )
 
     if(
-      check
+      check && trans[0].includes("EZCOMPOTE") == false
     ){
-      var cur_year = this.props.month['cal_year']
+
+      var cur_year = this.props.month['cal_year'].toString()
       var trans_year = trans[3].split('-')[0]
       var cur_month = parseInt(this.props.month['current.month_id'])
       var trans_month = parseInt(trans[11])
+
 
       if(cur_year<trans_year){
         statement_details.push(trans)
@@ -163,6 +167,7 @@ class TransShow extends React.Component {
       }
 
       else{
+
         statement_details.push(trans)
         return (
           <tr key={trans[0]}><td className='center aligned'>{trans[0]}</td><td className='center aligned'>{trans[1]}</td><td className='center aligned'>{trans[2]}</td><td className='center aligned'>{trans[3].split("T")[0]}</td><td className='center aligned'>$ {formatMoney(trans[4])}</td><td className='center aligned'>$ {formatMoney(trans[5])}</td><td className='center aligned'>{trans[6]}</td><td className='center aligned'>{trans[7]}</td><td className='center aligned'>{trans[8]}</td><td className='center aligned'>{trans[9]}</td><td className='center aligned'>{trans[10]}</td><td className='center aligned'>{trans[11]}</td>
@@ -179,7 +184,7 @@ class TransShow extends React.Component {
 
   renderList(){
     statement_details = []
-    statement_details.push([ "Transaction_ID","Seller","Type","Date","Revenue","Gross Profit","Order Number","Location","Split Percent","Custom Field","Payout Muiltiplier","Period ID"])
+    statement_details.push([ globals.trans_id,globals.seller,globals.type,globals.date,globals.revenue,globals.gp,globals.order_num,globals.location,globals.split,globals.custom_field,globals.multiplier,globals.period_id])
 
     return this.props.trans.map((trans) => {
       if(trans[3]) {
@@ -303,18 +308,18 @@ class TransShow extends React.Component {
             </tr>
             <tr>
 
-              <th className='center aligned'><strong>Transaction ID</strong></th>
-              <th className='center aligned'><strong>Transaction Seller</strong></th>
-              <th className='center aligned'><strong>Transaction Type</strong></th>
-              <th className='center aligned'><strong>Transaction Date</strong></th>
-              <th className='center aligned'><strong>Revenue</strong></th>
-              <th className='center aligned'><strong>Gross Profit</strong></th>
-              <th className='center aligned'><strong>Order Number</strong></th>
-              <th className='center aligned'><strong>Location</strong></th>
-              <th className='center aligned'><strong>Split Percent</strong></th>
-              <th className='center aligned'><strong>Custom Field</strong></th>
-              <th className='center aligned'><strong>Payout Multiplier</strong></th>
-              <th className='center aligned'><strong>Period</strong></th>
+              <th className='center aligned'><strong>{globals.trans_id}</strong></th>
+              <th className='center aligned'><strong>{globals.seller}</strong></th>
+              <th className='center aligned'><strong>{globals.type}</strong></th>
+              <th className='center aligned'><strong>{globals.date}</strong></th>
+              <th className='center aligned'><strong>{globals.revenue}</strong></th>
+              <th className='center aligned'><strong>{globals.gp}</strong></th>
+              <th className='center aligned'><strong>{globals.order_num}</strong></th>
+              <th className='center aligned'><strong>{globals.location}</strong></th>
+              <th className='center aligned'><strong>{globals.split}</strong></th>
+              <th className='center aligned'><strong>{globals.custom_field}</strong></th>
+              <th className='center aligned'><strong>{globals.multiplier}</strong></th>
+              <th className='center aligned'><strong>{globals.period_id}</strong></th>
               <th className='center aligned'><strong>Options</strong></th>
             </tr>
           </thead>

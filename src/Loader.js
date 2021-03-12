@@ -7,8 +7,8 @@ const Loader = props => {
   return ReactDOM.createPortal(
     <div className='ui dimmer modals visible active'>
 
-        <div class="ui active dimmer">
-          <div class="ui text loader">{props.filler}</div>
+        <div className="ui active dimmer">
+          <div className="ui text loader">{props.filler}</div>
           <div className='ui grid'>
           <div className='sixteen wide column'></div>
           <div className='sixteen wide column'></div>
@@ -16,7 +16,7 @@ const Loader = props => {
           <div className='sixteen wide column'></div>
           <div className='sixteen wide column'></div>
 
-          <div className='sixteen wide column'><div class='ui button' onClick={(e) => e.stopPropagation(history.push({pathname:'/' }))}>OK</div></div>
+          <div className='sixteen wide column'><div className='ui button' onClick={(e) => e.stopPropagation(history.push({pathname:'/' }))}>OK</div></div>
 
           </div>
 
