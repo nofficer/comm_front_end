@@ -15,6 +15,7 @@ import goalReducer from './goalReducer'
 import errorReducer from './errorReducer'
 import filterReducer from './filterReducer'
 import roleReducer from './roleReducer'
+import forecastReducer from './forecastReducer'
 
 
 export default combineReducers ({
@@ -34,5 +35,6 @@ export default combineReducers ({
   errors: errorReducer,
   filter:filterReducer,
   roles: roleReducer,
+  forecast: forecastReducer
 
 })

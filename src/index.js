@@ -8,7 +8,18 @@ import './semantic/dist/semantic.css'
 import App from './Components/App'
 import reducers from './Reducers'
 
+import firebase from "firebase/app";
+import "firebase/auth";
+import {firebaseConfigItem} from './apis/db'
 
+
+
+
+
+const firebaseConfig = firebaseConfigItem
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
@@ -22,3 +33,5 @@ ReactDOM.render(
   </Provider>,
   document.querySelector('#root')
 )
+
+export default store

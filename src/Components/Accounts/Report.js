@@ -112,7 +112,7 @@ class PayoutShow extends React.Component {
   castUser(e){
     // this.props.getPayouts_user({user_id:e.target.value, month_id:this.props.selected_month})
 
-    this.props.castUser(this.props.account['user_id'],this.props.account['role'],this.props.account['username'],e.target.value)
+    this.props.castUser(this.props.account['user_id'],this.props.account['role'],this.props.account['username'],e.target.value,this.props.account['token'])
   }
 
   componentDidMount(){
@@ -500,7 +500,7 @@ class PayoutShow extends React.Component {
           else if(goal[8].toLowerCase()==='qtd'){
 
 
-            if(payout_date >= goal_start && payout_mo_num <= sel_mo_num && payout_date <= goal_end && getQuarter(payout_date) === getQuarter(sel_mo_date_typed)){
+            if(payout_date >= goal_start && payout_mo_num <= sel_mo_num && payout_date <= goal_end && ( getQuarter(payout_date) === getQuarter(sel_mo_date_typed) || this.props.selected_month === 'all') ){
 
 
 
@@ -950,18 +950,18 @@ class PayoutShow extends React.Component {
             <select className='ui dropdown' onChange={this.handleChange}>
               <option value={monthmap[this.props.selected_month]}>{monthmap[this.props.selected_month]}</option>
               <option value="all">Year To Date</option>
-              <option value="1">January</option>
-              <option value="2">February</option>
-              <option value="3">March</option>
-              <option value="4">April</option>
-              <option value="5">May</option>
-              <option value="6">June</option>
-              <option value="7">July</option>
-              <option value="8">August</option>
-              <option value="9">September</option>
-              <option value="10">October</option>
-              <option value="11">November</option>
-              <option value="12">December</option>
+              <option value="1">{monthmap[1]}</option>
+              <option value="2">{monthmap[2]}</option>
+              <option value="3">{monthmap[3]}</option>
+              <option value="4">{monthmap[4]}</option>
+              <option value="5">{monthmap[5]}</option>
+              <option value="6">{monthmap[6]}</option>
+              <option value="7">{monthmap[7]}</option>
+              <option value="8">{monthmap[8]}</option>
+              <option value="9">{monthmap[9]}</option>
+              <option value="10">{monthmap[10]}</option>
+              <option value="11">{monthmap[11]}</option>
+              <option value="12">{monthmap[12]}</option>
 
             </select>
             </td>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getTrans, deleteTrans,getTime,setFilter,clearFilter,clearTransError,clearTrans,getAutoTrans} from '../actions'
+import { getTrans, deleteTrans,getTime,setFilter,clearFilter,clearTransError,clearTrans,getAutoTrans,checkCalcStatus} from '../actions'
 
 import { Link } from 'react-router-dom'
 import Login from './Accounts/Login'
@@ -66,6 +66,7 @@ class TransShow extends React.Component {
     this.props.getTrans({filter:'cm'})
     this.props.getTime()
     this.props.clearFilter()
+    this.props.checkCalcStatus()
   }
 
   handleChange = (e) => {
@@ -198,6 +199,17 @@ class TransShow extends React.Component {
 
   }
 
+  renderImportSourceButton(){
+    if(this.props.calc === 'Running'){
+      return ("Calculations Running")
+    }
+    else {
+      return(
+        <button className='rightitem fluid ui button positive' onClick={(e) => e.stopPropagation(this.props.getAutoTrans())}>Import Transactions from Source</button>
+      )
+    }
+  }
+
 
   render(){
     if(this.props.error === 'id'){
@@ -231,7 +243,7 @@ class TransShow extends React.Component {
         <div className='twelve wide column'></div>
         <div className='two wide column'>
           <div className='ui centre aligned grid'>
-              <button className='rightitem fluid ui button positive' onClick={(e) => e.stopPropagation(this.props.getAutoTrans())}>Import Transactions from Source</button>
+              {this.renderImportSourceButton()}
           </div>
         </div>
         <div className='six wide column'></div>
@@ -351,9 +363,10 @@ const mapStateToProps = (state) => {
     trans: Object.values(state.trans.trans),
     month: state.month.month,
     account: state.account.account,
+    calc: state.calc.calc,
     filter:state.filter.filter,
     error:state.errors.errors
   }
 }
 
-export default connect(mapStateToProps, { getTrans,deleteTrans,getTime,setFilter,clearFilter,clearTransError,clearTrans,getAutoTrans })(TransShow)
+export default connect(mapStateToProps, { getTrans,deleteTrans,getTime,setFilter,clearFilter,clearTransError,clearTrans,getAutoTrans,checkCalcStatus })(TransShow)

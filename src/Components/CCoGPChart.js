@@ -46,7 +46,7 @@ componentDidMount() {
               fontSize:20,
               fontColor: '#000000', // Default is #000000
               fontStyle: 'bold',
-              fontFamily: 'Roboto',
+              fontFamily: 'Arial',
               position:'top'
             },
             legend:{

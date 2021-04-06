@@ -1,11 +1,13 @@
 import { GET_PLANS, GET_USERS,  GET_USER, CREATE_USER, EDIT_USER, CREATE_CALC, CHANGE_DONE, CREATE_PLAN, EDIT_PLAN, GET_ATTAINMENT_RULES, CREATE_ATTAINMENT_RULE, EDIT_ATTAINMENT_RULE, GET_TRANS, CREATE_TRANS, EDIT_TRANS, GET_TRAN, DELETE_TRANS, DELETE_ATTAINMENT_RULE,DELETE_PLAN,DELETE_USER,GET_ATTAINMENT_RULE,GET_PLAN,UPLOAD_FILE,CHECK_RULE_USE,CHECK_PLAN_USE,CHECK_USER_USE,GET_RATE_TABLE,GET_RATE_TABLES,CREATE_RATE_TABLE,EDIT_RATE_TABLE,DELETE_RATE_TABLE,CALC_PLANS,GET_PAYOUTS,EDIT_PAYOUT,GET_PAYOUT,DELETE_PAYOUT,LOAD,GET_TIME,UPDATE_TIME,REVERT_TIME,LOGIN,LOGOUT,GET_PAYOUTS_USER,GET_GOAL,GET_GOALS,CREATE_GOAL,EDIT_GOAL,DELETE_GOAL,CLEAR,SELECT_MONTH,UPDATE_ACCOUNT,GET_PAYROLL,SET_FILTER,GET_FILTER,CLEAR_FILTER,LOADING,
 
-GET_LIABILITY,GET_LIABILITIES,EDIT_LIABILITY,DELETE_LIABILITY,CAST_USER,UPDATE_FYE,SELECT_YEAR,CLEAR_TRANS,CALC_STATUS,GET_YEARS,GET_SUMMARY_DATA,GET_PLAN_SUMMARY,GET_TOP_EARNERS,GET_ROLE_HIERARCHY,CREATE_ROLE_HIERARCHY,EDIT_ROLE_HIERARCHY,DELETE_ROLE_HIERARCHY,GET_ROLE_HIERARCHIES,GET_USERS_JOINED,GET_AUTO_TRANS,QBO_CALLBACK,GET_PAYOUTS_SHOW,GET_PAYOUTS_HISTORY_SHOW,
+GET_LIABILITY,GET_LIABILITIES,EDIT_LIABILITY,DELETE_LIABILITY,CAST_USER,UPDATE_FYE,SELECT_YEAR,CLEAR_TRANS,CALC_STATUS,GET_YEARS,GET_SUMMARY_DATA,GET_PLAN_SUMMARY,GET_TOP_EARNERS,GET_ROLE_HIERARCHY,CREATE_ROLE_HIERARCHY,EDIT_ROLE_HIERARCHY,DELETE_ROLE_HIERARCHY,GET_ROLE_HIERARCHIES,GET_USERS_JOINED,GET_AUTO_TRANS,QBO_CALLBACK,GET_PAYOUTS_SHOW,GET_PAYOUTS_HISTORY_SHOW,INPUT_FORECAST,GET_FORECAST,
 CHECK_USER } from './types'
 import db from '../apis/db'
 import history from '../history'
 import axios from 'axios'
-
+import store from '../index'
+import firebase from "firebase/app";
+import "firebase/auth";
 
 
 // const proxycheck = axios.create({
@@ -23,6 +25,48 @@ import axios from 'axios'
 //   }
 // }
 
+// This function gets a token from the state or the session storage and sets it on all the request headers
+function getToken() {
+  var token_val = ''
+  // console.log('getting token')
+  if(typeof(store) != 'undefined' ){
+   token_val =  store.getState().account.account.token
+
+  }
+  else if(sessionStorage.getItem('token')){
+    token_val = sessionStorage.getItem('token')
+
+  }
+
+
+
+
+
+  db.defaults.headers.common['Authorization'] = token_val
+
+
+}
+
+export const inputForecast = (formValues) => {
+  return async (dispatch) => {
+    const response = await db.post('/inputForecast',formValues)
+
+    dispatch({type:INPUT_FORECAST, payload: response.data})
+    history.push('/')
+    //REDIRECT ELSEWHERE
+  }
+}
+
+export const getForecast = () => {
+  return async (dispatch) => {
+    const response = await db.get('/getForecast')
+
+    dispatch({type:GET_FORECAST, payload: response.data})
+
+    //REDIRECT ELSEWHERE
+  }
+}
+
 
 
 export const callback_action_qbo = (URL) => {
@@ -37,10 +81,18 @@ export const callback_action_qbo = (URL) => {
 }
 
 export const getAutoTrans = () => {
+  history.push('/QBOLoadTrans')
   return async (dispatch) => {
     const response = await db.get('/QB_Oauth')
     dispatch({type:GET_AUTO_TRANS, payload: response.data})
-    window.open(response.data)
+    //Before the response comes just send the player to the loading screen and then when it returns good send them back to the transhow
+    if(response.data === "good"){
+      history.push('/transShow')
+    }
+    else {
+      window.location.href =response.data
+    }
+
   }
 }
 
@@ -152,9 +204,9 @@ export const updateFYE = () => {
 }
 }
 
-export const castUser = (user_id,role,username,casted_user_id) => {
+export const castUser = (user_id,role,username,casted_user_id,token) => {
 
-  return({type:CAST_USER, payload: {user_id:user_id.toLowerCase(),role:role,username:username,casted_user_id:casted_user_id}})
+  return({type:CAST_USER, payload: {user_id:user_id.toLowerCase(),role:role,username:username,casted_user_id:casted_user_id,token:token}})
 }
 
 export const getLiability = (liability_id) => {
@@ -191,6 +243,7 @@ export const deleteLiability = (liability_id) => {
 
 
 export const clearFilter = () => {
+  getToken()
   return({type:CLEAR_FILTER})
 }
 
@@ -307,29 +360,10 @@ export const logout = () => {
   return({type:LOGOUT})
 }
 
-    //Removed this for security concerns
-// export const setAccount = () => {
-//   var account = "none"
-//   if(localStorage.getItem('role')){
-//     account = {}
-//     console.log("Localstorage setting")
-//
-//     account['role'] = localStorage.getItem('role')
-//     account['user_id'] = parseInt(localStorage.getItem('user_id'))
-//     account['username'] = localStorage.getItem('username')
-//   }
-//   else if(sessionStorage.getItem('role')){
-//     account = {}
-//     console.log("Sessionstorage setting")
-//     account['role'] = sessionStorage.getItem('role')
-//     account['user_id'] = parseInt(sessionStorage.getItem('user_id'))
-//     account['username'] = sessionStorage.getItem('username')
-//   }
-//
-//   return({type:SET_ACCOUNT, payload:account})
-// }
+
 
 export const login = (formValues,save)=>{
+
   return async (dispatch) => {
     const response = await db.post('/userLogin',formValues)
     dispatch({type:LOGIN, payload: response.data})
@@ -337,8 +371,11 @@ export const login = (formValues,save)=>{
 
       sessionStorage.setItem('username',response.data['username'])
       sessionStorage.setItem('password',response.data['password'])
+      sessionStorage.setItem('token', response.data['token'])
 
     }
+    getToken()
+    setTimeout(function(){ alert("Your session has timed out, please refresh or close the page and log in again"); }, 3564000);
 
 
   }
@@ -351,7 +388,11 @@ export const checkUser = () => {
 
   return async (dispatch) => {
     const response = await db.post('/checkUser',savedUser)
+
     dispatch({type:CHECK_USER,payload:response.data})
+    getToken()
+    setTimeout(function(){ alert("Your session has timed out, please refresh or close the page and log in again"); }, 3564000);
+
   }
 }
 
@@ -379,7 +420,7 @@ export const updateTime = () => {
 }
 
 export const getTime = () => {
-
+  getToken()
   return async (dispatch) => {
     const response = await db.get('/getTime')
     dispatch({type:GET_TIME, payload: response.data})
@@ -667,6 +708,7 @@ export const deletePlan = (plan_id) => {
 }
 
 export const getPlans = () => {
+
 
   return async (dispatch) => {
     const response = await db.get('/getPlans')

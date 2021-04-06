@@ -53,7 +53,7 @@ import LiabilityEdit from './Liability/LiabilityEdit'
 import LiabilityDelete from './Liability/LiabilityDelete'
 
 import QBOcb from './Utils/QBOcb'
-
+import QBOLoadTrans from './Utils/QBOLoadTrans'
 
 import RoleHierarchyShow from './Role_Hierarchy/RoleHierarchyShow'
 import RoleHierarchyCreate from './Role_Hierarchy/RoleHierarchyCreate'
@@ -61,6 +61,8 @@ import RoleHierarchyEdit from './Role_Hierarchy/RoleHierarchyEdit'
 import RoleHierarchyDelete from './Role_Hierarchy/RoleHierarchyDelete'
 
 import Savings from './demo_tools/Savings'
+
+import Forecast from './Plan/Forecast'
 
 
 const App = () => {
@@ -75,9 +77,10 @@ const App = () => {
           <Switch>
             <Route path ='/' exact component={Landing}/>
             <Route path='/Savings' exact component={Savings}/>
-
+            <Route path='/Forecast' exact component={Forecast}/>
 
             <Route path ='/QBOcb' exact component={QBOcb}/>
+            <Route path ='/QBOLoadTrans' exact component={QBOLoadTrans}/>
 
             <Route path ='/admin' exact component={Time}/>
             <Route path ='/liabilityShow' exact component={LiabilityShow}/>

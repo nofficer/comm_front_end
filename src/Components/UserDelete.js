@@ -25,7 +25,7 @@ class UserDelete extends React.Component {
       return `Are you sure you wish to delete ${this.props.user.name}`
     }
     else {
-      return `You cannot delete ${this.props.user.name} because it is in use`
+      return `You cannot delete ${this.props.user.name} because it is in use by a current or future period transaction`
     }
 
 
