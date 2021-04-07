@@ -42,12 +42,12 @@ function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
 
 class Landing extends React.Component {
   componentDidMount(){
-    this.props.getForecast({"year": this.props.month['cal_year']})
+
     this.props.getYears()
     this.props.getSummaryData({'requested_year':this.props.month['cal_year']})
     this.props.getPlanSummary({'requested_year':this.props.month['cal_year']})
     this.props.getTopEarners({'requested_year':this.props.month['cal_year']})
-
+    this.props.getForecast({"year": this.props.month['cal_year']})
 
   }
 
@@ -129,7 +129,7 @@ class Landing extends React.Component {
 
 
 
-    return({'labels':labels,'payouts':pay_results,'transactions':trans_results,'ccogp':ccogp})
+    return({'labels':labels,'payouts':pay_results,'transactions':trans_results,'ccogp':ccogp,'forecast':this.props.forecast})
 
 
 
@@ -138,7 +138,7 @@ class Landing extends React.Component {
 
 
   getSummary = (e) => {
-    this.props.getForecast({"year":e.target.value})
+    this.props.getForecast({"year":Number(e.target.value)})
     this.props.getSummaryData({'requested_year':e.target.value})
     this.props.getPlanSummary({'requested_year':e.target.value})
     this.props.getTopEarners({'requested_year':e.target.value})
@@ -224,8 +224,7 @@ class Landing extends React.Component {
       sum_data['ccogp'] = sum_data['ccogp'].map((x) => {
         return(Math.round((x + Number.EPSILON) ))
       })
-      sum_data['forecast'] = this.props.forecast
-      sum_data['forecast'] = sum_data['forecast'].slice(1)
+
 
       var payouts_vals = Object.values(this.props.plan_summary)
       var total_payout = '$' + formatMoney(payouts_vals.reduce((a,b) => a + b, 0))
@@ -297,7 +296,7 @@ class Landing extends React.Component {
                       <div className='sixteen wide column ui placeholder segment'>
 
 
-                        <LineChart title={["Gross Profit Vs. Total Payout"]}  payouts={sum_data['payouts']} forecast={sum_data['forecast']} labels={sum_data['labels']} />
+                        <LineChart title={["Planned Payout vs. Actual Payout"]}  payouts={sum_data['payouts']} forecast={sum_data['forecast']} labels={sum_data['labels']} />
                       </div>
 
                       <div className='sixteen wide column ui placeholder segment'>

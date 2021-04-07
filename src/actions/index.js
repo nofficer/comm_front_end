@@ -58,6 +58,8 @@ export const inputForecast = (formValues) => {
 }
 
 export const getForecast = (year) => {
+  console.log(year)
+
   return async (dispatch) => {
     const response = await db.post('/getForecast',year)
 

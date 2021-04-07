@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { getTime,checkCalcStatus,inputForecast,getYears } from '../../actions'
 import Login from '../Accounts/Login'
 import Loader from '../../Loader'
+import history from '../../history'
 
 
 
@@ -21,6 +22,7 @@ class Forecast extends React.Component {
 
   onSubmit = (formValues) => {
     this.props.inputForecast(formValues)
+
   }
 
   populateDropdown(){

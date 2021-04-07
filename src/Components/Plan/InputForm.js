@@ -68,7 +68,7 @@ class InputForm extends React.Component {
       <p>Select Year</p>
       <Field name="year" component="select" label='Select Year'>
       {this.props.populateDropdown.map(year =>
-      <option value={year} key={year}>{year}</option>)}
+      <option value={year} key={"id_" + year}>{year}</option>)}
                 </Field>
 
 
@@ -142,6 +142,7 @@ return !isNaN(str) && // use type coercion to parse the _entirety_ of the string
 
 const validate = (formValues) => {
 	const errors = {};
+
 
   if(!formValues.month_1 || !isNumeric(formValues.month_1)) {
 
