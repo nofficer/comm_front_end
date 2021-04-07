@@ -224,6 +224,8 @@ class Landing extends React.Component {
       sum_data['ccogp'] = sum_data['ccogp'].map((x) => {
         return(Math.round((x + Number.EPSILON) ))
       })
+      sum_data['forecast'] = this.props.forecast
+      sum_data['forecast'] = sum_data['forecast'].slice(1)
 
       var payouts_vals = Object.values(this.props.plan_summary)
       var total_payout = '$' + formatMoney(payouts_vals.reduce((a,b) => a + b, 0))
@@ -295,7 +297,7 @@ class Landing extends React.Component {
                       <div className='sixteen wide column ui placeholder segment'>
 
 
-                        <LineChart title={["Gross Profit Vs. Total Payout"]}  payouts={sum_data['payouts']} profits={sum_data['transactions']} labels={sum_data['labels']} />
+                        <LineChart title={["Gross Profit Vs. Total Payout"]}  payouts={sum_data['payouts']} forecast={sum_data['forecast']} labels={sum_data['labels']} />
                       </div>
 
                       <div className='sixteen wide column ui placeholder segment'>
@@ -471,7 +473,8 @@ const mapStateToProps = (state) => {
     years:state.month.years,
     summary_data:state.month.summary_data,
     plan_summary:state.month.plan_summary,
-    top_earners:state.month.top_earners
+    top_earners:state.month.top_earners,
+    forecast: state.forecast.forecast
   }
 }
 
