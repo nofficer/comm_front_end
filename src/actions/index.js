@@ -49,7 +49,7 @@ function getToken() {
 
 export const inputForecast = (formValues) => {
   return async (dispatch) => {
-    const response = await db.post('/inputForecast',formValues)
+    const response = await db.post('/insertForecast',formValues)
 
     dispatch({type:INPUT_FORECAST, payload: response.data})
     history.push('/')
@@ -57,9 +57,9 @@ export const inputForecast = (formValues) => {
   }
 }
 
-export const getForecast = () => {
+export const getForecast = (year) => {
   return async (dispatch) => {
-    const response = await db.get('/getForecast')
+    const response = await db.post('/getForecast',year)
 
     dispatch({type:GET_FORECAST, payload: response.data})
 

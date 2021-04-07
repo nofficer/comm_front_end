@@ -31,6 +31,8 @@ class InputForm extends React.Component {
 
 
   onSubmit = (formValues) => {
+
+    console.log(formValues)
     this.props.onSubmit(formValues)
   }
 
@@ -57,6 +59,37 @@ class InputForm extends React.Component {
 
 
       </div>
+      <div className='three wide column'>
+
+
+
+      </div>
+      <div className='two wide column'>
+      <p>Select Year</p>
+      <Field name="year" component="select" label='Select Year'>
+      {this.props.populateDropdown.map(year =>
+      <option value={year} key={year}>{year}</option>)}
+                </Field>
+
+
+      </div>
+      <div className='three wide column'>
+
+
+
+
+      </div>
+      <div className='four wide column'>
+
+
+
+      </div>
+      <div className='four wide column'>
+
+
+
+      </div>
+
 
       <div className='four wide column'>
 
@@ -86,7 +119,10 @@ class InputForm extends React.Component {
 
 
         <div className='six wide column'></div>
-        <div className='four wide column'><button className='ui fluid button primary'>Submit</button></div>
+        <div className='four wide column'>
+
+        <button className='ui fluid button primary'>Submit</button>
+        </div>
         <div className='six wide column'></div>
 
         </div>

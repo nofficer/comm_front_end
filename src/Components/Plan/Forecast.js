@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getTime,checkCalcStatus,inputForecast } from '../../actions'
+import { getTime,checkCalcStatus,inputForecast,getYears } from '../../actions'
 import Login from '../Accounts/Login'
 import Loader from '../../Loader'
 
@@ -12,6 +12,7 @@ import InputForm from './InputForm'
 
 class Forecast extends React.Component {
   componentDidMount(){
+    this.props.getYears()
 
     this.props.getTime()
 
@@ -22,7 +23,10 @@ class Forecast extends React.Component {
     this.props.inputForecast(formValues)
   }
 
+  populateDropdown(){
 
+    return this.props.years
+  }
 
 
 
@@ -33,7 +37,7 @@ class Forecast extends React.Component {
 
 
         return (
-          <div className='ui container containermargin'><InputForm title="Input Payout Forecast" onSubmit={this.onSubmit}  /></div>
+          <div className='ui container containermargin'><InputForm title="Input Payout Forecast" onSubmit={this.onSubmit} year={this.props.month.cal_year} populateDropdown={this.populateDropdown()} /></div>
         )
 
 
@@ -53,8 +57,10 @@ const mapStateToProps = (state) => {
   return {
     account: state.account.account,
     calc: state.calc.calc,
+    month:state.month.month,
+    years:state.month.years
 
   }
 }
 
-export default connect(mapStateToProps, {getTime,checkCalcStatus,inputForecast })(Forecast)
+export default connect(mapStateToProps, {getTime,checkCalcStatus,inputForecast,getYears })(Forecast)

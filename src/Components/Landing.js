@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { uploadFile,onChangeFile,getPayouts_cy,getSummaryData,getYears,getPlanSummary,getTopEarners} from '../actions'
+import { uploadFile,onChangeFile,getPayouts_cy,getSummaryData,getYears,getPlanSummary,getTopEarners,getForecast} from '../actions'
 
 
 import LineChart from './LineChart'
@@ -42,7 +42,7 @@ function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
 
 class Landing extends React.Component {
   componentDidMount(){
-
+    this.props.getForecast({"year": this.props.month['cal_year']})
     this.props.getYears()
     this.props.getSummaryData({'requested_year':this.props.month['cal_year']})
     this.props.getPlanSummary({'requested_year':this.props.month['cal_year']})
@@ -138,6 +138,7 @@ class Landing extends React.Component {
 
 
   getSummary = (e) => {
+    this.props.getForecast({"year":e.target.value})
     this.props.getSummaryData({'requested_year':e.target.value})
     this.props.getPlanSummary({'requested_year':e.target.value})
     this.props.getTopEarners({'requested_year':e.target.value})
@@ -474,4 +475,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, {uploadFile,onChangeFile,getPayouts_cy,getSummaryData,getYears,getPlanSummary,getTopEarners})(Landing)
+export default connect(mapStateToProps, {uploadFile,onChangeFile,getPayouts_cy,getSummaryData,getYears,getPlanSummary,getTopEarners,getForecast})(Landing)

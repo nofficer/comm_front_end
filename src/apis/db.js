@@ -26,7 +26,7 @@ import { connect } from 'react-redux';
 
 
 export default axios.create({
-  baseURL: 'https://easycomp-305815.uc.r.appspot.com',
+  baseURL: 'http://127.0.0.1:8080',
   headers: {
     ilac:'bk123'
   }
