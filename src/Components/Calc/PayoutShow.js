@@ -147,7 +147,7 @@ class PayoutShow extends React.Component {
     </div>
     <div className='six wide column'></div>
 
-    <div className='ui container containermargin'>
+    <div className='containermargin' style={{"overflowX": "scroll"}}>
       <table className='ui celled table'>
 
         <thead>

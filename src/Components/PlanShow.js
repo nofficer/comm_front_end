@@ -79,6 +79,7 @@ class PlanShow extends React.Component {
         <div className='sixteen wide column'></div>
         <div className='sixteen wide column'></div>
         </div>
+        <div className='containermargin' style={{"overflowX": "scroll"}}>
         <table className='ui celled table'>
         <thead>
 
@@ -104,6 +105,7 @@ class PlanShow extends React.Component {
         {this.renderList()}
         </tbody>
         </table>
+        </div>
         </div>
 
       )

@@ -303,6 +303,7 @@ class PayoutShow extends React.Component {
         //////////////////////////WRAP
       }
       else if(payout[15] === this.props.account['casted_user_id'].toLowerCase() && payout[13] === this.props.selected_month && this.props.selected_year === payout_year ){
+
         //////////////////////////WRAP
         if(payout[14] in paySummary){
           paySummary[payout[14]]+=pay
@@ -631,9 +632,10 @@ class PayoutShow extends React.Component {
 
     this.props.payouts.map((payout) => {
 
-      if(trans_id_tracker.includes(payout[1]) === false){
 
-        if(payout[15] === this.props.account['casted_user_id'].toLowerCase() && (Number(payout[17].slice(5,7)) <= Number(this.props.selected_month) || this.props.selected_month.toLowerCase() === 'all') && (payout[17].slice(0,4) === this.props.selected_year.toString() || this.props.selected_year.toLowerCase() === 'all'  )  ) {
+      if(trans_id_tracker.includes(payout[1]) === false){
+        //TODO The way I am filtering here is going to mess me up I am comparing the date string month value to the selected month number. This only works for places that have a calendar year fiscal year, anything else will cause this to fail
+        if(payout[15] === this.props.account['casted_user_id'].toLowerCase() && (Number(payout[13]) <= Number(this.props.selected_month) || this.props.selected_month.toLowerCase() === 'all') && (payout[17].slice(0,4) === this.props.selected_year.toString() || this.props.selected_year.toLowerCase() === 'all'  )  ) {
           trans_id_tracker.push(payout[1])
           //This thing above me is what enables only unique additions to the graph
           if(typeof(no_goal_prod_total[monthmap[payout[13]]]) !== 'undefined'){
@@ -642,6 +644,7 @@ class PayoutShow extends React.Component {
             no_goal_prod_total[monthmap[payout[13]]]+=Number(payout[6])
           }
           else{
+
             no_goal_prod_total[monthmap[payout[13]]]=Number(payout[6])
           }
           checker = true
@@ -665,6 +668,7 @@ class PayoutShow extends React.Component {
     }
 
     if(checker){
+
 
       return(
         <BarChart feed={{
@@ -759,6 +763,7 @@ class PayoutShow extends React.Component {
   }
 
   createSummaryLine(line){
+
     var statement_line = [monthmap[this.props.selected_month]]
     var i;
     for (i = 0; i < line.length; i++) {
@@ -769,6 +774,7 @@ class PayoutShow extends React.Component {
 
     statement_details.push(statement_line)
     if(Number(line[1]) < 1){
+
       return(
         (
           <tr key={line[0]}>
@@ -793,6 +799,7 @@ class PayoutShow extends React.Component {
 
   renderSummary(){
     var summaryArray = this.createSummaryItem()
+
     statement_details = [[`${monthmap[this.props.selected_month]} Commission statement for ${this.props.account['username']}`],[],['Summary Performance'],['Month','Attainment Rule','Attainment','Payout']]
     return (summaryArray.map((line)=> {
       return this.createSummaryLine(line)

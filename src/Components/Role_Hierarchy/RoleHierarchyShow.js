@@ -90,7 +90,7 @@ class RoleHierarchyShow extends React.Component {
         <div className='sixteen wide column'></div>
 
         </div>
-
+        <div className='containermargin' style={{"overflowX": "scroll"}}>
         <table className='ui celled table'>
 
           <thead>
@@ -130,6 +130,7 @@ class RoleHierarchyShow extends React.Component {
           {this.renderList()}
           </tbody>
         </table>
+        </div>
 
         </div>
       )

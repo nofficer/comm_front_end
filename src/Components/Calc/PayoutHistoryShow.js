@@ -192,7 +192,7 @@ class PayoutShow extends React.Component {
         <div className="four wide column"><button className='rightitem fluid ui button positive' onClick={this.generateStatement}>Export Payouts </button></div>
         <div className='six wide column'></div>
 
-    <div className='ui container containermargin'>
+    <div className='containermargin' style={{"overflowX": "scroll"}}>
       <table className='ui celled table'>
 
         <thead>

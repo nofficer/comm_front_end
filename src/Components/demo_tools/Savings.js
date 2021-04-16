@@ -69,7 +69,7 @@ class Savings extends React.Component {
 
     var calc_cost = hourly_rate*time_spent_calculating_in_hours
 
-    var rep_audit_cost = num_hours_per_month*avg_profit
+    var rep_audit_cost = num_hours_per_month*avg_profit*num_reps
 
     var result = communication_cost+calc_cost+rep_audit_cost
 
