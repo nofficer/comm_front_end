@@ -215,9 +215,9 @@ class GoalForm extends React.Component {
                     <option value={rule[0]} key={rule[1]}>{rule[1]}</option>)}
                 </Field>
 
-        <Field name='start' component={this.renderInput} label='Enter Rate Effective Start Date (YYYY-MM-DD)'/>
+        <Field name='start' component={this.renderInput} label='Enter Goal Effective Start Date (YYYY-MM-DD)'/>
 
-              <Field name='end' component={this.renderInput} label='Enter Rate Effective End Date (YYYY-MM-DD)'/>
+              <Field name='end' component={this.renderInput} label='Enter Goal Effective End Date (YYYY-MM-DD)'/>
 
 
 

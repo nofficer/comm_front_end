@@ -22,7 +22,7 @@ class RunCalcs extends React.Component {
   }
   runCalc = () => {
     var plan_list_nums = this.planList.map(x => Number(x))
-    console.log(plan_list_nums)
+
     this.props.loadCalcs()
     this.props.calcPlans(plan_list_nums)
     this.planList = []
@@ -30,7 +30,7 @@ class RunCalcs extends React.Component {
 
   runAllCalc = () => {
     var plan_list_nums = this.props.plans.map(x => Number(x[0]))
-    console.log(plan_list_nums)
+
     this.props.loadCalcs()
     this.props.calcPlans(plan_list_nums)
     this.planList = []
@@ -58,7 +58,7 @@ class RunCalcs extends React.Component {
     var plan_id = e.target.value
 
     if(this.planList.includes(plan_id)){
-      console.log(plan_id)
+      
       var index = this.planList.indexOf(plan_id)
 
       this.planList.splice(index,1)

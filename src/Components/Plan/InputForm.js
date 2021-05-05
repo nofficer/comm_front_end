@@ -3,6 +3,8 @@ import { Field, reduxForm } from 'redux-form'
 import globals from '../globals'
 import monthmap from '../monthmap'
 
+
+
 class InputForm extends React.Component {
 
   renderError({error, touched}){
@@ -32,7 +34,7 @@ class InputForm extends React.Component {
 
   onSubmit = (formValues) => {
 
-    console.log(formValues)
+
     this.props.onSubmit(formValues)
   }
 
@@ -41,6 +43,8 @@ class InputForm extends React.Component {
 
 
   render(){
+
+
 
   return (
     <div>
@@ -68,6 +72,7 @@ class InputForm extends React.Component {
       <p>Select Year</p>
       <Field name="year" component="select" label='Select Year'>
       {this.props.populateDropdown.map(year =>
+
       <option value={year} key={"id_" + year}>{year}</option>)}
                 </Field>
 
@@ -133,65 +138,79 @@ class InputForm extends React.Component {
   }
 }
 
-function isNumeric(str) {
-if (typeof str !== "string") return false // we only process strings!
-return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
-       !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
+
+
+function isNumber(input) {
+  if(typeof(input) === 'number'){
+    return true
+  }
+  else if(typeof(input) === 'string'){
+    return !isNaN(input) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+           !isNaN(parseFloat(input))
+  }
+  else{
+    return false
+  }
 }
 
 
 const validate = (formValues) => {
 	const errors = {};
+  console.log(formValues)
+
+  console.log(isNumber(formValues.month_1))
+
+  if(!formValues.month_1 || !isNumber(formValues.month_1)) {
 
 
-  if(!formValues.month_1 || !isNumeric(formValues.month_1)) {
 
     errors.month_1 = "Amount must be a number"
   }
-  if(!formValues.month_2 || !isNumeric(formValues.month_2)) {
+  if(!formValues.month_2 || !isNumber(formValues.month_2)) {
 
     errors.month_2 = "Amount must be a number"
   }
-  if(!formValues.month_3 || !isNumeric(formValues.month_3)) {
+  if(!formValues.month_3 || !isNumber(formValues.month_3)) {
 
     errors.month_3 = "Amount must be a number"
   }
-  if(!formValues.month_4 || !isNumeric(formValues.month_4)) {
+  if(!formValues.month_4 || !isNumber(formValues.month_4)) {
 
     errors.month_4 = "Amount must be a number"
   }
-  if(!formValues.month_5 || !isNumeric(formValues.month_5)) {
+  if(!formValues.month_5 || !isNumber(formValues.month_5)) {
 
     errors.month_5 = "Amount must be a number"
   }
-  if(!formValues.month_6 || !isNumeric(formValues.month_6)) {
+  if(!formValues.month_6 || !isNumber(formValues.month_6)) {
 
     errors.month_6 = "Amount must be a number"
   }
-  if(!formValues.month_7 || !isNumeric(formValues.month_7)) {
+  if(!formValues.month_7 || !isNumber(formValues.month_7)) {
 
     errors.month_7 = "Amount must be a number"
   }
-  if(!formValues.month_8 || !isNumeric(formValues.month_8)) {
+  if(!formValues.month_8 || !isNumber(formValues.month_8)) {
 
     errors.month_8 = "Amount must be a number"
   }
-  if(!formValues.month_9 || !isNumeric(formValues.month_9)) {
+  if(!formValues.month_9 || !isNumber(formValues.month_9)) {
 
     errors.month_9 = "Amount must be a number"
   }
-  if(!formValues.month_10 || !isNumeric(formValues.month_10)) {
+  if(!formValues.month_10 || !isNumber(formValues.month_10)) {
 
     errors.month_10 = "Amount must be a number"
   }
-  if(!formValues.month_11 || !isNumeric(formValues.month_11)) {
+  if(!formValues.month_11 || !isNumber(formValues.month_11)) {
 
     errors.month_11 = "Amount must be a number"
   }
-  if(!formValues.month_12 || !isNumeric(formValues.month_12)) {
+  if(!formValues.month_12 || !isNumber(formValues.month_12)) {
 
     errors.month_12 = "Amount must be a number"
   }
+
 
 
   return errors
@@ -200,5 +219,7 @@ const validate = (formValues) => {
 export default reduxForm({
 	form: 'inputForm',
 	validate: validate,
-  enableReinitialize: true
+  enableReinitialize: true,
+  touchOnChange: true,
+  touchOnBlur: true
 })(InputForm);

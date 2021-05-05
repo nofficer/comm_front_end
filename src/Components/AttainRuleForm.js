@@ -148,13 +148,23 @@ class AttainRuleForm extends React.Component {
                     <option value="Overlay">Overlay</option>
                     <option value="Location">Location</option>
                     <option value="Location_Overlay">Location_Overlay</option>
+                    <option value="Rollup">Rollup</option>
+                    <option value="Rollup_Full">Rollup_Full</option>
                     <option value="Custom">{globals.custom_field}</option>
-                    <option value="Retro">Retro</option>
-                    <option value="Ote_Direct">OTE_Direct</option>
-                    <option value="Ote_Overlay">OTE_Overlay</option>
-                    <option value="Ote_Location">OTE_Location</option>
-                    <option value="Ote_Location_Overlay">OTE_Location_Overlay</option>
-                    <option value="Ote_Custom">OTE_{globals.custom_field}</option>
+                    <option value="Retro_Direct">Retro_Direct</option>
+                    <option value="Retro_Overlay">Retro_Overlay</option>
+                    <option value="Retro_Location">Retro_Location</option>
+                    <option value="Retro_Location_Overlay">Retro_Location_Overlay</option>
+                    <option value="Retro_Custom">Retro_{globals.custom_field}</option>
+                    <option value="Retro_Rollup">Retro_Rollup</option>
+                    <option value="Retro_Rollup_Full">Retro_Rollup_Full</option>
+                    <option value="Ote_Direct">On_Target_Earnings_Direct</option>
+                    <option value="Ote_Overlay">On_Target_Earnings_Overlay</option>
+                    <option value="Ote_Location">On_Target_Earnings_Location</option>
+                    <option value="Ote_Location_Overlay">On_Target_Earnings_Location_Overlay</option>
+                    <option value="Ote_Custom">On_Target_Earnings_{globals.custom_field}</option>
+                    <option value="Ote_Rollup">On_Target_Earnings_Rollup</option>
+                    <option value="Ote_Rollup_Full">On_Target_Earnings_Rollup_Full</option>
                   </Field>
           </div>
         </div>

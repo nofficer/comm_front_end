@@ -58,7 +58,7 @@ export const inputForecast = (formValues) => {
 }
 
 export const getForecast = (year) => {
-  console.log(year)
+
 
   return async (dispatch) => {
     const response = await db.post('/getForecast',year)
@@ -377,7 +377,7 @@ export const login = (formValues,save)=>{
 
     }
     getToken()
-    setTimeout(function(){ alert("Your session has timed out, please refresh or close the page and log in again"); }, 3564000);
+    setTimeout(function(){ alert("Your session has timed out, please close the page and log in again"); }, 3564000);
 
 
   }
@@ -393,7 +393,7 @@ export const checkUser = () => {
 
     dispatch({type:CHECK_USER,payload:response.data})
     getToken()
-    setTimeout(function(){ alert("Your session has timed out, please refresh or close the page and log in again"); }, 3564000);
+    setTimeout(function(){ alert("Your session has timed out, please close the page and log in again"); }, 3564000);
 
   }
 }

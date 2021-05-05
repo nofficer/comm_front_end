@@ -167,7 +167,7 @@ class Landing extends React.Component {
 
       <div className='sixteen wide column'>
       <div className='ui center aligned grid'>
-        <div  className='ui header bigfont'>EasyComp</div>
+
         </div></div>
 
 
@@ -197,7 +197,7 @@ class Landing extends React.Component {
 
             </div>
             <div className='six wide column'>
-              <div onClick={(e) => e.stopPropagation(history.push({pathname:'/report',state:{detail:this.props.month}}))} className="ui fluid primary button">Commissions Report</div>
+              <div onClick={(e) => e.stopPropagation(history.push({pathname:'/report',state:{detail:this.props.month}}))} className="ui fluid primary button">Generate Commission Report</div>
             </div>
             <div className='five wide column'>
 

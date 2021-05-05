@@ -125,8 +125,8 @@ class UserShow extends React.Component {
           <div className='sixteen wide column'></div>
           <div className='sixteen wide column'></div>
           </div>
-          <div className='ui container containermargin'>
-          <table className='ui celled fluid table'>
+          <div style={{overflow:'auto', whitespace:'nowrap',"transform":"rotateX(180deg)"}} className='ui container containermargin'>
+          <table  className='ui celled unstackable table' style={{"transform":"rotateX(180deg)"}}>
             <thead>
 
 

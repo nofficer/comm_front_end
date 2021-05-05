@@ -90,8 +90,8 @@ class RoleHierarchyShow extends React.Component {
         <div className='sixteen wide column'></div>
 
         </div>
-        <div className='containermargin' style={{"overflowX": "scroll"}}>
-        <table className='ui celled table'>
+        <div style={{overflow:'auto', whitespace:'nowrap',"transform":"rotateX(180deg)"}} className='ui container containermargin'>
+        <table  className='ui celled unstackable table' style={{"transform":"rotateX(180deg)"}}>
 
           <thead>
           <tr>
