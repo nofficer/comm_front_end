@@ -9,6 +9,8 @@ import store from '../index'
 import firebase from "firebase/app";
 import "firebase/auth";
 
+import {calculator} from '../apis/db'
+
 
 // const proxycheck = axios.create({
 //   baseURL: 'http://127.0.0.1:5000',
@@ -41,7 +43,7 @@ function getToken() {
 
 
 
-
+  calculator.defaults.headers.common['Authorization'] = token_val
   db.defaults.headers.common['Authorization'] = token_val
 
 
@@ -49,7 +51,7 @@ function getToken() {
 
 export const inputForecast = (formValues) => {
   return async (dispatch) => {
-    const response = await db.post('/inputForecast',formValues)
+    const response = await db.post('/insertForecast',formValues)
 
     dispatch({type:INPUT_FORECAST, payload: response.data})
     history.push('/')
@@ -57,9 +59,11 @@ export const inputForecast = (formValues) => {
   }
 }
 
-export const getForecast = () => {
+export const getForecast = (year) => {
+
+
   return async (dispatch) => {
-    const response = await db.get('/getForecast')
+    const response = await db.post('/getForecast',year)
 
     dispatch({type:GET_FORECAST, payload: response.data})
 
@@ -375,7 +379,7 @@ export const login = (formValues,save)=>{
 
     }
     getToken()
-    setTimeout(function(){ alert("Your session has timed out, please refresh or close the page and log in again"); }, 3564000);
+    setTimeout(function(){ alert("Your session has timed out, please close the page and log in again"); }, 3564000);
 
 
   }
@@ -391,7 +395,7 @@ export const checkUser = () => {
 
     dispatch({type:CHECK_USER,payload:response.data})
     getToken()
-    setTimeout(function(){ alert("Your session has timed out, please refresh or close the page and log in again"); }, 3564000);
+    setTimeout(function(){ alert("Your session has timed out, please close the page and log in again"); }, 3564000);
 
   }
 }
@@ -514,7 +518,7 @@ export const getPayout = (payout_id) => {
 export const calcPlans = (planList) => {
 
   return async (dispatch) => {
-    const response = await db.post('/calc_plans',planList)
+    const response = await calculator.post('/calc_plans',planList)
     dispatch({type:CALC_PLANS, payload: response.data})
   }
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { createTrans, getTrans,getUsers ,getTime,checkCalcStatus } from '../actions'
+import { createTrans,getUsers ,getTime,checkCalcStatus } from '../actions'
 import moment from 'moment'
 import Login from './Accounts/Login'
 
@@ -9,7 +9,7 @@ import TransForm from './TransForm'
 
 class TransCreate extends React.Component {
   componentDidMount(){
-    this.props.getTrans()
+
     this.props.getUsers()
     this.props.getTime()
     this.props.checkCalcStatus()
@@ -62,4 +62,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { getTrans, createTrans, getUsers,getTime,checkCalcStatus  })(TransCreate)
+export default connect(mapStateToProps, {createTrans, getUsers,getTime,checkCalcStatus  })(TransCreate)

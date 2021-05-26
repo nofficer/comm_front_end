@@ -12,14 +12,14 @@ class UserDelete extends React.Component {
 
   componentDidMount(){
     this.props.getUser({"user_id": this.props.match.params.user_id})
-    this.props.checkUserUse({"user_id": this.props.match.params.user_id})
+    //this.props.checkUserUse({"user_id": this.props.match.params.user_id})
     this.props.getTime()
     this.props.checkCalcStatus()
   }
 
   renderContent(){
     if(!this.props.user){
-      return 'Are you sure you wish to delete this plan?'
+      return 'Are you sure you wish to delete this user?'
     }
     else if(this.props.check !== "In Use"){
       return `Are you sure you wish to delete ${this.props.user.name}`

@@ -106,7 +106,7 @@ class AttainRuleForm extends React.Component {
           <div className="four wide column">
             <p>Select Attainment Metric</p>
             <Field name="rule_metric" component="select" label='Select Rule Metric'>
-                      <option value="nothin">Select an attainment metric...</option>
+                      <option value="nometric">Select an attainment metric...</option>
                       <option value="gp">GP</option>
                       <option value="revenue">Revenue</option>
                     </Field>
@@ -125,7 +125,7 @@ class AttainRuleForm extends React.Component {
           <div className="four wide column">
             <p>Select Plan</p>
             <Field name="plan_id" component="select" label='Enter Plan_ID'>
-                        <option value="">Select a plan...</option>
+                        <option value="noplan">Select a plan...</option>
                         {this.props.populateDropdown.map(plan =>
                         <option value={plan[0]} key={plan[1]}>{plan[1]}</option>)}
                       </Field>
@@ -134,7 +134,7 @@ class AttainRuleForm extends React.Component {
           <div className="four wide column">
           <p>Goal to be applied to attainment calculation?</p>
     <Field name="goal_use" component="select" label='Select Usage'>
-          <option value="none">Select Goal Dependency...</option>
+          <option value="nogoal">Select Goal Dependency...</option>
           <option value="yes">Yes</option>
           <option value="no">No</option>
         </Field>
@@ -143,17 +143,28 @@ class AttainRuleForm extends React.Component {
           <div className="four wide column">
           <p>Select Calculation Type</p>
           <Field name="rule_source" component="select" label='Select Rule Metric'>
-                    <option value="NoCalc">Select a calculation type...</option>
+                    <option value="nosource">Select a calculation type...</option>
                     <option value="Direct">Direct</option>
                     <option value="Overlay">Overlay</option>
                     <option value="Location">Location</option>
                     <option value="Location_Overlay">Location_Overlay</option>
+                    <option value="Rollup">Rollup</option>
+                    <option value="Rollup_Full">Rollup_Full</option>
                     <option value="Custom">{globals.custom_field}</option>
-                    <option value="Ote_Direct">OTE_Direct</option>
-                    <option value="Ote_Overlay">OTE_Overlay</option>
-                    <option value="Ote_Location">OTE_Location</option>
-                    <option value="Ote_Location_Overlay">OTE_Location_Overlay</option>
-                    <option value="Ote_Custom">OTE_{globals.custom_field}</option>
+                    <option value="Retro_Direct">Retro_Direct</option>
+                    <option value="Retro_Overlay">Retro_Overlay</option>
+                    <option value="Retro_Location">Retro_Location</option>
+                    <option value="Retro_Location_Overlay">Retro_Location_Overlay</option>
+                    <option value="Retro_Custom">Retro_{globals.custom_field}</option>
+                    <option value="Retro_Rollup">Retro_Rollup</option>
+                    <option value="Retro_Rollup_Full">Retro_Rollup_Full</option>
+                    <option value="Ote_Direct">On_Target_Earnings_Direct</option>
+                    <option value="Ote_Overlay">On_Target_Earnings_Overlay</option>
+                    <option value="Ote_Location">On_Target_Earnings_Location</option>
+                    <option value="Ote_Location_Overlay">On_Target_Earnings_Location_Overlay</option>
+                    <option value="Ote_Custom">On_Target_Earnings_{globals.custom_field}</option>
+                    <option value="Ote_Rollup">On_Target_Earnings_Rollup</option>
+                    <option value="Ote_Rollup_Full">On_Target_Earnings_Rollup_Full</option>
                   </Field>
           </div>
         </div>
@@ -211,30 +222,31 @@ const validate = (formValues) => {
 		//only ran if the user did not enter a title
 		errors.rule_name = 'You must enter a name'
 	}
-  if(!formValues.goal_use) {
+  if(formValues.goal_use == 'nogoal' ) {
 		//only ran if the user did not enter a title
-		errors.rule_name = 'Dont forget to select whether attainment is goal dependent'
+		errors.goal_use = 'Dont forget to select whether attainment is goal dependent'
 	}
-  if(!formValues.rule_source) {
+  if(formValues.rule_source == 'nosource') {
 		//only ran if the user did not enter a title
-		errors.rule_name = 'Dont forget to select a calculation type'
+		errors.rule_source = 'Dont forget to select a calculation type'
 	}
-  if(!formValues.rule_metric) {
+  if(formValues.rule_metric == "nometric"  ) {
 		//only ran if the user did not enter a title
-		errors.rule_name = 'Dont forget to select a metric'
+		errors.rule_metric = 'Dont forget to select a metric'
 	}
-  if(!formValues.rule_timeframe) {
+  if(formValues.rule_timeframe == "notimeframe") {
 		//only ran if the user did not enter a title
-		errors.rule_name = 'Dont forget to select a timeframe --->'
+		errors.rule_timeframe = 'Dont forget to select a timeframe --->'
 	}
   if(!formValues.rule_filter) {
-    console.log('hello')
+
     errors.rule_filter = 'You must enter a filter'
   }
-  if(!formValues.plan_id) {
+  if(formValues.plan_id == "noplan") {
 
-    errors.rule_name = 'Dont forget to select a plan'
+    errors.plan_id = 'Dont forget to select a plan'
   }
+
 
   return errors
 }

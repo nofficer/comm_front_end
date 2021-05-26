@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { uploadFile,onChangeFile,getPayouts_cy,getSummaryData,getYears,getPlanSummary,getTopEarners} from '../actions'
+import { uploadFile,onChangeFile,getPayouts_cy,getSummaryData,getYears,getPlanSummary,getTopEarners,getForecast} from '../actions'
 
 
 import LineChart from './LineChart'
@@ -47,7 +47,7 @@ class Landing extends React.Component {
     this.props.getSummaryData({'requested_year':this.props.month['cal_year']})
     this.props.getPlanSummary({'requested_year':this.props.month['cal_year']})
     this.props.getTopEarners({'requested_year':this.props.month['cal_year']})
-
+    this.props.getForecast({"year": this.props.month['cal_year']})
 
   }
 
@@ -129,15 +129,24 @@ class Landing extends React.Component {
 
 
 
-    return({'labels':labels,'payouts':pay_results,'transactions':trans_results,'ccogp':ccogp})
+    return({'labels':labels,'payouts':pay_results,'transactions':trans_results,'ccogp':ccogp,'forecast':this.props.forecast})
 
 
 
   }
 
+  retrieveData = (e) => {
+    this.props.getYears()
+    this.props.getSummaryData({'requested_year':this.props.month['cal_year']})
+    this.props.getPlanSummary({'requested_year':this.props.month['cal_year']})
+    this.props.getTopEarners({'requested_year':this.props.month['cal_year']})
+    this.props.getForecast({"year": this.props.month['cal_year']})
+  }
+
 
 
   getSummary = (e) => {
+    this.props.getForecast({"year":Number(e.target.value)})
     this.props.getSummaryData({'requested_year':e.target.value})
     this.props.getPlanSummary({'requested_year':e.target.value})
     this.props.getTopEarners({'requested_year':e.target.value})
@@ -166,7 +175,7 @@ class Landing extends React.Component {
 
       <div className='sixteen wide column'>
       <div className='ui center aligned grid'>
-        <div  className='ui header bigfont'>EasyComp</div>
+
         </div></div>
 
 
@@ -196,7 +205,7 @@ class Landing extends React.Component {
 
             </div>
             <div className='six wide column'>
-              <div onClick={(e) => e.stopPropagation(history.push({pathname:'/report',state:{detail:this.props.month}}))} className="ui fluid primary button">Commissions Report</div>
+              <div onClick={(e) => e.stopPropagation(history.push({pathname:'/report',state:{detail:this.props.month}}))} className="ui fluid primary button">Generate Commission Report</div>
             </div>
             <div className='five wide column'>
 
@@ -224,15 +233,24 @@ class Landing extends React.Component {
         return(Math.round((x + Number.EPSILON) ))
       })
 
+
+
+      if(typeof(this.props.summary_data[0]) != 'undefined'){
+
+
+
+
       var payouts_vals = Object.values(this.props.plan_summary)
       var total_payout = '$' + formatMoney(payouts_vals.reduce((a,b) => a + b, 0))
       return ( <div className='ui grid'>
       <div className='sixteen wide column'></div>
 
-      <div className='two wide column'></div>
+      <div className='two wide column'>
+
+      </div>
       <div className='twelve wide column'>
       <div className='ui center aligned grid'>
-        <div  className='ui header bigfont'>EasyComp</div>
+        <div className='ui header bigfont'>EasyComp</div>
         </div></div>
       <div className='two wide column'>
         <div className='ui center aligned grid'>
@@ -294,7 +312,7 @@ class Landing extends React.Component {
                       <div className='sixteen wide column ui placeholder segment'>
 
 
-                        <LineChart title={["Gross Profit Vs. Total Payout"]}  payouts={sum_data['payouts']} profits={sum_data['transactions']} labels={sum_data['labels']} />
+                        <LineChart title={["Planned Payout vs. Actual Payout"]}  payouts={sum_data['payouts']} forecast={sum_data['forecast']} labels={sum_data['labels']} />
                       </div>
 
                       <div className='sixteen wide column ui placeholder segment'>
@@ -387,6 +405,67 @@ class Landing extends React.Component {
         </div>
       )
     }
+    else{
+      return(
+        <div className='ui grid'>
+        <div className='sixteen wide column'></div>
+        <div className='sixteen wide column'></div>
+
+        <div className='sixteen wide column'>
+        <div className='ui center aligned grid'>
+
+          </div></div>
+
+
+
+
+
+
+          <div className='sixteen wide column'>
+            <div className='ui center aligned grid'>
+            <div className='four wide column'>
+
+            </div>
+            <div className='one wide column'>
+
+            </div>
+              <div className='six wide column'>
+
+
+              </div>
+              <div className='five wide column'>
+
+              </div>
+              <div className='sixteen wide column'>
+
+              </div>
+              <div className='five wide column'>
+
+              </div>
+              <div className='six wide column'>
+                <div className='ui fluid button primary' onClick={(e) => e.stopPropagation(this.retrieveData(e))} >Retrieve Summary Data</div>
+              </div>
+              <div className='five wide column'>
+
+              </div>
+              <div className='sixteen wide column'></div>
+
+              <div className='sixteen wide column'>
+
+              </div>
+              <div className='four wide column'>
+
+              </div>
+
+
+            </div>
+
+            </div>
+
+          </div>
+      )
+    }
+    }
     if(typeof(this.props.account['role']) ==='undefined'){
       if(typeof(this.props.years[0]) != 'string' ){
         return(
@@ -470,8 +549,9 @@ const mapStateToProps = (state) => {
     years:state.month.years,
     summary_data:state.month.summary_data,
     plan_summary:state.month.plan_summary,
-    top_earners:state.month.top_earners
+    top_earners:state.month.top_earners,
+    forecast: state.forecast.forecast
   }
 }
 
-export default connect(mapStateToProps, {uploadFile,onChangeFile,getPayouts_cy,getSummaryData,getYears,getPlanSummary,getTopEarners})(Landing)
+export default connect(mapStateToProps, {uploadFile,onChangeFile,getPayouts_cy,getSummaryData,getYears,getPlanSummary,getTopEarners,getForecast})(Landing)

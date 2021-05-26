@@ -158,7 +158,7 @@ class PayoutShow extends React.Component {
   }
   renderContent(){
       statement_details = []
-      statement_details.push([globals.payout_id, globals.trans_id,globals.seller_id,globals.payee,globals.revenue,globals.gp,globals.attainment,globals.payout,globals.split,globals.location,globals.multiplier,globals.order_num,globals.custom_field,globals.period_id,globals.rule,globals.payee_id,globals.type,globals.date])
+      statement_details.push([globals.payout_id, globals.trans_id,globals.seller_id,globals.payee,globals.revenue,globals.gp,globals.attainment,globals.payout,globals.split,globals.location,globals.multiplier,globals.order_num,globals.custom_field,globals.period_id,globals.rule,globals.payee_id,globals.type,globals.date,globals.calc_type])
 
     return (
 
@@ -192,10 +192,11 @@ class PayoutShow extends React.Component {
         <div className="four wide column"><button className='rightitem fluid ui button positive' onClick={this.generateStatement}>Export Payouts </button></div>
         <div className='six wide column'></div>
 
-    <div className='ui container containermargin'>
-      <table className='ui celled table'>
 
-        <thead>
+    <div style={{overflow:'auto', whitespace:'nowrap',"transform":"rotateX(180deg)"}} className='ui container containermargin'>
+    <table  className='ui celled small compact unstackable table' style={{"transform":"rotateX(180deg)"}}>
+
+        <thead className='ui sticky'>
         <tr>
           <td className='center aligned'>
             <div className="ui input">
@@ -295,6 +296,7 @@ class PayoutShow extends React.Component {
         </tbody>
       </table>
       </div>
+
       </div>)
   }
 

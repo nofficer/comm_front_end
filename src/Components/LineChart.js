@@ -27,7 +27,7 @@ componentDidMount() {
     labels: this.props.labels,
     datasets: [
       {
-        label: 'Gross Profit',
+        label: 'Planned Payout',
         fill:true,
 
 
@@ -36,7 +36,7 @@ componentDidMount() {
 
 
 
-        data: this.props.profits
+        data: this.props.forecast
       },
       {
         label: 'Payout',

@@ -49,6 +49,12 @@ class Header extends React.Component {
               </Link>
 
             </div>
+            <div onClick={(e) => e.stopPropagation(history.push({pathname:'/forecast',state:{detail:this.props.month}}))} className='item'>
+            <Link to='/forecast'>
+                  Forecast
+              </Link>
+
+            </div>
             <div onClick={(e) => e.stopPropagation(this.props.logout())} className='item'>
             <Link onClick={(e) => e.stopPropagation(this.props.logout())}  to='/'>
                   Log out

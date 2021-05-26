@@ -20,11 +20,14 @@ class AttainRuleShow extends React.Component {
   }
 
   fixField(item){
-    if(item == 'Ote_Custom'){
+    if(item === 'Ote_Custom'){
       return ('Ote_' + custom_field)
     }
-    else if(item == 'Custom'){
+    else if(item === 'Custom'){
       return(custom_field)
+    }
+    else if(item === 'Retro_Custom'){
+      return('Retro_' + custom_field)
     }
     else {
       return item
@@ -102,8 +105,8 @@ class AttainRuleShow extends React.Component {
       <div className='sixteen wide column'></div>
       <div className='sixteen wide column'></div>
       </div>
-
-        <table className='ui celled table'>
+      <div style={{overflow:'auto', whitespace:'nowrap',"transform":"rotateX(180deg)"}} className='ui container containermargin'>
+      <table  className='ui celled unstackable table' style={{"transform":"rotateX(180deg)"}}>
 
           <thead>
           <tr>
@@ -167,6 +170,7 @@ class AttainRuleShow extends React.Component {
           {this.renderList()}
           </tbody>
         </table>
+        </div>
 
         </div>
       )

@@ -14,7 +14,11 @@ import { saveAs } from 'file-saver'
 import globals from '../globals'
 
 
-
+window.mobileCheck = function() {
+  let check = false;
+  (function(a){if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(a)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0,4))) check = true;})(navigator.userAgent||navigator.vendor||window.opera);
+  return check;
+};
 
 function getQuarter(d) {
   d = d || new Date(); // If no date supplied, use today
@@ -205,8 +209,11 @@ class PayoutShow extends React.Component {
 
 
     var pay_rate = (Number(payout[7])/Number(payout[6]))*100
-    if(isNaN(pay_rate) || payout[16].toUpperCase().includes('OTE')){
+    if(payout[18].toUpperCase().includes('OTE')){
       pay_rate = 'OTE'
+    }
+    else if(payout[18].toUpperCase().includes('RETRO')){
+      pay_rate = 'RETRO'
     }
     else{
       pay_rate = pay_rate.toFixed(2) + '%'
@@ -303,6 +310,7 @@ class PayoutShow extends React.Component {
         //////////////////////////WRAP
       }
       else if(payout[15] === this.props.account['casted_user_id'].toLowerCase() && payout[13] === this.props.selected_month && this.props.selected_year === payout_year ){
+
         //////////////////////////WRAP
         if(payout[14] in paySummary){
           paySummary[payout[14]]+=pay
@@ -456,7 +464,7 @@ class PayoutShow extends React.Component {
       //   console.log(payout)
       // }
 
-      var pay_type = payout[16]
+      var pay_source = payout[18]
       var id = payout[15]
       var rule = payout[14]
       var multiplier = 1
@@ -474,10 +482,14 @@ class PayoutShow extends React.Component {
         sel_mo_num = Number(this.props.selected_month)
       }
 
+      //THE TYPE IS SET BY THE SYSTEM IF IT IS A PAYOUT FOR AN OTE OR RETRO TRANSACTION BECAUSE THE SYSTEM CREATES A TRANSACTION FOR IT
+      if(pay_source.toLowerCase().includes('ote') || pay_source.toLowerCase().includes('retro')){
 
-      if(pay_type.toLowerCase().includes('ote')){
         multiplier = goal_amt
       }
+
+
+
 
       var sel_mo_date = this.props.selected_year + '/' + this.props.selected_month + '/' + '15'
 
@@ -487,9 +499,12 @@ class PayoutShow extends React.Component {
 
 
         if(rule===goal_rule){
+
           //TODO ADD QUALIFIER WHICH CHECKS IF THE GOAL IS MTD OR QTD OR YTD AND FILTER THE GOAL SUMMING BASED ON THAT
           if(goal[8].toLowerCase()==='mtd'){
-            if(payout_date >= goal_start && payout_mo_num === sel_mo_num && payout_date <= goal_end){
+
+            //SET THIS UP SO THAT IF SELECTED MONTH IS ALL THEN IT WILL STILL FILL UP PRODUCTION FOR THE GOALS WHICH ARE MTD. Otherwise it wasn't summing it because the payout_mo_num is not 12
+            if(payout_date >= goal_start && (payout_mo_num === sel_mo_num || this.props.selected_month === 'all') && payout_date <= goal_end){
 
 
 
@@ -631,9 +646,10 @@ class PayoutShow extends React.Component {
 
     this.props.payouts.map((payout) => {
 
-      if(trans_id_tracker.includes(payout[1]) === false){
 
-        if(payout[15] === this.props.account['casted_user_id'].toLowerCase() && (Number(payout[17].slice(5,7)) <= Number(this.props.selected_month) || this.props.selected_month.toLowerCase() === 'all') && (payout[17].slice(0,4) === this.props.selected_year.toString() || this.props.selected_year.toLowerCase() === 'all'  )  ) {
+      if(trans_id_tracker.includes(payout[1]) === false){
+        //TODO The way I am filtering here is going to mess me up I am comparing the date string month value to the selected month number. This only works for places that have a calendar year fiscal year, anything else will cause this to fail
+        if(payout[15] === this.props.account['casted_user_id'].toLowerCase() && (Number(payout[13]) <= Number(this.props.selected_month) || this.props.selected_month.toLowerCase() === 'all') && (payout[17].slice(0,4) === this.props.selected_year.toString() || this.props.selected_year.toLowerCase() === 'all'  )  ) {
           trans_id_tracker.push(payout[1])
           //This thing above me is what enables only unique additions to the graph
           if(typeof(no_goal_prod_total[monthmap[payout[13]]]) !== 'undefined'){
@@ -642,6 +658,7 @@ class PayoutShow extends React.Component {
             no_goal_prod_total[monthmap[payout[13]]]+=Number(payout[6])
           }
           else{
+
             no_goal_prod_total[monthmap[payout[13]]]=Number(payout[6])
           }
           checker = true
@@ -665,6 +682,7 @@ class PayoutShow extends React.Component {
     }
 
     if(checker){
+
 
       return(
         <BarChart feed={{
@@ -750,7 +768,7 @@ class PayoutShow extends React.Component {
     statement_details.push([])
     statement_details.push([])
     statement_details.push([])
-    statement_details.push([globals.payout_id,globals.trans_id,globals.seller_id,globals.payee,globals.revenue,globals.gp,globals.attainment,globals.payout,globals.split,globals.location,globals.multiplier,globals.order_num,globals.custom_field,globals.month,globals.rule,globals.payee_id,globals.type,globals.date])
+    statement_details.push([globals.payout_id,globals.trans_id,globals.seller_id,globals.payee,globals.revenue,globals.gp,globals.attainment,globals.payout,globals.split,globals.location,globals.multiplier,globals.order_num,globals.custom_field,globals.month,globals.rule,globals.payee_id,globals.type,globals.date,'Calc_Type'])
     return this.props.payouts.map((payout) => {
 
       return (this.createItem(payout))
@@ -759,6 +777,7 @@ class PayoutShow extends React.Component {
   }
 
   createSummaryLine(line){
+
     var statement_line = [monthmap[this.props.selected_month]]
     var i;
     for (i = 0; i < line.length; i++) {
@@ -769,6 +788,7 @@ class PayoutShow extends React.Component {
 
     statement_details.push(statement_line)
     if(Number(line[1]) < 1){
+
       return(
         (
           <tr key={line[0]}>
@@ -793,6 +813,7 @@ class PayoutShow extends React.Component {
 
   renderSummary(){
     var summaryArray = this.createSummaryItem()
+
     statement_details = [[`${monthmap[this.props.selected_month]} Commission statement for ${this.props.account['username']}`],[],['Summary Performance'],['Month','Attainment Rule','Attainment','Payout']]
     return (summaryArray.map((line)=> {
       return this.createSummaryLine(line)
@@ -836,10 +857,7 @@ class PayoutShow extends React.Component {
 
     if((user[9] === dept && user[8] < lvl) || user[0].toLowerCase() === uid || this.props.account['role'] === 'admin' ||(user[10] !== null && user[10].toLowerCase() === uid)){ // IF THE SIGNED IN USER DEPARTMENT IS THE SAME AS THIS ROWS USER AND THE LEVEL IS LESS, OR IF THE USER IS EQUAL TO THE SIGNED IN USER, OR IF THE SIGNED IN USER IS AN ADMIN
       if((user[9] !== null && user[8] !== null) || user[0].toLowerCase() === uid || this.props.account['role'] === 'admin' ||(user[10] !== null && user[10].toLowerCase() === uid)){ // IF THE USER HAS A ROW IN THE ROLE HIERARCHY DISPLAY IT, OR IF THE USER IS EQUAL TO THE SIGNED IN USER, OR IF THE SIGNED IN USER IS AN ADMIN, OR IF THE USERS MGR ID IS THE CURRENT USER ID
-        // console.log('start')
-        // console.log(`${user[9]} => ${dept}`)
-        // console.log(`${user[8]} => ${lvl}`)
-        // console.log(`${user[0]} => ${uid}`)
+
         return (
           <option value={user[0]} key={user[1]}> {user[1]} </option>
         )
@@ -1043,8 +1061,8 @@ class PayoutShow extends React.Component {
         </div>
         </div>
         <div className="sixteen wide column"></div>
-        <div style={{overflow:'auto', whitespace:'nowrap'}} className='ui container containermargin'>
-        <table  className='ui celled small compact unstackable table'>
+        <div style={{overflow:'auto', whitespace:'nowrap',"transform":"rotateX(180deg)"}} className='ui container containermargin'>
+        <table  className='ui celled compact unstackable table' style={{"transform":"rotateX(180deg)"}}>
 
           <thead>
             <tr>
@@ -1168,9 +1186,304 @@ class PayoutShow extends React.Component {
 
         </div>)
     }
-//BELOW IS THE SELLER VIEW
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////
+  }
+//Mobile render below
+renderMobileContent(){
+  if(typeof(history.location.state.detail) === 'undefined'){
+    return(<Login/>)
+  }
+
+  else if(typeof(this.props.account['user_id']) !== 'undefined'){
+
+    return (<div className='ui grid '>
+
+
+    <div className='thirteen wide column'>
+
+    </div>
+    <div className='three wide column'>
+    <div className='ui center aligned grid'>
+    <div className="sixteen wide column">
+
+    </div>
+
+                </div>
+                </div>
+    <div className="sixteen wide column">
+    <div className='ui center aligned grid'>
+    <div className="sixteen wide column">
+
+    </div>
+
+    </div>
+    </div>
+
+
+
+    <div className="sixteen wide column">
+
+    </div>
+
+
+        <div className='sixteen wide column'>
+          <div className='ui center aligned grid'>
+          <h1 style={{fontSize:'3rem'}} className='ui huge header'>Dashboard </h1>
+          <table className='ui celled center aligned table'>
+            <thead><tr>
+              <th>Payout Summary</th>
+              </tr></thead>
+              <tbody>
+              <tr>
+                <td className='center aligned' >
+                <select className='ui dropdown'  name="cast_user" onChange={(e) => e.stopPropagation(this.castUser(e))}>
+                              <option value={this.props.account['user_id']}>Login as user...</option>
+                              {this.renderUsersDropdown()}
+                            </select>
+                </td>
+                </tr>
+
+              <tr>
+                <td className='center aligned' >
+                <select className='ui dropdown' onChange={this.handleYearChange}>
+                  <option value={this.props.selected_year}>{this.props.selected_year}</option>
+                  <option value="all">All</option>
+
+                  {this.renderYearOptions()}
+
+
+                </select>
+                </td>
+                </tr>
+
+
+
+            <tr>
+            <td className='center aligned'>
+            <select className='ui dropdown' onChange={this.handleChange}>
+              <option value={monthmap[this.props.selected_month]}>{monthmap[this.props.selected_month]}</option>
+              <option value="all">Year To Date</option>
+              <option value="1">{monthmap[1]}</option>
+              <option value="2">{monthmap[2]}</option>
+              <option value="3">{monthmap[3]}</option>
+              <option value="4">{monthmap[4]}</option>
+              <option value="5">{monthmap[5]}</option>
+              <option value="6">{monthmap[6]}</option>
+              <option value="7">{monthmap[7]}</option>
+              <option value="8">{monthmap[8]}</option>
+              <option value="9">{monthmap[9]}</option>
+              <option value="10">{monthmap[10]}</option>
+              <option value="11">{monthmap[11]}</option>
+              <option value="12">{monthmap[12]}</option>
+
+            </select>
+            </td>
+
+            </tr>
+            <tr>
+
+            <td className='center aligned'>
+              <div >{this.renderTotal()}</div>
+            </td>
+          </tr>
+
+          <tr>
+          <td className='center aligned'>
+
+          </td>
+          </tr>
+            </tbody>
+          </table>
+          </div>
+
+        </div>
+
+
+        <div className='sixteen wide column'>
+          <div className='ui center aligned grid'>
+            {this.generateCharts()}
+          </div>
+        </div>
+
+
+
+
+
+
+
+    <div className="six wide column">
+      <div className='ui center aligned grid'>
+
+
+
+      </div>
+    </div>
+      <div className="five wide column">
+
+      <div className='ui grid'>
+        <div className='fifteen wide column'>
+          <div className='ui center aligned grid'>
+
+
+          </div>
+        </div>
+
+          <div className="fifteen wide column">
+
+
+
+          </div>
+
+        </div>
+        <div className='one wide column'></div>
+      </div>
+
+
+    <div className="sixteen wide column"></div>
+
+    <div className="sixteen wide column">
+
+    <div className='ui center aligned grid'>
+
+    </div>
+    </div>
+    <div className="sixteen wide column"></div>
+
+    <div className='ui container containermargin'>
+
+      </div>
+      <div className="sixteen wide column"></div>
+      <div className="sixteen wide column"></div>
+      <div className="sixteen wide column">
+      <div className='ui center aligned grid'>
+      <h2 className=''>Detailed Transaction Listing</h2>
+      </div>
+      </div>
+      <div className="sixteen wide column"></div>
+      <div style={{overflow:'auto', whitespace:'nowrap'}} className='ui container containermargin'>
+      <table  className='ui celled small compact unstackable table'>
+
+        <thead>
+          <tr>
+
+            <td className='center aligned'>
+              <div className="ui input">
+                <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('trans_id',e.target.value))} placeholder="Search..."/>
+              </div>
+            </td>
+            <td className='center aligned'>
+              <div className="ui input">
+                <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('seller_id',e.target.value))} placeholder="Search..."/>
+              </div>
+            </td>
+            <td className='center aligned'>
+              <div className="ui input">
+                <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('payee',e.target.value))} placeholder="Search..."/>
+              </div>
+            </td>
+            <td className='center aligned'>
+              <div className="ui input">
+                <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('revenue',e.target.value))} placeholder="Search..."/>
+              </div>
+            </td>
+            <td className='center aligned'>
+              <div className="ui input">
+                <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('gp',e.target.value))} placeholder="Search..."/>
+              </div>
+            </td>
+            <td className='center aligned'>
+              <div className="ui input">
+                <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('attainment',e.target.value))} placeholder="Search..."/>
+              </div>
+            </td>
+            <td className='center aligned'>
+
+            </td>
+            <td className='center aligned'>
+              <div className="ui input">
+                <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('payout',e.target.value))} placeholder="Search..."/>
+              </div>
+            </td>
+            <td className='center aligned'>
+              <div className="ui input">
+                <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('split_percent',e.target.value))} placeholder="Search..."/>
+              </div>
+            </td>
+            <td className='center aligned'>
+              <div className="ui input">
+                <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('location',e.target.value))} placeholder="Search..."/>
+              </div>
+            </td>
+            <td className='center aligned'>
+              <div className="ui input">
+                <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('payout_multiplier',e.target.value))} placeholder="Search..."/>
+              </div>
+            </td>
+            <td className='center aligned'>
+              <div className="ui input">
+                <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('order_num',e.target.value))} placeholder="Search..."/>
+              </div>
+            </td>
+            <td className='center aligned'>
+            <div className="ui input">
+              <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('date',e.target.value))} placeholder="Search..."/>
+            </div>
+
+            </td>
+
+            <td className='center aligned'>
+              <div className="ui input">
+                <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('attainment_rule',e.target.value))} placeholder="Search..."/>
+              </div>
+            </td>
+            <td className='center aligned'>
+            <div className="ui input">
+              <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('type',e.target.value))} placeholder="Search..."/>
+            </div>
+            </td>
+            <td className='center aligned'>
+            <div className="ui input">
+
+              <input type="text" size="6" onChange={(e) => e.stopPropagation(this.props.setFilter('custom_field',e.target.value))} placeholder="Search..."/>
+            </div>
+            </td>
+          </tr>
+          <tr>
+
+
+          <th className='center aligned'><strong>{globals.trans_id}</strong></th>
+          <th className='center aligned'><strong>{globals.seller_id}</strong></th>
+          <th className='center aligned'><strong>{globals.payee}</strong></th>
+          <th className='center aligned'><strong>{globals.revenue}</strong></th>
+          <th className='center aligned'><strong>{globals.gp}</strong></th>
+          <th className='center aligned'><strong>{globals.attainment}</strong></th>
+          <th className='center aligned'><strong>{globals.rate}</strong></th>
+          <th className='center aligned'><strong>{globals.payout}</strong></th>
+          <th className='center aligned'><strong>{globals.split}</strong></th>
+          <th className='center aligned'><strong>{globals.location}</strong></th>
+          <th className='center aligned'><strong>{globals.multiplier}</strong></th>
+          <th className='center aligned'><strong>{globals.order_num}</strong></th>
+
+          <th className='center aligned'><strong>{globals.date}</strong></th>
+          <th className='center aligned'><strong>{globals.rule}</strong></th>
+          <th className='center aligned'><strong>{globals.type}</strong></th>
+          <th className='center aligned'><strong>{globals.custom_field}</strong></th>
+          </tr>
+        </thead>
+        <tbody>
+        {this.renderList()}
+        </tbody>
+      </table>
+      <div className="sixteen wide column">
+
+      </div>
+      <div className="sixteen wide column">
+
+      </div>
+      </div>
+
+
+      </div>)
+  }
 
 
 
@@ -1179,6 +1492,15 @@ class PayoutShow extends React.Component {
 
   render(){
 
+    if(window.mobileCheck()){
+      if(typeof(this.props.account['user_id']) !== "undefined" && typeof(this.props.account['casted_user_id']) !== 'undefined'){
+        return(
+          <div>
+          {this.renderMobileContent()}
+          </div>
+        )
+    }
+    }
 
     if(typeof(this.props.account['user_id']) !== "undefined" && typeof(this.props.account['casted_user_id']) !== 'undefined'){
 
