@@ -1062,7 +1062,7 @@ class PayoutShow extends React.Component {
         </div>
         <div className="sixteen wide column"></div>
         <div style={{overflow:'auto', whitespace:'nowrap',"transform":"rotateX(180deg)"}} className='ui container containermargin'>
-        <table  className='ui celled small compact unstackable table' style={{"transform":"rotateX(180deg)"}}>
+        <table  className='ui celled compact unstackable table' style={{"transform":"rotateX(180deg)"}}>
 
           <thead>
             <tr>

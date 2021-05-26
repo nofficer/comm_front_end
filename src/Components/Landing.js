@@ -135,6 +135,14 @@ class Landing extends React.Component {
 
   }
 
+  retrieveData = (e) => {
+    this.props.getYears()
+    this.props.getSummaryData({'requested_year':this.props.month['cal_year']})
+    this.props.getPlanSummary({'requested_year':this.props.month['cal_year']})
+    this.props.getTopEarners({'requested_year':this.props.month['cal_year']})
+    this.props.getForecast({"year": this.props.month['cal_year']})
+  }
+
 
 
   getSummary = (e) => {
@@ -226,15 +234,23 @@ class Landing extends React.Component {
       })
 
 
+
+      if(typeof(this.props.summary_data[0]) != 'undefined'){
+
+
+
+
       var payouts_vals = Object.values(this.props.plan_summary)
       var total_payout = '$' + formatMoney(payouts_vals.reduce((a,b) => a + b, 0))
       return ( <div className='ui grid'>
       <div className='sixteen wide column'></div>
 
-      <div className='two wide column'></div>
+      <div className='two wide column'>
+
+      </div>
       <div className='twelve wide column'>
       <div className='ui center aligned grid'>
-        <div  className='ui header bigfont'>EasyComp</div>
+        <div className='ui header bigfont'>EasyComp</div>
         </div></div>
       <div className='two wide column'>
         <div className='ui center aligned grid'>
@@ -388,6 +404,67 @@ class Landing extends React.Component {
 
         </div>
       )
+    }
+    else{
+      return(
+        <div className='ui grid'>
+        <div className='sixteen wide column'></div>
+        <div className='sixteen wide column'></div>
+
+        <div className='sixteen wide column'>
+        <div className='ui center aligned grid'>
+
+          </div></div>
+
+
+
+
+
+
+          <div className='sixteen wide column'>
+            <div className='ui center aligned grid'>
+            <div className='four wide column'>
+
+            </div>
+            <div className='one wide column'>
+
+            </div>
+              <div className='six wide column'>
+
+
+              </div>
+              <div className='five wide column'>
+
+              </div>
+              <div className='sixteen wide column'>
+
+              </div>
+              <div className='five wide column'>
+
+              </div>
+              <div className='six wide column'>
+                <div className='ui fluid button primary' onClick={(e) => e.stopPropagation(this.retrieveData(e))} >Retrieve Summary Data</div>
+              </div>
+              <div className='five wide column'>
+
+              </div>
+              <div className='sixteen wide column'></div>
+
+              <div className='sixteen wide column'>
+
+              </div>
+              <div className='four wide column'>
+
+              </div>
+
+
+            </div>
+
+            </div>
+
+          </div>
+      )
+    }
     }
     if(typeof(this.props.account['role']) ==='undefined'){
       if(typeof(this.props.years[0]) != 'string' ){

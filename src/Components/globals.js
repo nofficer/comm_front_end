@@ -28,7 +28,8 @@ var globals = {
   users_import_fields:['user_id','name','plan_id','user_location','annual_ti'],
   goals_import_fields:['goal_id','user_id','attainment_rule_id','start','end','goal'],
   accounts_import_fields:['user_id','username','password','role'],
-  role_import_fields:['user_id','mgr_id','level','dept']
+  role_import_fields:['user_id','mgr_id','level','dept'],
+  calc_type: 'Calculation Type'
 
 
 

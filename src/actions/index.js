@@ -9,6 +9,8 @@ import store from '../index'
 import firebase from "firebase/app";
 import "firebase/auth";
 
+import {calculator} from '../apis/db'
+
 
 // const proxycheck = axios.create({
 //   baseURL: 'http://127.0.0.1:5000',
@@ -41,7 +43,7 @@ function getToken() {
 
 
 
-
+  calculator.defaults.headers.common['Authorization'] = token_val
   db.defaults.headers.common['Authorization'] = token_val
 
 
@@ -516,7 +518,7 @@ export const getPayout = (payout_id) => {
 export const calcPlans = (planList) => {
 
   return async (dispatch) => {
-    const response = await db.post('/calc_plans',planList)
+    const response = await calculator.post('/calc_plans',planList)
     dispatch({type:CALC_PLANS, payload: response.data})
   }
 }
